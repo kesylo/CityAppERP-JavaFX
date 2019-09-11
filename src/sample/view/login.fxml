@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane id="txtUsername" cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoginController">
+    <children>
+        <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #F7A630;" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fx:id="imgLogo" fitHeight="77.0" fitWidth="320.0" layoutX="204.0" layoutY="16.0"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/logo.jpg"/>
+                    </image>
+                </ImageView>
+                <JFXButton fx:id="btnSignUp" buttonType="RAISED" defaultButton="true" layoutX="616.0" layoutY="54.0"
+                           prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #5DBCD2;"
+                           text="S'enregistrer">
+                    <effect>
+                        <Glow/>
+                    </effect>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </JFXButton>
+            </children>
+        </Pane>
+        <JFXTextField fx:id="txtUsername" cache="true" focusColor="#f7a630" labelFloat="true" layoutX="209.0"
+                      layoutY="134.0" prefHeight="25.0" prefWidth="311.0" promptText="Nom d'utilisateur"
+                      unFocusColor="BLACK">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXTextField>
+        <JFXPasswordField fx:id="txtPassword" focusColor="#f7a630" labelFloat="true" layoutX="209.0" layoutY="200.0"
+                          prefHeight="25.0" prefWidth="311.0" promptText="Mot de passe" unFocusColor="BLACK">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXPasswordField>
+        <JFXButton fx:id="btnConnection" buttonType="RAISED" defaultButton="true" layoutX="286.0" layoutY="313.0"
+                   prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #f7a630;" text="Connexion">
+            <effect>
+                <Glow/>
+            </effect>
+            <font>
+                <Font size="14.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
+        <Label layoutX="257.0" layoutY="377.0" text="City Center Appartments ERP 2019 ©">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lblErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="196.0" layoutY="263.0"
+               prefHeight="20.0" prefWidth="336.0" text="Nom d'utilisateur ou mot de passe incorrect ."
+               textAlignment="CENTER" textFill="#ff3d3d" visible="false">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
