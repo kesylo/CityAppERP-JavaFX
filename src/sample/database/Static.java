@@ -24,10 +24,4 @@ public class Static {
     public static final String TIMESHEET_BILAN_HK_TABLE = "timesheet_bilanhk";
 
 
-    /* ------------------------------------------- Employes table ---------------------------------------- */
-    public static final String EMPLOYE_PSEUDO = "pseudo";
-    public static final String EMPLOYE_PASSWORD = "password";
-
-
-    /* ------------------------------------------- App List table ---------------------------------------- */
 }

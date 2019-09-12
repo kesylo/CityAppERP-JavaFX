@@ -6,6 +6,7 @@ import java.sql.*;
 
 public class DBHandler extends DBConfig {
     Connection dbConnection;
+    ResultSet rs;
 
     public Connection getDbConnection() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://"
@@ -22,13 +23,11 @@ public class DBHandler extends DBConfig {
     /*------------------------------ Methods -------------------------------------*/
     public ResultSet getUser(User user) {
 
-        ResultSet rs = null;
+        rs = null;
 
         if (!user.getPseudo().equals("") || !user.getPassword().equals("")) {
             // prepare the query
-            String query = "SELECT * FROM " + Static.EMPLOYES_TABLE + " WHERE "
-                    + Static.EMPLOYE_PSEUDO + "=?" + " AND "
-                    + Static.EMPLOYE_PASSWORD + "=?";
+            String query = "SELECT * FROM " + Static.EMPLOYES_TABLE + " WHERE pseudo=?" + " AND password=?";
             // run it
             try {
                 PreparedStatement ps = getDbConnection().prepareStatement(query);
@@ -49,4 +48,44 @@ public class DBHandler extends DBConfig {
 
         return rs;
     }
+
+    public ResultSet getAllFromCaisse() {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.CAISSE_TABLE;
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet getInfosByDate(String date) {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.CAISSE_TABLE;
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+
 }

@@ -2,8 +2,7 @@
 
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXListView?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
@@ -14,89 +13,90 @@
 <?import javafx.scene.text.*?>
 <AnchorPane prefHeight="609.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CashRegisterController">
-    <children>
-        <AnchorPane prefHeight="83.0" prefWidth="287.0" style="-fx-background-color: #F7A631;">
-            <children>
-                <Label layoutX="75.0" layoutY="23.0" text="Caisse">
-                    <font>
-                        <Font name="Century Gothic Bold Italic" size="30.0"/>
-                    </font>
-                </Label>
-                <ImageView fitHeight="45.0" fitWidth="46.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true"
-                           preserveRatio="true">
-                    <image>
-                        <Image url="@../images/cashRegister.png"/>
-                    </image>
-                </ImageView>
-            </children>
-        </AnchorPane>
-        <Line endX="319.0" endY="-13.0" layoutX="266.0" layoutY="96.0" startX="-266.0" startY="-13.0">
-            <stroke>
-                <LinearGradient endX="1.0" endY="1.0">
-                    <stops>
-                        <Stop color="#b5a896"/>
-                        <Stop color="#b5a896" offset="0.37547892720306514"/>
-                        <Stop color="#fc8f00" offset="0.7739463601532567"/>
-                        <Stop color="#fc8f00" offset="1.0"/>
-                    </stops>
-                </LinearGradient>
-            </stroke>
-        </Line>
-        <AnchorPane layoutY="119.0" prefHeight="476.0" prefWidth="287.0">
-            <children>
-                <JFXListView layoutY="2.0" prefHeight="476.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0"
-                             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-            </children>
-        </AnchorPane>
-        <AnchorPane layoutX="293.0" layoutY="84.0" prefHeight="503.0" prefWidth="287.0">
-            <children>
-                <JFXButton fx:id="btnConnection" buttonType="RAISED" layoutX="65.0" layoutY="43.0" prefHeight="39.0"
-                           prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Remplir une Caisse">
-                    <effect>
-                        <Glow/>
-                    </effect>
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </JFXButton>
-                <JFXButton fx:id="btnConnection1" buttonType="RAISED" layoutX="65.0" layoutY="112.0" prefHeight="39.0"
-                           prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Détails sur une Caise">
-                    <effect>
-                        <Glow/>
-                    </effect>
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </JFXButton>
-            </children>
-        </AnchorPane>
-        <ImageView fitHeight="31.0" fitWidth="26.0" layoutX="554.0" layoutY="50.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <image>
-                <Image url="@../images/user.png"/>
-            </image>
-        </ImageView>
-        <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="309.0" layoutY="53.0"
-               prefHeight="20.0" prefWidth="237.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
-            <font>
-                <Font name="System Bold" size="14.0"/>
-            </font>
-        </Label>
-        <Label layoutX="450.0" layoutY="22.0" text="Utilisateur connecté :">
-            <font>
-                <Font size="14.0"/>
-            </font>
-        </Label>
-        <Label layoutX="14.0" layoutY="99.0" text="Date">
-            <font>
-                <Font name="System Bold" size="14.0"/>
-            </font>
-        </Label>
-    </children>
+   <children>
+      <AnchorPane prefHeight="83.0" prefWidth="287.0" style="-fx-background-color: #F7A631;">
+         <children>
+            <Label layoutX="75.0" layoutY="23.0" text="Caisse">
+               <font>
+                  <Font name="Century Gothic Bold Italic" size="30.0"/>
+               </font>
+            </Label>
+            <ImageView fitHeight="45.0" fitWidth="46.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true"
+                       preserveRatio="true">
+               <image>
+                  <Image url="@../images/cashRegister.png"/>
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Line endX="319.0" endY="-13.0" layoutX="266.0" layoutY="96.0" startX="-266.0" startY="-13.0">
+         <stroke>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#b5a896"/>
+                  <Stop color="#b5a896" offset="0.37547892720306514"/>
+                  <Stop color="#fc8f00" offset="0.7739463601532567"/>
+                  <Stop color="#fc8f00" offset="1.0"/>
+               </stops>
+            </LinearGradient>
+         </stroke>
+      </Line>
+      <AnchorPane layoutY="119.0" prefHeight="476.0" prefWidth="287.0">
+         <children>
+            <ListView fx:id="listViewCaisse" layoutX="14.0" layoutY="38.0" prefHeight="476.0" prefWidth="287.0"
+                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                      AnchorPane.topAnchor="0.0"/>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="293.0" layoutY="84.0" prefHeight="503.0" prefWidth="287.0">
+         <children>
+            <JFXButton fx:id="btnFillCaisse" buttonType="RAISED" layoutX="65.0" layoutY="43.0" prefHeight="39.0"
+                       prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Remplir une Caisse">
+               <effect>
+                  <Glow/>
+               </effect>
+               <font>
+                  <Font size="14.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnDetailCaisse" buttonType="RAISED" layoutX="65.0" layoutY="112.0" prefHeight="39.0"
+                       prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Détails sur une Caise">
+               <effect>
+                  <Glow/>
+               </effect>
+               <font>
+                  <Font size="14.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="31.0" fitWidth="26.0" layoutX="554.0" layoutY="50.0" pickOnBounds="true"
+                 preserveRatio="true">
+         <image>
+            <Image url="@../images/user.png"/>
+         </image>
+      </ImageView>
+      <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="309.0" layoutY="53.0"
+             prefHeight="20.0" prefWidth="237.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
+         <font>
+            <Font name="System Bold" size="14.0"/>
+         </font>
+      </Label>
+      <Label layoutX="450.0" layoutY="22.0" text="Utilisateur connecté :">
+         <font>
+            <Font size="14.0"/>
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="99.0" text="Date">
+         <font>
+            <Font name="System Bold" size="14.0"/>
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

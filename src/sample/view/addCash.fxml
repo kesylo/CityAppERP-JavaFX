@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="719.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.addCashController">
+    <children>
+        <Line endX="450.0" endY="-25.0" layoutX="276.0" layoutY="106.0" startX="-276.0" startY="-23.0">
+            <stroke>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#b5a896"/>
+                        <Stop color="#b5a896" offset="0.37547892720306514"/>
+                        <Stop color="#fc8f00" offset="0.7739463601532567"/>
+                        <Stop color="#fc8f00" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </stroke>
+        </Line>
+        <HBox layoutY="-1.0" prefHeight="85.0" prefWidth="727.0">
+            <children>
+                <Pane prefHeight="88.0" prefWidth="362.0">
+                    <children>
+                        <AnchorPane prefHeight="83.0" prefWidth="360.0" style="-fx-background-color: #F7A631;">
+                            <children>
+                                <Label layoutX="75.0" layoutY="23.0" text="Remplir une caisse">
+                                    <font>
+                                        <Font name="Century Gothic Bold Italic" size="30.0"/>
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="45.0" fitWidth="46.0" layoutX="14.0" layoutY="20.0"
+                                           pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/cashRegister.png"/>
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </Pane>
+                <Pane prefHeight="85.0" prefWidth="365.0">
+                    <children>
+                        <ImageView fitHeight="31.0" fitWidth="26.0" layoutX="325.0" layoutY="44.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                                <Image url="@../images/user.png"/>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="80.0"
+                               layoutY="47.0" prefHeight="20.0" prefWidth="237.0" text="Keming Loic"
+                               textAlignment="RIGHT" textFill="#5dbcd2">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="221.0" layoutY="16.0" text="Utilisateur connecté :">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

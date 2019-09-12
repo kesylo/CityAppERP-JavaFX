@@ -10,9 +10,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Parent root = FXMLLoader.load(getClass().getResource("view/dashboard.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
         primaryStage.setTitle("City Appartements ERP");
-        primaryStage.setScene(new Scene(root, 728, 400));
+        //primaryStage.setScene(new Scene(root, 728, 400));
+        primaryStage.setScene(new Scene(root, 986, 609));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
