@@ -50,13 +50,14 @@ public class CashRegisterController {
         addDatesToListView();
 
         btnFillCaisse.setOnAction(event -> {
-            goToFillCaisse();
+            goToWindow("/sample/view/addCash.fxml", "Remplir caisse", false);
         });
 
 
         btnDetailCaisse.setOnAction(event -> {
             // Show details for specific date
             showDetailsByDate();
+
         });
     }
 
@@ -67,9 +68,13 @@ public class CashRegisterController {
     private void showDetailsByDate() {
         // get selected item in listview
         String item = listViewCaisse.getSelectionModel().getSelectedItem();
-        System.out.println(item);
+        // get id for the selected date
+        int id = dbHandler.getCaisseIdByDate(item);
 
-        ResultSet data = dbHandler.getInfosByDate(item);
+        // get info for that id
+
+        // open new windows with those infos
+        goToWindow("/sample/view/addCash.fxml", "Détails caisse", true);
     }
 
     private void addDatesToListView() {
@@ -79,7 +84,6 @@ public class CashRegisterController {
 
         try {
             while (caisseRow.next()) {
-                System.out.println(caisseRow.getString("date"));
                 // add row element to data object
                 // the 0 is to have a reverse list
                 data.add(0, caisseRow.getString("date"));
@@ -94,22 +98,35 @@ public class CashRegisterController {
         listViewCaisse.getSelectionModel().select(0);
     }
 
-    private void goToFillCaisse() {
+    private void goToWindow(String windowPath, String title, boolean disableSave) {
         // navigate to new screen
         btnFillCaisse.getScene().getWindow().hide();
+
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/view/addCash.fxml"));
+        loader.setLocation(getClass().getResource(windowPath));
         try {
             loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // send data to other controller
+        editAddCashBehaviour(loader, title, disableSave);
+
         Parent root = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.setTitle("City Appartements ERP");
         stage.showAndWait();
+    }
+
+    private void editAddCashBehaviour(FXMLLoader loader, String title, boolean disableSave) {
+        addCashController addCashController = loader.getController();
+        addCashController.setPageTitle(title);
+        if (disableSave) {
+            addCashController.disableUIElements();
+        }
     }
 
 

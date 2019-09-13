@@ -68,14 +68,16 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
-    public ResultSet getInfosByDate(String date) {
+    public int getCaisseIdByDate(String date) {
         rs = null;
+        int id = 0;
 
         // prepare the query
-        String query = "SELECT * FROM " + Static.CAISSE_TABLE;
+        String query = "SELECT idCaisse FROM " + Static.CAISSE_TABLE + " WHERE date=?";
         // run it
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setString(1, date);
 
             rs = ps.executeQuery();
 
@@ -84,7 +86,16 @@ public class DBHandler extends DBConfig {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return rs;
+
+        try {
+            while (rs.next()) {
+                id = rs.getInt("idCaisse");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 
 
