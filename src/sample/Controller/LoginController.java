@@ -1,4 +1,4 @@
-package sample.controller;
+package sample.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -10,9 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import sample.animation.Shaker;
-import sample.database.DBHandler;
-import sample.model.User;
+import sample.Database.DBHandler;
+import sample.Model.User;
+import sample.Ressources.animation.Shaker;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +30,6 @@ public class LoginController {
 
     @FXML
     private ImageView imgLogo;
-
 
     @FXML
     private Label lblErrorMessage;
@@ -57,24 +56,23 @@ public class LoginController {
 
         btnSignUp.setOnAction(event -> {
             // Simple nav to goToSignup screen
-            goToSignup();
+            //goToSignup();
+            goToWindow("/sample/View/signup.fxml");
         });
 
         btnConnection.setOnAction(event -> {
-
             login();
-
         });
 
     }
 
     /*----------------------------------------------------------------------------------------*/
 
-    private void goToSignup() {
+    /*private void goToSignup() {
         // navigate to new screen
         btnSignUp.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/view/signup.fxml"));
+        loader.setLocation(getClass().getResource("/sample/View/signup.fxml"));
         try {
             loader.load();
         } catch (IOException e) {
@@ -86,16 +84,37 @@ public class LoginController {
         stage.setResizable(false);
         stage.setTitle("City Appartements ERP");
         stage.showAndWait();
+    }*/
+
+    private void goToWindow(String windowPath) {
+        // navigate to new screen
+        btnConnection.getScene().getWindow().hide();
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(windowPath));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.setTitle("City Appartements ERP");
+        stage.show();
     }
 
     private void login() {
+
+        // create temp user
+        User user = new User();
 
         String loginUserName = txtUsername.getText().trim();
         String loginPwd = txtPassword.getText().trim();
 
         if (!loginUserName.equals("") || !loginPwd.equals("")) {
-            // create temp user
-            User user = new User();
             user.setPseudo(loginUserName);
             user.setPassword(loginPwd);
 
@@ -106,13 +125,21 @@ public class LoginController {
             try {
                 while (userRow.next()) {
                     counter++;
-                    //String test = userRow.getString("address");
+                    user.setFirstName(userRow.getString("firstName"));
+                    user.setLastName(userRow.getString("lastName"));
+                    user.setRole(userRow.getInt("role"));
                 }
 
                 // if we found a match
                 if (counter == 1) {
                     System.out.println("login ok");
-                    goToDashboard();
+                    // define user variables globally
+                    String userName = user.getFirstName() + " " + user.getLastName();
+                    Global.setConnectedUserName(userName);
+                    Global.setRole(user.getRole());
+                    //goToDashboard();
+                    goToWindow("/sample/View/dashboard.fxml");
+
                 } else {
                     System.out.println("login failed");
                     // shake input text
@@ -137,11 +164,11 @@ public class LoginController {
         lblErrorMessage.setVisible(true);
     }
 
-    private void goToDashboard() {
+    /*private void goToDashboard() {
         // navigate to new screen
         btnConnection.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/view/dashboard.fxml"));
+        loader.setLocation(getClass().getResource("/sample/View/dashboard.fxml"));
         try {
             loader.load();
         } catch (IOException e) {
@@ -153,5 +180,8 @@ public class LoginController {
         stage.setResizable(false);
         stage.setTitle("City Appartements ERP");
         stage.showAndWait();
-    }
+
+    }*/
+
+
 }

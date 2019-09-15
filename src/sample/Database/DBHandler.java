@@ -1,6 +1,6 @@
-package sample.database;
+package sample.Database;
 
-import sample.model.User;
+import sample.Model.User;
 
 import java.sql.*;
 
@@ -21,6 +21,43 @@ public class DBHandler extends DBConfig {
     }
 
     /*------------------------------ Methods -------------------------------------*/
+
+    public ResultSet getLastAmountByDate(String date) {
+        rs = null;
+        // prepare the query
+        String query = "SELECT J_prec FROM " + Static.CAISSE_TABLE + " WHERE date=?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setString(1, date);
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet getLastAmountCaisse() {
+        rs = null;
+        // prepare the query
+        String query = "SELECT J_prec FROM " + Static.CAISSE_TABLE + " ORDER BY idCaisse DESC LIMIT 1";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public ResultSet getUser(User user) {
 
         rs = null;
@@ -99,4 +136,11 @@ public class DBHandler extends DBConfig {
     }
 
 
+    public void createCaisse(String toString, Float lastCaisseAmount) {
+        // INSERT INTO `cityappdatabase`.`caisse` (`idCaisse`, `date`, `J_prec`) VALUES ('128', '2019-09-14', '10.12');
+        // prepare the query
+        String query = "INSERT INTO " + Static.CAISSE_TABLE + " WHERE date=?";
+
+        // to complete
+    }
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane id="txtUsername" cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="400.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoginController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.LoginController">
     <children>
         <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #F7A630;" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -20,12 +20,12 @@
                 <ImageView fx:id="imgLogo" fitHeight="77.0" fitWidth="320.0" layoutX="204.0" layoutY="16.0"
                            pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/logo.jpg"/>
+                        <Image url="@../Ressources/images/logo.jpg"/>
                     </image>
                 </ImageView>
-                <JFXButton fx:id="btnSignUp" buttonType="RAISED" defaultButton="true" layoutX="616.0" layoutY="54.0"
-                           prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #5DBCD2;"
-                           text="S'enregistrer">
+                <JFXButton fx:id="btnSignUp" buttonType="RAISED" defaultButton="true" focusTraversable="false"
+                           layoutX="616.0" layoutY="54.0" prefHeight="30.0" prefWidth="98.0"
+                           style="-fx-background-color: #5DBCD2;" text="S'enregistrer">
                     <effect>
                         <Glow/>
                     </effect>

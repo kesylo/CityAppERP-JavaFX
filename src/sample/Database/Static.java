@@ -1,4 +1,4 @@
-package sample.database;
+package sample.Database;
 
 public class Static {
     public static final String APP_LIST_TABLE = "applist";

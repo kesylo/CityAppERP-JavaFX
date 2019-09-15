@@ -1,4 +1,4 @@
-package sample.animation;
+package sample.Ressources.animation;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;

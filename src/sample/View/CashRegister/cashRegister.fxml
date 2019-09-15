@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.*?>
 <AnchorPane prefHeight="609.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CashRegisterController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.CashRegisterController">
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="287.0" style="-fx-background-color: #F7A631;">
          <children>
@@ -24,7 +23,7 @@
             <ImageView fitHeight="45.0" fitWidth="46.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true"
                        preserveRatio="true">
                <image>
-                  <Image url="@../images/cashRegister.png"/>
+                  <Image url="@../../Ressources/images/cashRegister.png"/>
                </image>
             </ImageView>
          </children>
@@ -76,27 +75,34 @@
             </JFXButton>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="31.0" fitWidth="26.0" layoutX="554.0" layoutY="50.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <image>
-            <Image url="@../images/user.png"/>
-         </image>
-      </ImageView>
-      <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="309.0" layoutY="53.0"
-             prefHeight="20.0" prefWidth="237.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
-         <font>
-            <Font name="System Bold" size="14.0"/>
-         </font>
-      </Label>
-      <Label layoutX="450.0" layoutY="22.0" text="Utilisateur connecté :">
-         <font>
-            <Font size="14.0"/>
-         </font>
-      </Label>
       <Label layoutX="14.0" layoutY="99.0" text="Date">
          <font>
             <Font name="System Bold" size="14.0"/>
          </font>
       </Label>
+      <AnchorPane layoutX="301.0" layoutY="15.0">
+         <children>
+            <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutY="31.0"
+                   prefHeight="20.0" prefWidth="237.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
+               <font>
+                  <Font name="System Bold" size="14.0"/>
+               </font>
+            </Label>
+            <Label layoutX="141.0" text="Utilisateur connecté :">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+            <ImageView fx:id="btnLogOut" fitHeight="36.0" fitWidth="26.0" layoutX="243.0" layoutY="28.0"
+                       onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/shutdown.png"/>
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

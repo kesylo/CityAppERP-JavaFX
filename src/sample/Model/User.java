@@ -1,4 +1,4 @@
-package sample.model;
+package sample.Model;
 
 public class User {
     private int id;
@@ -18,6 +18,7 @@ public class User {
     private int postalCode;
     private String pseudo;
     private String sex;
+    private int role;
 
 
     public User() {
@@ -27,6 +28,14 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public void setId(int id) {

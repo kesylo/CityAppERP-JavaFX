@@ -1,4 +1,4 @@
-package sample.database;
+package sample.Database;
 
 public class DBConfig {
     protected String dbHost = "localhost";
