@@ -1,8 +1,8 @@
 package sample.Controller;
 
+import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.sun.glass.ui.Window;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,10 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,7 +45,7 @@ public class DashboardController implements Initializable, BasicSetup {
         setUserProfile();
 
         btnNavToCaisse.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/cashRegister.fxml");
+            goToWindow("/sample/View/CashRegister/cashDashboard.fxml");
         });
     }
 
@@ -93,15 +93,15 @@ public class DashboardController implements Initializable, BasicSetup {
         stage.setTitle("City Appartements ERP");
         stage.show();
 
-        // If dashBoard closed, close all other windows
-        stage.setOnCloseRequest((WindowEvent ev) -> {
-            Platform.exit();
-        });
+        // animate window
+        new FadeIn(root).play();
     }
 
     @Override
     public void setUserProfile() {
         lblConnectedUser.setText(Global.getConnectedUserName());
+        // set disconnect tooltip
+        Tooltip.install(btnLogOut, new Tooltip("Déconnexion"));
     }
 
     public void logOut() {

@@ -1,5 +1,6 @@
 package sample.Database;
 
+import sample.Model.Caisse;
 import sample.Model.User;
 
 import java.sql.*;
@@ -105,6 +106,61 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    public ResultSet getCaisseDataByNumShiftAndDate(int numeroShift, Date date) {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date =? AND numeroShift=?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setDate(1, date);
+            ps.setInt(2, numeroShift);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public Boolean checkIfDateExists(String date) {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date=?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setString(1, date);
+
+            int cnt = 0;
+
+            rs = ps.executeQuery();
+
+            try {
+                while (rs.next()) {
+                    cnt++;
+                }
+
+                if (cnt >= 1) {
+                    return true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public int getCaisseIdByDate(String date) {
         rs = null;
         int id = 0;
@@ -135,12 +191,88 @@ public class DBHandler extends DBConfig {
         return id;
     }
 
-
-    public void createCaisse(String toString, Float lastCaisseAmount) {
+    public void createCaisse(Caisse caisse) {
         // INSERT INTO `cityappdatabase`.`caisse` (`idCaisse`, `date`, `J_prec`) VALUES ('128', '2019-09-14', '10.12');
         // prepare the query
-        String query = "INSERT INTO " + Static.CAISSE_TABLE + " WHERE date=?";
+        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, J_prec, remarque ) VALUES (?,?,?)";
 
-        // to complete
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDate(1, caisse.getDate());
+            ps.setDouble(2, caisse.getMontant());
+            ps.setString(3, caisse.getRemarque());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet getEmployeByID(int idEmployes) {
+
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE + " WHERE id=?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, idEmployes);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet getIncomeExpense(int idCaisse, int numeroShift, int type) {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.CAISSE_RECETTES_TABLE + " WHERE fk_idCaisse=? and numeroShift=? and type=?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, idCaisse);
+            ps.setInt(2, numeroShift);
+            // type = 1 => Income
+            ps.setInt(3, type);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet getCash(int idCaisse, int numeroShift) {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.CAISSE_MONNAIE_TABLE + " WHERE caisse_idCaisse=? and numeroShift=?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, idCaisse);
+            ps.setInt(2, numeroShift);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 }

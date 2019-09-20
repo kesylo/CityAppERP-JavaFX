@@ -1,5 +1,6 @@
 package sample;
 
+import animatefx.animation.FadeIn;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +12,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("View/CashRegister/cashRegister.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("View/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/CashRegister/cashDashboard.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("View/login.fxml"));
 
         //Set app logo
         Image image = new Image("/sample/Ressources/images/icon.png");
@@ -23,6 +24,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 986, 609));
         primaryStage.setResizable(false);
         primaryStage.show();
+        // animate window
+        new FadeIn(root).play();
     }
 
 

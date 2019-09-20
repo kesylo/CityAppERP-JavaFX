@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.*?>
+<AnchorPane prefHeight="822.0" prefWidth="870.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.Controller.CashRegister.infosLastCaisseController">
+    <children>
+        <AnchorPane layoutX="584.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                    minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="271.0">
+            <children>
+                <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false"
+                       layoutY="31.0" prefHeight="20.0" prefWidth="237.0" text="Keming Loic" textAlignment="RIGHT"
+                       textFill="#5dbcd2">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Label>
+                <Label focusTraversable="false" layoutX="141.0" text="Utilisateur connecté :">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <ImageView fx:id="btnLogOut" fitHeight="36.0" fitWidth="26.0" layoutX="243.0" layoutY="28.0"
+                           onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../Ressources/images/shutdown.png"/>
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane prefHeight="83.0" prefWidth="287.0" style="-fx-background-color: #F7A631;">
+            <children>
+                <Label layoutX="75.0" layoutY="23.0" prefHeight="38.0" prefWidth="329.0" text="Infos dernières caisse">
+                    <font>
+                        <Font name="Century Gothic Bold Italic" size="30.0"/>
+                    </font>
+                </Label>
+                <ImageView fitHeight="45.0" fitWidth="46.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../../Ressources/images/cashRegister.png"/>
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <Line endX="-274.0" endY="-23.0" layoutX="274.0" layoutY="106.0" startX="592.2929077148438" startY="-23.0">
+            <stroke>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#b5a896"/>
+                        <Stop color="#b5a896" offset="0.37547892720306514"/>
+                        <Stop color="#fc8f00" offset="0.7739463601532567"/>
+                        <Stop color="#fc8f00" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </stroke>
+        </Line>
+        <JFXDatePicker fx:id="datePicker" defaultColor="#f7a631" editable="false" focusTraversable="false"
+                       layoutX="14.0" layoutY="118.0" prefHeight="30.0" prefWidth="123.0" promptText="Choisir date">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXDatePicker>
+        <Label focusTraversable="false" layoutX="158.0" layoutY="88.0" text="N° Shift">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label focusTraversable="false" layoutX="14.0" layoutY="88.0" text="Date">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lblShiftNumber" focusTraversable="false" layoutX="180.0" layoutY="123.0" text="1">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label focusTraversable="false" layoutX="348.0" layoutY="88.0" text="Crée par">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lblCaisseCreator" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false"
+               layoutX="241.0" layoutY="123.0" prefHeight="20.0" prefWidth="271.0" text="Keming Loic"
+               textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="543.0" layoutY="88.0"
+               text="Etat" textAlignment="RIGHT">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lblCaisseStatus" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false"
+               layoutX="506.0" layoutY="123.0" prefHeight="20.0" prefWidth="65.0" text="Fermée" textAlignment="RIGHT">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <TableView fx:id="tableIncomes" cacheShape="false" fixedCellSize="0.0" focusTraversable="false" layoutX="12.0"
+                   layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                   pickOnBounds="false" prefHeight="163.0" prefWidth="846.0" scaleShape="false"
+                   tableMenuButtonVisible="true">
+            <columns>
+                <TableColumn fx:id="clmCreationDate" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Date"/>
+                <TableColumn fx:id="clmTime" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Heure"/>
+                <TableColumn fx:id="clmAmount" prefWidth="100.0" style="-fx-alignment: CENTER-RIGHT;" text="Montant"/>
+                <TableColumn fx:id="clmReason" prefWidth="169.0" style="-fx-alignment: CENTER;" text="Provenance"/>
+                <TableColumn fx:id="clmIndex" prefWidth="177.0" style="-fx-alignment: CENTER;" text="Index"/>
+                <TableColumn fx:id="clmComments" prefWidth="235.0" text="Commentaires"/>
+            </columns>
+        </TableView>
+        <Label focusTraversable="false" layoutX="14.0" layoutY="170.0" prefHeight="20.0" prefWidth="139.0"
+               text="Recetttes" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label focusTraversable="false" layoutX="13.0" layoutY="392.0" prefHeight="20.0" prefWidth="139.0"
+               text="Dépenses" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lblTotalIncomes" alignment="TOP_RIGHT" focusTraversable="false" layoutX="771.0" layoutY="363.0"
+               prefHeight="20.0" prefWidth="84.0" text="5624.4 €" textAlignment="CENTER">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="641.0" layoutY="363.0" prefHeight="20.0"
+               prefWidth="139.0" text="Total recettes :" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lblTotalExpenses" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="584.0"
+               prefHeight="20.0" prefWidth="65.0" text="5624.4 €" textAlignment="CENTER">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+        <Label focusTraversable="false" layoutX="14.0" layoutY="614.0" prefHeight="20.0" prefWidth="139.0"
+               text="Monnaie en caisse" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7a631" height="38.0" layoutX="325.0" layoutY="760.0"
+                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="223.0"/>
+        <Label fx:id="lblTotalCaisse" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false"
+               layoutX="437.0" layoutY="765.0" prefHeight="28.0" prefWidth="92.0" text="5624.4 €"
+               textAlignment="CENTER">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </Label>
+        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="337.0" layoutY="769.0" prefHeight="20.0"
+               prefWidth="92.0" text="Total caisse :" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true"
+                   layoutX="555.0" layoutY="760.0" prefHeight="38.0" prefWidth="74.0"
+                   style="-fx-background-color: #5dbcd2;" text="OK">
+            <effect>
+                <Glow/>
+            </effect>
+            <font>
+                <Font size="14.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
+        <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true"
+                   layoutX="245.0" layoutY="760.0" prefHeight="38.0" prefWidth="74.0"
+                   style="-fx-background-color: #F44336;" text="Retour">
+            <effect>
+                <Glow/>
+            </effect>
+            <font>
+                <Font size="14.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
+        <JFXTextArea fx:id="txtAreaCommentCaisse" editable="false" focusColor="#f7a631" layoutX="592.0" layoutY="92.0"
+                     prefHeight="83.0" prefWidth="264.0" promptText="Commentaire" wrapText="true">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXTextArea>
+        <Separator layoutX="13.0" layoutY="117.0" prefHeight="1.0" prefWidth="559.0"/>
+        <Separator layoutX="10.0" layoutY="391.0" prefHeight="1.0" prefWidth="846.0"/>
+        <TableView fx:id="tableExpenses" cacheShape="false" fixedCellSize="0.0" focusTraversable="false" layoutX="14.0"
+                   layoutY="412.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                   pickOnBounds="false" prefHeight="163.0" prefWidth="846.0" scaleShape="false"
+                   tableMenuButtonVisible="true">
+            <columns>
+                <TableColumn fx:id="clmCreationDateE" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Date"/>
+                <TableColumn fx:id="clmTimeE" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Heure"/>
+                <TableColumn fx:id="clmAmountE" prefWidth="100.0" style="-fx-alignment: CENTER-RIGHT;" text="Montant"/>
+                <TableColumn fx:id="clmReasonE" prefWidth="169.0" style="-fx-alignment: CENTER;" text="Raison"/>
+                <TableColumn fx:id="clmSalaryBeneficial" prefWidth="177.0" style="-fx-alignment: CENTER;"
+                             text="Salarié"/>
+                <TableColumn fx:id="clmCommentsE" prefWidth="235.0" text="Commentaires"/>
+            </columns>
+        </TableView>
+        <Separator layoutX="14.0" layoutY="613.0" prefHeight="1.0" prefWidth="846.0"/>
+        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="641.0" layoutY="584.0" prefHeight="20.0"
+               prefWidth="139.0" text="Total dépenses :" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <TableView fx:id="tableCash" cacheShape="false" fixedCellSize="0.0" focusTraversable="false" layoutX="12.0"
+                   layoutY="644.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                   pickOnBounds="false" prefHeight="58.0" prefWidth="846.0" scaleShape="false"
+                   tableMenuButtonVisible="true">
+            <columns>
+                <TableColumn fx:id="clmLessThanOne" prefWidth="75.0" style="-fx-alignment: CENTER;" text="&gt; 0.5 €"/>
+                <TableColumn fx:id="clmFiftyCents" prefWidth="75.0" style="-fx-alignment: CENTER;" text="0.5 €"/>
+                <TableColumn fx:id="clmOneEuro" prefWidth="75.0" style="-fx-alignment: CENTER;" text="1 €"/>
+                <TableColumn fx:id="clmTwoEuros" prefWidth="75.0" style="-fx-alignment: CENTER;" text="2 €"/>
+                <TableColumn fx:id="clmFiveEuros" prefWidth="75.0" style="-fx-alignment: CENTER;" text="5 €"/>
+                <TableColumn fx:id="clmTenEuros" prefWidth="75.0" style="-fx-alignment: CENTER;" text="10 €"/>
+                <TableColumn fx:id="clmTwentyEuros" prefWidth="75.0" style="-fx-alignment: CENTER;" text="20 €"/>
+                <TableColumn fx:id="clmFiftyEuros" prefWidth="75.0" style="-fx-alignment: CENTER;" text="50 €"/>
+                <TableColumn fx:id="clmOneHundredEuros" prefWidth="75.0" style="-fx-alignment: CENTER;" text="100 €"/>
+                <TableColumn fx:id="clmTwoHundredEuros" prefWidth="75.0" style="-fx-alignment: CENTER;" text="200 €"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+        <Label fx:id="lblTotalCash" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="711.0"
+               prefHeight="20.0" prefWidth="65.0" text="5624.4 €" textAlignment="CENTER">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+        <Label alignment="TOP_RIGHT" layoutX="641.0" layoutY="711.0" prefHeight="20.0" prefWidth="139.0"
+               text="Total monnaie :" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Separator layoutX="14.0" layoutY="739.0" prefHeight="1.0" prefWidth="846.0"/>
+    </children>
+</AnchorPane>

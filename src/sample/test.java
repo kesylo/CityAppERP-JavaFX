@@ -1,9 +1,14 @@
 package sample;
 
-/*
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class test {
     public static void main(String[] args) {
-        System.out.println(java.time.LocalDate.now());
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        System.out.println(sdf.format(cal.getTime()));
     }
 }
-*/

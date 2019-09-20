@@ -1,5 +1,6 @@
 package sample.Controller.CashRegister;
 
+import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -10,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -56,11 +58,14 @@ public class addNewCaisseController implements BasicSetup {
         datePicker.setEditable(false);
 
         btnCreate.setOnAction(event -> {
-            createCaisse();
+            //createCaisse();
+            // go to next window
+            goToWindow("/sample/View/CashRegister/addCash.fxml");
+
         });
 
         btnCancel.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/cashRegister.fxml");
+            goToWindow("/sample/View/CashRegister/cashDashboard.fxml");
         });
     }
 
@@ -70,14 +75,33 @@ public class addNewCaisseController implements BasicSetup {
 
     /*----------------------------------------------------------------------------------------------------------*/
 
-    private void createCaisse() {
+    /*private void createCaisse() {
         DBHandler db = new DBHandler();
-        db.createCaisse(LocalDate.now().toString(), getLastCaisseAmount());
+        Caisse caisse = new Caisse();
 
-        // go to next window
-        goToWindow("/sample/View/CashRegister/addCash.fxml");
+        // create sql date
+        caisse.setDate(Date.valueOf(LocalDate.now()));
+        caisse.setMontant(Float.parseFloat(txtAmountLastDay.getText()));
+        caisse.setRemarque("");
+
+        String strDate = "" + caisse.getDate() + "";
+
+        // check if caisse already exists
+        if (!db.checkIfDateExists(strDate)){
+            // create the caisse
+            db.createCaisse(caisse);
+
+            // get id of last entered entry
+            //Global.setCurrentCaisseId(db.getCaisseIdByDate(strDate));
+        }else {
+            Global.showErrorMessage (
+                    "City App ERP",
+                    "Erreur lors de la création d'une caisse",
+                    "La date que vous avez entré existe déja. Vous ne pouvez pas créer 2 caisses dans une journée."
+            );
+        }
     }
-
+*/
 
     private Float getLastCaisseAmount() {
         DBHandler db = new DBHandler();
@@ -129,11 +153,15 @@ public class addNewCaisseController implements BasicSetup {
         stage.setResizable(false);
         stage.setTitle("City Appartements ERP");
         stage.show();
+        // animate window
+        new FadeIn(root).play();
     }
 
     @Override
     public void setUserProfile() {
         lblConnectedUser.setText(Global.getConnectedUserName());
+        // set disconnect tooltip
+        Tooltip.install(btnLogOut, new Tooltip("Déconnexion"));
     }
 
     @FXML

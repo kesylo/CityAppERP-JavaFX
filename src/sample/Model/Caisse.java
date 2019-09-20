@@ -1,6 +1,7 @@
 package sample.Model;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 public class Caisse {
 
@@ -8,35 +9,43 @@ public class Caisse {
 
     private Date date;
 
-    private float j_prec;
+    private Double montant;
 
     private String remarque;
+
+    private int numeroShift;
+
+    private int closed;
+
+    private int idEmployes;
 
     public Caisse() {
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
+    public Caisse(int id, Date date, Double montant, int numeroShift, String remarque, int closed, int idEmployes) {
+        this.id = id;
         this.date = date;
-    }
-
-    public float getJ_prec() {
-        return j_prec;
-    }
-
-    public void setJ_prec(float j_prec) {
-        this.j_prec = j_prec;
-    }
-
-    public String getRemarque() {
-        return remarque;
-    }
-
-    public void setRemarque(String remarque) {
+        this.montant = montant;
+        this.numeroShift = numeroShift;
         this.remarque = remarque;
+        this.closed = closed;
+        this.idEmployes = idEmployes;
+    }
+
+    public int getIdEmployes() {
+        return idEmployes;
+    }
+
+    public void setIdEmployes(int idEmployes) {
+        this.idEmployes = idEmployes;
+    }
+
+    public int getClosed() {
+        return closed;
+    }
+
+    public void setClosed(int closed) {
+        this.closed = closed;
     }
 
     public int getId() {
@@ -45,5 +54,37 @@ public class Caisse {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public int getNumeroShift() {
+        return numeroShift;
+    }
+
+    public void setNumeroShift(int numeroShift) {
+        this.numeroShift = numeroShift;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(Double montant) {
+        this.montant = montant;
+    }
+
+    public String getRemarque() {
+        return remarque;
+    }
+
+    public void setRemarque(String remarque) {
+        this.remarque = remarque;
     }
 }
