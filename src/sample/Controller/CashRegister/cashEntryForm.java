@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import sample.Controller.Global;
 
 import java.io.IOException;
 
@@ -138,7 +139,7 @@ public class cashEntryForm {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("City Appartements ERP");
+        stage.setTitle(Global.appName);
         stage.show();
         // animate window
         new FadeIn(root).play();

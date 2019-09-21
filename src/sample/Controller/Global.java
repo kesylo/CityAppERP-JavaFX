@@ -15,7 +15,7 @@ public class Global {
     private static Caisse beforeCurrentCaisse = new Caisse();
 
     // directly accessible
-    public static String appName = "City Appartements ERP";
+    public static String appName = "City Apartments ERP";
 
     /*----------------------------------------------------------------------------------------------------------*/
 

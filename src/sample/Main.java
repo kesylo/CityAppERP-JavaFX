@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import sample.Controller.Global;
 
 public class Main extends Application {
 
@@ -19,7 +20,7 @@ public class Main extends Application {
         Image image = new Image("/sample/Ressources/images/icon.png");
         primaryStage.getIcons().add(image);
 
-        primaryStage.setTitle("City Appartements ERP - Login");
+        primaryStage.setTitle(Global.appName + " - Login");
         //primaryStage.setScene(new Scene(root, 728, 400));
         primaryStage.setScene(new Scene(root, 986, 609));
         primaryStage.setResizable(false);

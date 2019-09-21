@@ -213,7 +213,7 @@ public class infosLastCaisseController implements BasicSetup {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("City Appartements ERP");
+        stage.setTitle("City Apartments ERP");
         stage.show();
         // animate window
         new FadeIn(root).play();
@@ -430,7 +430,7 @@ public class infosLastCaisseController implements BasicSetup {
         // get all windows and close
         List<Window> windows = Window.getWindows();
         for (int i = windows.size() - 1; i >= 0; i--) {
-            if (windows.get(i).getTitle() == "City Appartements ERP") {
+            if (windows.get(i).getTitle() == "City Apartments ERP") {
                 windows.get(i).close();
             }
         }
@@ -447,7 +447,7 @@ public class infosLastCaisseController implements BasicSetup {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("City Appartements ERP");
+        stage.setTitle("City Apartments ERP");
         stage.show();
 
         // navigate to new screen

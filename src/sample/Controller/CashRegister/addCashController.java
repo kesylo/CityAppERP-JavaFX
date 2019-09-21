@@ -155,7 +155,7 @@ public class addCashController implements BasicSetup {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("City Appartements ERP");
+        stage.setTitle(Global.appName);
         stage.show();
         // animate window
         new FadeIn(root).play();
@@ -186,7 +186,7 @@ public class addCashController implements BasicSetup {
         // get all windows and close
         List<Window> windows = Window.getWindows();
         for (int i = windows.size() - 1; i >= 0; i--) {
-            if (windows.get(i).getTitle() == "City Appartements ERP") {
+            if (windows.get(i).getTitle() == Global.appName) {
                 windows.get(i).close();
             }
         }
@@ -202,7 +202,7 @@ public class addCashController implements BasicSetup {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("City Appartements ERP");
+        stage.setTitle(Global.appName);
         stage.show();
 
         // navigate to new screen

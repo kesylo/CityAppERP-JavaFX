@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 
 public class LoginController {
 
+    //region Description
     @FXML
     private ResourceBundle resources;
 
@@ -50,6 +51,7 @@ public class LoginController {
     private JFXButton btnSignUp;
 
     private DBHandler dbHandler;
+    //endregion
 
     @FXML
     void initialize() {
@@ -86,7 +88,7 @@ public class LoginController {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("City Appartements ERP");
+        stage.setTitle(Global.appName + " Dashboard");
         stage.show();
         // animate window
         new FadeIn(root).play();
@@ -169,7 +171,7 @@ public class LoginController {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("City Appartements ERP");
+        stage.setTitle("City Apartments ERP");
         stage.showAndWait();
 
     }*/
