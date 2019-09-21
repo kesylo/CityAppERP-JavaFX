@@ -171,10 +171,23 @@ public class infosLastCaisseController implements BasicSetup {
         setCaisseInfos();
 
         btnRetour.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/cashDashboard.fxml");
+            goToWindow("/sample/View/CashRegister/caisseDashboard.fxml", true);
         });
 
         btnOK.setOnAction(event -> {
+            boolean action = Global.showInfoMessageWithBtn(
+                    "Verification des informations de caisse.",
+                    "Les informations de caisse présentées sont elles égales à celles que vous avez dans votre caisse physique ?",
+                    "Oui",
+                    "Non");
+
+            if (action){
+                //System.out.println("ok");
+                goToWindow("/sample/View/CashRegister/createCaisse.fxml", true);
+            }else {
+                //System.out.println("cancel");
+                goToWindow("/sample/View/CashRegister/countCashCaisse.fxml", false);
+            }
         });
     }
 
@@ -182,9 +195,11 @@ public class infosLastCaisseController implements BasicSetup {
 
     /*---------------------------------------------------------------------------------------------------*/
 
-    private void goToWindow(String windowPath) {
+    private void goToWindow(String windowPath, boolean closeCurrent) {
         // navigate to new screen
-        btnRetour.getScene().getWindow().hide();
+        if (closeCurrent){
+            btnRetour.getScene().getWindow().hide();
+        }
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(windowPath));
@@ -242,6 +257,8 @@ public class infosLastCaisseController implements BasicSetup {
 
         lblTotalCaisse.setText("" + balance + " €");
 
+        // add to global var
+        Global.getCurrentCaisse().setMontant(balance);
         // add to DB ?
 
     }

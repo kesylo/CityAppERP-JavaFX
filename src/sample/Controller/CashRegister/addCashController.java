@@ -71,7 +71,7 @@ public class addCashController implements BasicSetup {
         LoadData();
 
         btnCancel.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/cashDashboard.fxml");
+            goToWindow("/sample/View/CashRegister/caisseDashboard.fxml");
         });
 
         btnAddCash.setOnAction(event -> {

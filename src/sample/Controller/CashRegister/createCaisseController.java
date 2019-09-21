@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class addNewCaisseController implements BasicSetup {
+public class createCaisseController implements BasicSetup {
     @FXML
     private Label lblConnectedUser;
 
@@ -65,7 +65,7 @@ public class addNewCaisseController implements BasicSetup {
         });
 
         btnCancel.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/cashDashboard.fxml");
+            goToWindow("/sample/View/CashRegister/caisseDashboard.fxml");
         });
     }
 

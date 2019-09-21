@@ -45,7 +45,7 @@ public class DashboardController implements Initializable, BasicSetup {
         setUserProfile();
 
         btnNavToCaisse.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/cashDashboard.fxml");
+            goToWindow("/sample/View/CashRegister/caisseDashboard.fxml");
         });
     }
 

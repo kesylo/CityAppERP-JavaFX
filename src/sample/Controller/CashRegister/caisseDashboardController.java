@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class cashDashboardController implements BasicSetup {
+public class caisseDashboardController implements BasicSetup {
 
     @FXML
     private ResourceBundle resources;
@@ -86,6 +86,8 @@ public class cashDashboardController implements BasicSetup {
             }else {
                 goToWindow("/sample/View/CashRegister/addCash.fxml", true);
             }*/
+
+
         });
     }
 
@@ -125,7 +127,7 @@ public class cashDashboardController implements BasicSetup {
 
             /*System.out.println(item.getDate());
             System.out.println(item.getNumeroShift());*/
-        // goToWindow("/sample/View/CashRegister/addNewCaisse.fxml");
+        // goToWindow("/sample/View/CashRegister/createCaisse.fxml");
     }
 
     private void fillTable() {

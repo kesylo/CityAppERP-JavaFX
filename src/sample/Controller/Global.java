@@ -1,7 +1,11 @@
 package sample.Controller;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import sample.Model.Caisse;
+
+import java.util.Optional;
 
 public class Global {
     // variables to share between the whole App
@@ -9,6 +13,9 @@ public class Global {
     private static String connectedUserName = "";
     private static Caisse currentCaisse = new Caisse();
     private static Caisse beforeCurrentCaisse = new Caisse();
+
+    // directly accessible
+    public static String appName = "City Appartements ERP";
 
     /*----------------------------------------------------------------------------------------------------------*/
 
@@ -59,5 +66,22 @@ public class Global {
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
         alertDialog.show();
+    }
+
+    public static Boolean showInfoMessageWithBtn(String header, String content, String btnYes, String btnNo) {
+        // change button type text
+        ButtonType yes = new ButtonType(btnYes, ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType(btnNo, ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert alertDialog = new Alert(Alert.AlertType.CONFIRMATION, content, yes,  no);
+        alertDialog.setTitle(appName);
+        alertDialog.setHeaderText(header);
+
+        Optional<ButtonType> result = alertDialog.showAndWait();
+
+        if (result.orElse(no) == yes){
+            return true;
+        }
+        return false;
     }
 }

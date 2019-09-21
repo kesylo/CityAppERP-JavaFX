@@ -12,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("View/CashRegister/cashDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/CashRegister/caisseDashboard.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("View/login.fxml"));
 
         //Set app logo
