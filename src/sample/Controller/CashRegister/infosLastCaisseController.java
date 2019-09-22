@@ -3,7 +3,6 @@ package sample.Controller.CashRegister;
 import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
-import com.sun.glass.ui.Window;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,12 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import sample.Controller.BasicSetup;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
 import sample.Model.Cash;
@@ -26,12 +23,12 @@ import sample.Model.Expense;
 import sample.Model.Income;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class infosLastCaisseController implements BasicSetup {
+public class infosLastCaisseController  {
 
     //region UI elements
     @FXML
@@ -159,7 +156,8 @@ public class infosLastCaisseController implements BasicSetup {
 
     @FXML
     void logOut(MouseEvent event) {
-        logOut();
+        URL location = getClass().getResource("/sample/View/login.fxml");
+        Global.logOut(location, btnOK);
     }
 
     @FXML
@@ -167,11 +165,13 @@ public class infosLastCaisseController implements BasicSetup {
         // init DB access
         dbHandler = new DBHandler();
 
+        Global.setUserProfile(lblConnectedUser, btnLogOut);
+
         // set caisse infos
         setCaisseInfos();
 
         btnRetour.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/caisseDashboard.fxml", true);
+            btnRetour.getScene().getWindow().hide();
         });
 
         btnOK.setOnAction(event -> {
@@ -182,42 +182,16 @@ public class infosLastCaisseController implements BasicSetup {
                     "Non");
 
             if (action){
-                //System.out.println("ok");
-                goToWindow("/sample/View/CashRegister/createCaisse.fxml", true);
+                URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
+                Global.goToWindow(navPath, btnRetour,"Creation", true);
             }else {
-                //System.out.println("cancel");
-                goToWindow("/sample/View/CashRegister/countCashCaisse.fxml", false);
+                URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
+                Global.goToWindow(navPath, btnRetour,"Comptage", true);
             }
         });
     }
 
-
-
     /*---------------------------------------------------------------------------------------------------*/
-
-    private void goToWindow(String windowPath, boolean closeCurrent) {
-        // navigate to new screen
-        if (closeCurrent){
-            btnRetour.getScene().getWindow().hide();
-        }
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(windowPath));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle("City Apartments ERP");
-        stage.show();
-        // animate window
-        new FadeIn(root).play();
-    }
 
     private void setCaisseInfos() {
         // set creator
@@ -418,39 +392,4 @@ public class infosLastCaisseController implements BasicSetup {
         return name;
     }
 
-    @Override
-    public void setUserProfile() {
-        lblConnectedUser.setText(Global.getConnectedUserName());
-        // set disconnect tooltip
-        Tooltip.install(btnLogOut, new Tooltip("Déconnexion"));
-    }
-
-    @Override
-    public void logOut() {
-        // get all windows and close
-        List<Window> windows = Window.getWindows();
-        for (int i = windows.size() - 1; i >= 0; i--) {
-            if (windows.get(i).getTitle() == "City Apartments ERP") {
-                windows.get(i).close();
-            }
-        }
-
-        // load login scène
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/View/login.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle("City Apartments ERP");
-        stage.show();
-
-        // navigate to new screen
-        btnOK.getScene().getWindow().hide();
-    }
 }

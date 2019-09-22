@@ -1,23 +1,52 @@
 package sample.Controller;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import animatefx.animation.FadeIn;
+import com.jfoenix.controls.JFXButton;
+import com.sun.glass.ui.Window;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import sample.Model.Caisse;
+import sample.Model.User;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Global {
-    // variables to share between the whole App
-    private static int role = 0;
-    private static String connectedUserName = "";
+    private static User connectedUser = new User();
     private static Caisse currentCaisse = new Caisse();
     private static Caisse beforeCurrentCaisse = new Caisse();
+    private static int nberOfCaisses;
+
+    private static Stage caisseDashStage = null;
 
     // directly accessible
     public static String appName = "City Apartments ERP";
 
-    /*----------------------------------------------------------------------------------------------------------*/
+    /*--------------------------GETTERS AND SETTERS--------------------------------------------------------------------------------*/
+
+    public static int getNberOfCaisses() {
+        return nberOfCaisses;
+    }
+
+    public static void setNberOfCaisses(int nberOfCaisses) {
+        Global.nberOfCaisses = nberOfCaisses;
+    }
+
+    public static User getConnectedUser() {
+        return connectedUser;
+    }
+
+    public static void setConnectedUser(User connectedUser) {
+        Global.connectedUser = connectedUser;
+    }
 
     public static Caisse getBeforeCurrentCaisse() {
         return beforeCurrentCaisse;
@@ -35,37 +64,21 @@ public class Global {
         Global.currentCaisse = currentCaisse;
     }
 
-    public static int getRole() {
-        return role;
-    }
-
-    public static String getConnectedUserName() {
-        return connectedUserName;
-    }
-
-    public static void setRole(int role) {
-        Global.role = role;
-    }
-
-    public static void setConnectedUserName(String connectedUserName) {
-        Global.connectedUserName = connectedUserName;
-    }
-
-    /*------------------------------------------------------------------------------------------------------*/
-    public static void showErrorMessage(String title, String header, String content) {
+    /*--------------------------------- METHODS ---------------------------------------------------------------------*/
+    public static void showErrorMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.ERROR);
-        alertDialog.setTitle(title);
+        alertDialog.setTitle(appName);
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
-        alertDialog.show();
+        alertDialog.showAndWait();
     }
 
-    public static void showInfoMessage(String title, String header, String content) {
+    public static void showInfoMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.INFORMATION);
-        alertDialog.setTitle(title);
+        alertDialog.setTitle(appName);
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
-        alertDialog.show();
+        alertDialog.showAndWait();
     }
 
     public static Boolean showInfoMessageWithBtn(String header, String content, String btnYes, String btnNo) {
@@ -83,5 +96,73 @@ public class Global {
             return true;
         }
         return false;
+    }
+
+    public static void goToWindow (URL location, JFXButton anyBtn, String windowName, boolean closeWindow) {
+
+        if (closeWindow){
+            anyBtn.getScene().getWindow().hide();
+        }
+
+        /*List<Window> windows = Window.getWindows();
+        Stage mywindow = new Stage();
+        for (Window win : windows) {
+            if (win.getTitle().contains(windowName)) {
+                    mywindow= win
+            }
+        }*/
+
+
+         Stage stage = new Stage();
+        try {
+            Parent root = FXMLLoader.load(location);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle(appName + " " + windowName);
+            stage.setResizable(false);
+            stage.show();
+
+            // animate window
+            //new FadeIn(root).play();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static void setUserProfile(Label userName, ImageView logOutBtn){
+        userName.setText(connectedUser.getFirstName() + " " + connectedUser.getLastName());
+        // set disconnect tooltip
+        Tooltip.install(logOutBtn, new Tooltip("Déconnexion"));
+    }
+
+    public static void logOut(URL location, JFXButton anyBtn) {
+        // get all windows and close
+        List<Window> windows = Window.getWindows();
+        for (int i = windows.size() - 1; i >= 0; i--) {
+            if (windows.get(i).getTitle().contains("City")) {
+                windows.get(i).close();
+            }
+        }
+
+        // load login scene
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(location);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.setTitle(appName + " - Login");
+        stage.show();
+
+        // navigate to new screen
+        anyBtn.getScene().getWindow().hide();
     }
 }

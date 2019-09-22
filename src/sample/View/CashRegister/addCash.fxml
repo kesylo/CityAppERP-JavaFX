@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.*?>
 <AnchorPane prefHeight="766.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.addCashController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.addCashControllerDELETE">
    <children>
        <Line endX="450.0" endY="-25.0" layoutX="276.0" layoutY="106.0" startX="-276.0" startY="-23.0"
              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -65,7 +65,7 @@
                                </font>
                            </Label>
                            <ImageView fx:id="btnLogOut" fitHeight="36.0" fitWidth="26.0" layoutX="243.0" layoutY="28.0"
-                                      onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
+                                       pickOnBounds="true" preserveRatio="true">
                                <image>
                                    <Image url="@../../Ressources/images/shutdown.png"/>
                                </image>

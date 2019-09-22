@@ -93,7 +93,7 @@ public class countCashCaisseController {
         btnOK.setOnAction(event -> {
             // check if counted cash = caisse cash
             if (totalCaisseCount == Global.getCurrentCaisse().getMontant()){
-                Global.showInfoMessage(Global.appName,
+                Global.showInfoMessage(
                         "Vérification Correcte !",
                         "La monnaie disponible en caisse correspond bien à celle du système");
             } else {
@@ -120,7 +120,7 @@ public class countCashCaisseController {
 
         // check if we have more or less cash
         if (solde < 0){
-            Global.showErrorMessage(Global.appName,
+            Global.showErrorMessage(
                     "Une erreur de caisse vient d'être signaler dans la section 'commentaires' de cette caisse",
                     "Ceci à lieu car il y a " + solde * -1 +" € en plus dans la caisse.");
 
@@ -128,7 +128,7 @@ public class countCashCaisseController {
 
             addErrorLineToCaisse();
         } else if (solde > 0){
-            Global.showErrorMessage(Global.appName,
+            Global.showErrorMessage(
                     "Une erreur de caisse vient d'être signaler dans la section 'commentaires' de cette caisse",
                     "Ceci à lieu car il manque " + solde +" € dans la caisse.");
 
@@ -142,7 +142,7 @@ public class countCashCaisseController {
     }
 
     private void addErrorLineToCaisse() {
-
+        // to do
     }
 
     public void closeAllAndCreaeCaisse() {

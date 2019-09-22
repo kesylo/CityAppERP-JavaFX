@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.*?>
 <AnchorPane prefHeight="505.0" prefWidth="367.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.cashEntryForm">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.cashEntryFormDELETE">
     <children>
         <AnchorPane prefHeight="83.0" prefWidth="367.0" style="-fx-background-color: #F7A631;">
             <children>

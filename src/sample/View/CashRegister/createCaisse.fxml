@@ -1,149 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.*?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.*?>
-<AnchorPane prefHeight="315.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.createCaisseController">
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="279.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.createCaisseController">
     <children>
-        <AnchorPane prefHeight="83.0" prefWidth="298.0" style="-fx-background-color: #F7A631;">
+        <AnchorPane prefHeight="83.0" prefWidth="458.0" style="-fx-background-color: #F7A631;">
             <children>
-                <Label layoutX="77.0" layoutY="23.0" text="Remplir Caisse">
+                <Label layoutX="136.0" layoutY="23.0" text="Créer Caisse">
                     <font>
-                        <Font name="Century Gothic Bold Italic" size="30.0"/>
+                        <Font name="Century Gothic Bold Italic" size="30.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="55.0" fitWidth="68.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true"
-                           preserveRatio="true">
-                    <image>
-                        <Image url="@../../Ressources/images/cashRegister.png"/>
-                    </image>
-                </ImageView>
             </children>
         </AnchorPane>
-        <Line endX="385.99993896484375" endY="-23.0" layoutX="276.0" layoutY="106.0" startX="-276.0" startY="-23.0">
+        <Line endX="152.5" endY="-23.0" layoutX="276.0" layoutY="106.0" startX="-276.0" startY="-23.0">
             <stroke>
                 <LinearGradient endX="1.0" endY="1.0">
                     <stops>
-                        <Stop color="#b5a896"/>
-                        <Stop color="#b5a896" offset="0.37547892720306514"/>
-                        <Stop color="#fc8f00" offset="0.7739463601532567"/>
-                        <Stop color="#fc8f00" offset="1.0"/>
+                        <Stop color="#b5a896" />
+                        <Stop color="#b5a896" offset="0.37547892720306514" />
+                        <Stop color="#fc8f00" offset="0.7739463601532567" />
+                        <Stop color="#fc8f00" offset="1.0" />
                     </stops>
                 </LinearGradient>
             </stroke>
         </Line>
-        <Label layoutX="45.0" layoutY="121.0" text="Date">
+        <Label layoutX="28.0" layoutY="94.0" text="Date :">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <JFXDatePicker fx:id="datePicker" defaultColor="#f7a631" editable="false" layoutX="14.0" layoutY="148.0"
-                       prefHeight="30.0" prefWidth="123.0" promptText="Choisir date">
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </JFXDatePicker>
-        <Label layoutX="202.0" layoutY="121.0" text="Montant du jour précédent">
+        <Label layoutX="28.0" layoutY="121.0" text="Solde :">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <JFXTextField fx:id="txtAmountLastDay" cache="true" editable="false" focusColor="#f7a630" layoutX="230.0"
-                      layoutY="145.0" prefHeight="30.0" prefWidth="114.0" unFocusColor="BLACK">
+        <Label layoutX="28.0" layoutY="150.0" text="Numero du shift :">
             <font>
-                <Font size="14.0"/>
-            </font>
-        </JFXTextField>
-        <Label layoutX="351.0" layoutY="155.0" prefHeight="27.0" prefWidth="16.0" text="€">
-            <font>
-                <Font name="System Bold" size="18.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="470.0" layoutY="121.0" text="Montant du jour courant">
-            <font>
-                <Font name="System Bold" size="14.0"/>
-            </font>
-        </Label>
-        <JFXTextField fx:id="txtAmountCurrentDay" cache="true" editable="false" focusColor="#f7a630" layoutX="490.0"
-                      layoutY="145.0" prefHeight="30.0" prefWidth="114.0" text="0" unFocusColor="BLACK">
-            <font>
-                <Font size="14.0"/>
-            </font>
-        </JFXTextField>
-        <Label layoutX="611.0" layoutY="155.0" prefHeight="27.0" prefWidth="16.0" text="€">
-            <font>
-                <Font name="System Bold" size="18.0"/>
-            </font>
-        </Label>
-        <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true"
-                   layoutX="169.0" layoutY="241.0" prefHeight="39.0" prefWidth="123.0"
-                   style="-fx-background-color: #F44336;" text="Annuler">
+        <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="113.0" layoutY="227.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #F44336;" text="Annuler">
             <effect>
-                <Glow/>
+                <Glow />
             </effect>
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </JFXButton>
-        <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true"
-                   layoutX="372.0" layoutY="241.0" prefHeight="39.0" prefWidth="123.0"
-                   style="-fx-background-color: #5dbcd2;" text="Créer">
+        <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="262.0" layoutY="227.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #5dbcd2;" text="Créer">
             <effect>
-                <Glow/>
+                <Glow />
             </effect>
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </JFXButton>
-        <Line endX="377.5" endY="75.0" layoutX="286.0" layoutY="141.0" startX="-286.0" startY="75.0">
+        <Line endX="163.5" endY="75.0" layoutX="291.0" layoutY="141.0" startX="-286.0" startY="75.0">
             <stroke>
                 <LinearGradient endX="1.0" endY="1.0">
                     <stops>
-                        <Stop color="#b5a896"/>
-                        <Stop color="#b5a896" offset="0.37547892720306514"/>
-                        <Stop color="#fc8f00" offset="0.7739463601532567"/>
-                        <Stop color="#fc8f00" offset="1.0"/>
+                        <Stop color="#b5a896" />
+                        <Stop color="#b5a896" offset="0.37547892720306514" />
+                        <Stop color="#fc8f00" offset="0.7739463601532567" />
+                        <Stop color="#fc8f00" offset="1.0" />
                     </stops>
                 </LinearGradient>
             </stroke>
         </Line>
-        <AnchorPane layoutX="381.0" layoutY="15.0">
-            <children>
-                <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutY="31.0"
-                       prefHeight="20.0" prefWidth="237.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
-                    <font>
-                        <Font name="System Bold" size="14.0"/>
-                    </font>
-                </Label>
-                <Label layoutX="141.0" text="Utilisateur connecté :">
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                </Label>
-                <ImageView fx:id="btnLogOut" fitHeight="36.0" fitWidth="26.0" layoutX="243.0" layoutY="28.0"
-                           onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../Ressources/images/shutdown.png"/>
-                    </image>
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </ImageView>
-            </children>
-        </AnchorPane>
+      <Label layoutX="28.0" layoutY="182.0" text="Créateur : ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" layoutX="163.0" layoutY="92.0" prefHeight="25.0" prefWidth="169.0" text="2019-12-01">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblMontant" layoutX="162.0" layoutY="119.0" prefHeight="25.0" prefWidth="169.0" text="324.35 €">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNumeroShift" layoutX="163.0" layoutY="148.0" text="Généré automatiquement">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblUser" layoutX="163.0" layoutY="180.0" prefHeight="25.0" prefWidth="169.0" text="Keming loic">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+          <ImageView fitHeight="75.0" fitWidth="68.0" layoutX="368.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                  <Image url="@../../Ressources/images/cashRegister.png" />
+              </image>
+          </ImageView>
     </children>
 </AnchorPane>

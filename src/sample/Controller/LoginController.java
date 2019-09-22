@@ -58,10 +58,10 @@ public class LoginController {
 
         dbHandler = new DBHandler();
 
-
         btnSignUp.setOnAction(event -> {
             // Simple nav to goToSignup screen
-            goToWindow("/sample/View/signup.fxml");
+            URL navPath = getClass().getResource("/sample/View/signup.fxml");
+            Global.goToWindow(navPath, btnConnection,"Signup", true);
         });
 
         btnConnection.setOnAction(event -> {
@@ -72,32 +72,6 @@ public class LoginController {
 
     /*----------------------------------------------------------------------------------------*/
 
-    private void goToWindow(String windowPath) {
-        // navigate to new screen
-        btnConnection.getScene().getWindow().hide();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(windowPath));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle(Global.appName + " Dashboard");
-        stage.show();
-        // animate window
-        new FadeIn(root).play();
-
-        // If dashBoard closed, close all other windows
-        stage.setOnCloseRequest((WindowEvent ev) -> {
-            Platform.exit();
-        });
-    }
 
     private void login() {
 
@@ -121,17 +95,17 @@ public class LoginController {
                     user.setFirstName(userRow.getString("firstName"));
                     user.setLastName(userRow.getString("lastName"));
                     user.setRole(userRow.getInt("role"));
+                    user.setId(userRow.getInt("id"));
                 }
 
                 // if we found a match
                 if (counter == 1) {
                     System.out.println("login ok");
                     // define user variables globally
-                    String userName = user.getFirstName() + " " + user.getLastName();
-                    Global.setConnectedUserName(userName);
-                    Global.setRole(user.getRole());
-                    //goToDashboard();
-                    goToWindow("/sample/View/dashboard.fxml");
+                    Global.setConnectedUser(user);
+                    // goToDashboard
+                    URL navPath = getClass().getResource("/sample/View/dashboard.fxml");
+                    Global.goToWindow(navPath, btnConnection,"Dashboard", true);
 
                 } else {
                     System.out.println("login failed");
@@ -156,25 +130,4 @@ public class LoginController {
         // show error message
         lblErrorMessage.setVisible(true);
     }
-
-    /*private void goToDashboard() {
-        // navigate to new screen
-        btnConnection.getScene().getWindow().hide();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/View/dashboard.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle("City Apartments ERP");
-        stage.showAndWait();
-
-    }*/
-
-
 }

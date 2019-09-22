@@ -13,7 +13,7 @@ import sample.Controller.Global;
 
 import java.io.IOException;
 
-public class cashEntryForm {
+public class cashEntryFormDELETE {
 
     @FXML
     private JFXTextField txtLessthanOneEuro;

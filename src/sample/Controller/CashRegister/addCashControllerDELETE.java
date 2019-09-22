@@ -3,7 +3,6 @@ package sample.Controller.CashRegister;
 import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
-import com.sun.glass.ui.Window;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,11 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import sample.Controller.BasicSetup;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
 import sample.Model.Cash;
@@ -26,9 +22,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class addCashController implements BasicSetup {
+public class addCashControllerDELETE {
     @FXML
     private Label lblPageTitle;
 
@@ -65,7 +60,6 @@ public class addCashController implements BasicSetup {
     void initialize() {
 
         // set user profile
-        setUserProfile();
 
         // load data from selected date
         LoadData();
@@ -169,44 +163,6 @@ public class addCashController implements BasicSetup {
     }
 
 
-    @Override
-    public void setUserProfile() {
-        lblConnectedUser.setText(Global.getConnectedUserName());
-        // set disconnect tooltip
-        Tooltip.install(btnLogOut, new Tooltip("Déconnexion"));
-    }
 
-    @FXML
-    void logOut(MouseEvent event) {
-        logOut();
-    }
-
-    @Override
-    public void logOut() {
-        // get all windows and close
-        List<Window> windows = Window.getWindows();
-        for (int i = windows.size() - 1; i >= 0; i--) {
-            if (windows.get(i).getTitle() == Global.appName) {
-                windows.get(i).close();
-            }
-        }
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/View/login.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle(Global.appName);
-        stage.show();
-
-        // navigate to new screen
-        btnCancel.getScene().getWindow().hide();
-    }
 
 }

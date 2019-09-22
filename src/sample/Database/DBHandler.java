@@ -1,5 +1,6 @@
 package sample.Database;
 
+import sample.Controller.Global;
 import sample.Model.Caisse;
 import sample.Model.User;
 
@@ -23,40 +24,47 @@ public class DBHandler extends DBConfig {
 
     /*------------------------------ Methods -------------------------------------*/
 
-    public ResultSet getLastAmountByDate(String date) {
-        rs = null;
-        // prepare the query
-        String query = "SELECT J_prec FROM " + Static.CAISSE_TABLE + " WHERE date=?";
-        // run it
+    public int getNbrCaisseWithSameDate (String date) {
+        String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date=?";
+        int count = 0;
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
-
             ps.setString(1, date);
             rs = ps.executeQuery();
 
+            while (rs.next()) {
+                count ++;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return rs;
+
+        return count;
     }
 
-    public ResultSet getLastAmountCaisse() {
-        rs = null;
+    public double getLastAmountCaisse() {
+        Double amount = 0.0;
         // prepare the query
-        String query = "SELECT J_prec FROM " + Static.CAISSE_TABLE + " ORDER BY idCaisse DESC LIMIT 1";
+        String query = "SELECT montant FROM " + Static.CAISSE_TABLE + " ORDER BY idCaisse DESC LIMIT 1";
         // run it
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
+
             rs = ps.executeQuery();
+
+            while (rs.next()) {
+                amount = rs.getDouble("montant");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return rs;
+        return amount;
     }
 
     public ResultSet getUser(User user) {
@@ -192,16 +200,18 @@ public class DBHandler extends DBConfig {
     }
 
     public void createCaisse(Caisse caisse) {
-        // INSERT INTO `cityappdatabase`.`caisse` (`idCaisse`, `date`, `J_prec`) VALUES ('128', '2019-09-14', '10.12');
+        // INSERT INTO `cityappdatabase`.`caisse` ( `date`, `montant`, `numeroShift`, `closed`, `employees_id`) VALUES ('128', '2019-09-11', '321.52', '1', '1', '7');
         // prepare the query
-        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, J_prec, remarque ) VALUES (?,?,?)";
+        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id ) VALUES (?,?,?,?,?)";
 
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
 
             ps.setDate(1, caisse.getDate());
             ps.setDouble(2, caisse.getMontant());
-            ps.setString(3, caisse.getRemarque());
+            ps.setInt(3, caisse.getNumeroShift());
+            ps.setInt(4, caisse.getClosed());
+            ps.setInt(5, Global.getConnectedUser().getId());
 
             ps.executeUpdate();
         } catch (SQLException e) {

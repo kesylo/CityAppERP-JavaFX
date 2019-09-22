@@ -20,13 +20,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DashboardController implements Initializable, BasicSetup {
-    @FXML
-    private ResourceBundle resources;
+public class DashboardController implements Initializable {
 
-    @FXML
-    private URL location;
-
+    //region UI
     @FXML
     private Label lblConnectedUser;
 
@@ -35,24 +31,23 @@ public class DashboardController implements Initializable, BasicSetup {
 
     @FXML
     private JFXButton btnNavToCaisse;
+    //endregion
 
     @FXML
-    private Button btnnnnn;
+    void logOut(MouseEvent event) {
+        URL location = getClass().getResource("/sample/View/login.fxml");
+        Global.logOut(location, btnNavToCaisse);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        setUserProfile();
+        Global.setUserProfile(lblConnectedUser, btnLogOut);
 
         btnNavToCaisse.setOnAction(event -> {
-            goToWindow("/sample/View/CashRegister/caisseDashboard.fxml");
+            URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.goToWindow(toCaisse, btnNavToCaisse,"Caisse", false);
         });
-    }
-
-
-    @FXML
-    void logOut(MouseEvent event) {
-        logOut();
     }
 
     /*--------------------------------------------------------------------------------------*/
@@ -72,64 +67,6 @@ public class DashboardController implements Initializable, BasicSetup {
                 adminUserRole();
                 break;
         }
-    }
-
-    private void goToWindow(String windowPath) {
-        // navigate to new screen
-        //btnNavToCaisse.getScene().getWindow().hide();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(windowPath));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle(Global.appName);
-        stage.show();
-
-        // animate window
-        new FadeIn(root).play();
-    }
-
-    @Override
-    public void setUserProfile() {
-        lblConnectedUser.setText(Global.getConnectedUserName());
-        // set disconnect tooltip
-        Tooltip.install(btnLogOut, new Tooltip("Déconnexion"));
-    }
-
-    public void logOut() {
-        // get all windows and close
-        List<Window> windows = Window.getWindows();
-        for (int i = windows.size() - 1; i >= 0; i--) {
-            if (windows.get(i).getTitle() == Global.appName) {
-                windows.get(i).close();
-            }
-        }
-
-        // load login scène
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/View/login.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle(Global.appName);
-        stage.show();
-
-        // navigate to new screen
-        btnNavToCaisse.getScene().getWindow().hide();
     }
 
     /*------------------------------------------ ROLES ----------------------------------------------*/
