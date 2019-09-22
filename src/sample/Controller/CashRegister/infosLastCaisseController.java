@@ -1,28 +1,21 @@
 package sample.Controller.CashRegister;
 
-import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
+import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
-import sample.Model.Expense;
-import sample.Model.Income;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -67,48 +60,48 @@ public class infosLastCaisseController  {
 
     //region Table Income
     @FXML
-    private TableView<Income> tableIncomes;
+    private TableView<CaisseIncExp> tableIncomes;
 
     @FXML
-    private TableColumn<Income, Date> clmCreationDate;
+    private TableColumn<CaisseIncExp, Date> clmCreationDate;
 
     @FXML
-    private TableColumn<Income, String> clmTime;
+    private TableColumn<CaisseIncExp, String> clmTime;
 
     @FXML
-    private TableColumn<Income, Double> clmAmount;
+    private TableColumn<CaisseIncExp, Double> clmAmount;
 
     @FXML
-    private TableColumn<Income, String> clmReason;
+    private TableColumn<CaisseIncExp, String> clmReason;
 
     @FXML
-    private TableColumn<Income, String> clmComments;
+    private TableColumn<CaisseIncExp, String> clmComments;
 
     @FXML
-    private TableColumn<Income, Integer> clmIndex;
+    private TableColumn<CaisseIncExp, Integer> clmIndex;
     //endregion
 
     //region Table Expense
     @FXML
-    private TableView<Expense> tableExpenses;
+    private TableView<CaisseIncExp> tableExpenses;
 
     @FXML
-    private TableColumn<Expense, Date> clmCreationDateE;
+    private TableColumn<CaisseIncExp, Date> clmCreationDateE;
 
     @FXML
-    private TableColumn<Expense, String> clmTimeE;
+    private TableColumn<CaisseIncExp, String> clmTimeE;
 
     @FXML
-    private TableColumn<Expense, Double> clmAmountE;
+    private TableColumn<CaisseIncExp, Double> clmAmountE;
 
     @FXML
-    private TableColumn<Expense, String> clmReasonE;
+    private TableColumn<CaisseIncExp, String> clmReasonE;
 
     @FXML
-    private TableColumn<Expense, String> clmSalaryBeneficial;
+    private TableColumn<CaisseIncExp, String> clmSalaryBeneficial;
 
     @FXML
-    private TableColumn<Expense, String> clmCommentsE;
+    private TableColumn<CaisseIncExp, String> clmCommentsE;
     //endregion
 
     //region Table Cash
@@ -242,8 +235,8 @@ public class infosLastCaisseController  {
         ObservableList<Cash> data = FXCollections.observableArrayList();
 
         // get data from db
-        //ResultSet rs = dbHandler.getCash(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift());
-        ResultSet rs = dbHandler.getCash(1, 1);
+        ResultSet rs = dbHandler.getCash(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift());
+        //ResultSet rs = dbHandler.getCash(1, 1);
 
         try {
             while (rs.next()) {
@@ -297,28 +290,33 @@ public class infosLastCaisseController  {
 
     private void fillExpenseTab() {
         // Create list data
-        ObservableList<Expense> data = FXCollections.observableArrayList();
+        ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
         // get data from db
-        //ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 1);
-        ResultSet rs = dbHandler.getIncomeExpense(0, 0, 0);
+        ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 1);
+        //ResultSet rs = dbHandler.getIncomeExpense(0, 0, 0);
 
         try {
             while (rs.next()) {
-                Expense expense = new Expense(
+                CaisseIncExp expense = new CaisseIncExp(
                         rs.getDouble("montant"),
                         rs.getDate("date"),
                         rs.getString("time"),
+                        rs.getInt("employees_id"),
                         rs.getString("remarque"),
+                        rs.getInt("numeroShift"),
+                        rs.getInt("fk_idCaisse"),
                         rs.getString("reason"),
+                        rs.getString("indexClient"),
                         rs.getInt("type"),
-                        rs.getString("salaryBeneficial"));
+                        rs.getString("salaryBeneficial")
+                );
 
                 data.add(expense);
 
                 // calculate total
                 totalExpense += expense.getAmount();
-                lblTotalExpenses.setText("- " + totalExpense + " €");
+                lblTotalExpenses.setText(totalExpense + " €");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -328,7 +326,7 @@ public class infosLastCaisseController  {
         clmTimeE.setCellValueFactory(new PropertyValueFactory<>("Time"));
         clmAmountE.setCellValueFactory(new PropertyValueFactory<>("Amount"));
         clmReasonE.setCellValueFactory(new PropertyValueFactory<>("Reason"));
-        clmCommentsE.setCellValueFactory(new PropertyValueFactory<>("MoreInfos"));
+        clmCommentsE.setCellValueFactory(new PropertyValueFactory<>("Comment"));
         clmSalaryBeneficial.setCellValueFactory(new PropertyValueFactory<>("SalaryBeneficial"));
 
         // add list to table
@@ -337,28 +335,33 @@ public class infosLastCaisseController  {
 
     private void fillIncomeTab() {
         // Create list data
-        ObservableList<Income> data = FXCollections.observableArrayList();
+        ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
         // get data from db
-        //ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 1);
-        ResultSet rs = dbHandler.getIncomeExpense(0, 0, 1);
+        ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 0);
+        //ResultSet rs = dbHandler.getIncomeExpense(0, 0, 1);
 
         try {
             while (rs.next()) {
-                Income income = new Income(
-                        rs.getInt("type"),
+                CaisseIncExp income = new CaisseIncExp(
                         rs.getDouble("montant"),
                         rs.getDate("date"),
                         rs.getString("time"),
+                        rs.getInt("employees_id"),
                         rs.getString("remarque"),
+                        rs.getInt("numeroShift"),
+                        rs.getInt("fk_idCaisse"),
                         rs.getString("reason"),
-                        rs.getString("indexClient"));
+                        rs.getString("indexClient"),
+                        rs.getInt("type"),
+                        rs.getString("salaryBeneficial")
+                );
 
                 data.add(income);
 
                 // calculate total
                 totalIncome += income.getAmount();
-                lblTotalIncomes.setText("+ " + totalIncome + " €");
+                lblTotalIncomes.setText(totalIncome + " €");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -368,7 +371,7 @@ public class infosLastCaisseController  {
         clmTime.setCellValueFactory(new PropertyValueFactory<>("Time"));
         clmAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
         clmReason.setCellValueFactory(new PropertyValueFactory<>("Reason"));
-        clmComments.setCellValueFactory(new PropertyValueFactory<>("MoreInfos"));
+        clmComments.setCellValueFactory(new PropertyValueFactory<>("Comment"));
         clmIndex.setCellValueFactory(new PropertyValueFactory<>("IndexClient"));
 
         // add list to table

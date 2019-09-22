@@ -2,6 +2,7 @@ package sample.Database;
 
 import sample.Controller.Global;
 import sample.Model.Caisse;
+import sample.Model.CaisseIncExp;
 import sample.Model.User;
 
 import java.sql.*;
@@ -252,7 +253,7 @@ public class DBHandler extends DBConfig {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
             ps.setInt(1, idCaisse);
             ps.setInt(2, numeroShift);
-            // type = 1 => Income
+            // type = 0 => Income
             ps.setInt(3, type);
 
             rs = ps.executeQuery();
@@ -284,5 +285,40 @@ public class DBHandler extends DBConfig {
             e.printStackTrace();
         }
         return rs;
+    }
+
+    public void addErrorLine(CaisseIncExp errorExpense) {
+        //INSERT INTO `cityappdatabase`.`caisse_recettes` (`id_caisse_recettes`, `fk_idCaisse`, `montant`,
+        // `type`, `date`, `time`, `indexClient`, `remarque`, `numeroShift`, `reason`, `employees_id`) VALUES ('231', '1', '256', '1', '2019-09-11', '23:12', '158-256-2322', 'ccc', '2', 'ccc', '1');
+        String query = "INSERT INTO " + Static.CAISSE_RECETTES_TABLE + " ( " +
+                "fk_idCaisse," +
+                " montant," +
+                " type," +
+                " date, " +
+                " time, " +
+                " remarque, " +
+                " numeroShift, " +
+                " reason, " +
+                "employees_id ) VALUES (?,?,?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setInt(1, errorExpense.getIdCaisse());
+            ps.setDouble(2, errorExpense.getAmount());
+            ps.setInt(3, errorExpense.getType());
+            ps.setDate(4, errorExpense.getCreationDate());
+            ps.setString(5, errorExpense.getTime());
+            ps.setString(6, errorExpense.getComment());
+            ps.setInt(7, errorExpense.getShiftNumber());
+            ps.setString(8, errorExpense.getReason());
+            ps.setInt(9, errorExpense.getIdUser());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

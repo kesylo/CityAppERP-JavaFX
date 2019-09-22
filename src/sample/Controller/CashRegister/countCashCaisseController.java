@@ -1,6 +1,5 @@
 package sample.Controller.CashRegister;
 
-import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.glass.ui.Window;
@@ -18,8 +17,12 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.Controller.Global;
+import sample.Database.DBHandler;
+import sample.Model.CaisseIncExp;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class countCashCaisseController {
@@ -110,8 +113,6 @@ public class countCashCaisseController {
             }
         });
 
-
-
     }
     /*-------------------------------------------------------------------------------*/
 
@@ -124,7 +125,7 @@ public class countCashCaisseController {
                     "Une erreur de caisse vient d'être signaler dans la section 'commentaires' de cette caisse",
                     "Ceci à lieu car il y a " + solde * -1 +" € en plus dans la caisse.");
 
-            closeAllAndCreaeCaisse();
+            closeAllAndCreateCaisse();
 
             addErrorLineToCaisse();
         } else if (solde > 0){
@@ -132,20 +133,57 @@ public class countCashCaisseController {
                     "Une erreur de caisse vient d'être signaler dans la section 'commentaires' de cette caisse",
                     "Ceci à lieu car il manque " + solde +" € dans la caisse.");
 
-            closeAllAndCreaeCaisse();
+            closeAllAndCreateCaisse();
 
             addErrorLineToCaisse();
         }
-
-
-
     }
 
     private void addErrorLineToCaisse() {
+        Double errorAmount = totalCaisseCount - Global.getCurrentCaisse().getMontant();
         // to do
+        if (totalCaisseCount < Global.getCurrentCaisse().getMontant()){
+            // cash missing
+            CaisseIncExp errorExpense = new CaisseIncExp(
+                    errorAmount,
+                    Date.valueOf(LocalDate.now()),
+                    Global.getSystemTime(),
+                    Global.getConnectedUser().getId(),
+                    "Erreur dans la caisse. Il manque " + errorAmount + " euros.",
+                    Global.getCurrentCaisse().getNumeroShift(),
+                    Global.getCurrentCaisse().getId(),
+                    "Erreur de comptage",
+                    "",
+                    1,
+                    ""
+            );
+            addErrorLineInDB(errorExpense);
+        } else if (totalCaisseCount > Global.getCurrentCaisse().getMontant()){
+            // more cash
+            CaisseIncExp errorIncome = new CaisseIncExp(
+                    errorAmount,
+                    Date.valueOf(LocalDate.now()),
+                    Global.getSystemTime(),
+                    Global.getConnectedUser().getId(),
+                    "Erreur dans la caisse. Il y a " + errorAmount + " euros de plus que prévu.",
+                    Global.getCurrentCaisse().getNumeroShift(),
+                    Global.getCurrentCaisse().getId(),
+                    "Erreur de comptage",
+                    "",
+                    0,
+                    ""
+            );
+            addErrorLineInDB(errorIncome);
+        }
+
     }
 
-    public void closeAllAndCreaeCaisse() {
+    private void addErrorLineInDB(CaisseIncExp errorExpense) {
+        DBHandler dbHandler = new DBHandler();
+        dbHandler.addErrorLine(errorExpense);
+    }
+
+    public void closeAllAndCreateCaisse() {
         // get all windows and close
         List<Window> windows = Window.getWindows();
         for (int i = windows.size() - 1; i >= 0; i--) {

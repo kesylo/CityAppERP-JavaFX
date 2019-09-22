@@ -39,6 +39,8 @@ public class caisseDashboardController{
     @FXML
     private TableView<Caisse> tableDateShifts;
 
+    @FXML
+    private JFXButton btnCloseCaisse;
 
     @FXML
     private JFXButton btnFillCaisse;
@@ -78,12 +80,40 @@ public class caisseDashboardController{
             initCaissesInfos();
         });
 
-       /* btnDetailCaisse.setOnAction(event -> {
+       btnDetailCaisse.setOnAction(event -> {
 
-        });*/
+       });
+
+       btnCloseCaisse.setOnAction(event -> {
+           closeCaisse();
+       });
     }
 
+
+
     /*----------------------------------------------------------------------------------------------*/
+
+    private void closeCaisse() {
+        // get last row in table
+        Caisse lastCaisse = tableDateShifts.getItems().get(0);
+        if (lastCaisse.getClosed() == 0){
+            Global.showInfoMessage("Erreur lors de la fermeture de la caisse.",
+                    "Cette caisse est deja fermée.");
+        } else {
+            // close caisse
+            boolean action = Global.showInfoMessageWithBtn(
+                    "Fermeture de la caisse",
+                    "Etes-vous sûr dde vouloir fermer cette caisse ?",
+                    "Oui",
+                    "Non");
+
+            if (action){
+                // go to fermeture
+                URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
+                Global.goToWindow(navPath, btnFillCaisse,"Fermeture", false);
+            }
+        }
+    }
 
     private void initCaissesInfos() {
         // get last row in table

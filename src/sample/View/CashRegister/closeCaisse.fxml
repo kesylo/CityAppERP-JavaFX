@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.closeCaisseController">
+   <children>
+      <AnchorPane prefHeight="83.0" prefWidth="375.0" style="-fx-background-color: #F7A631;">
+         <children>
+            <Label layoutX="42.0" layoutY="23.0" text="Fermeture de caisse">
+               <font>
+                  <Font name="Century Gothic Bold Italic" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <VBox layoutX="17.0" layoutY="95.0" spacing="5.0">
+         <children>
+            <Label text="Date :">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Shift :">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Commentaires :">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Etat :">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Total Recettes">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Total dépenses :">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="149.0" layoutY="95.0" spacing="5.0">
+         <children>
+            <Label fx:id="lblDate" prefHeight="20.0" prefWidth="207.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblShiftNum" prefHeight="20.0" prefWidth="203.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblComments" prefHeight="20.0" prefWidth="209.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblEtat" prefHeight="20.0" prefWidth="207.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalIncome" prefHeight="20.0" prefWidth="207.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalExpenses" prefHeight="20.0" prefWidth="207.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="19.0" layoutY="277.0" prefHeight="20.0" prefWidth="119.0" text="Vous devez avoir : ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="17.0" layoutY="256.0" prefHeight="3.0" prefWidth="341.0" />
+      <Label fx:id="lblTotalCaisse" layoutX="150.0" layoutY="277.0" prefHeight="20.0" prefWidth="103.0" text="300 euros">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnCount" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="264.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="88.0" style="-fx-background-color: #f7a631;" text="Compter">
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnCloseCaisse" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="109.0" layoutY="348.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Fermer la caisse">
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Separator layoutX="19.0" layoutY="319.0" prefHeight="3.0" prefWidth="341.0" />
+   </children>
+</AnchorPane>

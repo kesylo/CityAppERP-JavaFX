@@ -15,7 +15,9 @@ import sample.Model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,7 +133,6 @@ public class Global {
 
     }
 
-
     public static void setUserProfile(Label userName, ImageView logOutBtn){
         userName.setText(connectedUser.getFirstName() + " " + connectedUser.getLastName());
         // set disconnect tooltip
@@ -164,5 +165,11 @@ public class Global {
 
         // navigate to new screen
         anyBtn.getScene().getWindow().hide();
+    }
+
+    public static String getSystemTime(){
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(cal.getTime());
     }
 }
