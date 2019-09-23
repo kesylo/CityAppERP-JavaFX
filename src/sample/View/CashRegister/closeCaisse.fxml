@@ -10,11 +10,11 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.closeCaisseController">
+<AnchorPane prefHeight="400.0" prefWidth="508.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.closeCaisseController">
    <children>
-      <AnchorPane prefHeight="83.0" prefWidth="375.0" style="-fx-background-color: #F7A631;">
+      <AnchorPane prefHeight="83.0" prefWidth="508.0" style="-fx-background-color: #F7A631;">
          <children>
-            <Label layoutX="42.0" layoutY="23.0" text="Fermeture de caisse">
+            <Label layoutX="107.0" layoutY="23.0" text="Fermeture de caisse">
                <font>
                   <Font name="Century Gothic Bold Italic" size="30.0" />
                </font>
@@ -55,7 +55,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="149.0" layoutY="95.0" spacing="5.0">
+      <VBox layoutX="149.0" layoutY="95.0" prefHeight="145.0" prefWidth="357.0" spacing="5.0">
          <children>
             <Label fx:id="lblDate" prefHeight="20.0" prefWidth="207.0">
                <font>
@@ -67,7 +67,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblComments" prefHeight="20.0" prefWidth="209.0">
+            <Label fx:id="lblComments" prefHeight="20.0" prefWidth="355.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -89,18 +89,18 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="19.0" layoutY="277.0" prefHeight="20.0" prefWidth="119.0" text="Vous devez avoir : ">
+      <Label layoutX="19.0" layoutY="277.0" prefHeight="20.0" prefWidth="119.0" text="Somme en caisse: ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Separator layoutX="17.0" layoutY="256.0" prefHeight="3.0" prefWidth="341.0" />
-      <Label fx:id="lblTotalCaisse" layoutX="150.0" layoutY="277.0" prefHeight="20.0" prefWidth="103.0" text="300 euros">
+      <Separator layoutX="17.0" layoutY="256.0" prefHeight="3.0" prefWidth="475.0" />
+      <Label fx:id="lblTotalCaisse" layoutX="150.0" layoutY="277.0" prefHeight="20.0" prefWidth="103.0" text="0 euros">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnCount" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="264.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="88.0" style="-fx-background-color: #f7a631;" text="Compter">
+      <JFXButton fx:id="btnCount" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="404.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="88.0" style="-fx-background-color: #f7a631;" text="Compter">
          <effect>
             <Glow />
          </effect>
@@ -111,7 +111,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="btnCloseCaisse" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="109.0" layoutY="348.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Fermer la caisse">
+      <JFXButton fx:id="btnCloseCaisse" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="175.0" layoutY="348.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Fermer la caisse">
          <effect>
             <Glow />
          </effect>
@@ -122,6 +122,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Separator layoutX="19.0" layoutY="319.0" prefHeight="3.0" prefWidth="341.0" />
+      <Separator layoutX="19.0" layoutY="319.0" prefHeight="3.0" prefWidth="475.0" />
    </children>
 </AnchorPane>

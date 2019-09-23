@@ -93,7 +93,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblCaisseCreator" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="241.0" layoutY="117.0" prefHeight="20.0" prefWidth="271.0" text="Keming Loic" textAlignment="CENTER">
+        <Label fx:id="lblCaisseCreator" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="241.0" layoutY="117.0" prefHeight="20.0" prefWidth="271.0" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -103,7 +103,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblCaisseStatus" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="506.0" layoutY="117.0" prefHeight="20.0" prefWidth="65.0" text="Fermée" textAlignment="RIGHT">
+        <Label fx:id="lblCaisseStatus" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="506.0" layoutY="117.0" prefHeight="20.0" prefWidth="65.0" textAlignment="RIGHT">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -128,7 +128,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblTotalIncomes" alignment="TOP_RIGHT" focusTraversable="false" layoutX="771.0" layoutY="363.0" prefHeight="20.0" prefWidth="84.0" text="5624.4 €" textAlignment="CENTER">
+        <Label fx:id="lblTotalIncomes" alignment="TOP_RIGHT" focusTraversable="false" layoutX="771.0" layoutY="363.0" prefHeight="20.0" prefWidth="84.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="14.0" />
             </font>
@@ -138,7 +138,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblTotalExpenses" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="584.0" prefHeight="20.0" prefWidth="65.0" text="5624.4 €" textAlignment="CENTER">
+        <Label fx:id="lblTotalExpenses" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="584.0" prefHeight="20.0" prefWidth="65.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="14.0" />
             </font>
@@ -149,7 +149,7 @@
             </font>
         </Label>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7a631" height="38.0" layoutX="325.0" layoutY="760.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="223.0" />
-        <Label fx:id="lblTotalCaisse" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="437.0" layoutY="765.0" prefHeight="28.0" prefWidth="92.0" text="5624.4 €" textAlignment="CENTER">
+        <Label fx:id="lblTotalCaisse" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="437.0" layoutY="765.0" prefHeight="28.0" prefWidth="92.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="19.0" />
             </font>
@@ -221,7 +221,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <Label fx:id="lblTotalCash" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="711.0" prefHeight="20.0" prefWidth="65.0" text="5624.4 €" textAlignment="CENTER">
+        <Label fx:id="lblTotalCash" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="711.0" prefHeight="20.0" prefWidth="65.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="14.0" />
             </font>

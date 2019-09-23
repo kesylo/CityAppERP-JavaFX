@@ -28,6 +28,15 @@ public class caisseDashboardController{
     //region UI
 
     @FXML
+    private JFXButton btnRefresh;
+
+    @FXML
+    private TableColumn<Caisse, String> clmDate;
+
+    @FXML
+    private TableColumn<Caisse, Integer> clmShift;
+
+    @FXML
     private ResourceBundle resources;
 
     @FXML
@@ -63,7 +72,6 @@ public class caisseDashboardController{
         Global.logOut(location, btnFillCaisse);
     }
 
-
     @FXML
     void initialize() {
 
@@ -87,6 +95,15 @@ public class caisseDashboardController{
        btnCloseCaisse.setOnAction(event -> {
            closeCaisse();
        });
+
+       btnRefresh.setOnAction(event -> {
+           tableDateShifts.getItems().clear();
+           fillTable();
+       });
+    }
+
+    private void reload() {
+
     }
 
 
@@ -103,41 +120,25 @@ public class caisseDashboardController{
             // close caisse
             boolean action = Global.showInfoMessageWithBtn(
                     "Fermeture de la caisse",
-                    "Etes-vous sûr dde vouloir fermer cette caisse ?",
+                    "Etes-vous sûr de vouloir fermer cette caisse ?",
                     "Oui",
                     "Non");
 
             if (action){
                 // go to fermeture
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.goToWindow(navPath, btnFillCaisse,"Fermeture", false);
+                Global.goToWindow(navPath, btnFillCaisse,"Fermeture", true);
             }
         }
     }
 
     private void initCaissesInfos() {
-        // get last row in table
-        Caisse lastCaisse = tableDateShifts.getItems().get(0);
 
-        // get before last row in table
-        Caisse beforeLastCaisse = tableDateShifts.getItems().get(1);
-
-            /*System.out.println(beforeLastCaisse.getDate());
-            System.out.println(beforeLastCaisse.getClosed());
-            System.out.println(beforeLastCaisse.getId());
-            System.out.println(beforeLastCaisse.getNumeroShift());*/
-
-        // make last caisse global
-        Global.setCurrentCaisse(lastCaisse);
-
-        // make before last caisse global
-        Global.setBeforeCurrentCaisse(beforeLastCaisse);
-
-        if (lastCaisse.getClosed() == 0) {
+        if (Global.getCurrentCaisse().getClosed() == 0) {
             // 0 = closed
             // go to infos Caisse
             URL location = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
-            Global.goToWindow(location, btnFillCaisse, "Recap", false);
+            Global.goToWindow(location, btnFillCaisse, "Recap", true);
 
         } else {
             // 1 = opened
@@ -151,10 +152,10 @@ public class caisseDashboardController{
     private void fillTable() {
         ResultSet caisseRow = dbHandler.getAllFromCaisse();
 
-        // Set table column names
+        /*// Set table column names
         TableColumn date = new TableColumn("Date");
         TableColumn shift = new TableColumn("Shift");
-        tableDateShifts.getColumns().addAll(date, shift);
+        tableDateShifts.getColumns().addAll(date, shift);*/
 
         // Create list data
         ObservableList<Caisse> data = FXCollections.observableArrayList();
@@ -168,20 +169,37 @@ public class caisseDashboardController{
                         caisseRow.getInt("numeroShift"),
                         caisseRow.getString("remarque"),
                         caisseRow.getInt("closed"),
-                        caisseRow.getInt("employees_id"));
+                        caisseRow.getInt("employees_id"),
+                        caisseRow.getString("date_fermeture"));
                 data.add(0, caisse);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        date.setCellValueFactory(new PropertyValueFactory<Caisse, String>("date"));
-        shift.setCellValueFactory(new PropertyValueFactory<Caisse, String>("numeroShift"));
+        /*date.setCellValueFactory(new PropertyValueFactory<Caisse, String>("date"));
+        shift.setCellValueFactory(new PropertyValueFactory<Caisse, String>("numeroShift"));*/
+
+        clmDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        clmShift.setCellValueFactory(new PropertyValueFactory<>("NumeroShift"));
 
         tableDateShifts.setItems(data);
+
         // set table size globally for future tests:
         Global.setNberOfCaisses(data.size());
         tableDateShifts.getSelectionModel().select(0);
+
+        // get last row in table
+        Caisse lastCaisse = tableDateShifts.getItems().get(0);
+
+        // get before last row in table
+        Caisse beforeLastCaisse = tableDateShifts.getItems().get(1);
+
+        // make last caisse global
+        Global.setCurrentCaisse(lastCaisse);
+
+        // make before last caisse global
+        Global.setBeforeCurrentCaisse(beforeLastCaisse);
     }
 
 }

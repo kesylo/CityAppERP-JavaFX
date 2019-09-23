@@ -19,10 +19,12 @@ public class Caisse {
 
     private int idEmployes;
 
+    private String closedDate;
+
     public Caisse() {
     }
 
-    public Caisse(int id, Date date, Double montant, int numeroShift, String remarque, int closed, int idEmployes) {
+    public Caisse(int id, Date date, Double montant, int numeroShift, String remarque, int closed, int idEmployes, String closedDate) {
         this.id = id;
         this.date = date;
         this.montant = montant;
@@ -30,6 +32,7 @@ public class Caisse {
         this.remarque = remarque;
         this.closed = closed;
         this.idEmployes = idEmployes;
+        this.closedDate = closedDate;
     }
 
     public int getIdEmployes() {
@@ -86,5 +89,13 @@ public class Caisse {
 
     public void setRemarque(String remarque) {
         this.remarque = remarque;
+    }
+
+    public String getClosedDate() {
+        return closedDate;
+    }
+
+    public void setClosedDate(String closedDate) {
+        this.closedDate = closedDate;
     }
 }

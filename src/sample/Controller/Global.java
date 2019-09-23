@@ -32,7 +32,7 @@ public class Global {
     // directly accessible
     public static String appName = "City Apartments ERP";
 
-    /*--------------------------GETTERS AND SETTERS--------------------------------------------------------------------------------*/
+    //region Getters and Setters
 
     public static int getNberOfCaisses() {
         return nberOfCaisses;
@@ -65,6 +65,8 @@ public class Global {
     public static void setCurrentCaisse(Caisse currentCaisse) {
         Global.currentCaisse = currentCaisse;
     }
+
+    //endregion
 
     /*--------------------------------- METHODS ---------------------------------------------------------------------*/
     public static void showErrorMessage(String header, String content) {

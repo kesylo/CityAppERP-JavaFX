@@ -23,7 +23,7 @@ public class DBHandler extends DBConfig {
         return dbConnection;
     }
 
-    /*------------------------------ Methods -------------------------------------*/
+    /*------------------------------ SELECT -------------------------------------*/
 
     public int getNbrCaisseWithSameDate (String date) {
         String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date=?";
@@ -200,28 +200,6 @@ public class DBHandler extends DBConfig {
         return id;
     }
 
-    public void createCaisse(Caisse caisse) {
-        // INSERT INTO `cityappdatabase`.`caisse` ( `date`, `montant`, `numeroShift`, `closed`, `employees_id`) VALUES ('128', '2019-09-11', '321.52', '1', '1', '7');
-        // prepare the query
-        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id ) VALUES (?,?,?,?,?)";
-
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-
-            ps.setDate(1, caisse.getDate());
-            ps.setDouble(2, caisse.getMontant());
-            ps.setInt(3, caisse.getNumeroShift());
-            ps.setInt(4, caisse.getClosed());
-            ps.setInt(5, Global.getConnectedUser().getId());
-
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public ResultSet getEmployeByID(int idEmployes) {
 
         rs = null;
@@ -287,6 +265,8 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    /*------------------------------ INSERT -------------------------------------*/
+
     public void addErrorLine(CaisseIncExp errorExpense) {
         //INSERT INTO `cityappdatabase`.`caisse_recettes` (`id_caisse_recettes`, `fk_idCaisse`, `montant`,
         // `type`, `date`, `time`, `indexClient`, `remarque`, `numeroShift`, `reason`, `employees_id`) VALUES ('231', '1', '256', '1', '2019-09-11', '23:12', '158-256-2322', 'ccc', '2', 'ccc', '1');
@@ -321,4 +301,50 @@ public class DBHandler extends DBConfig {
             e.printStackTrace();
         }
     }
+
+    public void createCaisse(Caisse caisse) {
+        // INSERT INTO `cityappdatabase`.`caisse` ( `date`, `montant`, `numeroShift`, `closed`, `employees_id`) VALUES ('128', '2019-09-11', '321.52', '1', '1', '7');
+        // prepare the query
+        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id ) VALUES (?,?,?,?,?)";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDate(1, caisse.getDate());
+            ps.setDouble(2, caisse.getMontant());
+            ps.setInt(3, caisse.getNumeroShift());
+            ps.setInt(4, caisse.getClosed());
+            ps.setInt(5, Global.getConnectedUser().getId());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*------------------------------ UPDATE -------------------------------------*/
+
+    public void updateCaisseStatus(Double montant, int statusToSet, String dateClosed, Caisse caisse){
+        String query = "UPDATE " + Static.CAISSE_TABLE + " SET montant = ?, closed = ?, date_fermeture = ? WHERE idCaisse = ?";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDouble(1, montant);
+            ps.setInt(2, statusToSet);
+            ps.setString(3, dateClosed);
+            ps.setInt(4, caisse.getId());
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*------------------------------ DELETE -------------------------------------*/
 }

@@ -164,7 +164,8 @@ public class infosLastCaisseController  {
         setCaisseInfos();
 
         btnRetour.setOnAction(event -> {
-            btnRetour.getScene().getWindow().hide();
+            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.goToWindow(navPath, btnRetour,"Caisse", true);
         });
 
         btnOK.setOnAction(event -> {
