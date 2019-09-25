@@ -27,7 +27,6 @@ public class Global {
     private static Caisse beforeCurrentCaisse = new Caisse();
     private static int nberOfCaisses;
 
-    private static Stage caisseDashStage = null;
 
     // directly accessible
     public static String appName = "City Apartments ERP";

@@ -60,6 +60,10 @@ public class caisseDashboardController{
     @FXML
     private Label lblConnectedUser;
 
+
+    @FXML
+    private JFXButton btnIncomeExpense;
+
     @FXML
     private AnchorPane anchorParent;
     //endregion
@@ -100,13 +104,12 @@ public class caisseDashboardController{
            tableDateShifts.getItems().clear();
            fillTable();
        });
+
+       btnIncomeExpense.setOnAction(event -> {
+           URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
+           Global.goToWindow(navPath, btnFillCaisse,"Actions", true);
+       });
     }
-
-    private void reload() {
-
-    }
-
-
 
     /*----------------------------------------------------------------------------------------------*/
 

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="521.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.addIncomeExpenseController">
+   <children>
+      <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: #F7A631;">
+         <children>
+            <Label layoutX="75.0" layoutY="23.0" text="Ajouter une Recette / Dépense">
+               <font>
+                  <Font name="Century Gothic Bold Italic" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <JFXTextField fx:id="txtAmount" alignment="CENTER_RIGHT" focusColor="#f8ae2e" labelFloat="true" layoutX="14.0" layoutY="106.0" onMouseClicked="#selectText" prefHeight="30.0" prefWidth="105.0" promptText="Montant" text="0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <Label layoutX="166.0" layoutY="111.0" text="Date :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="333.0" layoutY="86.0" text="Shift :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="331.0" layoutY="111.0" text="Utilistateur :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" layoutX="214.0" layoutY="111.0" prefHeight="20.0" prefWidth="105.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblShiftNum" layoutX="378.0" layoutY="86.0" prefHeight="20.0" prefWidth="27.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblUser" layoutX="413.0" layoutY="111.0" prefHeight="20.0" prefWidth="179.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <JFXRadioButton fx:id="radioIncome" layoutX="113.0" layoutY="160.0" onAction="#radioSelect" selected="true" style="-jfx-selected-color: #5dbcd2;" text="Recette">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="group" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <Separator layoutX="116.0" layoutY="137.0" prefHeight="0.0" prefWidth="472.0" />
+      <JFXRadioButton fx:id="radioExpense" layoutX="408.0" layoutY="160.0" onAction="#radioSelect" style="-jfx-selected-color: #F44336;" text="Dépense" toggleGroup="$group">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXRadioButton>
+      <Separator layoutX="300.0" layoutY="140.0" orientation="VERTICAL" prefHeight="296.0" prefWidth="0.0" />
+      <VBox fx:id="vboxIncome" fillWidth="false" layoutX="16.0" layoutY="200.0" prefHeight="233.0" prefWidth="270.0" spacing="25.0">
+         <children>
+            <ComboBox fx:id="comboSource" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#comboBoxProvenance" prefHeight="25.0" prefWidth="270.0" promptText="Provenance" visibleRowCount="5" />
+            <ComboBox fx:id="comboIncomeBank" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Banque" visibleRowCount="5" />
+            <JFXTextField fx:id="txtClientIndex" disable="true" focusColor="#f8ae2e" labelFloat="true" onKeyTyped="#onType" prefHeight="30.0" prefWidth="271.0" promptText="Index client">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextArea fx:id="txtAreaCommentCaisse" disable="true" editable="false" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxExpense" disable="true" layoutX="314.0" layoutY="200.0" spacing="25.0">
+         <children>
+            <ComboBox fx:id="comboRaison" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#comboBoxReason" prefHeight="25.0" prefWidth="270.0" promptText="Raison" visibleRowCount="5" />
+            <ComboBox fx:id="comboExpenseBank" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Banque" visibleRowCount="5" />
+            <ComboBox fx:id="comboSalaryBeneficial" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Choisir l'employé" visibleRowCount="5" />
+            <JFXTextArea fx:id="txtAreaComment" disable="true" editable="false" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+         </children>
+      </VBox>
+      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="187.0" layoutY="460.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #F44336;" text="Annuler">
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="336.0" layoutY="460.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #5dbcd2;" text="Ajouter">
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

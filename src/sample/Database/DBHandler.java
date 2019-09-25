@@ -200,6 +200,26 @@ public class DBHandler extends DBConfig {
         return id;
     }
 
+    public ResultSet getAllEmployeesNames() {
+
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE;
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public ResultSet getEmployeByID(int idEmployes) {
 
         rs = null;

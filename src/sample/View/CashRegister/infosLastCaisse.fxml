@@ -170,7 +170,7 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </JFXButton>
-        <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="245.0" layoutY="760.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #F44336;" text="Retour">
+        <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="245.0" layoutY="760.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #F44336;" text="Retour">
             <effect>
                 <Glow />
             </effect>
