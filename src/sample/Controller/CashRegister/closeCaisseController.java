@@ -42,10 +42,16 @@ public class closeCaisseController {
     private Label lblTotalExpenses;
 
     @FXML
+    private Label lblTotalCountAmount;
+
+    @FXML
     private Label lblTotalCaisse;
 
     @FXML
     private JFXButton btnCount;
+
+    @FXML
+    private JFXButton btnBack;
 
     @FXML
     private JFXButton btnCloseCaisse;
@@ -57,21 +63,41 @@ public class closeCaisseController {
         loadData();
 
         btnCount.setOnAction(event -> {
+            // tell count windows we are coming from close caisse for different behaviour
+            Global.navFrom = "CloseCaisse";
+
             URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
-            Global.goToWindow(navPath, btnCount,"Comptage", true);
+            Global.goToWindow(navPath, btnCount,"Comptage", false);
+        });
+
+        btnBack.setOnAction(event -> {
+            // reset count cash result
+            Global.setCountCashResult(0.0);
+
+            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.goToWindow(navPath, btnCount,"Caisse", true);
         });
 
         btnCloseCaisse.setOnAction(event -> {
-            // close only if its open
-            if (Global.getCurrentCaisse().getClosed() == 1){
-                closeCaisse();
-                Global.showInfoMessage(
-                        "Action éffectuée.",
-                        "La caisse a été fermée avec succès."
-                );
+            // reset count cash result
+            Global.setCountCashResult(0.0);
+
+            if (Global.getCaisseCash() != null){
+                // close only if its open
+                if (Global.getCurrentCaisse().getClosed() == 1){
+                    closeCaisse();
+                    Global.showInfoMessage(
+                            "Action éffectuée.",
+                            "La caisse a été fermée avec succès."
+                    );
+                }
+                URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+                Global.goToWindow(navPath, btnCount,"Caisse", true);
             }
-            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.goToWindow(navPath, btnCount,"Caisse", true);
+            else {
+                Global.showErrorMessage("Erreur lors de la ferméture.",
+                        "Veuillez compter la caisse avant de la fermer.");
+            }
         });
     }
 
@@ -80,11 +106,8 @@ public class closeCaisseController {
 
     private void closeCaisse() {
         DBHandler db = new DBHandler();
-
-        Date date = new Date(); // this object contains the current date value
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        db.updateCaisseStatus(caisseFinalAmount,0, formatter.format(date), Global.getCurrentCaisse());
+        db.updateCaisseStatus(caisseFinalAmount,0, Global.getSystemDateTime(), Global.getCurrentCaisse());
+        db.addCaisseCash(Global.getCaisseCash());
     }
 
     private void loadData() {
@@ -94,6 +117,11 @@ public class closeCaisseController {
         // compute total expenses
         totalExpense = computeExpense();
 
+        caisseFinalAmount = computeFinalCaisseAmount();
+        // set globally
+        Global.setComputedSoldeCaisse(caisseFinalAmount);
+        Global.getCurrentCaisse().setMontant(caisseFinalAmount);
+
         lblDate.setText(Global.getCurrentCaisse().getDate().toString());
         lblShiftNum.setText(Global.getCurrentCaisse().getNumeroShift() + "");
         lblComments.setText(Global.getCurrentCaisse().getRemarque());
@@ -101,12 +129,18 @@ public class closeCaisseController {
         lblTotalIncome.setText(totalIncome + " €");
         lblTotalExpenses.setText(totalExpense + " €");
         lblTotalCaisse.setText(caisseFinalAmount + " €");
+
+        // set count cash result
+        lblTotalCountAmount.setText(Global.getCountCashResult() + " €");
     }
 
     private Double computeFinalCaisseAmount(){
         // return balance
         // Last caisse solde + income - expenses
-        return Global.getBeforeCurrentCaisse().getMontant() + totalIncome - totalExpense;
+        if (Global.getNberOfCaisses() >= 2 ){
+            return Global.getBeforeCurrentCaisse().getMontant() + totalIncome - totalExpense;
+        }
+        return 0.0 + totalIncome - totalExpense;
     }
 
     private Double computeExpense() {

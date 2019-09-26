@@ -78,6 +78,8 @@ public class caisseDashboardController{
 
     @FXML
     void initialize() {
+        // init global variables
+        initGlobal();
 
         // init DB access
         dbHandler = new DBHandler();
@@ -93,11 +95,18 @@ public class caisseDashboardController{
         });
 
        btnDetailCaisse.setOnAction(event -> {
+           if (Global.getNberOfCaisses() >= 1){
 
+
+               // code here
+
+           }
        });
 
        btnCloseCaisse.setOnAction(event -> {
-           closeCaisse();
+           if (Global.getNberOfCaisses() >= 1){
+               closeCaisse();
+           }
        });
 
        btnRefresh.setOnAction(event -> {
@@ -106,12 +115,22 @@ public class caisseDashboardController{
        });
 
        btnIncomeExpense.setOnAction(event -> {
-           URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-           Global.goToWindow(navPath, btnFillCaisse,"Actions", true);
+           if (Global.getNberOfCaisses() >= 1){
+               URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
+               Global.goToWindow(navPath, btnFillCaisse,"Actions", true);
+           }
        });
     }
 
+
+
     /*----------------------------------------------------------------------------------------------*/
+    private void initGlobal() {
+        Global.navFrom = "";
+        Global.setComputedSoldeCaisse(0.0);
+        Global.setCaisseCash(null);
+        Global.setCountCashResult(0.0);
+    }
 
     private void closeCaisse() {
         // get last row in table
@@ -136,19 +155,24 @@ public class caisseDashboardController{
     }
 
     private void initCaissesInfos() {
+        if (Global.getNberOfCaisses() >= 1){
+            if (Global.getCurrentCaisse().getClosed() == 0) {
+                // 0 = closed
+                // go to infos Caisse
+                URL location = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
+                Global.goToWindow(location, btnFillCaisse, "Recap", true);
 
-        if (Global.getCurrentCaisse().getClosed() == 0) {
-            // 0 = closed
+            } else {
+                // 1 = opened
+                Global.showInfoMessage(
+                        "Vérification du statut de la caisse.",
+                        "La caisse précedente n'est pas encore fermée. Veuillez la fermer pour en créer une nouvelle."
+                );
+            }
+        }else {
             // go to infos Caisse
-            URL location = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
-            Global.goToWindow(location, btnFillCaisse, "Recap", true);
-
-        } else {
-            // 1 = opened
-            Global.showInfoMessage(
-                    "Vérification du statut de la caisse.",
-                    "La caisse précedente n'est pas encore fermée. Veuillez la fermer pour en créer une nouvelle."
-            );
+            URL location = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
+            Global.goToWindow(location, btnFillCaisse, "Creation", true);
         }
     }
 
@@ -190,19 +214,23 @@ public class caisseDashboardController{
 
         // set table size globally for future tests:
         Global.setNberOfCaisses(data.size());
-        tableDateShifts.getSelectionModel().select(0);
 
-        // get last row in table
-        Caisse lastCaisse = tableDateShifts.getItems().get(0);
+        if (data.size() >= 1){
+            tableDateShifts.getSelectionModel().select(0);
 
-        // get before last row in table
-        Caisse beforeLastCaisse = tableDateShifts.getItems().get(1);
+            // get last row in table
+            Caisse lastCaisse = tableDateShifts.getItems().get(0);
 
-        // make last caisse global
-        Global.setCurrentCaisse(lastCaisse);
+            // make last caisse global
+            Global.setCurrentCaisse(lastCaisse);
 
-        // make before last caisse global
-        Global.setBeforeCurrentCaisse(beforeLastCaisse);
+            if (data.size() >= 2){
+                // get before last row in table
+                Caisse beforeLastCaisse = tableDateShifts.getItems().get(1);
+                // make before last caisse global
+                Global.setBeforeCurrentCaisse(beforeLastCaisse);
+            }
+        }
     }
 
 }

@@ -20,6 +20,24 @@ public class CaisseIncExp {
     //endregion
 
 
+    @Override
+    public String toString() {
+        return "CaisseIncExp{" +
+                "idCaisseIncExp=" + idCaisseIncExp +
+                ", amount=" + amount +
+                ", creationDate=" + creationDate +
+                ", time='" + time + '\'' +
+                ", idUser=" + idUser +
+                ", comment='" + comment + '\'' +
+                ", shiftNumber=" + shiftNumber +
+                ", idCaisse=" + idCaisse +
+                ", reason='" + reason + '\'' +
+                ", clientIndex='" + clientIndex + '\'' +
+                ", type=" + type +
+                ", salaryBeneficial='" + salaryBeneficial + '\'' +
+                '}';
+    }
+
     public CaisseIncExp(double amount, Date creationDate, String time, int idUser, String comment, int shiftNumber, int idCaisse, String reason, String clientIndex, int type, String salaryBeneficial) {
         this.amount = amount;
         this.creationDate = creationDate;

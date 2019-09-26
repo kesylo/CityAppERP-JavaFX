@@ -19,8 +19,10 @@ import javafx.stage.Stage;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
+import sample.Model.Cash;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -66,6 +68,7 @@ public class countCashCaisseController {
     //endregion
 
     private Double totalCaisseCount = 0.0;
+    Double solde;
 
     @FXML
     void computeTotal(ActionEvent event) {
@@ -94,62 +97,149 @@ public class countCashCaisseController {
         });
 
         btnOK.setOnAction(event -> {
-            // check if counted cash = caisse cash
-            if (totalCaisseCount == Global.getCurrentCaisse().getMontant()){
-                Global.showInfoMessage(
-                        "Vérification Correcte !",
-                        "La monnaie disponible en caisse correspond bien à celle du système");
-            } else {
-                boolean result = Global.showInfoMessageWithBtn(
-                        "Vérification Incorrecte",
-                        "Le montant compté n'est pas égal au montant enregistré dans le système. " +
-                                "Voulez vous recompter ou signaler l'erreur ?",
-                        "Compter à nouveau",
-                        "Signaler l'erreur");
+            // set globally
+            Global.setCountCashResult(totalCaisseCount);
 
-                if (!result){
-                    addErrorToCurrentCaisse();
+            if (Global.navFrom == "CloseCaisse"){
+                setCashForCurrentCaisse();
+            } else {
+                // check if counted cash = caisse cash
+                if (totalCaisseCount == Global.getCurrentCaisse().getMontant()){
+                    Global.showInfoMessage(
+                            "Vérification Correcte !",
+                            "La monnaie disponible en caisse correspond bien à celle du système");
+                } else {
+                    boolean result = Global.showInfoMessageWithBtn(
+                            "Vérification Incorrecte",
+                            "Le montant compté n'est pas égal au montant enregistré dans le système. " +
+                                    "Voulez vous recompter ou signaler l'erreur ?",
+                            "Compter à nouveau",
+                            "Signaler l'erreur");
+
+                    if (!result){
+                        addErrorToCurrentCaisse();
+                    }
                 }
             }
         });
 
     }
+
     /*-------------------------------------------------------------------------------*/
 
+    private void setCashForCurrentCaisse() {
+        Cash cash = new Cash(
+                Global.getCurrentCaisse().getId(),
+                Global.getCurrentCaisse().getNumeroShift(),
+                Double.valueOf(txtLessThanFiftyCents.getText()),
+                txtBoxFiftyCents.getValue(),
+                txtBoxOne.getValue(),
+                txtBoxTwo.getValue(),
+                txtBoxFive.getValue(),
+                txtBoxTen.getValue(),
+                txtBoxTwenty.getValue(),
+                txtBoxfiftyEuros.getValue(),
+                txtBoxOneHundred.getValue(),
+                txtBoxTwoHundred.getValue()
+        );
+
+        Global.setCaisseCash(cash);
+
+        if (Double.parseDouble(countTotal.getText()) == Global.getComputedSoldeCaisse()){
+            Global.closeWindow("Fermeture");
+            URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
+            Global.goToWindow(navPath, btnOK,"Fermeture", true);
+        } else {
+            // add error to caisse
+            boolean result = Global.showInfoMessageWithBtn(
+                    "Vérification Incorrecte",
+                    "Le montant compté n'est pas égal au montant enregistré dans le système. " +
+                            "Voulez vous recompter ou signaler l'erreur ?",
+                    "Compter à nouveau",
+                    "Signaler l'erreur");
+
+            if (!result){
+                addErrorToCurrentCaisse();
+            }
+        }
+    }
+
     private void addErrorToCurrentCaisse() {
-        Double solde = Global.getCurrentCaisse().getMontant() - totalCaisseCount;
+
+        if (Global.navFrom == "CloseCaisse"){
+            solde = Global.getComputedSoldeCaisse() - totalCaisseCount;
+        }else {
+            solde = Global.getCurrentCaisse().getMontant() - totalCaisseCount;
+        }
 
         // check if we have more or less cash
         if (solde < 0){
             Global.showErrorMessage(
-                    "Une erreur de caisse vient d'être signaler dans la section 'commentaires' de cette caisse",
+                    "Une erreur de caisse vient d'être signalée dans la section 'commentaires' de cette caisse",
                     "Ceci à lieu car il y a " + solde * -1 +" € en plus dans la caisse.");
 
-            closeAllAndCreateCaisse();
+            addErrorLineToCaisse(solde);
+            // make solde positive
+            solde = solde * -1;
 
-            addErrorLineToCaisse();
+            if (Global.navFrom == "CloseCaisse"){
+                Global.closeWindow("Fermeture");
+                URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
+                Global.goToWindow(navPath, btnOK,"Fermeture", true);
+                // error sent
+
+                // update amount caisse
+                Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() + solde);
+            } else {
+                // error sent
+
+                // update amount caisse
+                Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() + solde);
+
+                URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
+                Global.goToWindow(navPath, btnOK,"Creation", true);
+            }
+
+
         } else if (solde > 0){
             Global.showErrorMessage(
-                    "Une erreur de caisse vient d'être signaler dans la section 'commentaires' de cette caisse",
+                    "Une erreur de caisse vient d'être signalée dans la section 'commentaires' de cette caisse",
                     "Ceci à lieu car il manque " + solde +" € dans la caisse.");
 
-            closeAllAndCreateCaisse();
+            addErrorLineToCaisse(solde);
 
-            addErrorLineToCaisse();
+            if (Global.navFrom == "CloseCaisse"){
+                Global.closeWindow("Fermeture");
+                URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
+                Global.goToWindow(navPath, btnOK,"Fermeture", true);
+                // error sent
+
+                // update amount caisse
+                Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() - solde);
+            } else {
+                // error sent
+
+                // update amount caisse
+                Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() - solde);
+                URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
+                Global.goToWindow(navPath, btnOK,"Creation", true);
+            }
+
+
         }
     }
 
-    private void addErrorLineToCaisse() {
-        Double errorAmount = totalCaisseCount - Global.getCurrentCaisse().getMontant();
+    private void addErrorLineToCaisse(Double soldeCaisse) {
+
         // to do
-        if (totalCaisseCount < Global.getCurrentCaisse().getMontant()){
+        if (soldeCaisse > 0){
             // cash missing
             CaisseIncExp errorExpense = new CaisseIncExp(
-                    errorAmount,
+                    soldeCaisse,
                     Date.valueOf(LocalDate.now()),
                     Global.getSystemTime(),
                     Global.getConnectedUser().getId(),
-                    "Erreur dans la caisse. Il manque " + errorAmount + " euros.",
+                    "Erreur dans la caisse. Il manque " + soldeCaisse + " euros.",
                     Global.getCurrentCaisse().getNumeroShift(),
                     Global.getCurrentCaisse().getId(),
                     "Erreur de comptage",
@@ -158,14 +248,14 @@ public class countCashCaisseController {
                     ""
             );
             addErrorLineInDB(errorExpense);
-        } else if (totalCaisseCount > Global.getCurrentCaisse().getMontant()){
+        } else if (soldeCaisse < 0){
             // more cash
             CaisseIncExp errorIncome = new CaisseIncExp(
-                    errorAmount,
+                    soldeCaisse * -1,
                     Date.valueOf(LocalDate.now()),
                     Global.getSystemTime(),
                     Global.getConnectedUser().getId(),
-                    "Erreur dans la caisse. Il y a " + errorAmount + " euros de plus que prévu.",
+                    "Erreur dans la caisse. Il y a " + soldeCaisse * -1 + " euros de plus que prévu.",
                     Global.getCurrentCaisse().getNumeroShift(),
                     Global.getCurrentCaisse().getId(),
                     "Erreur de comptage",
@@ -183,7 +273,7 @@ public class countCashCaisseController {
         dbHandler.addErrorLine(errorExpense);
     }
 
-    public void closeAllAndCreateCaisse() {
+/*    public void closeAllAndCreateCaisse() {
         // get all windows and close
         List<Window> windows = Window.getWindows();
         for (int i = windows.size() - 1; i >= 0; i--) {
@@ -209,7 +299,7 @@ public class countCashCaisseController {
 
         // navigate to new screen
         btnOK.getScene().getWindow().hide();
-    }
+    }*/
 
     private void setComboBoxValues() {
         setValuesFor(txtBoxTwoHundred);
@@ -244,7 +334,8 @@ public class countCashCaisseController {
         + txtBoxOneHundred.getValue() * 100
         + txtBoxTwoHundred.getValue() * 200);
 
-        countTotal.setText(totalCaisseCount + " €");
+        countTotal.setText(totalCaisseCount + "");
+
     }
 
 }

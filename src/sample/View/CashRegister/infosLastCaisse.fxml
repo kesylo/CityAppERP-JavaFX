@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="822.0" prefWidth="870.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.infosLastCaisseController">
+<AnchorPane prefHeight="848.0" prefWidth="870.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.infosLastCaisseController">
     <children>
         <AnchorPane layoutX="584.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="271.0">
             <children>
@@ -42,9 +42,9 @@
                 </ImageView>
             </children>
         </AnchorPane>
-        <AnchorPane prefHeight="83.0" prefWidth="287.0" style="-fx-background-color: #F7A631;">
+        <AnchorPane prefHeight="83.0" prefWidth="559.0" style="-fx-background-color: #F7A631;">
             <children>
-                <Label layoutX="75.0" layoutY="23.0" prefHeight="38.0" prefWidth="329.0" text="Infos dernières caisse">
+                <Label layoutX="75.0" layoutY="23.0" prefHeight="38.0" prefWidth="446.0" text="Infos caisse précédente">
                     <font>
                         <Font name="Century Gothic Bold Italic" size="30.0" />
                     </font>
@@ -128,17 +128,17 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblTotalIncomes" alignment="TOP_RIGHT" focusTraversable="false" layoutX="771.0" layoutY="363.0" prefHeight="20.0" prefWidth="84.0" text="0 €" textAlignment="CENTER">
+        <Label fx:id="lblTotalIncomes" alignment="TOP_RIGHT" focusTraversable="false" layoutX="665.0" layoutY="363.0" prefHeight="20.0" prefWidth="190.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="641.0" layoutY="363.0" prefHeight="20.0" prefWidth="139.0" text="Total recettes :" textAlignment="CENTER">
+        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="523.0" layoutY="363.0" prefHeight="20.0" prefWidth="139.0" text="Total recettes :" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblTotalExpenses" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="584.0" prefHeight="20.0" prefWidth="65.0" text="0 €" textAlignment="CENTER">
+        <Label fx:id="lblTotalExpenses" alignment="TOP_RIGHT" focusTraversable="false" layoutX="664.0" layoutY="584.0" prefHeight="20.0" prefWidth="190.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="14.0" />
             </font>
@@ -148,18 +148,18 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7a631" height="38.0" layoutX="325.0" layoutY="760.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="223.0" />
-        <Label fx:id="lblTotalCaisse" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="437.0" layoutY="765.0" prefHeight="28.0" prefWidth="92.0" text="0 €" textAlignment="CENTER">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7a631" height="38.0" layoutX="325.0" layoutY="774.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="223.0" />
+        <Label fx:id="lblTotalCaisse" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" layoutX="326.0" layoutY="779.0" prefHeight="28.0" prefWidth="223.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="19.0" />
             </font>
         </Label>
-        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="337.0" layoutY="769.0" prefHeight="20.0" prefWidth="92.0" text="Total caisse :" textAlignment="CENTER">
+        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="387.0" layoutY="741.0" prefHeight="20.0" prefWidth="92.0" text="Total caisse :" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="555.0" layoutY="760.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #5dbcd2;" text="OK">
+        <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="556.0" layoutY="774.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #5dbcd2;" text="OK">
             <effect>
                 <Glow />
             </effect>
@@ -170,7 +170,7 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </JFXButton>
-        <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="245.0" layoutY="760.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #F44336;" text="Retour">
+        <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="241.0" layoutY="774.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #F44336;" text="Retour">
             <effect>
                 <Glow />
             </effect>
@@ -199,7 +199,7 @@
             </columns>
         </TableView>
         <Separator layoutX="14.0" layoutY="613.0" prefHeight="1.0" prefWidth="846.0" />
-        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="641.0" layoutY="584.0" prefHeight="20.0" prefWidth="139.0" text="Total dépenses :" textAlignment="CENTER">
+        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="529.0" layoutY="584.0" prefHeight="20.0" prefWidth="139.0" text="Total dépenses :" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -221,12 +221,12 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <Label fx:id="lblTotalCash" alignment="TOP_RIGHT" focusTraversable="false" layoutX="789.0" layoutY="711.0" prefHeight="20.0" prefWidth="65.0" text="0 €" textAlignment="CENTER">
+        <Label fx:id="lblTotalCash" alignment="TOP_RIGHT" focusTraversable="false" layoutX="673.0" layoutY="711.0" prefHeight="20.0" prefWidth="181.0" text="0 €" textAlignment="CENTER">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label alignment="TOP_RIGHT" layoutX="641.0" layoutY="711.0" prefHeight="20.0" prefWidth="139.0" text="Total monnaie :" textAlignment="CENTER">
+        <Label alignment="TOP_RIGHT" layoutX="529.0" layoutY="711.0" prefHeight="20.0" prefWidth="139.0" text="Total monnaie :" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="521.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.addIncomeExpenseController">
+<AnchorPane prefHeight="577.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.addIncomeExpenseController">
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: #F7A631;">
          <children>
@@ -31,12 +32,12 @@
             <Font size="14.0" />
          </font>
       </JFXTextField>
-      <Label layoutX="166.0" layoutY="111.0" text="Date :">
+      <Label layoutX="332.0" layoutY="91.0" text="Date :">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="333.0" layoutY="86.0" text="Shift :">
+      <Label layoutX="493.0" layoutY="91.0" text="Shift :">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -46,12 +47,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblDate" layoutX="214.0" layoutY="111.0" prefHeight="20.0" prefWidth="105.0">
+      <Label fx:id="lblDate" layoutX="380.0" layoutY="91.0" prefHeight="20.0" prefWidth="105.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblShiftNum" layoutX="378.0" layoutY="86.0" prefHeight="20.0" prefWidth="27.0">
+      <Label fx:id="lblShiftNum" layoutX="538.0" layoutY="91.0" prefHeight="20.0" prefWidth="27.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -85,7 +86,7 @@
                   <Font size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextArea fx:id="txtAreaCommentCaisse" disable="true" editable="false" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
+            <JFXTextArea fx:id="txtAreaCommentCaisse" disable="true" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
@@ -97,14 +98,14 @@
             <ComboBox fx:id="comboRaison" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#comboBoxReason" prefHeight="25.0" prefWidth="270.0" promptText="Raison" visibleRowCount="5" />
             <ComboBox fx:id="comboExpenseBank" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Banque" visibleRowCount="5" />
             <ComboBox fx:id="comboSalaryBeneficial" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Choisir l'employé" visibleRowCount="5" />
-            <JFXTextArea fx:id="txtAreaComment" disable="true" editable="false" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
+            <JFXTextArea fx:id="txtAreaComment" disable="true" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXTextArea>
          </children>
       </VBox>
-      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="187.0" layoutY="460.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #F44336;" text="Annuler">
+      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="187.0" layoutY="517.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #F44336;" text="Annuler">
          <effect>
             <Glow />
          </effect>
@@ -115,7 +116,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="336.0" layoutY="460.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #5dbcd2;" text="Ajouter">
+      <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="336.0" layoutY="517.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #5dbcd2;" text="Ajouter">
          <effect>
             <Glow />
          </effect>
@@ -126,5 +127,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <JFXCheckBox fx:id="ckcAddManyEntries" checkedColor="#5dbcd2" layoutX="16.0" layoutY="455.0" selected="true" text="Effectuer plusieurs enregistrements" />
+      <Label layoutX="132.0" layoutY="111.0" text="€">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

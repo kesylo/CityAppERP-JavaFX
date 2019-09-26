@@ -41,6 +41,8 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // reset some values
+        Global.navFrom = "";
 
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 

@@ -2,7 +2,8 @@ package sample.Model;
 
 public class Cash {
 
-    private int row;
+    private int idCaisse;
+    private int numShift;
     private Double lessThanFiftyCents;
     private int fiftyCents;
     private int oneEuro;
@@ -14,10 +15,9 @@ public class Cash {
     private int onehundredeuros;
     private int twoHundredEuros;
 
-    public Cash() {
-    }
-
-    public Cash(Double lessThanFiftyCents, int fiftyCents, int oneEuro, int twoEuros, int fiveEuros, int tenEuros, int twentyEuros, int fiftyEuros, int oneHundrdEuros, int twoHundredEuros) {
+    public Cash(int idCaisse, int numShift, Double lessThanFiftyCents, int fiftyCents, int oneEuro, int twoEuros, int fiveEuros, int tenEuros, int twentyEuros, int fiftyEuros, int onehundredeuros, int twoHundredEuros) {
+        this.idCaisse = idCaisse;
+        this.numShift = numShift;
         this.lessThanFiftyCents = lessThanFiftyCents;
         this.fiftyCents = fiftyCents;
         this.oneEuro = oneEuro;
@@ -26,16 +26,24 @@ public class Cash {
         this.tenEuros = tenEuros;
         this.twentyEuros = twentyEuros;
         this.fiftyEuros = fiftyEuros;
-        this.onehundredeuros = oneHundrdEuros;
+        this.onehundredeuros = onehundredeuros;
         this.twoHundredEuros = twoHundredEuros;
     }
 
-    public int getRow() {
-        return row;
+    public int getIdCaisse() {
+        return idCaisse;
     }
 
-    public void setRow(int row) {
-        this.row = row;
+    public void setIdCaisse(int idCaisse) {
+        this.idCaisse = idCaisse;
+    }
+
+    public int getNumShift() {
+        return numShift;
+    }
+
+    public void setNumShift(int numShift) {
+        this.numShift = numShift;
     }
 
     public Double getLessThanFiftyCents() {
@@ -102,12 +110,12 @@ public class Cash {
         this.fiftyEuros = fiftyEuros;
     }
 
-    public int getOneHundredEuros() {
+    public int getOnehundredeuros() {
         return onehundredeuros;
     }
 
-    public void setOneHundredEuros(int oneHundrdEuros) {
-        this.onehundredeuros = oneHundrdEuros;
+    public void setOnehundredeuros(int onehundredeuros) {
+        this.onehundredeuros = onehundredeuros;
     }
 
     public int getTwoHundredEuros() {

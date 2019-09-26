@@ -3,6 +3,7 @@ package sample.Database;
 import sample.Controller.Global;
 import sample.Model.Caisse;
 import sample.Model.CaisseIncExp;
+import sample.Model.Cash;
 import sample.Model.User;
 
 import java.sql.*;
@@ -344,6 +345,62 @@ public class DBHandler extends DBConfig {
         }
     }
 
+    public void addIncORExp(CaisseIncExp caisseAction) {
+        String query = "INSERT INTO " + Static.CAISSE_RECETTES_TABLE + " ( montant, type, date, time, indexClient, remarque, numeroShift, reason, salaryBeneficial, employees_id, fk_idCaisse ) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDouble(1, caisseAction.getAmount());
+            ps.setInt(2, caisseAction.getType());
+            ps.setDate(3, caisseAction.getCreationDate());
+            ps.setString(4, caisseAction.getTime());
+            ps.setString(5, caisseAction.getClientIndex());
+            ps.setString(6, caisseAction.getComment());
+            ps.setInt(7, caisseAction.getShiftNumber());
+            ps.setString(8, caisseAction.getReason());
+            ps.setString(9, caisseAction.getSalaryBeneficial());
+            ps.setInt(10, caisseAction.getIdUser());
+            ps.setInt(11, caisseAction.getIdCaisse());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addCaisseCash(Cash caisseCash) {
+        String query = "INSERT INTO " + Static.CAISSE_MONNAIE_TABLE + " ( caisse_idCaisse, numeroShift, lessThanOneEuro, fiftyCents, oneEuro," +
+                "twoEuros, fiveEuros, tenEuros, twentyEuros, fiftyEuros, oneHundredEuros, twoHundredEuros) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setInt(1, caisseCash.getIdCaisse());
+            ps.setInt(2, caisseCash.getNumShift());
+            ps.setDouble(3, caisseCash.getLessThanFiftyCents());
+            ps.setInt(4, caisseCash.getFiftyCents());
+            ps.setInt(5, caisseCash.getOneEuro());
+            ps.setInt(6, caisseCash.getTwoEuros());
+            ps.setInt(7, caisseCash.getFiveEuros());
+            ps.setInt(8, caisseCash.getTenEuros());
+            ps.setInt(9, caisseCash.getTwentyEuros());
+            ps.setInt(10, caisseCash.getFiftyEuros());
+            ps.setInt(11, caisseCash.getOnehundredeuros());
+            ps.setInt(12, caisseCash.getTwoHundredEuros());
+
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*------------------------------ UPDATE -------------------------------------*/
 
     public void updateCaisseStatus(Double montant, int statusToSet, String dateClosed, Caisse caisse){
@@ -365,6 +422,7 @@ public class DBHandler extends DBConfig {
             e.printStackTrace();
         }
     }
+
 
     /*------------------------------ DELETE -------------------------------------*/
 }

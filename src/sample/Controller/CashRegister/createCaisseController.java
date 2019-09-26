@@ -41,7 +41,8 @@ public class createCaisseController{
     void initialize() {
 
         // get last caisse amount
-        amountLastCaisse = db.getLastAmountCaisse();
+        /*amountLastCaisse = db.getLastAmountCaisse();*/
+        amountLastCaisse = Global.getCurrentCaisse().getMontant();
         // init fields
         fillUiElmts();
 

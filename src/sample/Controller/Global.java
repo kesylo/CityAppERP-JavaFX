@@ -11,27 +11,57 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sample.Model.Caisse;
+import sample.Model.Cash;
 import sample.Model.User;
 
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Global {
     private static User connectedUser = new User();
+
+
     private static Caisse currentCaisse = new Caisse();
     private static Caisse beforeCurrentCaisse = new Caisse();
     private static int nberOfCaisses;
+    private static Double computedSoldeCaisse;
+    private static Cash caisseCash;
+    private static Double countCashResult = 0.0;
+
 
 
     // directly accessible
     public static String appName = "City Apartments ERP";
+    public static String navFrom = "";
 
     //region Getters and Setters
+
+
+    public static Double getCountCashResult() {
+        return countCashResult;
+    }
+
+    public static void setCountCashResult(Double countCashResult) {
+        Global.countCashResult = countCashResult;
+    }
+
+    public static Cash getCaisseCash() {
+        return caisseCash;
+    }
+
+    public static Double getComputedSoldeCaisse() {
+        return computedSoldeCaisse;
+    }
+
+    public static void setComputedSoldeCaisse(Double computedSoldeCaisse) {
+        Global.computedSoldeCaisse = computedSoldeCaisse;
+    }
+
+    public static void setCaisseCash(Cash caisseCash) {
+        Global.caisseCash = caisseCash;
+    }
 
     public static int getNberOfCaisses() {
         return nberOfCaisses;
@@ -173,4 +203,22 @@ public class Global {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(cal.getTime());
     }
+
+    public static String getSystemDateTime(){
+        Date date = new Date(); // this object contains the current date value
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return formatter.format(date);
+    }
+
+    public static void closeWindow(String windowName){
+        List<Window> windows = Window.getWindows();
+        Stage mywindow = new Stage();
+        for (Window win : windows) {
+            if (win.getTitle().contains(windowName)) {
+                    win.close();
+            }
+        }
+    }
+
+
 }

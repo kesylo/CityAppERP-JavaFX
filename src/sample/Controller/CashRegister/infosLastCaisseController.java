@@ -201,8 +201,10 @@ public class infosLastCaisseController  {
         // set shift
         lblShiftNumber.setText("" + Global.getCurrentCaisse().getNumeroShift());
 
-        // set date
-        datePicker.setValue(Global.getCurrentCaisse().getDate().toLocalDate());
+        if (Global.getNberOfCaisses() >= 1){
+            // set date
+            datePicker.setValue(Global.getCurrentCaisse().getDate().toLocalDate());
+        }
 
         // fill incomes
         fillIncomeTab();
@@ -218,17 +220,31 @@ public class infosLastCaisseController  {
     }
 
     private void computeCaisse() {
-        // formula: Caisse before - expenses + incomes
-        Double balance = Global.getBeforeCurrentCaisse().getMontant()
-                - totalExpense
-                + totalIncome;
 
-        lblTotalCaisse.setText("" + balance + " €");
+        Double balance;
+        if (Global.getNberOfCaisses() >= 1){
+            balance = 0.0
+                    - totalExpense
+                    + totalIncome;
 
-        // add to global var
-        Global.getCurrentCaisse().setMontant(balance);
-        // add to DB ?
+            lblTotalCaisse.setText("" + balance + " €");
 
+            // add to global var
+            Global.getCurrentCaisse().setMontant(balance);
+
+            if (Global.getNberOfCaisses() >= 2){
+                // formula: Caisse before - expenses + incomes
+                 balance = Global.getBeforeCurrentCaisse().getMontant()
+                        - totalExpense
+                        + totalIncome;
+
+                lblTotalCaisse.setText("" + balance + " €");
+
+                // add to global var
+                Global.getCurrentCaisse().setMontant(balance);
+                // add to DB ?
+            }
+        }
     }
 
     private void fillCashTab() {
@@ -242,6 +258,8 @@ public class infosLastCaisseController  {
         try {
             while (rs.next()) {
                 Cash cash = new Cash(
+                        rs.getInt("caisse_idCaisse"),
+                        rs.getInt("numeroShift"),
                         rs.getDouble("lessThanOneEuro"),
                         rs.getInt("fiftyCents"),
                         rs.getInt("oneEuro"),
@@ -265,7 +283,7 @@ public class infosLastCaisseController  {
                         + cash.getTenEuros() * 10
                         + cash.getTwentyEuros() * 20
                         + cash.getFiftyEuros() * 50
-                        + cash.getTwoHundredEuros() * 100
+                        + cash.getOnehundredeuros() * 100
                         + cash.getTwoHundredEuros() * 200;
 
                 lblTotalCash.setText("" + totalCash + " €");
@@ -282,7 +300,7 @@ public class infosLastCaisseController  {
         clmTenEuros.setCellValueFactory(new PropertyValueFactory<>("TenEuros"));
         clmTwentyEuros.setCellValueFactory(new PropertyValueFactory<>("TwentyEuros"));
         clmFiftyEuros.setCellValueFactory(new PropertyValueFactory<>("FiftyEuros"));
-        clmOneHundredEuros.setCellValueFactory(new PropertyValueFactory<>("OneHundredEuros"));
+        clmOneHundredEuros.setCellValueFactory(new PropertyValueFactory<>("Onehundredeuros"));
         clmTwoHundredEuros.setCellValueFactory(new PropertyValueFactory<>("TwoHundredEuros"));
 
         // add list to table
