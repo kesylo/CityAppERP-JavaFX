@@ -2,11 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="599.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.countCashCaisseController">
+<AnchorPane prefHeight="587.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.countCashCaisseController">
    <children>
       <AnchorPane layoutY="-8.0" prefHeight="83.0" prefWidth="273.0" style="-fx-background-color: #F7A631;">
          <children>
@@ -129,21 +127,22 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="100.0" layoutY="538.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #5dbcd2;" text="Ok" textAlignment="CENTER">
-         <effect>
-            <Glow />
-         </effect>
-         <font>
-            <Font size="14.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
       <Label fx:id="countTotal1" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="227.0" layoutY="494.0" prefHeight="25.0" prefWidth="6.0" text="€">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="83.0" layoutY="535.0" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #5dbcd2;" text="OK">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_checkmark_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>

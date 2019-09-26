@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,11 +14,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorParent" prefHeight="609.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.caisseDashboardController">
+<AnchorPane fx:id="anchorParent" prefHeight="661.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.caisseDashboardController">
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="321.0" style="-fx-background-color: #F7A631;">
          <children>
-            <Label layoutX="75.0" layoutY="23.0" text="Caisse">
+            <Label layoutX="89.0" layoutY="23.0" text="Caisse">
                <font>
                    <Font name="Century Gothic Bold Italic" size="30.0" />
                </font>
@@ -74,64 +73,81 @@
             <TableColumn fx:id="clmShift" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Shift" />
          </columns>
        </TableView>
-      <VBox layoutX="366.0" layoutY="124.0" prefHeight="250.0" prefWidth="157.0" spacing="20.0">
-         <children>
-             <JFXButton fx:id="btnFillCaisse" buttonType="RAISED" focusTraversable="false" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Créer une caisse">
-               <effect>
-                   <Glow />
-               </effect>
-               <font>
-                   <Font size="14.0" />
-               </font>
-               <cursor>
-                   <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-             <JFXButton fx:id="btnDetailCaisse" buttonType="RAISED" focusTraversable="false" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Détails">
-               <effect>
-                   <Glow />
-               </effect>
-               <font>
-                   <Font size="14.0" />
-               </font>
-               <cursor>
-                   <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton fx:id="btnCloseCaisse" buttonType="RAISED" focusTraversable="false" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Fermer une caisse">
-               <effect>
-                  <Glow />
-               </effect>
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton fx:id="btnIncomeExpense" buttonType="RAISED" focusTraversable="false" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #5dbcd2;" text="Recettes / Dépenses">
-               <effect>
-                  <Glow />
-               </effect>
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-         </children>
-      </VBox>
-      <JFXButton fx:id="btnRefresh" buttonType="RAISED" focusTraversable="false" layoutX="366.0" layoutY="555.0" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #f7a631;" text="Rafraîchir">
-         <effect>
-            <Glow />
-         </effect>
+      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="161.0" layoutY="609.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
          <font>
             <Font size="14.0" />
          </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_back_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
+      <JFXButton fx:id="btnRefresh" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="326.0" layoutY="609.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #f7a631;" text="Rafraîchir">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_synchronize_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <VBox layoutX="359.0" layoutY="145.0" spacing="20.0">
+         <children>
+            <JFXButton fx:id="btnFillCaisse" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" prefHeight="43.0" prefWidth="185.0" style="-fx-background-color: #5dbcd2;" text="Créer une caisse" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_plus_math_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnDetailCaisse" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" prefHeight="43.0" prefWidth="185.0" style="-fx-background-color: #5dbcd2;" text="Détails">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_info_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnCloseCaisse" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" prefHeight="43.0" prefWidth="185.0" style="-fx-background-color: #5dbcd2;" text="Fermer une caisse">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_door_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnIncomeExpense" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" prefHeight="43.0" prefWidth="185.0" style="-fx-background-color: #5dbcd2;" text="Recettes / Dépenses">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_banknotes_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

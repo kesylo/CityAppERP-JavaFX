@@ -1,23 +1,16 @@
 package sample.Controller;
 
-import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import sample.Database.DBHandler;
 import sample.Model.User;
 import sample.Ressources.animation.Shaker;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,14 +19,9 @@ import java.util.ResourceBundle;
 public class LoginController {
 
     //region Description
-    @FXML
-    private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
-    private ImageView imgLogo;
+    private Hyperlink lblRegister;
 
     @FXML
     private Label lblErrorMessage;
@@ -47,22 +35,19 @@ public class LoginController {
     @FXML
     private JFXButton btnConnection;
 
-    @FXML
-    private JFXButton btnSignUp;
-
     private DBHandler dbHandler;
     //endregion
+
+    @FXML
+    void goToDashboard(ActionEvent event) {
+        URL navPath = getClass().getResource("/sample/View/signup.fxml");
+        Global.goToWindow(navPath, btnConnection," - SignUp", true);
+    }
 
     @FXML
     void initialize() {
 
         dbHandler = new DBHandler();
-
-        btnSignUp.setOnAction(event -> {
-            // Simple nav to goToSignup screen
-            URL navPath = getClass().getResource("/sample/View/signup.fxml");
-            Global.goToWindow(navPath, btnConnection,"Signup", true);
-        });
 
         btnConnection.setOnAction(event -> {
             login();
@@ -71,7 +56,6 @@ public class LoginController {
     }
 
     /*----------------------------------------------------------------------------------------*/
-
 
     private void login() {
 

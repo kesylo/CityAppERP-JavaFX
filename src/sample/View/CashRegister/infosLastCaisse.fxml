@@ -8,7 +8,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="848.0" prefWidth="870.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.infosLastCaisseController">
+<AnchorPane prefHeight="832.0" prefWidth="870.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.infosLastCaisseController">
     <children>
         <AnchorPane layoutX="584.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="271.0">
             <children>
@@ -44,7 +43,7 @@
         </AnchorPane>
         <AnchorPane prefHeight="83.0" prefWidth="559.0" style="-fx-background-color: #F7A631;">
             <children>
-                <Label layoutX="75.0" layoutY="23.0" prefHeight="38.0" prefWidth="446.0" text="Infos caisse précédente">
+                <Label layoutX="108.0" layoutY="23.0" prefHeight="38.0" prefWidth="446.0" text="Infos caisse précédente">
                     <font>
                         <Font name="Century Gothic Bold Italic" size="30.0" />
                     </font>
@@ -154,33 +153,11 @@
                 <Font size="19.0" />
             </font>
         </Label>
-        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="387.0" layoutY="741.0" prefHeight="20.0" prefWidth="92.0" text="Total caisse :" textAlignment="CENTER">
+        <Label alignment="TOP_RIGHT" focusTraversable="false" layoutX="387.0" layoutY="747.0" prefHeight="20.0" prefWidth="92.0" text="Total caisse :" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="556.0" layoutY="774.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #5dbcd2;" text="OK">
-            <effect>
-                <Glow />
-            </effect>
-            <font>
-                <Font size="14.0" />
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </JFXButton>
-        <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="241.0" layoutY="774.0" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #F44336;" text="Retour">
-            <effect>
-                <Glow />
-            </effect>
-            <font>
-                <Font size="14.0" />
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </JFXButton>
         <JFXTextArea fx:id="txtAreaCommentCaisse" editable="false" focusColor="#f7a631" layoutX="592.0" layoutY="85.0" prefHeight="83.0" prefWidth="264.0" promptText="Commentaire" wrapText="true">
             <font>
                 <Font size="14.0" />
@@ -232,5 +209,29 @@
             </font>
         </Label>
         <Separator layoutX="14.0" layoutY="739.0" prefHeight="1.0" prefWidth="846.0" />
+      <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="556.0" layoutY="774.0" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #5dbcd2;" text="OK">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_checkmark_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="208.0" layoutY="774.0" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #E0E0E0;" text="Retour">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_back_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
     </children>
 </AnchorPane>

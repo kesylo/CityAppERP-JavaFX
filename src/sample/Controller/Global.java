@@ -1,9 +1,7 @@
 package sample.Controller;
 
-import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.sun.glass.ui.Window;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,27 +15,31 @@ import sample.Model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 public class Global {
+
+    //region Global variables
+
     private static User connectedUser = new User();
+    public static String appName = "City Apartments ERP";
+    public static String navFrom = "";
 
+    //endregion
 
+    //region Caisse App
     private static Caisse currentCaisse = new Caisse();
     private static Caisse beforeCurrentCaisse = new Caisse();
     private static int nberOfCaisses;
     private static Double computedSoldeCaisse;
     private static Cash caisseCash;
     private static Double countCashResult = 0.0;
-
-
-
-    // directly accessible
-    public static String appName = "City Apartments ERP";
-    public static String navFrom = "";
+    //endregion
 
     //region Getters and Setters
-
 
     public static Double getCountCashResult() {
         return countCashResult;
@@ -97,7 +99,8 @@ public class Global {
 
     //endregion
 
-    /*--------------------------------- METHODS ---------------------------------------------------------------------*/
+    //region Methods
+
     public static void showErrorMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.ERROR);
         alertDialog.setTitle(appName);
@@ -191,7 +194,7 @@ public class Global {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle(appName + " - Login");
+        stage.setTitle(appName + " - Connexion");
         stage.show();
 
         // navigate to new screen
@@ -220,5 +223,6 @@ public class Global {
         }
     }
 
+    //endregion
 
 }

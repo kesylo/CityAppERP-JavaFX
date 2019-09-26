@@ -99,6 +99,8 @@ public class caisseDashboardController{
 
 
                // code here
+               URL navPath = getClass().getResource("/sample/View/CashRegister/detailsCaisse.fxml");
+               Global.goToWindow(navPath, btnFillCaisse,"Details", false);
 
            }
        });

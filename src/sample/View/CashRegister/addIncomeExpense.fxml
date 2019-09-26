@@ -5,18 +5,18 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="577.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.addIncomeExpenseController">
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.addIncomeExpenseController">
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: #F7A631;">
          <children>
@@ -105,33 +105,35 @@
             </JFXTextArea>
          </children>
       </VBox>
-      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" layoutX="187.0" layoutY="517.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #F44336;" text="Annuler">
-         <effect>
-            <Glow />
-         </effect>
-         <font>
-            <Font size="14.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="336.0" layoutY="517.0" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #5dbcd2;" text="Ajouter">
-         <effect>
-            <Glow />
-         </effect>
-         <font>
-            <Font size="14.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
       <JFXCheckBox fx:id="ckcAddManyEntries" checkedColor="#5dbcd2" layoutX="16.0" layoutY="455.0" selected="true" text="Effectuer plusieurs enregistrements" />
       <Label layoutX="132.0" layoutY="111.0" text="€">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="140.0" layoutY="498.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_back_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="345.0" layoutY="498.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #5dbcd2;" text="Ajouter">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_plus_math_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>
