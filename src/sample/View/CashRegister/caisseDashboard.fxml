@@ -123,18 +123,6 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnCloseCaisse" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" prefHeight="43.0" prefWidth="185.0" style="-fx-background-color: #5dbcd2;" text="Fermer une caisse">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Ressources/images/icons8_door_52px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
             <JFXButton fx:id="btnIncomeExpense" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" prefHeight="43.0" prefWidth="185.0" style="-fx-background-color: #5dbcd2;" text="Recettes / Dépenses">
                <font>
                   <Font size="14.0" />
@@ -143,6 +131,18 @@
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Ressources/images/icons8_banknotes_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnCloseCaisse" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" prefHeight="43.0" prefWidth="185.0" style="-fx-background-color: #5dbcd2;" text="Fermer une caisse">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_door_52px.png" />
                      </image>
                   </ImageView>
                </graphic>

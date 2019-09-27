@@ -94,29 +94,29 @@ public class caisseDashboardController{
             initCaissesInfos();
         });
 
-       btnDetailCaisse.setOnAction(event -> {
+        btnDetailCaisse.setOnAction(event -> {
            if (Global.getNberOfCaisses() >= 1){
-
-
-               // code here
+               // set the preview caisse globally
+               Caisse previewCaisse = tableDateShifts.getSelectionModel().getSelectedItem();
+               Global.setPreviewCaisse(previewCaisse);
+               // open preview window
                URL navPath = getClass().getResource("/sample/View/CashRegister/detailsCaisse.fxml");
                Global.goToWindow(navPath, btnFillCaisse,"Details", false);
-
            }
        });
 
-       btnCloseCaisse.setOnAction(event -> {
+        btnCloseCaisse.setOnAction(event -> {
            if (Global.getNberOfCaisses() >= 1){
                closeCaisse();
            }
        });
 
-       btnRefresh.setOnAction(event -> {
+        btnRefresh.setOnAction(event -> {
            tableDateShifts.getItems().clear();
            fillTable();
        });
 
-       btnIncomeExpense.setOnAction(event -> {
+        btnIncomeExpense.setOnAction(event -> {
            if (Global.getNberOfCaisses() >= 1){
                URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
                Global.goToWindow(navPath, btnFillCaisse,"Actions", true);
@@ -124,9 +124,8 @@ public class caisseDashboardController{
        });
     }
 
-
-
     /*----------------------------------------------------------------------------------------------*/
+
     private void initGlobal() {
         Global.navFrom = "";
         Global.setComputedSoldeCaisse(0.0);

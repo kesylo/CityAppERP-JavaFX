@@ -1,5 +1,7 @@
 package sample.Model;
 
+import java.sql.Date;
+
 public class User {
     private int id;
     private String adress;
@@ -9,11 +11,11 @@ public class User {
     private String email;
     private String firstName;
     private int houseNumber;
-    private String dateInService;
+    private Date dateInService;
     private String lastName;
     private String letterBoxNumber;
-    private int nationalRegistreryNumber;
-    private String dateOutService;
+    private String nationalRegistreryNumber;
+    private Date dateOutService;
     private String password;
     private int postalCode;
     private String pseudo;
@@ -21,11 +23,58 @@ public class User {
     private int role;
 
 
+    //region controller
     public User() {
-
     }
 
+    public User(int id, String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, Date dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, Date dateOutService, String password, int postalCode, String pseudo, String sex, int role) {
+        this.id = id;
+        this.adress = adress;
+        this.city = city;
+        this.maritalStatus = maritalStatus;
+        this.departement = departement;
+        this.email = email;
+        this.firstName = firstName;
+        this.houseNumber = houseNumber;
+        this.dateInService = dateInService;
+        this.lastName = lastName;
+        this.letterBoxNumber = letterBoxNumber;
+        this.nationalRegistreryNumber = nationalRegistreryNumber;
+        this.dateOutService = dateOutService;
+        this.password = password;
+        this.postalCode = postalCode;
+        this.pseudo = pseudo;
+        this.sex = sex;
+        this.role = role;
+    }
+    //endregion
 
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", adress='" + adress + '\'' +
+                ", city='" + city + '\'' +
+                ", maritalStatus='" + maritalStatus + '\'' +
+                ", departement='" + departement + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", houseNumber=" + houseNumber +
+                ", dateInService=" + dateInService +
+                ", lastName='" + lastName + '\'' +
+                ", letterBoxNumber='" + letterBoxNumber + '\'' +
+                ", nationalRegistreryNumber='" + nationalRegistreryNumber + '\'' +
+                ", dateOutService=" + dateOutService +
+                ", password='" + password + '\'' +
+                ", postalCode=" + postalCode +
+                ", pseudo='" + pseudo + '\'' +
+                ", sex='" + sex + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
+    //region getters and setters
     public int getId() {
         return id;
     }
@@ -98,11 +147,11 @@ public class User {
         this.houseNumber = houseNumber;
     }
 
-    public String getDateInService() {
+    public Date getDateInService() {
         return dateInService;
     }
 
-    public void setDateInService(String dateInService) {
+    public void setDateInService(Date dateInService) {
         this.dateInService = dateInService;
     }
 
@@ -122,19 +171,19 @@ public class User {
         this.letterBoxNumber = letterBoxNumber;
     }
 
-    public int getNationalRegistreryNumber() {
+    public String getNationalRegistreryNumber() {
         return nationalRegistreryNumber;
     }
 
-    public void setNationalRegistreryNumber(int nationalRegistreryNumber) {
+    public void setNationalRegistreryNumber(String nationalRegistreryNumber) {
         this.nationalRegistreryNumber = nationalRegistreryNumber;
     }
 
-    public String getDateOutService() {
+    public Date getDateOutService() {
         return dateOutService;
     }
 
-    public void setDateOutService(String dateOutService) {
+    public void setDateOutService(Date dateOutService) {
         this.dateOutService = dateOutService;
     }
 
@@ -169,4 +218,5 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
+    //endregion
 }

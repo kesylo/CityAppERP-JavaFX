@@ -24,6 +24,20 @@ public class Caisse {
     public Caisse() {
     }
 
+    @Override
+    public String toString() {
+        return "Caisse{" +
+                "id=" + id +
+                ", date=" + date +
+                ", montant=" + montant +
+                ", remarque='" + remarque + '\'' +
+                ", numeroShift=" + numeroShift +
+                ", closed=" + closed +
+                ", idEmployes=" + idEmployes +
+                ", closedDate='" + closedDate + '\'' +
+                '}';
+    }
+
     public Caisse(int id, Date date, Double montant, int numeroShift, String remarque, int closed, int idEmployes, String closedDate) {
         this.id = id;
         this.date = date;
@@ -38,6 +52,8 @@ public class Caisse {
     public int getIdEmployes() {
         return idEmployes;
     }
+
+    //region Getters
 
     public void setIdEmployes(int idEmployes) {
         this.idEmployes = idEmployes;
@@ -98,4 +114,5 @@ public class Caisse {
     public void setClosedDate(String closedDate) {
         this.closedDate = closedDate;
     }
+    //endregion
 }

@@ -227,7 +227,7 @@ public class infosLastCaisseController  {
                     - totalExpense
                     + totalIncome;
 
-            lblTotalCaisse.setText("" + balance + " €");
+            lblTotalCaisse.setText(balance + " €");
 
             // add to global var
             Global.getCurrentCaisse().setMontant(balance);
@@ -238,7 +238,7 @@ public class infosLastCaisseController  {
                         - totalExpense
                         + totalIncome;
 
-                lblTotalCaisse.setText("" + balance + " €");
+                lblTotalCaisse.setText(balance + " €");
 
                 // add to global var
                 Global.getCurrentCaisse().setMontant(balance);
@@ -286,7 +286,7 @@ public class infosLastCaisseController  {
                         + cash.getOnehundredeuros() * 100
                         + cash.getTwoHundredEuros() * 200;
 
-                lblTotalCash.setText("" + totalCash + " €");
+                lblTotalCash.setText(totalCash + " €");
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -23,15 +23,14 @@ import java.util.Optional;
 public class Global {
 
     //region Global variables
-
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
-
     //endregion
 
     //region Caisse App
     private static Caisse currentCaisse = new Caisse();
+    private static Caisse previewCaisse = new Caisse();
     private static Caisse beforeCurrentCaisse = new Caisse();
     private static int nberOfCaisses;
     private static Double computedSoldeCaisse;
@@ -40,6 +39,14 @@ public class Global {
     //endregion
 
     //region Getters and Setters
+
+    public static Caisse getPreviewCaisse() {
+        return previewCaisse;
+    }
+
+    public static void setPreviewCaisse(Caisse previewCaisse) {
+        Global.previewCaisse = previewCaisse;
+    }
 
     public static Double getCountCashResult() {
         return countCashResult;

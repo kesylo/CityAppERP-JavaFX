@@ -242,6 +242,52 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    public User getEmployeObjByID(int idEmployes) {
+        User user = null;
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE + " WHERE id=?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, idEmployes);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                user = new User(
+                        idEmployes,
+                        rs.getString("address"),
+                        rs.getString("city"),
+                        rs.getString("CivilStatus"),
+                        rs.getString("dept"),
+                        rs.getString("email"),
+                        rs.getString("firstName"),
+                        rs.getInt("houseNum"),
+                        rs.getDate("inService"),
+                        rs.getString("lastName"),
+                        rs.getString("letterBoxNum"),
+                        rs.getString("nationalRegisterNum"),
+                        rs.getDate("outService"),
+                        rs.getString("password"),
+                        rs.getInt("postalCode"),
+                        rs.getString("pseudo"),
+                        rs.getString("sex"),
+                        rs.getInt("role")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        return user;
+    }
+
     public ResultSet getIncomeExpense(int idCaisse, int numeroShift, int type) {
         rs = null;
 

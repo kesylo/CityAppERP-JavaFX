@@ -106,7 +106,7 @@ public class addIncomeExpenseController {
     DBHandler dbHandler = new DBHandler();
     boolean isIncome = true;
     boolean isExpense = false;
-    boolean isClientIdCorrtect = false;
+    //boolean isClientIdCorrtect = false;
     boolean isRegistrationComplete = false;
     Double amount = 0.0;
 
@@ -127,59 +127,49 @@ public class addIncomeExpenseController {
             }
         });
 
-        // validate client index
-        RegexValidator val = new RegexValidator();
-
-        txtClientIndex.getValidators().add(val);
-        val.setRegexPattern("\\d{2}+[-+]\\d{4}+[-+]\\d{5}");
-        val.setMessage("Verifiez le numero du client");
-        txtClientIndex.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue){
-                    isClientIdCorrtect = txtClientIndex.validate();
-                }
-            }
-        });
-
         btnCancel.setOnAction(event -> {
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
             Global.goToWindow(navPath, btnCreate,"Caisse", true);
         });
 
         btnCreate.setOnAction(event -> {
-            // check if caisse opened before adding
-            if (Global.getCurrentCaisse().getClosed() == 1){
-                amount = Double.valueOf(txtAmount.getText());
 
-                if (amount != null && amount != 0.0){
-                    if (ckcAddManyEntries.isSelected()){
-                        saveToDB();
-                        if (isRegistrationComplete){
-                            URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-                            Global.goToWindow(navPath, btnCreate,"Actions", true);
-                        }
-                    } else {
-                        saveToDB();
-                        if (isRegistrationComplete){
-                            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-                            Global.goToWindow(navPath, btnCreate,"Caisse", true);
-                        }
+            // check if caisse opened before adding
+            if (Global.getCurrentCaisse().getClosed() == 1) {
+
+                // check if amount textbox is not empty
+                if (!txtAmount.getText().isEmpty()){
+                    // get amount from input text
+                    amount = Double.valueOf(txtAmount.getText());
+                    if (amount != 0.0){
+                        // check if fields are correct
+                        checkIncomePossibility();
+                        checkExpensePossibility();
+                    }else {
+                        // amount = 0
+                        // amount txt empty
+                        Global.showErrorMessage(
+                                "Erreur sur le montant entré.",
+                                "Le montant ne peut pas être égal à 0.");
                     }
+                }else {
+                    // amount txt empty
+                    Global.showErrorMessage(
+                            "Erreur sur le montant entré.",
+                            "Vérifiez le champ 'montant' pour continuer.");
                 }
-                else {
-                    Global.showErrorMessage("Erreur sur le montant.",
-                            "Le montant de l'opération n'est pas correct.");
-                }
-            }
-            else {
-                Global.showErrorMessage("Erreur sur la caisse. Contacter l'administrateur.",
+            }else {
+                Global.showErrorMessage(
+                        "Erreur sur la caisse. Contacter l'administrateur.",
                         "Cette caisse est déja fermée. Vous ne pouvez plus la modifier.");
             }
-
         });
 
     }
+
+
+
+
     /*----------------------------------------------------------------------------------*/
 
     private void saveToDB() {
@@ -188,7 +178,7 @@ public class addIncomeExpenseController {
 
         if (isIncome){
             if (comboSource.getSelectionModel().getSelectedIndex() == 0){ // client
-                if (isClientIdCorrtect){
+                if (txtClientIndex.getText().matches("\\d{2}+[-+]\\d{4}+[-+]\\d{5}")){
                     income = new CaisseIncExp(amount,
                             Date.valueOf(LocalDate.now()),
                             Global.getSystemTime(),
@@ -206,7 +196,7 @@ public class addIncomeExpenseController {
                 }else {
                     Global.showInfoMessage(
                             "Verifiez le numero d'index.",
-                            "Il doit etre au faormat: XX-XXXX-XXXXX");
+                            "Il doit être au format: XX-XXXX-XXXXX");
                 }
             }
             else if (comboSource.getSelectionModel().getSelectedIndex() == 1){ // bank
@@ -348,6 +338,7 @@ public class addIncomeExpenseController {
         //endregion
 
         loadUserList();
+        comboSource.getSelectionModel().selectFirst();
     }
 
     public void loadUserList(){
@@ -419,12 +410,106 @@ public class addIncomeExpenseController {
             vboxExpense.setDisable(true);
             isIncome = true;
             isExpense = false;
+            comboSource.getSelectionModel().selectFirst();
         }
         if (radioExpense.isSelected()) {
             vboxIncome.setDisable(true);
             vboxExpense.setDisable(false);
             isIncome = false;
             isExpense = true;
+            comboRaison.getSelectionModel().selectFirst();
+        }
+    }
+
+    private void checkExpensePossibility() {
+        // Expense
+        if (radioExpense.isSelected()){
+            // salary selected
+            if (comboRaison.getSelectionModel().getSelectedIndex() == 0){
+                // check if checkbox is checked
+                commitToDB();
+            }
+            // bank selected
+            else if (comboRaison.getSelectionModel().getSelectedIndex() == 1){
+                // check if checkbox is checked
+                commitToDB();
+            }
+            // other selected
+            else if (comboRaison.getSelectionModel().getSelectedIndex() == 2){
+                // check if comment empty
+                if (!txtAreaComment.getText().isEmpty()){
+                    // check if checkbox is checked
+                    commitToDB();
+                }
+                else {
+                    // Comment is empty
+                    Global.showErrorMessage(
+                            "Erreur sur le commentaire",
+                            "Le champ details ne peut pas être vide.");
+                }
+            }
+        }
+    }
+
+    private void checkIncomePossibility() {
+
+        // Income
+        if (radioIncome.isSelected()){
+            // Client selected
+            if (comboSource.getSelectionModel().getSelectedIndex() == 0){
+                // check if txtindex empty
+                if (!txtClientIndex.getText().isEmpty()){
+                    // check if client index is ok
+                    if (txtClientIndex.getText().matches("\\d{2}+[-+]\\d{4}+[-+]\\d{5}")){
+                        // check if checkbox is checked
+                        commitToDB();
+                    }
+                    else {
+                        // regex pattern not ok
+                        Global.showErrorMessage(
+                                "Erreur sur l'index du client",
+                                "L'index doit être sous la forme: XX-XXXX-XXXXX");
+                    }
+                }
+                else {
+                    // client index empty
+                    Global.showErrorMessage(
+                            "Erreur sur l'index du client",
+                            "L'index du client ne peux pas être vide.");
+                }
+            }
+            // bank selected
+            else if (comboSource.getSelectionModel().getSelectedIndex() == 1){
+                // check if checkbox is checked
+                commitToDB();
+            }
+            // other selected
+            else if (comboSource.getSelectionModel().getSelectedIndex() == 2){
+                // check if comment empty
+                if (!txtAreaCommentCaisse.getText().isEmpty()){
+                    // check if checkbox is checked
+                    commitToDB();
+                }
+                else {
+                    // Comment is empty
+                    Global.showErrorMessage(
+                            "Erreur sur le commentaire",
+                            "Le champ details ne peut pas être vide.");
+                }
+            }
+        }
+    }
+
+    private void commitToDB() {
+        if (ckcAddManyEntries.isSelected()){
+            // form ok. save to db
+            saveToDB();
+            URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
+            Global.goToWindow(navPath, btnCreate,"Actions", true);
+        }else {
+            saveToDB();
+            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.goToWindow(navPath, btnCreate,"Caisse", true);
         }
     }
 }
