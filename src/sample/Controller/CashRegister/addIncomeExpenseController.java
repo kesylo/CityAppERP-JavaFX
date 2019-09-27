@@ -167,9 +167,6 @@ public class addIncomeExpenseController {
 
     }
 
-
-
-
     /*----------------------------------------------------------------------------------*/
 
     private void saveToDB() {
@@ -506,10 +503,18 @@ public class addIncomeExpenseController {
             saveToDB();
             URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
             Global.goToWindow(navPath, btnCreate,"Actions", true);
+            // show notification
+            Global.successSystemNotif(
+                    "Opération éffectuée avec succès.",
+                    "#f7a631");
         }else {
             saveToDB();
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
             Global.goToWindow(navPath, btnCreate,"Caisse", true);
+            // show notification
+            Global.successSystemNotif(
+                    "Opération éffectuée avec succès.",
+                    "#f7a631");
         }
     }
 }

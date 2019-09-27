@@ -6,11 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.Model.Caisse;
 import sample.Model.Cash;
 import sample.Model.User;
+import tray.animations.AnimationType;
+import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -228,6 +233,19 @@ public class Global {
                     win.close();
             }
         }
+    }
+
+    public  static void successSystemNotif(String message, String color){
+        TrayNotification tray = new TrayNotification();
+
+        Image whatsAppImg = new Image("/sample/Ressources/images/icon.png");
+
+        tray.setTitle(appName);
+        tray.setMessage(message);
+        tray.setRectangleFill(Paint.valueOf(color));
+        tray.setAnimationType(AnimationType.POPUP);
+        tray.setImage(whatsAppImg);
+        tray.showAndDismiss(Duration.seconds(0.5));
     }
 
     //endregion

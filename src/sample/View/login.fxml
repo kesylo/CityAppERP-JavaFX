@@ -37,22 +37,22 @@
                 <Font size="13.0" />
             </font>
         </Label>
-        <Label fx:id="lblErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="196.0" layoutY="263.0" prefHeight="20.0" prefWidth="336.0" text="Nom d'utilisateur ou mot de passe incorrect ." textAlignment="CENTER" textFill="#ff3d3d" visible="false">
+        <Label fx:id="lblErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="283.0" prefHeight="20.0" prefWidth="287.0" text="Nom d'utilisateur ou mot de passe incorrect ." textAlignment="CENTER" textFill="#ff3d3d" visible="false">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-      <ImageView fitHeight="30.0" fitWidth="34.0" layoutX="208.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pwdIcon" fitHeight="30.0" fitWidth="34.0" layoutX="208.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Ressources/images/icons8_password_52px.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="34.0" layoutX="208.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="userIcon" fitHeight="30.0" fitWidth="34.0" layoutX="208.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Ressources/images/icons8_user_male_circle_52px.png" />
          </image>
       </ImageView>
-      <Hyperlink fx:id="lblRegister" layoutX="411.0" layoutY="259.0" onAction="#goToDashboard" text="S'enregistrer &gt;">
+      <Hyperlink fx:id="lblRegister" layoutX="411.0" layoutY="248.0" onAction="#goToDashboard" text="S'enregistrer &gt;">
          <font>
             <Font size="14.0" />
          </font>
@@ -69,7 +69,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <Label layoutX="217.0" layoutY="263.0" text="Vous n'avez pas de compte ?">
+      <Label layoutX="217.0" layoutY="252.0" text="Vous n'avez pas de compte ?">
          <font>
             <Font size="14.0" />
          </font>

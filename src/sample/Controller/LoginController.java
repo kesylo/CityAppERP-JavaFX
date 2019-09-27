@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import sample.Database.DBHandler;
 import sample.Model.User;
 import sample.Ressources.animation.Shaker;
@@ -31,6 +32,13 @@ public class LoginController {
 
     @FXML
     private JFXPasswordField txtPassword;
+
+    @FXML
+    private ImageView pwdIcon;
+
+    @FXML
+    private ImageView userIcon;
+
 
     @FXML
     private JFXButton btnConnection;
@@ -62,6 +70,9 @@ public class LoginController {
         // create temp user
         User user = new User();
 
+        // hide error text
+        lblErrorMessage.setVisible(false);
+
         String loginUserName = txtUsername.getText().trim();
         String loginPwd = txtPassword.getText().trim();
 
@@ -85,6 +96,10 @@ public class LoginController {
                 // if we found a match
                 if (counter == 1) {
                     System.out.println("login ok");
+                    // show notification
+                    Global.successSystemNotif(
+                            "Connexion réussie!",
+                            "#f7a631");
                     // define user variables globally
                     Global.setConnectedUser(user);
                     // goToDashboard
@@ -107,9 +122,13 @@ public class LoginController {
     private void showErrorAndShake() {
         Shaker shakerUser = new Shaker(txtUsername);
         Shaker shakerPwd = new Shaker(txtPassword);
+        Shaker shakerUserIcon = new Shaker(userIcon);
+        Shaker shakerPwdIcon = new Shaker(pwdIcon);
         Shaker shakerErrorMessage = new Shaker(lblErrorMessage);
         shakerUser.shake();
         shakerPwd.shake();
+        shakerUserIcon.shake();
+        shakerPwdIcon.shake();
         shakerErrorMessage.shake();
         // show error message
         lblErrorMessage.setVisible(true);

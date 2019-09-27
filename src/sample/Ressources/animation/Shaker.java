@@ -12,9 +12,9 @@ public class Shaker {
 
     public Shaker(Node node) {
         translateTransition = new TranslateTransition(Duration.millis(100), node);
-        translateTransition.setFromX(0f);
-        translateTransition.setByX(20f);
-        translateTransition.setCycleCount(2);
+        translateTransition.setFromX(-15f);
+        translateTransition.setByX(10f);
+        translateTransition.setCycleCount(4);
         translateTransition.setAutoReverse(true);
 
     }
