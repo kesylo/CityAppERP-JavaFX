@@ -2,6 +2,8 @@ package sample.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.sun.glass.ui.Window;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,9 +43,19 @@ public class Global {
     private static Double computedSoldeCaisse;
     private static Cash caisseCash;
     private static Double countCashResult = 0.0;
+    private static ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
     //endregion
 
     //region Getters and Setters
+
+
+    public static ObservableList<Caisse> getCaisseList() {
+        return caisseList;
+    }
+
+    public static void setCaisseList(ObservableList<Caisse> caisseList) {
+        Global.caisseList = caisseList;
+    }
 
     public static Caisse getPreviewCaisse() {
         return previewCaisse;

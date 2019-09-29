@@ -99,8 +99,8 @@ public class closeCaisseController {
                         "Veuillez compter la caisse avant de la fermer.");
             }
         });
-    }
 
+    }
 
     /*-------------------------------------------------------------------------------------------------------------*/
 

@@ -1,23 +1,22 @@
 package sample.Controller;
 
-import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
-import com.sun.glass.ui.Window;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import sample.Database.DBHandler;
+import sample.Model.Caisse;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -41,12 +40,14 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         // reset some values
         Global.navFrom = "";
 
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
         btnNavToCaisse.setOnAction(event -> {
+            // nav to caisse when data are fetched
             URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
             Global.goToWindow(toCaisse, btnNavToCaisse,"Caisse", false);
         });

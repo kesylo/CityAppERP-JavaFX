@@ -18,28 +18,6 @@
 
 <AnchorPane prefHeight="823.0" prefWidth="875.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.detailsCaisseController">
    <children>
-      <AnchorPane layoutX="584.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="271.0">
-         <children>
-            <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutY="31.0" prefHeight="20.0" prefWidth="237.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label focusTraversable="false" layoutX="141.0" text="Utilisateur connecté :">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="btnLogOut" fitHeight="36.0" fitWidth="26.0" layoutX="243.0" layoutY="28.0" onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../Ressources/images/shutdown.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-      </AnchorPane>
       <AnchorPane prefHeight="83.0" prefWidth="559.0" style="-fx-background-color: #F7A631;">
          <children>
             <Label layoutX="128.0" layoutY="23.0" prefHeight="38.0" prefWidth="223.0" text="Détails caisse">
@@ -54,7 +32,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Line endX="-274.0" endY="-23.0" layoutX="274.0" layoutY="106.0" startX="592.2929077148438" startY="-23.0">
+      <Line endX="-274.0" endY="-23.0" layoutX="274.0" layoutY="106.0" startX="592.2929077148438" startY="-23.0" AnchorPane.rightAnchor="0.0">
          <stroke>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -68,37 +46,37 @@
       </Line>
       <Label focusTraversable="false" layoutX="158.0" layoutY="90.0" text="N° Shift">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label focusTraversable="false" layoutX="14.0" layoutY="90.0" text="Date">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="lblShiftNumber" focusTraversable="false" layoutX="180.0" layoutY="117.0" text="1">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label focusTraversable="false" layoutX="348.0" layoutY="90.0" text="Crée par">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblCaisseCreator" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="241.0" layoutY="117.0" prefHeight="20.0" prefWidth="271.0" textAlignment="CENTER">
+      <Label fx:id="lblCaisseCreator" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="257.0" layoutY="117.0" prefHeight="20.0" prefWidth="244.0" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="543.0" layoutY="90.0" text="Etat" textAlignment="RIGHT">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="lblCaisseStatus" alignment="TOP_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="506.0" layoutY="117.0" prefHeight="20.0" prefWidth="65.0" textAlignment="RIGHT">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <TableView fx:id="tableIncomes" cacheShape="false" fixedCellSize="0.0" focusTraversable="false" layoutX="12.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="163.0" prefWidth="846.0" scaleShape="false" tableMenuButtonVisible="true">
@@ -113,33 +91,33 @@
       </TableView>
       <Label focusTraversable="false" layoutX="14.0" layoutY="170.0" prefHeight="20.0" prefWidth="139.0" text="Recetttes" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label focusTraversable="false" layoutX="13.0" layoutY="395.0" prefHeight="20.0" prefWidth="139.0" text="Dépenses" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="lblTotalIncomes" alignment="TOP_RIGHT" focusTraversable="false" layoutX="709.0" layoutY="364.0" prefHeight="20.0" prefWidth="147.0" text="0 €" textAlignment="CENTER">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="lblTotalExpenses" alignment="TOP_RIGHT" focusTraversable="false" layoutX="709.0" layoutY="587.0" prefHeight="20.0" prefWidth="147.0" text="0 €" textAlignment="CENTER">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Label focusTraversable="false" layoutX="14.0" layoutY="617.0" prefHeight="20.0" prefWidth="139.0" text="Monnaie en caisse" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7a631" height="38.0" layoutX="327.0" layoutY="771.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="223.0" />
       <Label fx:id="lblTotalCaisse" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" layoutX="328.0" layoutY="776.0" prefHeight="28.0" prefWidth="223.0" text="0 €" textAlignment="CENTER">
          <font>
-            <Font size="19.0" />
+            <Font name="Poppins Regular" size="18.0" />
          </font>
       </Label>
       <JFXTextArea fx:id="txtAreaCommentCaisse" editable="false" focusColor="#f7a631" layoutX="592.0" layoutY="85.0" prefHeight="83.0" prefWidth="264.0" promptText="Commentaire" wrapText="true">
@@ -179,19 +157,19 @@
       </TableView>
       <Label fx:id="lblTotalCash" alignment="TOP_RIGHT" focusTraversable="false" layoutX="675.0" layoutY="713.0" prefHeight="20.0" prefWidth="181.0" text="0 €" textAlignment="CENTER">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Separator layoutX="12.0" layoutY="742.0" prefHeight="1.0" prefWidth="846.0" />
       <Label fx:id="lblDate" focusTraversable="false" layoutX="14.0" layoutY="117.0" prefHeight="20.0" prefWidth="124.0" text="1">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Separator layoutX="13.0" layoutY="149.0" prefHeight="1.0" prefWidth="559.0" />
       <JFXButton fx:id="btnOk" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="561.0" layoutY="771.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #5dbcd2;" text="Ok">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -203,7 +181,7 @@
       </JFXButton>
       <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="198.0" layoutY="771.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
@@ -213,5 +191,27 @@
             </ImageView>
          </graphic>
       </JFXButton>
+      <AnchorPane layoutX="581.0" layoutY="15.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="5.0" layoutY="29.0" prefHeight="20.0" prefWidth="225.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
+               <font>
+                  <Font name="Poppins Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="117.0" prefHeight="20.0" prefWidth="170.0" text="Utilisateur connecté :">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="btnLogOut" fitHeight="36.0" fitWidth="26.0" layoutX="240.0" layoutY="27.0" onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/shutdown.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

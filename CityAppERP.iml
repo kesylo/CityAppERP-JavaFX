@@ -7,11 +7,50 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jfoenix-8.0.8" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.17" level="project" />
-    <orderEntry type="library" name="fontawesomefx-8.9" level="project" />
-    <orderEntry type="library" name="io.github.typhon0:AnimateFX:1.2.1" level="project" />
-    <orderEntry type="library" name="AnimateFX-1.2.1" level="project" />
-    <orderEntry type="library" name="TrayNotification" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library name="AnimeFX">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libraries/AnimateFX-1.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="FontAwesome">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libraries/fontawesomefx-8.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="JFoenix">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libraries/jfoenix-8.0.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="SQLConnector">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libraries/mysql-connector-java-8.0.17.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="TrayNotif">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libraries/TrayNotification.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

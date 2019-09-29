@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="587.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.countCashCaisseController">
    <children>
       <AnchorPane layoutY="-8.0" prefHeight="83.0" prefWidth="273.0" style="-fx-background-color: #F7A631;">
@@ -31,14 +30,14 @@
       </AnchorPane>
       <Pane layoutX="21.0" layoutY="82.0" prefHeight="395.0" prefWidth="231.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="82.0">
          <children>
-            <Label layoutX="155.0" layoutY="4.0" text="Somme €">
+            <Label layoutX="163.0" layoutY="4.0" text="Somme">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="4.0" text="Quantité">
+            <Label layoutX="10.0" layoutY="4.0" text="Quantité">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
             <Separator layoutX="16.0" layoutY="28.0" prefWidth="200.0" />
@@ -46,52 +45,52 @@
                <children>
                   <Label focusTraversable="false" prefHeight="25.0" text="Cent(s)">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="50 cents">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="1 euro">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="2 euros">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="5 euros">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="10 euros">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="20 euros">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="50 euros">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="100 euros">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                   <Label focusTraversable="false" prefHeight="25.0" text="200 euros">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
                </children>
@@ -100,7 +99,7 @@
                <children>
                   <JFXTextField fx:id="txtLessThanFiftyCents" alignment="CENTER_RIGHT" focusColor="#f8ae2e" focusTraversable="false" onMouseClicked="#selectText" prefHeight="25.0" prefWidth="93.0" text="0">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
                   <ComboBox fx:id="txtBoxFiftyCents" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#computeTotal" prefHeight="25.0" prefWidth="58.0" visibleRowCount="5" />
@@ -119,22 +118,22 @@
       </Pane>
       <Label focusTraversable="false" layoutX="36.0" layoutY="496.0" prefHeight="20.0" prefWidth="54.0" text="Total :">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="countTotal" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="94.0" layoutY="494.0" prefHeight="25.0" prefWidth="131.0" text="0">
+      <Label fx:id="countTotal" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="90.0" layoutY="494.0" prefHeight="25.0" prefWidth="125.0" text="0">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="countTotal1" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="227.0" layoutY="494.0" prefHeight="25.0" prefWidth="6.0" text="€">
+      <Label fx:id="countTotal1" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="218.0" layoutY="494.0" prefHeight="25.0" prefWidth="14.0" text="€">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
       </Label>
       <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="83.0" layoutY="535.0" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #5dbcd2;" text="OK">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">

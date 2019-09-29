@@ -1,9 +1,11 @@
 package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import sample.Controller.Global;
+import sample.Controller.dialogController;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
@@ -35,6 +37,7 @@ public class createCaisseController{
 
     private DBHandler db = new DBHandler();
     private Double amountLastCaisse = 0.0;
+    private dialogController wd = null;
     private URL toCaisseDashboard = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
 
     @FXML
@@ -42,7 +45,10 @@ public class createCaisseController{
 
         // get last caisse amount
         /*amountLastCaisse = db.getLastAmountCaisse();*/
-        amountLastCaisse = Global.getCurrentCaisse().getMontant();
+        if (Global.getNberOfCaisses() > 0){
+            amountLastCaisse = Global.getCurrentCaisse().getMontant();
+        }
+
         // init fields
         fillUiElmts();
 
@@ -59,15 +65,16 @@ public class createCaisseController{
     private void createCaisse() {
         // insert caisse in DB
         Caisse caisse = new Caisse();
-        int caisseWithSameDate = db.getNbrCaisseWithSameDate(LocalDate.now().toString());
+        int caisseWithSameDate = db.getNbrCaisseWithSameDate(Date.valueOf(LocalDate.now()));
 
         if (caisseWithSameDate == 0){
             configureCaisse(caisse);
             // there is no shift at that date
             caisse.setNumeroShift(1);
-            // create caisse
-            db.createCaisse(caisse);
-            // show succès message
+            //db.createCaisse(caisse);
+            // in new thread
+            sendDataToDB(caisse);
+            // show success message
             congrats();
             // go to dashboard
             Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
@@ -75,14 +82,18 @@ public class createCaisseController{
             configureCaisse(caisse);
             // there is 1 shift already
             caisse.setNumeroShift(2);
-            db.createCaisse(caisse);
+            //db.createCaisse(caisse);
+            // in new thread
+            sendDataToDB(caisse);
             congrats();
             Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
         } else if (caisseWithSameDate == 2){
             configureCaisse(caisse);
             // there are 2 caisses already, create last
             caisse.setNumeroShift(3);
-            db.createCaisse(caisse);
+            //db.createCaisse(caisse);
+            // in new thread
+            sendDataToDB(caisse);
             congrats();
             Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
         } else {
@@ -91,6 +102,20 @@ public class createCaisseController{
                     "Chaque journée à droit à maximum 3 shifts.");
             Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
         }
+    }
+
+    private void sendDataToDB(Caisse caisse) {
+        Platform.runLater(() ->{
+            wd = new dialogController(btnCancel.getScene().getWindow(), "loading");
+
+            wd.exec("123", inputParam -> {
+                db.createCaisse(caisse);
+
+                return new Integer(1);
+            });
+
+        });
+
     }
 
     private void configureCaisse (Caisse caisse){

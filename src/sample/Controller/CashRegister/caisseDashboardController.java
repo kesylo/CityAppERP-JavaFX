@@ -1,11 +1,10 @@
 package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,14 +13,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import sample.Controller.Global;
+import sample.Controller.dialogController;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class caisseDashboardController{
 
@@ -31,16 +29,13 @@ public class caisseDashboardController{
     private JFXButton btnRefresh;
 
     @FXML
+    private JFXButton btnCancel;
+
+    @FXML
     private TableColumn<Caisse, String> clmDate;
 
     @FXML
     private TableColumn<Caisse, Integer> clmShift;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private ImageView btnLogOut;
@@ -69,6 +64,7 @@ public class caisseDashboardController{
     //endregion
 
     private DBHandler dbHandler;
+    private dialogController wd = null;
 
     @FXML
     void logOut(MouseEvent event) {
@@ -87,14 +83,19 @@ public class caisseDashboardController{
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
-        // add dates to listview
-        fillTable();
+        // get all caisses
+        getAllCaisses();
+
+        btnCancel.setOnAction(event -> {
+            btnCancel.getScene().getWindow().hide();
+        });
 
         btnFillCaisse.setOnAction(event -> {
             initCaissesInfos();
         });
 
         btnDetailCaisse.setOnAction(event -> {
+
            if (Global.getNberOfCaisses() >= 1){
                // set the preview caisse globally
                Caisse previewCaisse = tableDateShifts.getSelectionModel().getSelectedItem();
@@ -113,7 +114,7 @@ public class caisseDashboardController{
 
         btnRefresh.setOnAction(event -> {
            tableDateShifts.getItems().clear();
-           fillTable();
+           getAllCaisses();
        });
 
         btnIncomeExpense.setOnAction(event -> {
@@ -123,6 +124,8 @@ public class caisseDashboardController{
            }
        });
     }
+
+
 
     /*----------------------------------------------------------------------------------------------*/
 
@@ -143,7 +146,7 @@ public class caisseDashboardController{
             // close caisse
             boolean action = Global.showInfoMessageWithBtn(
                     "Fermeture de la caisse",
-                    "Etes-vous sûr de vouloir fermer cette caisse ?",
+                    "Etes-vous sûr de vouloir fermer la dernière caisse ?",
                     "Oui",
                     "Non");
 
@@ -177,17 +180,30 @@ public class caisseDashboardController{
         }
     }
 
-    private void fillTable() {
-        ResultSet caisseRow = dbHandler.getAllFromCaisse();
+    private void getAllCaisses() {
 
-        /*// Set table column names
-        TableColumn date = new TableColumn("Date");
-        TableColumn shift = new TableColumn("Shift");
-        tableDateShifts.getColumns().addAll(date, shift);*/
+        Platform.runLater(() ->{
+            // prepare loading screen
+            wd = new dialogController(btnFillCaisse.getScene().getWindow(), "loading");
 
-        // Create list data
+            wd.exec("123", inputParam -> {
+                // run long longTask
+                final ObservableList<Caisse> data = longTask();
+                Global.setCaisseList(data);
+
+                Platform.runLater(() ->{
+                    fillTable(Global.getCaisseList());
+                });
+
+                return new Integer(1);
+            });
+        });
+    }
+
+    private ObservableList<Caisse> longTask() {
         ObservableList<Caisse> data = FXCollections.observableArrayList();
 
+        ResultSet caisseRow = dbHandler.getAllFromCaisse();
         try {
             while (caisseRow.next()) {
                 Caisse caisse = new Caisse(
@@ -204,9 +220,10 @@ public class caisseDashboardController{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return data;
+    }
 
-        /*date.setCellValueFactory(new PropertyValueFactory<Caisse, String>("date"));
-        shift.setCellValueFactory(new PropertyValueFactory<Caisse, String>("numeroShift"));*/
+    private void fillTable( ObservableList<Caisse> data) {
 
         clmDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
         clmShift.setCellValueFactory(new PropertyValueFactory<>("NumeroShift"));
@@ -232,6 +249,7 @@ public class caisseDashboardController{
                 Global.setBeforeCurrentCaisse(beforeLastCaisse);
             }
         }
+        tableDateShifts.getSelectionModel().selectFirst();
     }
 
 }

@@ -9,57 +9,58 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="txtUsername" cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.LoginController">
+<AnchorPane id="txtUsername" cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.LoginController">
     <children>
-        <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #F7A630;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane layoutX="-2.0" prefHeight="140.0" prefWidth="478.0" style="-fx-background-color: #F7A630;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fx:id="imgLogo" fitHeight="77.0" fitWidth="320.0" layoutX="204.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="imgLogo" fitHeight="90.0" fitWidth="424.0" layoutX="27.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Ressources/images/logo.jpg" />
                     </image>
                 </ImageView>
             </children>
         </Pane>
-        <JFXTextField fx:id="txtUsername" cache="true" focusColor="#f7a630" labelFloat="true" layoutX="252.0" layoutY="134.0" prefHeight="30.0" prefWidth="259.0" promptText="Nom d'utilisateur" unFocusColor="BLACK">
+        <JFXTextField fx:id="txtUsername" cache="true" focusColor="#f7a630" labelFloat="true" layoutX="126.0" layoutY="177.0" prefHeight="30.0" prefWidth="259.0" promptText="Nom d'utilisateur" unFocusColor="BLACK">
             <font>
-                <Font size="14.0" />
+                <Font name="Poppins Regular" size="14.0" />
             </font>
         </JFXTextField>
-        <JFXPasswordField fx:id="txtPassword" focusColor="#f7a630" labelFloat="true" layoutX="252.0" layoutY="200.0" prefHeight="30.0" prefWidth="259.0" promptText="Mot de passe" unFocusColor="BLACK">
+        <JFXPasswordField fx:id="txtPassword" focusColor="#f7a630" labelFloat="true" layoutX="127.0" layoutY="251.0" prefHeight="30.0" prefWidth="259.0" promptText="Mot de passe" unFocusColor="BLACK">
             <font>
-                <Font size="14.0" />
+                <Font name="Poppins Regular" size="14.0" />
             </font>
         </JFXPasswordField>
-        <Label layoutX="261.0" layoutY="377.0" text="City Center Apartments ERP 2019 ©">
+        <Label layoutX="119.0" layoutY="596.0" text="City Center Apartments ERP 2019 ©">
             <font>
-                <Font size="13.0" />
+                <Font name="Poppins Regular" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="283.0" prefHeight="20.0" prefWidth="287.0" text="Nom d'utilisateur ou mot de passe incorrect ." textAlignment="CENTER" textFill="#ff3d3d" visible="false">
+        <Label fx:id="lblErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="357.0" prefHeight="20.0" prefWidth="365.0" text="Nom d'utilisateur ou mot de passe incorrect ." textAlignment="CENTER" textFill="#ff3d3d" visible="false">
             <font>
-                <Font size="14.0" />
+                <Font name="Poppins Regular" size="14.0" />
             </font>
         </Label>
-      <ImageView fx:id="pwdIcon" fitHeight="30.0" fitWidth="34.0" layoutX="208.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pwdIcon" fitHeight="30.0" fitWidth="34.0" layoutX="83.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Ressources/images/icons8_password_52px.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="userIcon" fitHeight="30.0" fitWidth="34.0" layoutX="208.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="userIcon" fitHeight="30.0" fitWidth="34.0" layoutX="82.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Ressources/images/icons8_user_male_circle_52px.png" />
          </image>
       </ImageView>
-      <Hyperlink fx:id="lblRegister" layoutX="411.0" layoutY="248.0" onAction="#goToDashboard" text="S'enregistrer &gt;">
+      <Hyperlink fx:id="lblRegister" layoutX="295.0" layoutY="308.0" onAction="#goToDashboard" text="S'enregistrer &gt;">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
       </Hyperlink>
-      <JFXButton fx:id="btnConnection" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="285.0" layoutY="316.0" prefHeight="38.0" prefWidth="158.0" style="-fx-background-color: #f7a631;" text="Connexion" textAlignment="CENTER">
+      <JFXButton fx:id="btnConnection" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="158.0" layoutY="487.0" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: #f7a631;" text="Connexion" textAlignment="CENTER">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -69,10 +70,11 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <Label layoutX="217.0" layoutY="252.0" text="Vous n'avez pas de compte ?">
+      <Label layoutX="77.0" layoutY="312.0" text="Vous n'avez pas de compte ?">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
       </Label>
+      <Line endX="318.7928466796875" endY="80.0" layoutX="147.0" layoutY="507.0" startX="-158.7071533203125" startY="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
     </children>
 </AnchorPane>

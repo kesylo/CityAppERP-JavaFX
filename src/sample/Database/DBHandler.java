@@ -26,12 +26,12 @@ public class DBHandler extends DBConfig {
 
     /*------------------------------ SELECT -------------------------------------*/
 
-    public int getNbrCaisseWithSameDate (String date) {
+    public int getNbrCaisseWithSameDate (Date date) {
         String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date=?";
         int count = 0;
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
-            ps.setString(1, date);
+            ps.setDate(1, date);
             rs = ps.executeQuery();
 
             while (rs.next()) {

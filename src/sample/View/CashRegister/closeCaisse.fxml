@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="392.0" prefWidth="508.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.closeCaisseController">
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="508.0" style="-fx-background-color: #F7A631;">
@@ -25,32 +24,32 @@
          <children>
             <Label text="Date :">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
             <Label text="Shift :">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
             <Label text="Commentaires :">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
             <Label text="Etat :">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
             <Label text="Total Recettes">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
             <Label text="Total dépenses :">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
          </children>
@@ -59,61 +58,61 @@
          <children>
             <Label fx:id="lblDate" prefHeight="20.0" prefWidth="207.0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Poppins Regular" size="14.0" />
                </font>
             </Label>
             <Label fx:id="lblShiftNum" prefHeight="20.0" prefWidth="203.0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Poppins Regular" size="14.0" />
                </font>
             </Label>
             <Label fx:id="lblComments" prefHeight="20.0" prefWidth="355.0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Poppins Regular" size="14.0" />
                </font>
             </Label>
             <Label fx:id="lblEtat" prefHeight="20.0" prefWidth="207.0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Poppins Regular" size="14.0" />
                </font>
             </Label>
             <Label fx:id="lblTotalIncome" prefHeight="20.0" prefWidth="207.0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Poppins Regular" size="14.0" />
                </font>
             </Label>
             <Label fx:id="lblTotalExpenses" prefHeight="20.0" prefWidth="207.0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Poppins Regular" size="14.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <Label layoutX="19.0" layoutY="262.0" prefHeight="20.0" prefWidth="119.0" text="Somme en caisse: ">
+      <Label layoutX="19.0" layoutY="262.0" prefHeight="20.0" prefWidth="153.0" text="Somme en caisse: ">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
       </Label>
       <Separator layoutX="17.0" layoutY="256.0" prefHeight="3.0" prefWidth="475.0" />
-      <Label fx:id="lblTotalCaisse" layoutX="162.0" layoutY="262.0" prefHeight="20.0" prefWidth="190.0" text="0 euros">
+      <Label fx:id="lblTotalCaisse" layoutX="188.0" layoutY="262.0" prefHeight="20.0" prefWidth="164.0" text="0 euros">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
       <Separator layoutX="19.0" layoutY="319.0" prefHeight="3.0" prefWidth="475.0" />
-      <Label layoutX="19.0" layoutY="293.0" prefHeight="20.0" prefWidth="132.0" text="Résultat comptage :">
+      <Label layoutX="19.0" layoutY="293.0" prefHeight="20.0" prefWidth="153.0" text="Résultat comptage :">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblTotalCountAmount" layoutX="162.0" layoutY="293.0" prefHeight="20.0" prefWidth="190.0" text="0 euros">
+      <Label fx:id="lblTotalCountAmount" layoutX="188.0" layoutY="293.0" prefHeight="20.0" prefWidth="164.0" text="0 euros">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnCount" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="378.0" layoutY="270.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #f7a631;" text="Compter">
+      <JFXButton fx:id="btnCount" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="363.0" layoutY="270.0" prefHeight="38.0" prefWidth="131.0" style="-fx-background-color: #f7a631;" text="Compter">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -123,9 +122,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnCloseCaisse" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="270.0" layoutY="340.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #5dbcd2;" text="Fermer">
+      <JFXButton fx:id="btnCloseCaisse" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="292.0" layoutY="340.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #5dbcd2;" text="Fermer">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -135,9 +134,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnBack" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="122.0" layoutY="340.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
+      <JFXButton fx:id="btnBack" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="101.0" layoutY="340.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
          <font>
-            <Font size="14.0" />
+            <Font name="Poppins Regular" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
