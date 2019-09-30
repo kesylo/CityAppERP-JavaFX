@@ -15,7 +15,6 @@ import sample.Ressources.animation.Shaker;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class LoginController {
 
@@ -49,7 +48,7 @@ public class LoginController {
     @FXML
     void goToDashboard(ActionEvent event) {
         URL navPath = getClass().getResource("/sample/View/signup.fxml");
-        Global.goToWindow(navPath, btnConnection," - SignUp", true);
+        Global.closeAndGoToWindow(navPath," - SignUp");
     }
 
     @FXML
@@ -104,7 +103,7 @@ public class LoginController {
                     Global.setConnectedUser(user);
                     // goToDashboard
                     URL navPath = getClass().getResource("/sample/View/dashboard.fxml");
-                    Global.goToWindow(navPath, btnConnection,"Dashboard", true);
+                    Global.closeAndGoToWindow(navPath,"Dashboard");
 
                 } else {
                     System.out.println("login failed");

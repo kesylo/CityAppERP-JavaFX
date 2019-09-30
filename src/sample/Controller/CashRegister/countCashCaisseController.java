@@ -2,30 +2,23 @@ package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.glass.ui.Window;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
 public class countCashCaisseController {
 
@@ -148,7 +141,7 @@ public class countCashCaisseController {
         if (Double.parseDouble(countTotal.getText()) == Global.getComputedSoldeCaisse()){
             Global.closeWindow("Fermeture");
             URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-            Global.goToWindow(navPath, btnOK,"Fermeture", true);
+            Global.closeAndGoToWindow(navPath,"Fermeture");
         } else {
             // add error to caisse
             boolean result = Global.showInfoMessageWithBtn(
@@ -185,7 +178,7 @@ public class countCashCaisseController {
             if (Global.navFrom == "CloseCaisse"){
                 Global.closeWindow("Fermeture");
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.goToWindow(navPath, btnOK,"Fermeture", true);
+                Global.closeAndGoToWindow(navPath,"Fermeture");
                 // error sent
 
                 // update amount caisse
@@ -197,7 +190,7 @@ public class countCashCaisseController {
                 Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() + solde);
 
                 URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-                Global.goToWindow(navPath, btnOK,"Creation", true);
+                Global.closeAndGoToWindow(navPath,"Creation");
             }
 
 
@@ -211,7 +204,7 @@ public class countCashCaisseController {
             if (Global.navFrom == "CloseCaisse"){
                 Global.closeWindow("Fermeture");
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.goToWindow(navPath, btnOK,"Fermeture", true);
+                Global.closeAndGoToWindow(navPath,"Fermeture");
                 // error sent
 
                 // update amount caisse
@@ -222,7 +215,7 @@ public class countCashCaisseController {
                 // update amount caisse
                 Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() - solde);
                 URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-                Global.goToWindow(navPath, btnOK,"Creation", true);
+                Global.closeAndGoToWindow(navPath,"Creation");
             }
 
 
@@ -272,34 +265,6 @@ public class countCashCaisseController {
         DBHandler dbHandler = new DBHandler();
         dbHandler.addErrorLine(errorExpense);
     }
-
-/*    public void closeAllAndCreateCaisse() {
-        // get all windows and close
-        List<Window> windows = Window.getWindows();
-        for (int i = windows.size() - 1; i >= 0; i--) {
-            if (windows.get(i).getTitle() == Global.appName) {
-                windows.get(i).close();
-            }
-        }
-
-        // load login scène
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/View/CashRegister/createCaisse.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle(Global.appName);
-        stage.show();
-
-        // navigate to new screen
-        btnOK.getScene().getWindow().hide();
-    }*/
 
     private void setComboBoxValues() {
         setValuesFor(txtBoxTwoHundred);

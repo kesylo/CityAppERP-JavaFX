@@ -33,6 +33,8 @@ public class Global {
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
+    public static Stage stage = new Stage();
+    public Scene scene = null;
     //endregion
 
     //region Caisse App
@@ -48,6 +50,22 @@ public class Global {
 
     //region Getters and Setters
 
+
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static String getAppName() {
+        return appName;
+    }
+
+    public static void setAppName(String appName) {
+        Global.appName = appName;
+    }
+
+    public static void setStage(Stage stage) {
+        Global.stage = stage;
+    }
 
     public static ObservableList<Caisse> getCaisseList() {
         return caisseList;
@@ -158,12 +176,11 @@ public class Global {
         return false;
     }
 
-    public static void goToWindow (URL location, JFXButton anyBtn, String windowName, boolean closeWindow) {
+    public static void closeAndGoToWindow(URL location, String windowName) {
 
-        if (closeWindow){
+        /*if (closeWindow){
             anyBtn.getScene().getWindow().hide();
-        }
-
+        }*/
         /*List<Window> windows = Window.getWindows();
         Stage mywindow = new Stage();
         for (Window win : windows) {
@@ -173,22 +190,36 @@ public class Global {
         }*/
 
 
-         Stage stage = new Stage();
         try {
             Parent root = FXMLLoader.load(location);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle(appName + " " + windowName);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
-            // animate window
-            //new FadeIn(root).play();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void stayButGoToWindow(URL location, String windowName){
+        Stage mystage = new Stage();
+        try {
+            Parent root = FXMLLoader.load(location);
+            //Scene scene = new Scene(root);
+            //stage.setScene(scene);
+            mystage.setScene(new Scene(root));
+            mystage.setTitle(appName + " " + windowName);
+            mystage.setResizable(false);
+            mystage.centerOnScreen();
+            mystage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void setUserProfile(Label userName, ImageView logOutBtn){

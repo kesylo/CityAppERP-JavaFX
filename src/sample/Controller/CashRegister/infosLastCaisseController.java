@@ -170,7 +170,7 @@ public class infosLastCaisseController  {
 
         btnRetour.setOnAction(event -> {
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.goToWindow(navPath, btnRetour,"Caisse", true);
+            Global.closeAndGoToWindow(navPath,"Caisse");
         });
 
         btnOK.setOnAction(event -> {
@@ -182,10 +182,10 @@ public class infosLastCaisseController  {
 
             if (action){
                 URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-                Global.goToWindow(navPath, btnRetour,"Creation", true);
+                Global.closeAndGoToWindow(navPath,"Creation");
             }else {
                 URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
-                Global.goToWindow(navPath, btnRetour,"Comptage", true);
+                Global.closeAndGoToWindow(navPath,"Comptage");
             }
         });
     }
@@ -212,10 +212,10 @@ public class infosLastCaisseController  {
         }
 
         // fill incomes
-        fillIncomeTab();
+        getIncomeFromDB();
 
         // fill expenses
-        fillExpenseTab();
+        getExpenseFromDB();
 
         // fill cash table
         getCashFromDB();
@@ -257,7 +257,7 @@ public class infosLastCaisseController  {
         ObservableList<Cash> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement...");
+            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement du cash...");
 
             wd.exec("123", inputParam -> {
 
@@ -331,13 +331,12 @@ public class infosLastCaisseController  {
         tableCash.setItems(data);
     }
 
-
     private ObservableList<CaisseIncExp> getExpenseFromDB(){
         // Create list data
         ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement...");
+            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement des depenses ...");
 
             wd.exec("123", inputParam -> {
                 // get data from db
@@ -360,6 +359,11 @@ public class infosLastCaisseController  {
                         );
                         data.add(expense);
                     }
+
+                    // ui related element
+                    Platform.runLater(() ->{
+                        fillExpenseTab(data);
+                    });
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -370,8 +374,7 @@ public class infosLastCaisseController  {
         return data;
     }
 
-    private void fillExpenseTab() {
-        ObservableList<CaisseIncExp> data = getExpenseFromDB();
+    private void fillExpenseTab(ObservableList<CaisseIncExp> data) {
 
         for (int i=0; i < data.size(); i++){
             totalExpense += data.get(i).getAmount();
@@ -392,40 +395,49 @@ public class infosLastCaisseController  {
         tableExpenses.setItems(data);
     }
 
-    private void fillIncomeTab() {
+    private ObservableList<CaisseIncExp> getIncomeFromDB(){
         // Create list data
         ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
-        // get data from db
-        ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 0);
-        //ResultSet rs = dbHandler.getIncomeExpense(0, 0, 1);
+        Platform.runLater(() ->{
+            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement des recettes ...");
 
-        try {
-            while (rs.next()) {
-                CaisseIncExp income = new CaisseIncExp(
-                        rs.getDouble("montant"),
-                        rs.getDate("date"),
-                        rs.getString("time"),
-                        rs.getInt("employees_id"),
-                        rs.getString("remarque"),
-                        rs.getInt("numeroShift"),
-                        rs.getInt("fk_idCaisse"),
-                        rs.getString("reason"),
-                        rs.getString("indexClient"),
-                        rs.getInt("type"),
-                        rs.getString("salaryBeneficial")
-                );
+            wd.exec("123", inputParam -> {
+                ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 0);
+                //ResultSet rs = dbHandler.getIncomeExpense(0, 0, 1);
 
-                data.add(income);
+                try {
+                    while (rs.next()) {
+                        CaisseIncExp income = new CaisseIncExp(
+                                rs.getDouble("montant"),
+                                rs.getDate("date"),
+                                rs.getString("time"),
+                                rs.getInt("employees_id"),
+                                rs.getString("remarque"),
+                                rs.getInt("numeroShift"),
+                                rs.getInt("fk_idCaisse"),
+                                rs.getString("reason"),
+                                rs.getString("indexClient"),
+                                rs.getInt("type"),
+                                rs.getString("salaryBeneficial")
+                        );
+                        data.add(income);
+                    }
+                    // ui related element
+                    Platform.runLater(() ->{
+                        fillIncomeTab(data);
+                    });
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
-                // calculate total
-                /*totalIncome += income.getAmount();
-                lblTotalIncomes.setText(totalIncome + " €");*/
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+                return new Integer(1);
+            });
+        });
+        return data;
+    }
 
+    private void fillIncomeTab(ObservableList<CaisseIncExp> data) {
         for (int i=0; i < data.size(); i++){
             totalIncome += data.get(i).getAmount();
             lblTotalIncomes.setText(totalIncome + " €");

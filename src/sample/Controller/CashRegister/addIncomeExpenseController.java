@@ -6,8 +6,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -24,7 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import com.jfoenix.validation.RegexValidator;
 import sample.Model.CaisseIncExp;
 
 public class addIncomeExpenseController {
@@ -129,7 +126,7 @@ public class addIncomeExpenseController {
 
         btnCancel.setOnAction(event -> {
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.goToWindow(navPath, btnCreate,"Caisse", true);
+            Global.closeAndGoToWindow(navPath,"Caisse");
         });
 
         btnCreate.setOnAction(event -> {
@@ -502,7 +499,7 @@ public class addIncomeExpenseController {
             // form ok. save to db
             saveToDB();
             URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-            Global.goToWindow(navPath, btnCreate,"Actions", true);
+            Global.closeAndGoToWindow(navPath,"Actions");
             // show notification
             Global.successSystemNotif(
                     "Opération éffectuée avec succès.",
@@ -510,7 +507,7 @@ public class addIncomeExpenseController {
         }else {
             saveToDB();
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.goToWindow(navPath, btnCreate,"Caisse", true);
+            Global.closeAndGoToWindow(navPath,"Caisse");
             // show notification
             Global.successSystemNotif(
                     "Opération éffectuée avec succès.",

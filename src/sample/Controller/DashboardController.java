@@ -1,22 +1,13 @@
 package sample.Controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import sample.Database.DBHandler;
-import sample.Model.Caisse;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -49,7 +40,7 @@ public class DashboardController implements Initializable {
         btnNavToCaisse.setOnAction(event -> {
             // nav to caisse when data are fetched
             URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.goToWindow(toCaisse, btnNavToCaisse,"Caisse", false);
+            Global.closeAndGoToWindow(toCaisse, "Caisse");
         });
     }
 

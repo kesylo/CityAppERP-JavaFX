@@ -24,9 +24,11 @@ public class Main extends Application {
         //primaryStage.setScene(new Scene(root, 478, 628));
         primaryStage.setScene(new Scene(root, 986, 609));
         primaryStage.setResizable(false);
+        primaryStage.centerOnScreen();
         primaryStage.show();
-        // animate window
-        new FadeIn(root).play();
+
+        // set stage globally for faster navigation
+        Global.setStage(primaryStage);
     }
 
 

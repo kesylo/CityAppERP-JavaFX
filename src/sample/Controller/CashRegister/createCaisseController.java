@@ -57,7 +57,7 @@ public class createCaisseController{
         });
 
         btnCancel.setOnAction(event -> {
-            Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
+            Global.closeAndGoToWindow(toCaisseDashboard,"Caisse");
         });
     }
     /*----------------------------------------------------------------------------------------------------------*/
@@ -76,7 +76,7 @@ public class createCaisseController{
             // show success message
             congrats();
             // go to dashboard
-            Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
+            Global.closeAndGoToWindow(toCaisseDashboard,"Caisse");
         } else if (caisseWithSameDate == 1){
             configureCaisse(caisse);
             // there is 1 shift already
@@ -84,7 +84,7 @@ public class createCaisseController{
             // in new thread
             sendDataToDB(caisse);
             congrats();
-            Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
+            Global.closeAndGoToWindow(toCaisseDashboard,"Caisse");
         } else if (caisseWithSameDate == 2){
             configureCaisse(caisse);
             // there are 2 caisses already, create last
@@ -92,12 +92,12 @@ public class createCaisseController{
             // in new thread
             sendDataToDB(caisse);
             congrats();
-            Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
+            Global.closeAndGoToWindow(toCaisseDashboard,"Caisse");
         } else {
             // we can't create another caisse for this date
             Global.showErrorMessage("Erreur lors de la création de la caisse. Il existe deja 3 caisses pour la date d'aujourd'hui.",
                     "Chaque journée à droit à maximum 3 shifts.");
-            Global.goToWindow(toCaisseDashboard, btnCreate,"Caisse", true);
+            Global.closeAndGoToWindow(toCaisseDashboard,"Caisse");
         }
     }
 

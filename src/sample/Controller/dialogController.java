@@ -1,5 +1,6 @@
 package sample.Controller;
 
+import com.jfoenix.controls.JFXProgressBar;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -27,11 +29,14 @@ public class dialogController<P> {
     private Task animationWorker;
     private Task<Integer> taskWorker;
 
+
+
     private final ProgressIndicator progressIndicator = new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS);
+    //private final JFXProgressBar progressIndicator = new JFXProgressBar(JFXProgressBar.INDETERMINATE_PROGRESS);
     private final Stage dialog = new Stage(StageStyle.UNDECORATED);
     private final Label label = new Label();
     private final Group root = new Group();
-    private final Scene scene = new Scene(root, 330, 120, Color.WHITE);
+    private final Scene scene = new Scene(root, 330, 120, Color.BLACK);
     private final BorderPane mainPane = new BorderPane();
     private final VBox vbox = new VBox();
 
@@ -74,7 +79,7 @@ public class dialogController<P> {
      */
     private void setupDialog() {
         root.getChildren().add(mainPane);
-        vbox.setSpacing(5);
+        vbox.setSpacing(10);
         vbox.setAlignment(Pos.CENTER);
         vbox.setMinSize(330, 120);
         vbox.getChildren().addAll(label,progressIndicator);
@@ -112,6 +117,8 @@ public class dialogController<P> {
 
         progressIndicator.setProgress(0);
         progressIndicator.progressProperty().unbind();
+        label.setTextFill(Color.WHITE);
+        label.setFont(new Font("Poppies", 14));
         progressIndicator.progressProperty().bind(animationWorker.progressProperty());
 
         animationWorker.messageProperty().addListener((observable, oldValue, newValue) -> {

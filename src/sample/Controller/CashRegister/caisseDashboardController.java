@@ -102,7 +102,7 @@ public class caisseDashboardController{
                Global.setPreviewCaisse(previewCaisse);
                // open preview window
                URL navPath = getClass().getResource("/sample/View/CashRegister/detailsCaisse.fxml");
-               Global.goToWindow(navPath, btnFillCaisse,"Details", false);
+               Global.stayButGoToWindow(navPath,"Details");
            }
        });
 
@@ -120,7 +120,7 @@ public class caisseDashboardController{
         btnIncomeExpense.setOnAction(event -> {
            if (Global.getNberOfCaisses() >= 1){
                URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-               Global.goToWindow(navPath, btnFillCaisse,"Actions", true);
+               Global.closeAndGoToWindow(navPath,"Actions");
            }
        });
     }
@@ -153,7 +153,7 @@ public class caisseDashboardController{
             if (action){
                 // go to fermeture
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.goToWindow(navPath, btnFillCaisse,"Fermeture", true);
+                Global.closeAndGoToWindow(navPath,"Fermeture");
             }
         }
     }
@@ -164,7 +164,7 @@ public class caisseDashboardController{
                 // 0 = closed
                 // go to infos Caisse
                 URL location = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
-                Global.goToWindow(location, btnFillCaisse, "Recap", true);
+                Global.closeAndGoToWindow(location, "Recap");
 
             } else {
                 // 1 = opened
@@ -176,7 +176,7 @@ public class caisseDashboardController{
         }else {
             // go to infos Caisse
             URL location = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-            Global.goToWindow(location, btnFillCaisse, "Creation", true);
+            Global.closeAndGoToWindow(location, "Creation");
         }
     }
 

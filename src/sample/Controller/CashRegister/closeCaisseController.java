@@ -9,8 +9,6 @@ import sample.Database.DBHandler;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class closeCaisseController {
 
@@ -67,7 +65,7 @@ public class closeCaisseController {
             Global.navFrom = "CloseCaisse";
 
             URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
-            Global.goToWindow(navPath, btnCount,"Comptage", false);
+            Global.stayButGoToWindow(navPath,"Comptage");
         });
 
         btnBack.setOnAction(event -> {
@@ -75,7 +73,7 @@ public class closeCaisseController {
             Global.setCountCashResult(0.0);
 
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.goToWindow(navPath, btnCount,"Caisse", true);
+            Global.closeAndGoToWindow(navPath,"Caisse");
         });
 
         btnCloseCaisse.setOnAction(event -> {
@@ -92,7 +90,7 @@ public class closeCaisseController {
                     );
                 }
                 URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-                Global.goToWindow(navPath, btnCount,"Caisse", true);
+                Global.closeAndGoToWindow(navPath,"Caisse");
             }
             else {
                 Global.showErrorMessage("Erreur lors de la ferméture.",
