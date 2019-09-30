@@ -71,7 +71,6 @@ public class createCaisseController{
             configureCaisse(caisse);
             // there is no shift at that date
             caisse.setNumeroShift(1);
-            //db.createCaisse(caisse);
             // in new thread
             sendDataToDB(caisse);
             // show success message
@@ -82,7 +81,6 @@ public class createCaisseController{
             configureCaisse(caisse);
             // there is 1 shift already
             caisse.setNumeroShift(2);
-            //db.createCaisse(caisse);
             // in new thread
             sendDataToDB(caisse);
             congrats();
@@ -91,7 +89,6 @@ public class createCaisseController{
             configureCaisse(caisse);
             // there are 2 caisses already, create last
             caisse.setNumeroShift(3);
-            //db.createCaisse(caisse);
             // in new thread
             sendDataToDB(caisse);
             congrats();
@@ -106,7 +103,7 @@ public class createCaisseController{
 
     private void sendDataToDB(Caisse caisse) {
         Platform.runLater(() ->{
-            wd = new dialogController(btnCancel.getScene().getWindow(), "loading");
+            wd = new dialogController(btnCancel.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
                 db.createCaisse(caisse);

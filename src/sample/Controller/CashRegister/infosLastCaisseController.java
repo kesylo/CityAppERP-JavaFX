@@ -2,6 +2,7 @@ package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sample.Controller.Global;
+import sample.Controller.dialogController;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
@@ -143,9 +145,10 @@ public class infosLastCaisseController  {
     //endregion
 
     DBHandler dbHandler;
-    double totalCash = 0;
+    double totalCash;
     double totalExpense = 0;
     double totalIncome = 0;
+    private dialogController wd = null;
 
     @FXML
     void logOut(MouseEvent event) {
@@ -155,6 +158,8 @@ public class infosLastCaisseController  {
 
     @FXML
     void initialize() {
+        totalCash = 0.0;
+
         // init DB access
         dbHandler = new DBHandler();
 
@@ -213,7 +218,7 @@ public class infosLastCaisseController  {
         fillExpenseTab();
 
         // fill cash table
-        fillCashTab();
+        getCashFromDB();
 
         // calculate caisse
         computeCaisse();
@@ -247,50 +252,69 @@ public class infosLastCaisseController  {
         }
     }
 
-    private void fillCashTab() {
+    private void getCashFromDB() {
         // Create list data
         ObservableList<Cash> data = FXCollections.observableArrayList();
 
-        // get data from db
-        ResultSet rs = dbHandler.getCash(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift());
-        //ResultSet rs = dbHandler.getCash(1, 1);
+        Platform.runLater(() ->{
+            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement...");
 
-        try {
-            while (rs.next()) {
-                Cash cash = new Cash(
-                        rs.getInt("caisse_idCaisse"),
-                        rs.getInt("numeroShift"),
-                        rs.getDouble("lessThanOneEuro"),
-                        rs.getInt("fiftyCents"),
-                        rs.getInt("oneEuro"),
-                        rs.getInt("twoEuros"),
-                        rs.getInt("fiveEuros"),
-                        rs.getInt("tenEuros"),
-                        rs.getInt("twentyEuros"),
-                        rs.getInt("fiftyEuros"),
-                        rs.getInt("oneHundredEuros"),
-                        rs.getInt("twoHundredEuros")
-                );
+            wd.exec("123", inputParam -> {
 
-                data.add(cash);
+                ResultSet rs = dbHandler.getCash(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift());
 
-                // calculate total
-                totalCash = cash.getLessThanFiftyCents()
-                        + cash.getFiftyCents() * 0.50
-                        + cash.getOneEuro()
-                        + cash.getTwoEuros() * 2
-                        + cash.getFiveEuros() * 5
-                        + cash.getTenEuros() * 10
-                        + cash.getTwentyEuros() * 20
-                        + cash.getFiftyEuros() * 50
-                        + cash.getOnehundredeuros() * 100
-                        + cash.getTwoHundredEuros() * 200;
+                try {
+                    while (rs.next()) {
+                        Cash cash = new Cash(
+                                rs.getInt("caisse_idCaisse"),
+                                rs.getInt("numeroShift"),
+                                rs.getDouble("lessThanOneEuro"),
+                                rs.getInt("fiftyCents"),
+                                rs.getInt("oneEuro"),
+                                rs.getInt("twoEuros"),
+                                rs.getInt("fiveEuros"),
+                                rs.getInt("tenEuros"),
+                                rs.getInt("twentyEuros"),
+                                rs.getInt("fiftyEuros"),
+                                rs.getInt("oneHundredEuros"),
+                                rs.getInt("twoHundredEuros")
+                        );
 
-                lblTotalCash.setText(totalCash + " €");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+                        data.add(cash);
+
+                        // ui related element
+                        Platform.runLater(() ->{
+                            fillCashTab(data);
+                        });
+
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                return new Integer(1);
+            });
+
+        });
+    }
+
+    private void fillCashTab(ObservableList<Cash> data) {
+
+        for (Cash d : data){
+            totalCash = d.getLessThanFiftyCents()
+                    + d.getFiftyCents() * 0.50
+                    + d.getOneEuro()
+                    + d.getTwoEuros() * 2
+                    + d.getFiveEuros() * 5
+                    + d.getTenEuros() * 10
+                    + d.getTwentyEuros() * 20
+                    + d.getFiftyEuros() * 50
+                    + d.getOnehundredeuros() * 100
+                    + d.getTwoHundredEuros() * 200;
         }
+
+        lblTotalCash.setText(totalCash + " €");
+
         // link ui tabs to class methods
         clmLessThanOne.setCellValueFactory(new PropertyValueFactory<>("LessThanFiftyCents"));
         clmFiftyCents.setCellValueFactory(new PropertyValueFactory<>("FiftyCents"));
@@ -307,39 +331,55 @@ public class infosLastCaisseController  {
         tableCash.setItems(data);
     }
 
-    private void fillExpenseTab() {
+
+    private ObservableList<CaisseIncExp> getExpenseFromDB(){
         // Create list data
         ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
-        // get data from db
-        ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 1);
-        //ResultSet rs = dbHandler.getIncomeExpense(0, 0, 0);
+        Platform.runLater(() ->{
+            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement...");
 
-        try {
-            while (rs.next()) {
-                CaisseIncExp expense = new CaisseIncExp(
-                        rs.getDouble("montant"),
-                        rs.getDate("date"),
-                        rs.getString("time"),
-                        rs.getInt("employees_id"),
-                        rs.getString("remarque"),
-                        rs.getInt("numeroShift"),
-                        rs.getInt("fk_idCaisse"),
-                        rs.getString("reason"),
-                        rs.getString("indexClient"),
-                        rs.getInt("type"),
-                        rs.getString("salaryBeneficial")
-                );
+            wd.exec("123", inputParam -> {
+                // get data from db
+                ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 1);
 
-                data.add(expense);
+                try {
+                    while (rs.next()) {
+                        CaisseIncExp expense = new CaisseIncExp(
+                                rs.getDouble("montant"),
+                                rs.getDate("date"),
+                                rs.getString("time"),
+                                rs.getInt("employees_id"),
+                                rs.getString("remarque"),
+                                rs.getInt("numeroShift"),
+                                rs.getInt("fk_idCaisse"),
+                                rs.getString("reason"),
+                                rs.getString("indexClient"),
+                                rs.getInt("type"),
+                                rs.getString("salaryBeneficial")
+                        );
+                        data.add(expense);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
-                // calculate total
-                totalExpense += expense.getAmount();
-                lblTotalExpenses.setText(totalExpense + " €");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+                return new Integer(1);
+            });
+        });
+        return data;
+    }
+
+    private void fillExpenseTab() {
+        ObservableList<CaisseIncExp> data = getExpenseFromDB();
+
+        for (int i=0; i < data.size(); i++){
+            totalExpense += data.get(i).getAmount();
+            System.out.println(data.get(i).getAmount());
+            System.out.println(data.size());
         }
+        lblTotalExpenses.setText(totalExpense + " €");
+
         // link ui tabs to class methods
         clmCreationDateE.setCellValueFactory(new PropertyValueFactory<>("CreationDate"));
         clmTimeE.setCellValueFactory(new PropertyValueFactory<>("Time"));
@@ -379,12 +419,18 @@ public class infosLastCaisseController  {
                 data.add(income);
 
                 // calculate total
-                totalIncome += income.getAmount();
-                lblTotalIncomes.setText(totalIncome + " €");
+                /*totalIncome += income.getAmount();
+                lblTotalIncomes.setText(totalIncome + " €");*/
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        for (int i=0; i < data.size(); i++){
+            totalIncome += data.get(i).getAmount();
+            lblTotalIncomes.setText(totalIncome + " €");
+        }
+
         // link ui tabs to class methods
         clmCreationDate.setCellValueFactory(new PropertyValueFactory<>("CreationDate"));
         clmTime.setCellValueFactory(new PropertyValueFactory<>("Time"));

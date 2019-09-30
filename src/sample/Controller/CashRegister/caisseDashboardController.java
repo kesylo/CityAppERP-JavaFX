@@ -184,7 +184,7 @@ public class caisseDashboardController{
 
         Platform.runLater(() ->{
             // prepare loading screen
-            wd = new dialogController(btnFillCaisse.getScene().getWindow(), "loading");
+            wd = new dialogController(btnFillCaisse.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
                 // run long longTask
