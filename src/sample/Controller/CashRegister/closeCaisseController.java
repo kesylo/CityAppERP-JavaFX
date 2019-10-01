@@ -1,8 +1,10 @@
 package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import sample.Controller.DialogController;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
 
@@ -54,6 +56,8 @@ public class closeCaisseController {
     @FXML
     private JFXButton btnCloseCaisse;
     //endregion
+
+    private DialogController wd = null;
 
     @FXML
     void initialize() {
@@ -109,27 +113,45 @@ public class closeCaisseController {
     }
 
     private void loadData() {
-        // compute total income
-        totalIncome = computeIncome();
 
-        // compute total expenses
-        totalExpense = computeExpense();
+        Platform.runLater(() ->{
+            wd = new DialogController(btnBack.getScene().getWindow(), "Chargement...");
 
-        caisseFinalAmount = computeFinalCaisseAmount();
-        // set globally
-        Global.setComputedSoldeCaisse(caisseFinalAmount);
-        Global.getCurrentCaisse().setMontant(caisseFinalAmount);
+            wd.exec("123", inputParam -> {
 
-        lblDate.setText(Global.getCurrentCaisse().getDate().toString());
-        lblShiftNum.setText(Global.getCurrentCaisse().getNumeroShift() + "");
-        lblComments.setText(Global.getCurrentCaisse().getRemarque());
-        lblEtat.setText("Ouverte");
-        lblTotalIncome.setText(totalIncome + " €");
-        lblTotalExpenses.setText(totalExpense + " €");
-        lblTotalCaisse.setText(caisseFinalAmount + " €");
+                // compute total income
+                totalIncome = computeIncome();
 
-        // set count cash result
-        lblTotalCountAmount.setText(Global.getCountCashResult() + " €");
+                // compute total expenses
+                totalExpense = computeExpense();
+
+                caisseFinalAmount = computeFinalCaisseAmount();
+
+                // set globally
+                Global.setComputedSoldeCaisse(caisseFinalAmount);
+                Global.getCurrentCaisse().setMontant(caisseFinalAmount);
+
+
+
+
+                Platform.runLater(() ->{
+
+                    lblDate.setText(Global.getCurrentCaisse().getDate());
+                    lblShiftNum.setText(Global.getCurrentCaisse().getNumeroShift() + "");
+                    lblComments.setText(Global.getCurrentCaisse().getRemarque());
+                    lblEtat.setText("Ouverte");
+                    lblTotalIncome.setText(Global.formatDouble(totalIncome) + " €");
+                    lblTotalExpenses.setText(Global.formatDouble(totalExpense) + " €");
+                    lblTotalCaisse.setText(Global.formatDouble(caisseFinalAmount) + " €");
+
+                    // set count cash result
+                    lblTotalCountAmount.setText(Global.formatDouble(Global.getCountCashResult()) + " €");
+
+                });
+
+                return new Integer(1);
+            });
+        });
     }
 
     private Double computeFinalCaisseAmount(){

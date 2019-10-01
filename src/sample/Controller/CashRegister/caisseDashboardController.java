@@ -76,9 +76,6 @@ public class caisseDashboardController{
     @FXML
     void initialize() {
 
-        //System.out.println(Global.getSystemDate());
-        //System.out.println(Date.valueOf(Global.getSystemDate()));
-
         // init DB access
         dbHandler = new DBHandler();
 
@@ -139,7 +136,7 @@ public class caisseDashboardController{
         btnIncomeExpense.setOnAction(event -> {
            if (Global.getNberOfCaisses() >= 1){
                URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-               Global.closeAndGoToWindow(navPath,"Actions");
+               Global.stayButGoToWindow(navPath,"Actions",true);
            }
        });
     }
@@ -234,7 +231,8 @@ public class caisseDashboardController{
                         caisseRow.getInt("closed"),
                         caisseRow.getInt("employees_id"),
                         caisseRow.getString("date_fermeture"),
-                        caisseRow.getInt("numeroCaisse")
+                        caisseRow.getInt("numeroCaisse"),
+                        caisseRow.getInt("has_error")
                         );
 
                 data.add(0, caisse);

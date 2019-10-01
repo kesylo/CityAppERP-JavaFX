@@ -126,8 +126,9 @@ public class addIncomeExpenseController {
         });
 
         btnCancel.setOnAction(event -> {
-            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(navPath,"Caisse");
+            /*URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.closeAndGoToWindow(navPath,"Caisse");*/
+            btnCreate.getScene().getWindow().hide();
         });
 
         btnCreate.setOnAction(event -> {
@@ -436,7 +437,7 @@ public class addIncomeExpenseController {
             }
             else if (comboSource.getSelectionModel().getSelectedIndex() == 1){ // bank
                 income = new CaisseIncExp(amount,
-                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemDate(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         "",
@@ -455,7 +456,7 @@ public class addIncomeExpenseController {
             else if (comboSource.getSelectionModel().getSelectedIndex() == 2){ // other
 
                 income = new CaisseIncExp(amount,
-                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemDate(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         txtAreaCommentCaisse.getText(),
@@ -481,7 +482,7 @@ public class addIncomeExpenseController {
         if (isExpense) {
             if (comboRaison.getSelectionModel().getSelectedIndex() == 0) { // salary
                 expense = new CaisseIncExp(amount,
-                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemDate(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         "",
@@ -501,7 +502,7 @@ public class addIncomeExpenseController {
                 comboExpenseBank.getSelectionModel().selectFirst();
 
                 expense = new CaisseIncExp(amount,
-                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemDate(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         "",
@@ -520,7 +521,7 @@ public class addIncomeExpenseController {
             }
             else if (comboRaison.getSelectionModel().getSelectedIndex() == 2){ // other
                 expense = new CaisseIncExp(amount,
-                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemDate(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         txtAreaComment.getText(),

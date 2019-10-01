@@ -113,7 +113,7 @@ public class createCaisseController{
 
     private void fillUiElmts() {
         lblDate.setText(Global.getSystemDate().toString());
-        lblMontant.setText(amountLastCaisse + " €");
+        lblMontant.setText(Global.formatDouble(amountLastCaisse) + " €");
         lblUser.setText(Global.getConnectedUser().getFirstName() + " " + Global.getConnectedUser().getLastName());
     }
 

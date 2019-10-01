@@ -451,7 +451,7 @@ public class DBHandler extends DBConfig {
     /*------------------------------ UPDATE -------------------------------------*/
 
     public void updateCaisseStatus(Double montant, int statusToSet, String dateClosed, Caisse caisse){
-        String query = "UPDATE " + Static.CAISSE_TABLE + " SET montant = ?, closed = ?, date_fermeture = ? WHERE idCaisse = ?";
+        String query = "UPDATE " + Static.CAISSE_TABLE + " SET montant = ?, closed = ?, date_fermeture = ?, has_error = ? WHERE idCaisse = ?";
 
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
@@ -459,7 +459,9 @@ public class DBHandler extends DBConfig {
             ps.setDouble(1, montant);
             ps.setInt(2, statusToSet);
             ps.setString(3, dateClosed);
-            ps.setInt(4, caisse.getId());
+            ps.setInt(4, caisse.getHasError());
+            ps.setInt(5, caisse.getId());
+
 
             ps.executeUpdate();
             ps.close();

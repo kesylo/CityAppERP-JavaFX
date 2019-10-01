@@ -36,9 +36,6 @@ public class infosLastCaisseController  {
     private ImageView btnLogOut;
 
     @FXML
-    private JFXDatePicker datePicker;
-
-    @FXML
     private Label lblShiftNumber;
 
     @FXML
@@ -174,8 +171,7 @@ public class infosLastCaisseController  {
         setCaisseInfos();
 
         btnRetour.setOnAction(event -> {
-            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(navPath,"Caisse");
+            btnOK.getScene().getWindow().hide();
         });
 
         btnOK.setOnAction(event -> {
@@ -246,7 +242,7 @@ public class infosLastCaisseController  {
                         - totalExpense
                         + totalIncome;
 
-                lblTotalCaisse.setText(balance + " €");
+                lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
 
                 // add to global var
                 Global.getCurrentCaisse().setMontant(balance);

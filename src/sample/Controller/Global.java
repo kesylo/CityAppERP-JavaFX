@@ -316,10 +316,9 @@ public class Global {
         return formatter.format(date);
     }
 
-    public static Double formatDouble (Double value){
+    public static String formatDouble (Double value){
         String format = String.format("%.2f", value);
-        Double d = Double.parseDouble(format);
-        return d;
+        return format;
     }
 
     public static int generateCaisseID() {

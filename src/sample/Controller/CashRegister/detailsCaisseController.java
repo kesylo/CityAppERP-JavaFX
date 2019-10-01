@@ -163,6 +163,8 @@ public class detailsCaisseController {
     @FXML
     void initialize() {
 
+        reset();
+
         // init DB access
         dbHandler = new DBHandler();
 
@@ -194,22 +196,42 @@ public class detailsCaisseController {
 
     //region Methods
 
+    private boolean isSelectedCaisseClosed (){
+        if (Global.getPreviewCaisse() == Global.getCurrentCaisse()){
+            if (Global.getCurrentCaisse().getClosed() == 0){
+                // fermée
+                return true;
+            }else {
+                // ouverte
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void computeCaisse() {
-
         if (Global.getNberOfCaisses() >= 1){
-            balance = 0.0
-                    - totalExpense
-                    + totalIncome;
 
-            lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
+            if (isSelectedCaisseClosed()){
+                // selected caisse is closed so get caisse amount from preview
+                lblTotalCaisse.setText(Global.formatDouble(Global.getPreviewCaisse().getMontant()) + " €");
 
-            if (Global.getNberOfCaisses() >= 2){
-                // formula: Caisse before - expenses + incomes
-                balance = Global.getBeforeCurrentCaisse().getMontant()
+            } else {
+                // selected caisse is opened so compute caisse
+                balance = 0.0
                         - totalExpense
                         + totalIncome;
 
                 lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
+
+                if (Global.getNberOfCaisses() >= 2){
+                    // formula: Caisse before - expenses + incomes
+                    balance = Global.getBeforeCurrentCaisse().getMontant()
+                            - totalExpense
+                            + totalIncome;
+
+                    lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
+                }
             }
         }
     }
@@ -217,7 +239,7 @@ public class detailsCaisseController {
     private void fillHeader() {
 
         // set date
-        lblDate.setText(Global.getPreviewCaisse().getDate().toString());
+        lblDate.setText(Global.getPreviewCaisse().getDate());
 
         // set number shift
         lblShiftNumber.setText(Global.getPreviewCaisse().getNumeroShift() + "");
@@ -249,6 +271,14 @@ public class detailsCaisseController {
         txtAreaCommentCaisse.setText(Global.getPreviewCaisse().getRemarque());
     }
 
+    private void reset(){
+        dbHandler = null;
+        totalIncome = 0.0;
+        totalExpense = 0.0;
+        totalCash = 0.0;
+        balance = 0.0;
+        wd = null;
+    }
 
     private void getCashFromDB() {
         // Create list data
@@ -259,7 +289,7 @@ public class detailsCaisseController {
 
             wd.exec("123", inputParam -> {
 
-                ResultSet rs = dbHandler.getCash(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift());
+                ResultSet rs = dbHandler.getCash(Global.getPreviewCaisse().getId(), Global.getPreviewCaisse().getNumeroShift());
 
                 try {
                     while (rs.next()) {
@@ -343,7 +373,7 @@ public class detailsCaisseController {
 
             wd.exec("123", inputParam -> {
                 // get data from db
-                ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 1);
+                ResultSet rs = dbHandler.getIncomeExpense(Global.getPreviewCaisse().getId(), Global.getPreviewCaisse().getNumeroShift(), 1);
 
                 try {
                     while (rs.next()) {
@@ -407,7 +437,7 @@ public class detailsCaisseController {
             wd = new DialogController(btnOk.getScene().getWindow(), "Chargement des recettes ...");
 
             wd.exec("123", inputParam -> {
-                ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 0);
+                ResultSet rs = dbHandler.getIncomeExpense(Global.getPreviewCaisse().getId(), Global.getPreviewCaisse().getNumeroShift(), 0);
                 //ResultSet rs = dbHandler.getIncomeExpense(0, 0, 1);
 
                 try {

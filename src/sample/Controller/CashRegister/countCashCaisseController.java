@@ -98,12 +98,15 @@ public class countCashCaisseController {
                 setCashForCurrentCaisse();
             } else {
                 // check if counted cash = caisse cash
-                if (totalCaisseCount == Global.getCurrentCaisse().getMontant()){
+                if (Global.formatDouble(totalCaisseCount) == Global.formatDouble(Global.getCurrentCaisse().getMontant())){
                     Global.showInfoMessage(
                             "Vérification Correcte !",
                             "La monnaie disponible en caisse correspond bien à celle du système");
                     btnOK.getScene().getWindow().hide();
+                    // caisse has no error
+                    Global.getCurrentCaisse().setHasError(0);
                 } else {
+
                     boolean result = Global.showInfoMessageWithBtn(
                             "Vérification Incorrecte",
                             "Le montant compté n'est pas égal au montant enregistré dans le système. " +
@@ -111,13 +114,16 @@ public class countCashCaisseController {
                             "Compter à nouveau",
                             "Signaler l'erreur");
 
+
+
                     if (!result){
+                        // caisse has error
+                        Global.getCurrentCaisse().setHasError(1);
                         addErrorToCurrentCaisse();
                     }
                 }
             }
 
-            btnOK.getScene().getWindow().hide();
         });
 
     }
@@ -143,6 +149,8 @@ public class countCashCaisseController {
         Global.setCaisseCash(cash);
 
         if (Double.parseDouble(countTotal.getText()) == Global.getComputedSoldeCaisse()){
+            // caisse has no error
+            Global.getCurrentCaisse().setHasError(0);
             Global.closeWindow("Fermeture");
             URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
             Global.closeAndGoToWindow(navPath,"Fermeture");
@@ -156,6 +164,8 @@ public class countCashCaisseController {
                     "Signaler l'erreur");
 
             if (!result){
+                // caisse has error
+                Global.getCurrentCaisse().setHasError(1);
                 addErrorToCurrentCaisse();
             }
         }
@@ -244,6 +254,8 @@ public class countCashCaisseController {
                     1,
                     ""
             );
+            // set error in current caisse
+            Global.getCurrentCaisse().setHasError(1);
             addErrorLineInDB(errorExpense);
         } else if (soldeCaisse < 0){
             // more cash
@@ -260,6 +272,8 @@ public class countCashCaisseController {
                     0,
                     ""
             );
+            // set error in current caisse
+            Global.getCurrentCaisse().setHasError(1);
             addErrorLineInDB(errorIncome);
         }
 
