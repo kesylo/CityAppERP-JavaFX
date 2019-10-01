@@ -18,8 +18,10 @@ import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class caisseDashboardController{
 
@@ -65,6 +67,7 @@ public class caisseDashboardController{
 
     private DBHandler dbHandler;
     private dialogController wd = null;
+    private int caisseWithSameDate = 0;
 
     @FXML
     void logOut(MouseEvent event) {
@@ -74,11 +77,15 @@ public class caisseDashboardController{
 
     @FXML
     void initialize() {
-        // init global variables
-        initGlobal();
+
+        System.out.println(Global.getSystemDate());
+        System.out.println(Date.valueOf(Global.getSystemDate()));
 
         // init DB access
         dbHandler = new DBHandler();
+
+        // init global variables
+        initGlobal();
 
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
@@ -91,7 +98,21 @@ public class caisseDashboardController{
         });
 
         btnFillCaisse.setOnAction(event -> {
-            initCaissesInfos();
+
+            caisseWithSameDate = dbHandler.getNbrCaisseWithSameDate(Date.valueOf(Global.getSystemDate()));
+            // set it globally
+            Global.setNberOfCaissesWithSameDate(caisseWithSameDate);
+            System.out.println(caisseWithSameDate);
+
+            if (caisseWithSameDate > 2){
+                // we can't create another caisse for this date
+                Global.showErrorMessage("Erreur lors de la création de la caisse. Il existe deja 3 caisses pour la date d'aujourd'hui.",
+                        "Chaque journée à droit à maximum 3 shifts.");
+            } else {
+                // there are less than 3 caisses for the day
+                initCaissesInfos();
+            }
+
         });
 
         btnDetailCaisse.setOnAction(event -> {
@@ -102,7 +123,7 @@ public class caisseDashboardController{
                Global.setPreviewCaisse(previewCaisse);
                // open preview window
                URL navPath = getClass().getResource("/sample/View/CashRegister/detailsCaisse.fxml");
-               Global.stayButGoToWindow(navPath,"Details");
+               Global.stayButGoToWindow(navPath,"Details", true);
            }
        });
 

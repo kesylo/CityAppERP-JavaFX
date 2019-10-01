@@ -2,6 +2,7 @@ package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -101,6 +102,7 @@ public class countCashCaisseController {
                     Global.showInfoMessage(
                             "Vérification Correcte !",
                             "La monnaie disponible en caisse correspond bien à celle du système");
+                    btnOK.getScene().getWindow().hide();
                 } else {
                     boolean result = Global.showInfoMessageWithBtn(
                             "Vérification Incorrecte",
@@ -114,6 +116,8 @@ public class countCashCaisseController {
                     }
                 }
             }
+
+            btnOK.getScene().getWindow().hide();
         });
 
     }
@@ -229,7 +233,7 @@ public class countCashCaisseController {
             // cash missing
             CaisseIncExp errorExpense = new CaisseIncExp(
                     soldeCaisse,
-                    Date.valueOf(LocalDate.now()),
+                    Date.valueOf(Global.getSystemDate()),
                     Global.getSystemTime(),
                     Global.getConnectedUser().getId(),
                     "Erreur dans la caisse. Il manque " + soldeCaisse + " euros.",
@@ -245,7 +249,7 @@ public class countCashCaisseController {
             // more cash
             CaisseIncExp errorIncome = new CaisseIncExp(
                     soldeCaisse * -1,
-                    Date.valueOf(LocalDate.now()),
+                    Date.valueOf(Global.getSystemDate()),
                     Global.getSystemTime(),
                     Global.getConnectedUser().getId(),
                     "Erreur dans la caisse. Il y a " + soldeCaisse * -1 + " euros de plus que prévu.",
@@ -262,8 +266,12 @@ public class countCashCaisseController {
     }
 
     private void addErrorLineInDB(CaisseIncExp errorExpense) {
-        DBHandler dbHandler = new DBHandler();
-        dbHandler.addErrorLine(errorExpense);
+
+        Platform.runLater(() ->{
+            DBHandler dbHandler = new DBHandler();
+            dbHandler.addErrorLine(errorExpense);
+        });
+
     }
 
     private void setComboBoxValues() {
@@ -280,7 +288,7 @@ public class countCashCaisseController {
 
     private void setValuesFor(ComboBox<Integer> comboBox) {
         ObservableList<Integer> data = FXCollections.observableArrayList();
-        for (int i = 0; i < 70; i++){
+        for (int i = 0; i < 20; i++){
             data.add(i);
         }
         comboBox.setItems(data);

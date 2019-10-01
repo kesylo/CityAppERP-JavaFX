@@ -185,8 +185,6 @@ public class detailsCaisseController {
         // fill cash table
         getCashFromDB();
 
-        // compute caisse total
-        computeCaisse();
 
         btnRetour.setOnAction(event -> {
             // close window
@@ -201,8 +199,6 @@ public class detailsCaisseController {
 
     }
 
-
-
     //region Methods
 
     private void computeCaisse() {
@@ -212,7 +208,7 @@ public class detailsCaisseController {
                     - totalExpense
                     + totalIncome;
 
-            lblTotalCaisse.setText(balance + " €");
+            lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
 
             if (Global.getNberOfCaisses() >= 2){
                 // formula: Caisse before - expenses + incomes
@@ -220,7 +216,7 @@ public class detailsCaisseController {
                         - totalExpense
                         + totalIncome;
 
-                lblTotalCaisse.setText(balance + " €");
+                lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
             }
         }
     }
@@ -235,9 +231,16 @@ public class detailsCaisseController {
 
         // set created by
         Platform.runLater(() ->{
-            int idCreator = Global.getPreviewCaisse().getIdEmployes();
-            User currentUser = dbHandler.getEmployeObjByID(idCreator);
-            lblCaisseCreator.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+            wd = new dialogController(btnOk.getScene().getWindow(), "Chargement...");
+            wd.exec("123", inputParam -> {
+
+                Platform.runLater(() ->{
+                    int idCreator = Global.getPreviewCaisse().getIdEmployes();
+                    User currentUser = dbHandler.getEmployeObjByID(idCreator);
+                    lblCaisseCreator.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+                });
+                return new Integer(1);
+            });
         });
 
 
@@ -288,7 +291,6 @@ public class detailsCaisseController {
                         Platform.runLater(() ->{
                             fillCashTab(data);
                         });
-
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -298,6 +300,8 @@ public class detailsCaisseController {
             });
 
         });
+
+
     }
 
     private void fillCashTab(ObservableList<Cash> data) {
@@ -315,7 +319,8 @@ public class detailsCaisseController {
                     + d.getTwoHundredEuros() * 200;
         }
 
-        lblTotalCash.setText(totalCash + " €");
+        lblTotalCash.setText(Global.formatDouble(totalCash) + " €");
+
 
         // link ui tabs to class methods
         clmLessThanOne.setCellValueFactory(new PropertyValueFactory<>("LessThanFiftyCents"));
@@ -331,6 +336,9 @@ public class detailsCaisseController {
 
         // add list to table
         tableCash.setItems(data);
+
+        // compute caisse
+        computeCaisse();
     }
 
     private ObservableList<CaisseIncExp> getExpenseFromDB(){
@@ -380,10 +388,8 @@ public class detailsCaisseController {
 
         for (int i=0; i < data.size(); i++){
             totalExpense += data.get(i).getAmount();
-            System.out.println(data.get(i).getAmount());
-            System.out.println(data.size());
         }
-        lblTotalExpenses.setText(totalExpense + " €");
+        lblTotalExpenses.setText(Global.formatDouble(totalExpense) + " €");
 
         // link ui tabs to class methods
         clmCreationDateE.setCellValueFactory(new PropertyValueFactory<>("CreationDate"));
@@ -395,6 +401,9 @@ public class detailsCaisseController {
 
         // add list to table
         tableExpenses.setItems(data);
+
+        // compute caisse
+        computeCaisse();
     }
 
     private ObservableList<CaisseIncExp> getIncomeFromDB(){
@@ -442,7 +451,7 @@ public class detailsCaisseController {
     private void fillIncomeTab(ObservableList<CaisseIncExp> data) {
         for (int i=0; i < data.size(); i++){
             totalIncome += data.get(i).getAmount();
-            lblTotalIncomes.setText(totalIncome + " €");
+            lblTotalIncomes.setText(Global.formatDouble(totalIncome) + " €");
         }
 
         // link ui tabs to class methods
@@ -455,9 +464,10 @@ public class detailsCaisseController {
 
         // add list to table
         tableIncomes.setItems(data);
+
+        // compute caisse
+        computeCaisse();
     }
-
-
 
     //endregion
 }

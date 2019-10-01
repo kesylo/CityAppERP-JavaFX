@@ -1,13 +1,12 @@
 package sample.Model;
 
 
-import java.sql.Date;
 
 public class Caisse {
 
     private int id;
 
-    private Date date;
+    private String date;
 
     private Double montant;
 
@@ -38,7 +37,7 @@ public class Caisse {
                 '}';
     }
 
-    public Caisse(int id, Date date, Double montant, int numeroShift, String remarque, int closed, int idEmployes, String closedDate) {
+    public Caisse(int id, String date, Double montant, int numeroShift, String remarque, int closed, int idEmployes, String closedDate) {
         this.id = id;
         this.date = date;
         this.montant = montant;
@@ -75,7 +74,7 @@ public class Caisse {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -87,7 +86,7 @@ public class Caisse {
         this.numeroShift = numeroShift;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

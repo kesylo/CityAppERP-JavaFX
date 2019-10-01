@@ -40,7 +40,7 @@ public class DashboardController implements Initializable {
         btnNavToCaisse.setOnAction(event -> {
             // nav to caisse when data are fetched
             URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(toCaisse, "Caisse");
+            Global.stayButGoToWindow(toCaisse, "Caisse" ,true);
         });
     }
 

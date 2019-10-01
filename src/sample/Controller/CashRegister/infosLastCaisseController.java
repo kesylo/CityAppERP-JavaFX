@@ -30,6 +30,9 @@ public class infosLastCaisseController  {
     private Label lblConnectedUser;
 
     @FXML
+    private Label lblDate;
+
+    @FXML
     private ImageView btnLogOut;
 
     @FXML
@@ -149,6 +152,8 @@ public class infosLastCaisseController  {
     double totalExpense = 0;
     double totalIncome = 0;
     private dialogController wd = null;
+    String name = "";
+
 
     @FXML
     void logOut(MouseEvent event) {
@@ -194,7 +199,7 @@ public class infosLastCaisseController  {
 
     private void setCaisseInfos() {
         // set creator
-        lblCaisseCreator.setText(getNameById(Global.getCurrentCaisse().getIdEmployes()));
+        setCreatorName(Global.getCurrentCaisse().getIdEmployes());
 
         // set state
         if (Global.getCurrentCaisse().getClosed() == 0) {
@@ -208,7 +213,8 @@ public class infosLastCaisseController  {
 
         if (Global.getNberOfCaisses() >= 1){
             // set date
-            datePicker.setValue(Global.getCurrentCaisse().getDate().toLocalDate());
+            //datePicker.setValue(Global.getCurrentCaisse().getDate());
+            lblDate.setText();
         }
 
         // fill incomes
@@ -219,9 +225,6 @@ public class infosLastCaisseController  {
 
         // fill cash table
         getCashFromDB();
-
-        // calculate caisse
-        computeCaisse();
     }
 
     private void computeCaisse() {
@@ -232,7 +235,7 @@ public class infosLastCaisseController  {
                     - totalExpense
                     + totalIncome;
 
-            lblTotalCaisse.setText(balance + " €");
+            lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
 
             // add to global var
             Global.getCurrentCaisse().setMontant(balance);
@@ -313,7 +316,7 @@ public class infosLastCaisseController  {
                     + d.getTwoHundredEuros() * 200;
         }
 
-        lblTotalCash.setText(totalCash + " €");
+        lblTotalCash.setText(Global.formatDouble(totalCash) + " €");
 
         // link ui tabs to class methods
         clmLessThanOne.setCellValueFactory(new PropertyValueFactory<>("LessThanFiftyCents"));
@@ -329,6 +332,9 @@ public class infosLastCaisseController  {
 
         // add list to table
         tableCash.setItems(data);
+
+        // calculate caisse
+        computeCaisse();
     }
 
     private ObservableList<CaisseIncExp> getExpenseFromDB(){
@@ -381,7 +387,7 @@ public class infosLastCaisseController  {
             System.out.println(data.get(i).getAmount());
             System.out.println(data.size());
         }
-        lblTotalExpenses.setText(totalExpense + " €");
+        lblTotalExpenses.setText(Global.formatDouble(totalExpense) + " €");
 
         // link ui tabs to class methods
         clmCreationDateE.setCellValueFactory(new PropertyValueFactory<>("CreationDate"));
@@ -393,6 +399,9 @@ public class infosLastCaisseController  {
 
         // add list to table
         tableExpenses.setItems(data);
+
+        // calculate caisse
+        computeCaisse();
     }
 
     private ObservableList<CaisseIncExp> getIncomeFromDB(){
@@ -440,7 +449,7 @@ public class infosLastCaisseController  {
     private void fillIncomeTab(ObservableList<CaisseIncExp> data) {
         for (int i=0; i < data.size(); i++){
             totalIncome += data.get(i).getAmount();
-            lblTotalIncomes.setText(totalIncome + " €");
+            lblTotalIncomes.setText(Global.formatDouble(totalIncome) + " €");
         }
 
         // link ui tabs to class methods
@@ -453,23 +462,37 @@ public class infosLastCaisseController  {
 
         // add list to table
         tableIncomes.setItems(data);
+
+        // calculate caisse
+        computeCaisse();
     }
 
-    private String getNameById(int idEmployes) {
-        ResultSet employeRow = dbHandler.getEmployeByID(idEmployes);
-        String name = "";
+    private void setCreatorName(int idEmployes) {
 
-        try {
-            while (employeRow.next()) {
-                String fName = employeRow.getString("firstName");
-                String lName = employeRow.getString("lastName");
-                name = fName + " " + lName;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Platform.runLater(() ->{
+            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement...");
 
-        return name;
+            wd.exec("123", inputParam -> {
+                ResultSet employeRow = dbHandler.getEmployeByID(idEmployes);
+
+                try {
+                    while (employeRow.next()) {
+                        String fName = employeRow.getString("firstName");
+                        String lName = employeRow.getString("lastName");
+                        name = fName + " " + lName;
+                    }
+
+                    Platform.runLater(() ->{
+                        lblCaisseCreator.setText(name);
+                    });
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                return new Integer(1);
+            });
+        });
     }
 
 }

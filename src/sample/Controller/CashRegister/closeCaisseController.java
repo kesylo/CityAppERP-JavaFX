@@ -65,7 +65,7 @@ public class closeCaisseController {
             Global.navFrom = "CloseCaisse";
 
             URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
-            Global.stayButGoToWindow(navPath,"Comptage");
+            Global.stayButGoToWindow(navPath,"Comptage", false);
         });
 
         btnBack.setOnAction(event -> {

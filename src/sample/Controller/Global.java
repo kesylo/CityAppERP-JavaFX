@@ -21,7 +21,10 @@ import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +36,7 @@ public class Global {
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
-    public static Stage stage = new Stage();
+    public static Stage stage;
     public Scene scene = null;
     //endregion
 
@@ -46,10 +49,19 @@ public class Global {
     private static Cash caisseCash;
     private static Double countCashResult = 0.0;
     private static ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
+    private static int nberOfCaissesWithSameDate;
     //endregion
 
     //region Getters and Setters
 
+
+    public static int getNberOfCaissesWithSameDate() {
+        return nberOfCaissesWithSameDate;
+    }
+
+    public static void setNberOfCaissesWithSameDate(int nberOfCaissesWithSameDate) {
+        Global.nberOfCaissesWithSameDate = nberOfCaissesWithSameDate;
+    }
 
     public static Stage getStage() {
         return stage;
@@ -197,6 +209,7 @@ public class Global {
             stage.setResizable(false);
             stage.centerOnScreen();
             stage.show();
+            stage.toFront();
 
 
         } catch (IOException e) {
@@ -204,7 +217,7 @@ public class Global {
         }
     }
 
-    public static void stayButGoToWindow(URL location, String windowName){
+    public static void stayButGoToWindow(URL location, String windowName, boolean toback){
         Stage mystage = new Stage();
         try {
             Parent root = FXMLLoader.load(location);
@@ -214,7 +227,13 @@ public class Global {
             mystage.setTitle(appName + " " + windowName);
             mystage.setResizable(false);
             mystage.centerOnScreen();
+
             mystage.show();
+            if (toback){
+                mystage.toBack();
+                stage = mystage;
+
+            }
 
 
         } catch (IOException e) {
@@ -278,7 +297,7 @@ public class Global {
         }
     }
 
-    public  static void successSystemNotif(String message, String color){
+    public static void successSystemNotif(String message, String color){
         TrayNotification tray = new TrayNotification();
 
         Image whatsAppImg = new Image("/sample/Ressources/images/icon.png");
@@ -290,6 +309,27 @@ public class Global {
         tray.setImage(whatsAppImg);
         tray.showAndDismiss(Duration.seconds(0.5));
     }
+
+    public static LocalDate getSystemDate()  {
+        final String stringDate = new SimpleDateFormat("").format(new Date());
+        LocalDate m = LocalDate.parse(stringDate);
+        return m;
+    }
+
+    public static Double formatDouble (Double value){
+        String format = String.format("%.2f", value);
+        Double d = Double.parseDouble(format);
+        return d;
+    }
+
+    /*public static int generateCaisseNumber(){
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int number;
+
+
+
+        return number;
+    }*/
 
     //endregion
 

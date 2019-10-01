@@ -51,7 +51,7 @@
             <TableColumn fx:id="clmShift" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Shift" />
          </columns>
        </TableView>
-      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="122.0" layoutY="609.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
+      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" cancelButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="122.0" layoutY="609.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
@@ -63,7 +63,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnRefresh" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="333.0" layoutY="609.0" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #f7a631;" text="Rafraîchir">
+      <JFXButton fx:id="btnRefresh" alignment="CENTER" buttonType="RAISED" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="333.0" layoutY="609.0" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #f7a631;" text="Rafraîchir">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>

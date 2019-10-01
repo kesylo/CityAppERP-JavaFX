@@ -131,7 +131,7 @@
             <Font name="Poppins Regular" size="14.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="83.0" layoutY="535.0" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #5dbcd2;" text="OK">
+      <JFXButton fx:id="btnOK" alignment="CENTER" buttonType="RAISED" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="83.0" layoutY="535.0" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #5dbcd2;" text="OK">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>

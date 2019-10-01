@@ -1,6 +1,7 @@
 package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.*;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import sample.Controller.Global;
+import sample.Controller.dialogController;
 import sample.Database.DBHandler;
 
 import java.net.URL;
@@ -103,7 +105,7 @@ public class addIncomeExpenseController {
     DBHandler dbHandler = new DBHandler();
     boolean isIncome = true;
     boolean isExpense = false;
-    //boolean isClientIdCorrtect = false;
+    private dialogController wd = null;
     boolean isRegistrationComplete = false;
     Double amount = 0.0;
 
@@ -166,134 +168,6 @@ public class addIncomeExpenseController {
 
     /*----------------------------------------------------------------------------------*/
 
-    private void saveToDB() {
-        CaisseIncExp income;
-        CaisseIncExp expense;
-
-        if (isIncome){
-            if (comboSource.getSelectionModel().getSelectedIndex() == 0){ // client
-                if (txtClientIndex.getText().matches("\\d{2}+[-+]\\d{4}+[-+]\\d{5}")){
-                    income = new CaisseIncExp(amount,
-                            Date.valueOf(LocalDate.now()),
-                            Global.getSystemTime(),
-                            Global.getConnectedUser().getId(),
-                            "",
-                            Global.getCurrentCaisse().getNumeroShift(),
-                            Global.getCurrentCaisse().getId(),
-                            "",
-                            txtClientIndex.getText(),
-                            0,
-                            "");
-                    // add to DB
-                    dbHandler.addIncORExp(income);
-                    isRegistrationComplete = true;
-                }else {
-                    Global.showInfoMessage(
-                            "Verifiez le numero d'index.",
-                            "Il doit être au format: XX-XXXX-XXXXX");
-                }
-            }
-            else if (comboSource.getSelectionModel().getSelectedIndex() == 1){ // bank
-                income = new CaisseIncExp(amount,
-                        Date.valueOf(LocalDate.now()),
-                        Global.getSystemTime(),
-                        Global.getConnectedUser().getId(),
-                        "",
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
-                        comboIncomeBank.getValue(),
-                        "",
-                        0,
-                        "");
-                // add to DB
-                dbHandler.addIncORExp(income);
-                isRegistrationComplete = true;
-                System.out.println(income.toString());
-            }
-            else if (comboSource.getSelectionModel().getSelectedIndex() == 2){ // other
-
-                income = new CaisseIncExp(amount,
-                        Date.valueOf(LocalDate.now()),
-                        Global.getSystemTime(),
-                        Global.getConnectedUser().getId(),
-                        txtAreaCommentCaisse.getText(),
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
-                        "",
-                        "",
-                        0,
-                        "");
-                // add to DB
-                dbHandler.addIncORExp(income);
-                isRegistrationComplete = true;
-            }
-            else {
-                Global.showErrorMessage("Veuillez remplir le formulaire",
-                        "Les informations remplies ne sont pas complètes");
-                isRegistrationComplete = false;
-            }
-        }
-
-        if (isExpense) {
-            if (comboRaison.getSelectionModel().getSelectedIndex() == 0) { // salary
-                expense = new CaisseIncExp(amount,
-                        Date.valueOf(LocalDate.now()),
-                        Global.getSystemTime(),
-                        Global.getConnectedUser().getId(),
-                        "",
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
-                        comboRaison.getValue(),
-                        "",
-                        1,
-                        comboSalaryBeneficial.getValue());
-                // add to DB
-                dbHandler.addIncORExp(expense);
-                isRegistrationComplete = true;
-            }
-            else if (comboRaison.getSelectionModel().getSelectedIndex() == 1){ // bank
-                comboExpenseBank.getSelectionModel().selectFirst();
-
-                expense = new CaisseIncExp(amount,
-                        Date.valueOf(LocalDate.now()),
-                        Global.getSystemTime(),
-                        Global.getConnectedUser().getId(),
-                        "",
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
-                        comboExpenseBank.getValue(),
-                        "",
-                        1,
-                        "");
-                // add to DB
-                dbHandler.addIncORExp(expense);
-                isRegistrationComplete = true;
-
-            }
-            else if (comboRaison.getSelectionModel().getSelectedIndex() == 2){ // other
-                expense = new CaisseIncExp(amount,
-                        Date.valueOf(LocalDate.now()),
-                        Global.getSystemTime(),
-                        Global.getConnectedUser().getId(),
-                        txtAreaComment.getText(),
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
-                        comboRaison.getValue(),
-                        "",
-                        1,
-                        "");
-                // add to DB
-                dbHandler.addIncORExp(expense);
-                isRegistrationComplete = true;
-            }
-            else {
-                Global.showErrorMessage("Veuillez remplir le formulaire",
-                        "Les informations remplies ne sont pas complètes");
-                isRegistrationComplete = true;
-            }
-        }
-    }
-
     private void loadHeader() {
         lblDate.setText(Global.getCurrentCaisse().getDate().toString());
         lblShiftNum.setText(Global.getCurrentCaisse().getNumeroShift() + "");
@@ -336,23 +210,39 @@ public class addIncomeExpenseController {
     }
 
     public void loadUserList(){
-        ResultSet userRow = dbHandler.getAllEmployeesNames();
-        ObservableList<String> usersList = FXCollections.observableArrayList();
-        String firstName;
-        String lastName;
-        String fullName;
 
-        try {
-            while (userRow.next()){
-                firstName = userRow.getString("firstName");
-                lastName = userRow.getString("lastName");
-                fullName = firstName + " " + lastName;
-                usersList.add(fullName);
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        comboSalaryBeneficial.setItems(usersList);
+        Platform.runLater(() ->{
+            wd = new dialogController(btnCreate.getScene().getWindow(), "Chargement des utilisateurs...");
+
+            wd.exec("123", inputParam -> {
+
+                ObservableList<String> usersList = FXCollections.observableArrayList();
+                String firstName;
+                String lastName;
+                String fullName;
+                ResultSet userRow = dbHandler.getAllEmployeesNames();
+
+                try {
+                    while (userRow.next()){
+                        firstName = userRow.getString("firstName");
+                        lastName = userRow.getString("lastName");
+                        fullName = firstName + " " + lastName;
+                        usersList.add(fullName);
+                    }
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+
+                Platform.runLater(() ->{
+                    comboSalaryBeneficial.setItems(usersList);
+                });
+
+                return new Integer(1);
+            });
+        });
+
+
+
     }
 
     public void comboBoxProvenance(ActionEvent event){
@@ -454,7 +344,7 @@ public class addIncomeExpenseController {
                 // check if txtindex empty
                 if (!txtClientIndex.getText().isEmpty()){
                     // check if client index is ok
-                    if (txtClientIndex.getText().matches("\\d{2}+[-+]\\d{4}+[-+]\\d{5}")){
+                    if (txtClientIndex.getText().matches("\\d{3}+[-+]\\d{4}+[-+]\\d{5}")){
                         // check if checkbox is checked
                         commitToDB();
                     }
@@ -462,7 +352,7 @@ public class addIncomeExpenseController {
                         // regex pattern not ok
                         Global.showErrorMessage(
                                 "Erreur sur l'index du client",
-                                "L'index doit être sous la forme: XX-XXXX-XXXXX");
+                                "L'index doit être sous la forme: XXX-XXXX-XXXXX");
                     }
                 }
                 else {
@@ -512,6 +402,146 @@ public class addIncomeExpenseController {
             Global.successSystemNotif(
                     "Opération éffectuée avec succès.",
                     "#f7a631");
+        }
+    }
+
+    private void saveToDB() {
+        CaisseIncExp income;
+        CaisseIncExp expense;
+
+        if (isIncome){
+            if (comboSource.getSelectionModel().getSelectedIndex() == 0){ // client
+                if (txtClientIndex.getText().matches("\\d{3}+[-+]\\d{4}+[-+]\\d{5}")){
+                    income = new CaisseIncExp(amount,
+                            Date.valueOf(Global.getSystemDate()),
+                            Global.getSystemTime(),
+                            Global.getConnectedUser().getId(),
+                            "",
+                            Global.getCurrentCaisse().getNumeroShift(),
+                            Global.getCurrentCaisse().getId(),
+                            "",
+                            txtClientIndex.getText(),
+                            0,
+                            "");
+                    // add to DB
+                    Platform.runLater(() ->{
+                        dbHandler.addIncORExp(income);
+                    });
+
+                    isRegistrationComplete = true;
+                }else {
+                    /*Global.showInfoMessage(
+                            "Verifiez le numero d'index.",
+                            "Il doit être au format: XX-XXXX-XXXXX");*/
+                }
+            }
+            else if (comboSource.getSelectionModel().getSelectedIndex() == 1){ // bank
+                income = new CaisseIncExp(amount,
+                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemTime(),
+                        Global.getConnectedUser().getId(),
+                        "",
+                        Global.getCurrentCaisse().getNumeroShift(),
+                        Global.getCurrentCaisse().getId(),
+                        comboIncomeBank.getValue(),
+                        "",
+                        0,
+                        "");
+                // add to DB
+                Platform.runLater(() ->{
+                    dbHandler.addIncORExp(income);
+                });
+                isRegistrationComplete = true;
+            }
+            else if (comboSource.getSelectionModel().getSelectedIndex() == 2){ // other
+
+                income = new CaisseIncExp(amount,
+                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemTime(),
+                        Global.getConnectedUser().getId(),
+                        txtAreaCommentCaisse.getText(),
+                        Global.getCurrentCaisse().getNumeroShift(),
+                        Global.getCurrentCaisse().getId(),
+                        "",
+                        "",
+                        0,
+                        "");
+                // add to DB
+                Platform.runLater(() ->{
+                    dbHandler.addIncORExp(income);
+                });
+                isRegistrationComplete = true;
+            }
+            else {
+                Global.showErrorMessage("Veuillez remplir le formulaire",
+                        "Les informations remplies ne sont pas complètes");
+                isRegistrationComplete = false;
+            }
+        }
+
+        if (isExpense) {
+            if (comboRaison.getSelectionModel().getSelectedIndex() == 0) { // salary
+                expense = new CaisseIncExp(amount,
+                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemTime(),
+                        Global.getConnectedUser().getId(),
+                        "",
+                        Global.getCurrentCaisse().getNumeroShift(),
+                        Global.getCurrentCaisse().getId(),
+                        comboRaison.getValue(),
+                        "",
+                        1,
+                        comboSalaryBeneficial.getValue());
+                // add to DB
+                Platform.runLater(() ->{
+                    dbHandler.addIncORExp(expense);
+                });
+                isRegistrationComplete = true;
+            }
+            else if (comboRaison.getSelectionModel().getSelectedIndex() == 1){ // bank
+                comboExpenseBank.getSelectionModel().selectFirst();
+
+                expense = new CaisseIncExp(amount,
+                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemTime(),
+                        Global.getConnectedUser().getId(),
+                        "",
+                        Global.getCurrentCaisse().getNumeroShift(),
+                        Global.getCurrentCaisse().getId(),
+                        comboExpenseBank.getValue(),
+                        "",
+                        1,
+                        "");
+                // add to DB
+                Platform.runLater(() ->{
+                    dbHandler.addIncORExp(expense);
+                });
+                isRegistrationComplete = true;
+
+            }
+            else if (comboRaison.getSelectionModel().getSelectedIndex() == 2){ // other
+                expense = new CaisseIncExp(amount,
+                        Date.valueOf(Global.getSystemDate()),
+                        Global.getSystemTime(),
+                        Global.getConnectedUser().getId(),
+                        txtAreaComment.getText(),
+                        Global.getCurrentCaisse().getNumeroShift(),
+                        Global.getCurrentCaisse().getId(),
+                        comboRaison.getValue(),
+                        "",
+                        1,
+                        "");
+                // add to DB
+                Platform.runLater(() ->{
+                    dbHandler.addIncORExp(expense);
+                });
+                isRegistrationComplete = true;
+            }
+            else {
+                Global.showErrorMessage("Veuillez remplir le formulaire",
+                        "Les informations remplies ne sont pas complètes");
+                isRegistrationComplete = true;
+            }
         }
     }
 }

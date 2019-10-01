@@ -104,7 +104,7 @@
             </JFXTextArea>
          </children>
       </VBox>
-      <JFXCheckBox fx:id="ckcAddManyEntries" checkedColor="#5dbcd2" layoutX="16.0" layoutY="455.0" selected="true" text="Effectuer plusieurs enregistrements">
+      <JFXCheckBox fx:id="ckcAddManyEntries" checkedColor="#5dbcd2" layoutX="16.0" layoutY="455.0" text="Effectuer plusieurs enregistrements">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font></JFXCheckBox>
@@ -113,7 +113,7 @@
             <Font name="Poppins Bold" size="14.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="133.0" layoutY="498.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
+      <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" cancelButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="133.0" layoutY="498.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #E0E0E0;" text="Retour">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
@@ -125,7 +125,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" focusTraversable="false" graphicTextGap="5.0" layoutX="358.0" layoutY="498.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #5dbcd2;" text="Ajouter">
+      <JFXButton fx:id="btnCreate" alignment="CENTER" buttonType="RAISED" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="358.0" layoutY="498.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #5dbcd2;" text="Ajouter">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
