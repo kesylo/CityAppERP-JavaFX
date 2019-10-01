@@ -354,7 +354,7 @@ public class DBHandler extends DBConfig {
             ps.setInt(1, errorExpense.getIdCaisse());
             ps.setDouble(2, errorExpense.getAmount());
             ps.setInt(3, errorExpense.getType());
-            ps.setDate(4, errorExpense.getCreationDate());
+            ps.setString(4, errorExpense.getCreationDate());
             ps.setString(5, errorExpense.getTime());
             ps.setString(6, errorExpense.getComment());
             ps.setInt(7, errorExpense.getShiftNumber());
@@ -401,7 +401,7 @@ public class DBHandler extends DBConfig {
 
             ps.setDouble(1, caisseAction.getAmount());
             ps.setInt(2, caisseAction.getType());
-            ps.setDate(3, caisseAction.getCreationDate());
+            ps.setString(3, caisseAction.getCreationDate());
             ps.setString(4, caisseAction.getTime());
             ps.setString(5, caisseAction.getClientIndex());
             ps.setString(6, caisseAction.getComment());

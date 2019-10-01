@@ -5,13 +5,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import sample.Controller.Global;
-import sample.Controller.dialogController;
+import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
 import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
 
 public class createCaisseController{
 
@@ -37,7 +35,7 @@ public class createCaisseController{
 
     private DBHandler db = new DBHandler();
     private Double amountLastCaisse = 0.0;
-    private dialogController wd = null;
+    private DialogController wd = null;
     private URL toCaisseDashboard = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
 
     @FXML
@@ -91,7 +89,7 @@ public class createCaisseController{
 
     private void sendDataToDB(Caisse caisse) {
         Platform.runLater(() ->{
-            wd = new dialogController(btnCancel.getScene().getWindow(), "Chargement...");
+            wd = new DialogController(btnCancel.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
                 db.createCaisse(caisse);

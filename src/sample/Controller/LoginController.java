@@ -46,7 +46,7 @@ public class LoginController {
     private DBHandler dbHandler;
     //endregion
 
-    private dialogController wd = null;
+    private DialogController wd = null;
     private int counter = 0;
 
     @FXML
@@ -86,7 +86,7 @@ public class LoginController {
 
 
             Platform.runLater(() ->{
-                wd = new dialogController(btnConnection.getScene().getWindow(), "Connexion...");
+                wd = new DialogController(btnConnection.getScene().getWindow(), "Connexion...");
 
                 wd.exec("123", inputParam -> {
 

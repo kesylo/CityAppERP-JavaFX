@@ -2,7 +2,6 @@ package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
-import com.sun.nio.sctp.Notification;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,20 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
-import javafx.util.Duration;
 import sample.Controller.Global;
-import sample.Controller.dialogController;
+import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
 import sample.Model.User;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
 
 import java.net.URL;
 import java.sql.Date;
@@ -159,7 +152,7 @@ public class detailsCaisseController {
     private Double totalExpense = 0.0;
     private Double totalCash = 0.0;
     private Double balance = 0.0;
-    private dialogController wd = null;
+    private DialogController wd = null;
 
     @FXML
     void logOut(MouseEvent event) {
@@ -231,7 +224,7 @@ public class detailsCaisseController {
 
         // set created by
         Platform.runLater(() ->{
-            wd = new dialogController(btnOk.getScene().getWindow(), "Chargement...");
+            wd = new DialogController(btnOk.getScene().getWindow(), "Chargement...");
             wd.exec("123", inputParam -> {
 
                 Platform.runLater(() ->{
@@ -262,7 +255,7 @@ public class detailsCaisseController {
         ObservableList<Cash> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOk.getScene().getWindow(), "Chargement du cash...");
+            wd = new DialogController(btnOk.getScene().getWindow(), "Chargement du cash...");
 
             wd.exec("123", inputParam -> {
 
@@ -346,7 +339,7 @@ public class detailsCaisseController {
         ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOk.getScene().getWindow(), "Chargement des depenses ...");
+            wd = new DialogController(btnOk.getScene().getWindow(), "Chargement des depenses ...");
 
             wd.exec("123", inputParam -> {
                 // get data from db
@@ -356,7 +349,7 @@ public class detailsCaisseController {
                     while (rs.next()) {
                         CaisseIncExp expense = new CaisseIncExp(
                                 rs.getDouble("montant"),
-                                rs.getDate("date"),
+                                rs.getString("date"),
                                 rs.getString("time"),
                                 rs.getInt("employees_id"),
                                 rs.getString("remarque"),
@@ -411,7 +404,7 @@ public class detailsCaisseController {
         ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOk.getScene().getWindow(), "Chargement des recettes ...");
+            wd = new DialogController(btnOk.getScene().getWindow(), "Chargement des recettes ...");
 
             wd.exec("123", inputParam -> {
                 ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 0);
@@ -421,7 +414,7 @@ public class detailsCaisseController {
                     while (rs.next()) {
                         CaisseIncExp income = new CaisseIncExp(
                                 rs.getDouble("montant"),
-                                rs.getDate("date"),
+                                rs.getString("date"),
                                 rs.getString("time"),
                                 rs.getInt("employees_id"),
                                 rs.getString("remarque"),

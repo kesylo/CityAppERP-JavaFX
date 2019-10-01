@@ -15,14 +15,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import sample.Controller.Global;
-import sample.Controller.dialogController;
+import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 
 import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import sample.Model.CaisseIncExp;
 
@@ -105,7 +104,7 @@ public class addIncomeExpenseController {
     DBHandler dbHandler = new DBHandler();
     boolean isIncome = true;
     boolean isExpense = false;
-    private dialogController wd = null;
+    private DialogController wd = null;
     boolean isRegistrationComplete = false;
     Double amount = 0.0;
 
@@ -212,7 +211,7 @@ public class addIncomeExpenseController {
     public void loadUserList(){
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnCreate.getScene().getWindow(), "Chargement des utilisateurs...");
+            wd = new DialogController(btnCreate.getScene().getWindow(), "Chargement des utilisateurs...");
 
             wd.exec("123", inputParam -> {
 
@@ -413,7 +412,7 @@ public class addIncomeExpenseController {
             if (comboSource.getSelectionModel().getSelectedIndex() == 0){ // client
                 if (txtClientIndex.getText().matches("\\d{3}+[-+]\\d{4}+[-+]\\d{5}")){
                     income = new CaisseIncExp(amount,
-                            Date.valueOf(Global.getSystemDate()),
+                            Global.getSystemDate(),
                             Global.getSystemTime(),
                             Global.getConnectedUser().getId(),
                             "",

@@ -233,7 +233,7 @@ public class countCashCaisseController {
             // cash missing
             CaisseIncExp errorExpense = new CaisseIncExp(
                     soldeCaisse,
-                    Date.valueOf(Global.getSystemDate()),
+                    Global.getSystemDate(),
                     Global.getSystemTime(),
                     Global.getConnectedUser().getId(),
                     "Erreur dans la caisse. Il manque " + soldeCaisse + " euros.",
@@ -249,7 +249,7 @@ public class countCashCaisseController {
             // more cash
             CaisseIncExp errorIncome = new CaisseIncExp(
                     soldeCaisse * -1,
-                    Date.valueOf(Global.getSystemDate()),
+                    Global.getSystemDate(),
                     Global.getSystemTime(),
                     Global.getConnectedUser().getId(),
                     "Erreur dans la caisse. Il y a " + soldeCaisse * -1 + " euros de plus que prévu.",

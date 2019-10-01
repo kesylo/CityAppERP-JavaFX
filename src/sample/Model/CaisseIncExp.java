@@ -7,7 +7,7 @@ public class CaisseIncExp {
     //region pojo
     private int idCaisseIncExp;
     private double amount;
-    private Date creationDate;
+    private String creationDate;
     private String time;
     private int idUser;
     private String comment;
@@ -38,7 +38,7 @@ public class CaisseIncExp {
                 '}';
     }
 
-    public CaisseIncExp(double amount, Date creationDate, String time, int idUser, String comment, int shiftNumber, int idCaisse, String reason, String clientIndex, int type, String salaryBeneficial) {
+    public CaisseIncExp(double amount, String creationDate, String time, int idUser, String comment, int shiftNumber, int idCaisse, String reason, String clientIndex, int type, String salaryBeneficial) {
         this.amount = amount;
         this.creationDate = creationDate;
         this.time = time;
@@ -69,11 +69,11 @@ public class CaisseIncExp {
         this.amount = amount;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

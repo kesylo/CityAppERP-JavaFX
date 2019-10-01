@@ -13,15 +13,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import sample.Controller.Global;
-import sample.Controller.dialogController;
+import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class caisseDashboardController{
 
@@ -66,7 +64,7 @@ public class caisseDashboardController{
     //endregion
 
     private DBHandler dbHandler;
-    private dialogController wd = null;
+    private DialogController wd = null;
     private int caisseWithSameDate = 0;
 
     @FXML
@@ -205,7 +203,7 @@ public class caisseDashboardController{
 
         Platform.runLater(() ->{
             // prepare loading screen
-            wd = new dialogController(btnFillCaisse.getScene().getWindow(), "Chargement...");
+            wd = new DialogController(btnFillCaisse.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
                 // run long longTask

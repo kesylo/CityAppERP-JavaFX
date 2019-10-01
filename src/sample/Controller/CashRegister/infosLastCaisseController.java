@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sample.Controller.Global;
-import sample.Controller.dialogController;
+import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
@@ -151,7 +151,7 @@ public class infosLastCaisseController  {
     double totalCash;
     double totalExpense = 0;
     double totalIncome = 0;
-    private dialogController wd = null;
+    private DialogController wd = null;
     String name = "";
 
 
@@ -260,7 +260,7 @@ public class infosLastCaisseController  {
         ObservableList<Cash> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement du cash...");
+            wd = new DialogController(btnOK.getScene().getWindow(), "Chargement du cash...");
 
             wd.exec("123", inputParam -> {
 
@@ -342,7 +342,7 @@ public class infosLastCaisseController  {
         ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement des depenses ...");
+            wd = new DialogController(btnOK.getScene().getWindow(), "Chargement des depenses ...");
 
             wd.exec("123", inputParam -> {
                 // get data from db
@@ -352,7 +352,7 @@ public class infosLastCaisseController  {
                     while (rs.next()) {
                         CaisseIncExp expense = new CaisseIncExp(
                                 rs.getDouble("montant"),
-                                rs.getDate("date"),
+                                rs.getString("date"),
                                 rs.getString("time"),
                                 rs.getInt("employees_id"),
                                 rs.getString("remarque"),
@@ -409,7 +409,7 @@ public class infosLastCaisseController  {
         ObservableList<CaisseIncExp> data = FXCollections.observableArrayList();
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement des recettes ...");
+            wd = new DialogController(btnOK.getScene().getWindow(), "Chargement des recettes ...");
 
             wd.exec("123", inputParam -> {
                 ResultSet rs = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(), Global.getCurrentCaisse().getNumeroShift(), 0);
@@ -419,7 +419,7 @@ public class infosLastCaisseController  {
                     while (rs.next()) {
                         CaisseIncExp income = new CaisseIncExp(
                                 rs.getDouble("montant"),
-                                rs.getDate("date"),
+                                rs.getString("date"),
                                 rs.getString("time"),
                                 rs.getInt("employees_id"),
                                 rs.getString("remarque"),
@@ -470,7 +470,7 @@ public class infosLastCaisseController  {
     private void setCreatorName(int idEmployes) {
 
         Platform.runLater(() ->{
-            wd = new dialogController(btnOK.getScene().getWindow(), "Chargement...");
+            wd = new DialogController(btnOK.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
                 ResultSet employeRow = dbHandler.getEmployeByID(idEmployes);
