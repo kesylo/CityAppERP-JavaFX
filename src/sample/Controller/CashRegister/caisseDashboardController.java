@@ -78,8 +78,8 @@ public class caisseDashboardController{
     @FXML
     void initialize() {
 
-        System.out.println(Global.getSystemDate());
-        System.out.println(Date.valueOf(Global.getSystemDate()));
+        //System.out.println(Global.getSystemDate());
+        //System.out.println(Date.valueOf(Global.getSystemDate()));
 
         // init DB access
         dbHandler = new DBHandler();
@@ -99,7 +99,7 @@ public class caisseDashboardController{
 
         btnFillCaisse.setOnAction(event -> {
 
-            caisseWithSameDate = dbHandler.getNbrCaisseWithSameDate(Date.valueOf(Global.getSystemDate()));
+            caisseWithSameDate = dbHandler.getNbrCaisseWithSameDate(Global.getSystemDate());
             // set it globally
             Global.setNberOfCaissesWithSameDate(caisseWithSameDate);
             System.out.println(caisseWithSameDate);
@@ -229,13 +229,16 @@ public class caisseDashboardController{
             while (caisseRow.next()) {
                 Caisse caisse = new Caisse(
                         caisseRow.getInt("idCaisse"),
-                        caisseRow.getDate("date"),
+                        caisseRow.getString("date"),
                         caisseRow.getDouble("montant"),
-                        caisseRow.getInt("numeroShift"),
                         caisseRow.getString("remarque"),
+                        caisseRow.getInt("numeroShift"),
                         caisseRow.getInt("closed"),
                         caisseRow.getInt("employees_id"),
-                        caisseRow.getString("date_fermeture"));
+                        caisseRow.getString("date_fermeture"),
+                        caisseRow.getInt("numeroCaisse")
+                        );
+
                 data.add(0, caisse);
             }
         } catch (SQLException e) {

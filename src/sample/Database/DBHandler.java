@@ -26,12 +26,12 @@ public class DBHandler extends DBConfig {
 
     /*------------------------------ SELECT -------------------------------------*/
 
-    public int getNbrCaisseWithSameDate (Date date) {
+    public int getNbrCaisseWithSameDate (String date) {
         String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date=?";
         int count = 0;
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
-            ps.setDate(1, date);
+            ps.setString(1, date);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -372,16 +372,17 @@ public class DBHandler extends DBConfig {
     public void createCaisse(Caisse caisse) {
         // INSERT INTO `cityappdatabase`.`caisse` ( `date`, `montant`, `numeroShift`, `closed`, `employees_id`) VALUES ('128', '2019-09-11', '321.52', '1', '1', '7');
         // prepare the query
-        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id ) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id, numeroCaisse) VALUES (?,?,?,?,?,?)";
 
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
 
-            ps.setDate(1, caisse.getDate());
+            ps.setString(1, caisse.getDate());
             ps.setDouble(2, caisse.getMontant());
             ps.setInt(3, caisse.getNumeroShift());
             ps.setInt(4, caisse.getClosed());
             ps.setInt(5, Global.getConnectedUser().getId());
+            ps.setInt(6, caisse.getNumeroCaisse());
 
             ps.executeUpdate();
         } catch (SQLException e) {

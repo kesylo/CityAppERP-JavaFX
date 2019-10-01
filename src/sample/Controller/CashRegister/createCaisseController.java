@@ -105,10 +105,11 @@ public class createCaisseController{
 
     private void configureCaisse (Caisse caisse){
 
-        caisse.setDate(Date.valueOf(Global.getSystemDate()));
+        caisse.setDate(Global.getSystemDate());
         caisse.setMontant(amountLastCaisse);
         caisse.setRemarque("");
         caisse.setClosed(1);
+        caisse.setNumeroCaisse(Global.generateCaisseID());
         caisse.setIdEmployes(Global.getConnectedUser().getId());
     }
 

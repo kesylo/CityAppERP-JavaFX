@@ -20,6 +20,8 @@ public class Caisse {
 
     private String closedDate;
 
+    private int numeroCaisse;
+
     public Caisse() {
     }
 
@@ -27,32 +29,42 @@ public class Caisse {
     public String toString() {
         return "Caisse{" +
                 "id=" + id +
-                ", date=" + date +
+                ", date='" + date + '\'' +
                 ", montant=" + montant +
                 ", remarque='" + remarque + '\'' +
                 ", numeroShift=" + numeroShift +
                 ", closed=" + closed +
                 ", idEmployes=" + idEmployes +
                 ", closedDate='" + closedDate + '\'' +
+                ", numeroCaisse=" + numeroCaisse +
                 '}';
     }
 
-    public Caisse(int id, String date, Double montant, int numeroShift, String remarque, int closed, int idEmployes, String closedDate) {
+    public Caisse(int id, String date, Double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, int numeroCaisse) {
         this.id = id;
         this.date = date;
         this.montant = montant;
-        this.numeroShift = numeroShift;
         this.remarque = remarque;
+        this.numeroShift = numeroShift;
         this.closed = closed;
         this.idEmployes = idEmployes;
         this.closedDate = closedDate;
+        this.numeroCaisse = numeroCaisse;
+    }
+
+//region Getters
+
+    public int getNumeroCaisse() {
+        return numeroCaisse;
     }
 
     public int getIdEmployes() {
         return idEmployes;
     }
 
-    //region Getters
+    public void setNumeroCaisse(int numeroCaisse) {
+        this.numeroCaisse = numeroCaisse;
+    }
 
     public void setIdEmployes(int idEmployes) {
         this.idEmployes = idEmployes;

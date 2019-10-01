@@ -310,16 +310,21 @@ public class Global {
         tray.showAndDismiss(Duration.seconds(0.5));
     }
 
-    public static LocalDate getSystemDate()  {
-        final String stringDate = new SimpleDateFormat("").format(new Date());
-        LocalDate m = LocalDate.parse(stringDate);
-        return m;
+    public static String getSystemDate()  {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM");
+        return formatter.format(date);
     }
 
     public static Double formatDouble (Double value){
         String format = String.format("%.2f", value);
         Double d = Double.parseDouble(format);
         return d;
+    }
+
+    public static int generateCaisseID() {
+
+        return 1;
     }
 
     /*public static int generateCaisseNumber(){
