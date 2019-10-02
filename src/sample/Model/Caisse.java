@@ -20,7 +20,7 @@ public class Caisse {
 
     private String closedDate;
 
-    private int numeroCaisse;
+    private String numeroCaisse;
 
     private int hasError;
 
@@ -42,7 +42,7 @@ public class Caisse {
                 '}';
     }
 
-    public Caisse(int id, String date, Double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, int numeroCaisse, int hasError) {
+    public Caisse(int id, String date, Double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, String numeroCaisse, int hasError) {
         this.id = id;
         this.date = date;
         this.montant = montant;
@@ -66,7 +66,7 @@ public class Caisse {
         this.hasError = hasError;
     }
 
-    public int getNumeroCaisse() {
+    public String getNumeroCaisse() {
         return numeroCaisse;
     }
 
@@ -74,7 +74,7 @@ public class Caisse {
         return idEmployes;
     }
 
-    public void setNumeroCaisse(int numeroCaisse) {
+    public void setNumeroCaisse(String numeroCaisse) {
         this.numeroCaisse = numeroCaisse;
     }
 

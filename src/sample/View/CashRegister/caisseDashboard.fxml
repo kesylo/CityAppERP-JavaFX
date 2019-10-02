@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorParent" prefHeight="661.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.caisseDashboardController">
+<AnchorPane fx:id="anchorParent" maxHeight="823.0" maxWidth="875.0" minHeight="823.0" minWidth="875.0" prefHeight="823.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.caisseDashboardController">
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="321.0" style="-fx-background-color: #F7A631;">
          <children>

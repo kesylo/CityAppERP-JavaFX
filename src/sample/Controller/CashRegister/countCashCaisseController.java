@@ -31,6 +31,9 @@ public class countCashCaisseController {
     private ComboBox<Integer> txtBoxOneHundred;
 
     @FXML
+    private JFXButton btnRetour;
+
+    @FXML
     private ComboBox<Integer> txtBoxfiftyEuros;
 
     @FXML
@@ -87,6 +90,16 @@ public class countCashCaisseController {
                 if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
                     txtLessThanFiftyCents.setText(oldValue);
                 }
+            }
+        });
+
+        btnRetour.setOnAction(event -> {
+            if (Global.navFrom == "CloseCaisse"){
+                URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
+                Global.closeAndGoToWindow(navPath,"Fermeture");
+            }else {
+                URL navPath = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
+                Global.closeAndGoToWindow(navPath,"Recap");
             }
         });
 
@@ -151,7 +164,7 @@ public class countCashCaisseController {
         if (Double.parseDouble(countTotal.getText()) == Global.getComputedSoldeCaisse()){
             // caisse has no error
             Global.getCurrentCaisse().setHasError(0);
-            Global.closeWindow("Fermeture");
+            //Global.closeWindow("Fermeture");
             URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
             Global.closeAndGoToWindow(navPath,"Fermeture");
         } else {

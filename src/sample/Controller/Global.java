@@ -37,7 +37,6 @@ public class Global {
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
     public static Stage stage;
-    public Scene scene = null;
     //endregion
 
     //region Caisse App
@@ -50,6 +49,7 @@ public class Global {
     private static Double countCashResult = 0.0;
     private static ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
     private static int nberOfCaissesWithSameDate;
+    private static String availableCaisseNumber;
     //endregion
 
     //region Getters and Setters
@@ -61,6 +61,14 @@ public class Global {
 
     public static void setNberOfCaissesWithSameDate(int nberOfCaissesWithSameDate) {
         Global.nberOfCaissesWithSameDate = nberOfCaissesWithSameDate;
+    }
+
+    public static String getAvailableCaisseNumber() {
+        return availableCaisseNumber;
+    }
+
+    public static void setAvailableCaisseNumber(String availableCaisseNumber) {
+        Global.availableCaisseNumber = availableCaisseNumber;
     }
 
     public static Stage getStage() {
@@ -209,15 +217,13 @@ public class Global {
             stage.setResizable(false);
             stage.centerOnScreen();
             stage.show();
-            stage.toFront();
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void stayButGoToWindow(URL location, String windowName, boolean toback){
+    /*public static void stayButGoToWindow(URL location, String windowName, boolean toback){
         Stage mystage = new Stage();
         try {
             Parent root = FXMLLoader.load(location);
@@ -239,7 +245,7 @@ public class Global {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static void setUserProfile(Label userName, ImageView logOutBtn){
         userName.setText(connectedUser.getFirstName() + " " + connectedUser.getLastName());
@@ -321,13 +327,13 @@ public class Global {
         return format;
     }
 
-    public static int generateCaisseID() {
+/*    public static int generateCaisseID() {
 
         return 1;
     }
 
-    /*public static int generateCaisseNumber(){
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+    public static int generateCaisseNumber(){
+
         int number;
 
 

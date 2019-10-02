@@ -182,8 +182,8 @@ public class detailsCaisseController {
 
 
         btnRetour.setOnAction(event -> {
-            // close window
-            btnOk.getScene().getWindow().hide();
+            URL url = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.closeAndGoToWindow(url, "Caisse");
         });
 
         btnOk.setOnAction(event -> {

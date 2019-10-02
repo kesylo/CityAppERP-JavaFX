@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="392.0" prefWidth="508.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.closeCaisseController">
+<AnchorPane maxHeight="823.0" maxWidth="875.0" minHeight="823.0" minWidth="875.0" prefHeight="823.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.closeCaisseController">
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="508.0" style="-fx-background-color: #F7A631;">
          <children>

@@ -126,9 +126,8 @@ public class addIncomeExpenseController {
         });
 
         btnCancel.setOnAction(event -> {
-            /*URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(navPath,"Caisse");*/
-            btnCreate.getScene().getWindow().hide();
+            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.closeAndGoToWindow(navPath,"Caisse");
         });
 
         btnCreate.setOnAction(event -> {

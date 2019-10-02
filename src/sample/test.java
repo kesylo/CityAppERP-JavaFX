@@ -22,6 +22,11 @@ public class test {
             System.out.println("fouund");
         }*/
 
+        int a = 4441;
+        String b = String.format("%04d", a);
+        System.out.println(b);
+
+
         int year = Calendar.getInstance().get(Calendar.YEAR);
         //double n = 0.05264;
         //System.out.println(Global.getSystemDate());
@@ -29,7 +34,7 @@ public class test {
         final String stringDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         LocalDate m = LocalDate.parse(stringDate);
 
-        System.out.println(m);
+        //System.out.println(m);
 
         String test  = "91-1124-31203";
         if (test.matches("\\d{2}+[-+]\\d{4}+[-+]\\d{5}")){

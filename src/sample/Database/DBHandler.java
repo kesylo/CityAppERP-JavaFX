@@ -382,7 +382,7 @@ public class DBHandler extends DBConfig {
             ps.setInt(3, caisse.getNumeroShift());
             ps.setInt(4, caisse.getClosed());
             ps.setInt(5, Global.getConnectedUser().getId());
-            ps.setInt(6, caisse.getNumeroCaisse());
+            ps.setString(6, caisse.getNumeroCaisse());
 
             ps.executeUpdate();
         } catch (SQLException e) {

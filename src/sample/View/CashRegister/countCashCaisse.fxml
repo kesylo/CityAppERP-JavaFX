@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="587.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.countCashCaisseController">
+<AnchorPane maxHeight="823.0" maxWidth="875.0" minHeight="823.0" minWidth="875.0" prefHeight="823.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CashRegister.countCashCaisseController">
    <children>
       <AnchorPane layoutY="-8.0" prefHeight="83.0" prefWidth="273.0" style="-fx-background-color: #F7A631;">
          <children>
@@ -139,6 +139,18 @@
             <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../Ressources/images/icons8_checkmark_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnRetour" alignment="CENTER" buttonType="RAISED" cancelButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="52.0" layoutY="589.0" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #E0E0E0;" text="Retour">
+         <font>
+            <Font name="Poppins Regular" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_back_52px.png" />
                </image>
             </ImageView>
          </graphic>

@@ -20,6 +20,7 @@ import sample.Model.Caisse;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class caisseDashboardController{
 
@@ -89,7 +90,8 @@ public class caisseDashboardController{
         getAllCaisses();
 
         btnCancel.setOnAction(event -> {
-            btnCancel.getScene().getWindow().hide();
+            URL navPath = getClass().getResource("/sample/View/dashboard.fxml");
+            Global.closeAndGoToWindow(navPath,"Dashboard");
         });
 
         btnFillCaisse.setOnAction(event -> {
@@ -118,7 +120,7 @@ public class caisseDashboardController{
                Global.setPreviewCaisse(previewCaisse);
                // open preview window
                URL navPath = getClass().getResource("/sample/View/CashRegister/detailsCaisse.fxml");
-               Global.stayButGoToWindow(navPath,"Details", true);
+               Global.closeAndGoToWindow(navPath,"Details");
            }
        });
 
@@ -136,7 +138,7 @@ public class caisseDashboardController{
         btnIncomeExpense.setOnAction(event -> {
            if (Global.getNberOfCaisses() >= 1){
                URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-               Global.stayButGoToWindow(navPath,"Actions",true);
+               Global.closeAndGoToWindow(navPath,"Actions");
            }
        });
     }
@@ -196,6 +198,45 @@ public class caisseDashboardController{
         }
     }
 
+    private void createCaisseNumber (){
+
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100; // returns 19
+        String currentCaisseNumber = Global.getCurrentCaisse().getNumeroCaisse();
+        String numeroCaisse;
+
+        // check if we have at least 1 caisse
+        if (Global.getNberOfCaisses() >= 1){
+            // check if last caisse id is of format XX-XXXX
+            if (currentCaisseNumber.matches("\\d{2}[-+]\\d{4}")){
+                // create new one base on that one
+                // split that
+                String [] tabParts = currentCaisseNumber.split("-",2);
+                // add 1 to part XXXX
+                int part2 = Integer.parseInt(tabParts[1]);
+                part2 ++;
+                // output in format XXXX
+                String x = String.format("%04d", part2);
+                // final
+                numeroCaisse = currentYear + "-" + x;
+                // set globally
+                Global.setAvailableCaisseNumber(numeroCaisse);
+            }else {
+                // create new caisse number
+                // final
+                numeroCaisse = currentYear + "-" + "0001";
+                // set globally
+                Global.setAvailableCaisseNumber(numeroCaisse);
+            }
+        }else {
+            // create new caisse number
+            // final
+            numeroCaisse = currentYear + "-" + "0001";
+            // set globally
+            Global.setAvailableCaisseNumber(numeroCaisse);
+        }
+
+    }
+
     private void getAllCaisses() {
 
         Platform.runLater(() ->{
@@ -209,6 +250,9 @@ public class caisseDashboardController{
 
                 Platform.runLater(() ->{
                     fillTable(Global.getCaisseList());
+                    // generate a caisse number for further use
+                    createCaisseNumber();
+                    System.out.println(Global.getAvailableCaisseNumber());
                 });
 
                 return new Integer(1);
@@ -231,7 +275,7 @@ public class caisseDashboardController{
                         caisseRow.getInt("closed"),
                         caisseRow.getInt("employees_id"),
                         caisseRow.getString("date_fermeture"),
-                        caisseRow.getInt("numeroCaisse"),
+                        caisseRow.getString("numeroCaisse"),
                         caisseRow.getInt("has_error")
                         );
 

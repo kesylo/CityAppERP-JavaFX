@@ -21,14 +21,13 @@ public class Main extends Application {
         primaryStage.getIcons().add(image);
 
         primaryStage.setTitle(Global.appName + " - Login");
-        //primaryStage.setScene(new Scene(root, 478, 628));
-        primaryStage.setScene(new Scene(root, 986, 609));
+        primaryStage.setScene(new Scene(root, 478, 628));
+        //primaryStage.setScene(new Scene(root, 875, 823));
         primaryStage.setResizable(false);
         primaryStage.centerOnScreen();
-        primaryStage.show();
-
         // set stage globally for faster navigation
         Global.setStage(primaryStage);
+        primaryStage.show();
     }
 
 

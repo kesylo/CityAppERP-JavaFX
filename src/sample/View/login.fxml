@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="txtUsername" cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.LoginController">
+<AnchorPane id="txtUsername" fx:id="pane" cache="true" maxHeight="628.0" maxWidth="478.0" minHeight="628.0" minWidth="478.0" prefHeight="628.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.LoginController">
     <children>
         <Pane layoutX="-2.0" prefHeight="140.0" prefWidth="478.0" style="-fx-background-color: #F7A630;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>

@@ -107,12 +107,12 @@ public class createCaisseController{
         caisse.setMontant(amountLastCaisse);
         caisse.setRemarque("");
         caisse.setClosed(1);
-        caisse.setNumeroCaisse(Global.generateCaisseID());
+        caisse.setNumeroCaisse(Global.getAvailableCaisseNumber());
         caisse.setIdEmployes(Global.getConnectedUser().getId());
     }
 
     private void fillUiElmts() {
-        lblDate.setText(Global.getSystemDate().toString());
+        lblDate.setText(Global.getSystemDate());
         lblMontant.setText(Global.formatDouble(amountLastCaisse) + " €");
         lblUser.setText(Global.getConnectedUser().getFirstName() + " " + Global.getConnectedUser().getLastName());
     }
