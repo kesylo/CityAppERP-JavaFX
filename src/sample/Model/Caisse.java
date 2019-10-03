@@ -24,6 +24,8 @@ public class Caisse {
 
     private int hasError;
 
+    private Double error_amount;
+
     public Caisse() {
     }
 
@@ -42,7 +44,7 @@ public class Caisse {
                 '}';
     }
 
-    public Caisse(int id, String date, Double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, String numeroCaisse, int hasError) {
+    public Caisse(int id, String date, Double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, String numeroCaisse, int hasError, Double error_amount) {
         this.id = id;
         this.date = date;
         this.montant = montant;
@@ -53,10 +55,19 @@ public class Caisse {
         this.closedDate = closedDate;
         this.numeroCaisse = numeroCaisse;
         this.hasError = hasError;
+        this.error_amount = error_amount;
     }
 
     //region Getters
 
+
+    public Double getError_amount() {
+        return error_amount;
+    }
+
+    public void setError_amount(Double error_amount) {
+        this.error_amount = error_amount;
+    }
 
     public int getHasError() {
         return hasError;

@@ -5,76 +5,93 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="txtUsername" fx:id="pane" cache="true" maxHeight="628.0" maxWidth="478.0" minHeight="628.0" minWidth="478.0" prefHeight="628.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.LoginController">
+<AnchorPane fx:id="anchor" cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1160.0" stylesheets="@../Ressources/css/gradient.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.LoginController">
     <children>
-        <Pane layoutX="-2.0" prefHeight="140.0" prefWidth="478.0" style="-fx-background-color: #F7A630;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <ImageView fx:id="imgLogo" fitHeight="90.0" fitWidth="424.0" layoutX="27.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <AnchorPane layoutX="580.0" layoutY="61.0" prefHeight="751.0" prefWidth="501.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 7;" AnchorPane.bottomAnchor="-52.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="61.0">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <HBox layoutX="101.0" layoutY="243.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="userIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Ressources/images/icons8_user_male_circle_52px.png" />
+                     </image>
+                  </ImageView>
+                    <JFXTextField fx:id="txtUsername" cache="true" focusColor="#f7a630" labelFloat="true" prefHeight="30.0" prefWidth="259.0" promptText="Nom d'utilisateur" unFocusColor="BLACK">
+                        <font>
+                            <Font name="Poppins Regular" size="14.0" />
+                        </font>
+                    </JFXTextField>
+               </children>
+            </HBox>
+            <HBox layoutX="102.0" layoutY="317.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="pwdIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Ressources/images/icons8_password_52px.png" />
+                     </image>
+                  </ImageView>
+                    <JFXPasswordField fx:id="txtPassword" focusColor="#f7a630" labelFloat="true" prefHeight="30.0" prefWidth="259.0" promptText="Mot de passe" unFocusColor="BLACK">
+                        <font>
+                            <Font name="Poppins Regular" size="14.0" />
+                        </font>
+                    </JFXPasswordField>
+               </children>
+            </HBox>
+            <Hyperlink fx:id="lblRegister" layoutX="311.0" layoutY="385.0" onAction="#goToDashboard" text="S'enregistrer &gt;">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+            </Hyperlink>
+            <Label layoutX="89.0" layoutY="389.0" text="Vous n'avez pas de compte ?">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnConnection" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="172.0" layoutY="520.0" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: #f7a631;" text="Connexion" textAlignment="CENTER">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Ressources/images/icons8_right_circular_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+              <Label fx:id="lblErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="70.0" layoutY="441.0" prefHeight="20.0" prefWidth="365.0" text="Nom d'utilisateur ou mot de passe incorrect ." textAlignment="CENTER" textFill="#ff3d3d" visible="false">
+                  <font>
+                      <Font name="Poppins Regular" size="14.0" />
+                  </font>
+              </Label>
+                <ImageView fx:id="imgLogo" fitHeight="66.0" fitWidth="312.0" layoutX="96.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Ressources/images/logo.jpg" />
                     </image>
                 </ImageView>
-            </children>
-        </Pane>
-        <JFXTextField fx:id="txtUsername" cache="true" focusColor="#f7a630" labelFloat="true" layoutX="126.0" layoutY="177.0" prefHeight="30.0" prefWidth="259.0" promptText="Nom d'utilisateur" unFocusColor="BLACK">
-            <font>
-                <Font name="Poppins Regular" size="14.0" />
-            </font>
-        </JFXTextField>
-        <JFXPasswordField fx:id="txtPassword" focusColor="#f7a630" labelFloat="true" layoutX="127.0" layoutY="251.0" prefHeight="30.0" prefWidth="259.0" promptText="Mot de passe" unFocusColor="BLACK">
-            <font>
-                <Font name="Poppins Regular" size="14.0" />
-            </font>
-        </JFXPasswordField>
-        <Label layoutX="119.0" layoutY="596.0" text="City Center Apartments ERP 2019 ©">
-            <font>
-                <Font name="Poppins Regular" size="14.0" />
-            </font>
-        </Label>
-        <Label fx:id="lblErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="357.0" prefHeight="20.0" prefWidth="365.0" text="Nom d'utilisateur ou mot de passe incorrect ." textAlignment="CENTER" textFill="#ff3d3d" visible="false">
-            <font>
-                <Font name="Poppins Regular" size="14.0" />
-            </font>
-        </Label>
-      <ImageView fx:id="pwdIcon" fitHeight="30.0" fitWidth="34.0" layoutX="83.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
+              <Label layoutX="133.0" layoutY="662.0" text="City Center Apartments ERP 2019 ©">
+                  <font>
+                      <Font name="Poppins Regular" size="14.0" />
+                  </font>
+              </Label>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="446.0" fitWidth="345.0" layoutX="115.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Ressources/images/icons8_password_52px.png" />
+            <Image url="@../Ressources/images/undraw_travelers_qlt1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="userIcon" fitHeight="30.0" fitWidth="34.0" layoutX="82.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Ressources/images/icons8_user_male_circle_52px.png" />
-         </image>
-      </ImageView>
-      <Hyperlink fx:id="lblRegister" layoutX="295.0" layoutY="308.0" onAction="#goToDashboard" text="S'enregistrer &gt;">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-      </Hyperlink>
-      <JFXButton fx:id="btnConnection" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="158.0" layoutY="487.0" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: #f7a631;" text="Connexion" textAlignment="CENTER">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Ressources/images/icons8_right_circular_52px.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <Label layoutX="77.0" layoutY="312.0" text="Vous n'avez pas de compte ?">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-      </Label>
-      <Line endX="318.7928466796875" endY="80.0" layoutX="147.0" layoutY="507.0" startX="-158.7071533203125" startY="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Line endX="352.0" layoutX="168.0" layoutY="696.0" startX="-100.0" />
     </children>
 </AnchorPane>

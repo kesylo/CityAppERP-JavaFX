@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -19,7 +20,6 @@ import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -32,6 +32,15 @@ public class addIncomeExpenseController {
 
     @FXML
     private JFXTextField txtAmount;
+
+    @FXML
+    private Label lblConnectedUser;
+
+    @FXML
+    private ImageView btnLogOut;
+
+    @FXML
+    private ImageView photo;
 
     @FXML
     private VBox vboxIncome;
@@ -97,6 +106,12 @@ public class addIncomeExpenseController {
     }
 
     @FXML
+    void logOut(MouseEvent event) {
+        URL location = getClass().getResource("/sample/View/login.fxml");
+        Global.logOut(location, btnCreate);
+    }
+
+    @FXML
     void onType(KeyEvent event) {
 
     }
@@ -110,6 +125,12 @@ public class addIncomeExpenseController {
 
     @FXML
     void initialize() {
+        // set profile photo
+        Global.setProfileIcon(photo);
+
+        // set user profile
+        Global.setUserProfile(lblConnectedUser, btnLogOut);
+
         loadHeader();
 
         loadBody();
@@ -127,7 +148,7 @@ public class addIncomeExpenseController {
 
         btnCancel.setOnAction(event -> {
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(navPath,"Caisse");
+            Global.navigateTo(navPath,"Caisse");
         });
 
         btnCreate.setOnAction(event -> {
@@ -388,7 +409,7 @@ public class addIncomeExpenseController {
             // form ok. save to db
             saveToDB();
             URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-            Global.closeAndGoToWindow(navPath,"Actions");
+            Global.navigateTo(navPath,"Actions");
             // show notification
             Global.successSystemNotif(
                     "Opération éffectuée avec succès.",
@@ -396,7 +417,7 @@ public class addIncomeExpenseController {
         }else {
             saveToDB();
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(navPath,"Caisse");
+            Global.navigateTo(navPath,"Caisse");
             // show notification
             Global.successSystemNotif(
                     "Opération éffectuée avec succès.",

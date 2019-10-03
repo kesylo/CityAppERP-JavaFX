@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import sample.Controller.DialogController;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
@@ -17,6 +19,15 @@ public class closeCaisseController {
     //region UI
     @FXML
     private Label lblDate;
+
+    @FXML
+    private Label lblConnectedUser;
+
+    @FXML
+    private ImageView btnLogOut;
+
+    @FXML
+    private ImageView photo;
 
     DBHandler dbHandler = new DBHandler();
 
@@ -60,7 +71,19 @@ public class closeCaisseController {
     private DialogController wd = null;
 
     @FXML
+    void logOut(MouseEvent event) {
+        URL location = getClass().getResource("/sample/View/login.fxml");
+        Global.logOut(location, btnBack);
+    }
+
+    @FXML
     void initialize() {
+
+        // set profile photo
+        Global.setProfileIcon(photo);
+
+        // set user profile
+        Global.setUserProfile(lblConnectedUser, btnLogOut);
 
         loadData();
 
@@ -69,7 +92,7 @@ public class closeCaisseController {
             Global.navFrom = "CloseCaisse";
 
             URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
-            Global.closeAndGoToWindow(navPath,"Comptage");
+            Global.navigateModal(navPath,"Comptage");
         });
 
         btnBack.setOnAction(event -> {
@@ -77,7 +100,7 @@ public class closeCaisseController {
             Global.setCountCashResult(0.0);
 
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(navPath,"Caisse");
+            Global.navigateTo(navPath,"Caisse");
         });
 
         btnCloseCaisse.setOnAction(event -> {
@@ -87,19 +110,27 @@ public class closeCaisseController {
             if (Global.getCaisseCash() != null){
                 // close only if its open
                 if (Global.getCurrentCaisse().getClosed() == 1){
-                    closeCaisse();
+
+                    Platform.runLater(() ->{
+
+                        closeCaisse();
+
+                    });
+
                     Global.showInfoMessage(
                             "Action éffectuée.",
                             "La caisse a été fermée avec succès."
                     );
                 }
                 URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-                Global.closeAndGoToWindow(navPath,"Caisse");
+                Global.navigateTo(navPath,"Caisse");
             }
             else {
                 Global.showErrorMessage("Erreur lors de la ferméture.",
                         "Veuillez compter la caisse avant de la fermer.");
             }
+
+
         });
 
     }
@@ -108,7 +139,10 @@ public class closeCaisseController {
 
     private void closeCaisse() {
         DBHandler db = new DBHandler();
-        db.updateCaisseStatus(caisseFinalAmount,0, Global.getSystemDateTime(), Global.getCurrentCaisse());
+        db.updateCaisseStatus(caisseFinalAmount,
+                0,
+                Global.getSystemDateTime(),
+                Global.getCurrentCaisse());
         db.addCaisseCash(Global.getCaisseCash());
     }
 
@@ -156,9 +190,14 @@ public class closeCaisseController {
 
     private Double computeFinalCaisseAmount(){
         // return balance
-        // Last caisse solde + income - expenses
+        // Last caisse solde + income - expenses - errors
         if (Global.getNberOfCaisses() >= 2 ){
-            return Global.getBeforeCurrentCaisse().getMontant() + totalIncome - totalExpense;
+
+            return Global.getBeforeCurrentCaisse().getMontant()
+                    - Global.getBeforeCurrentCaisse().getError_amount()
+                    + totalIncome
+                    - totalExpense
+                    - Global.getCurrentCaisse().getError_amount();
         }
         return 0.0 + totalIncome - totalExpense;
     }

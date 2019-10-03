@@ -117,6 +117,9 @@ public class detailsCaisseController {
     private JFXTextArea txtAreaCommentCaisse;
 
     @FXML
+    private ImageView photo;
+
+    @FXML
     private ImageView btnLogOut;
 
     @FXML
@@ -165,6 +168,12 @@ public class detailsCaisseController {
 
         reset();
 
+        // set profile photo
+        Global.setProfileIcon(photo);
+
+        // set user profile
+        Global.setUserProfile(lblConnectedUser, btnLogOut);
+
         // init DB access
         dbHandler = new DBHandler();
 
@@ -183,13 +192,12 @@ public class detailsCaisseController {
 
         btnRetour.setOnAction(event -> {
             URL url = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(url, "Caisse");
+            Global.navigateTo(url, "Caisse");
         });
 
         btnOk.setOnAction(event -> {
-            // close window
-            btnOk.getScene().getWindow().hide();
-
+            URL url = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+            Global.navigateTo(url, "Caisse");
         });
 
     }
@@ -225,10 +233,11 @@ public class detailsCaisseController {
                 lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
 
                 if (Global.getNberOfCaisses() >= 2){
-                    // formula: Caisse before - expenses + incomes
-                    balance = Global.getBeforeCurrentCaisse().getMontant()
+                    // formula: Caisse before - expenses + incomes - error
+                    balance = Global.getCurrentCaisse().getMontant()
                             - totalExpense
-                            + totalIncome;
+                            + totalIncome
+                            - Global.getCurrentCaisse().getError_amount();
 
                     lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
                 }

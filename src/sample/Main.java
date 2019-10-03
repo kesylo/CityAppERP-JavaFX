@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("View/dashboard.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("View/CashRegister/caisseDashboard.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("View/login.fxml"));
 
         //Set app logo
@@ -21,7 +21,10 @@ public class Main extends Application {
         primaryStage.getIcons().add(image);
 
         primaryStage.setTitle(Global.appName + " - Login");
-        primaryStage.setScene(new Scene(root, 478, 628));
+        Scene scene = new Scene(root, 1160, 760);
+        primaryStage.setScene(scene);
+
+        //scene.getStylesheets().add(getClass().getResource("/sample/Ressources/css/gradient.css").toExternalForm());
         //primaryStage.setScene(new Scene(root, 875, 823));
         primaryStage.setResizable(false);
         primaryStage.centerOnScreen();

@@ -2,6 +2,7 @@ package sample.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.sun.glass.ui.Window;
+import com.sun.jndi.toolkit.url.UrlUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Model.Caisse;
@@ -21,14 +23,8 @@ import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Global {
 
@@ -50,10 +46,19 @@ public class Global {
     private static ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
     private static int nberOfCaissesWithSameDate;
     private static String availableCaisseNumber;
+    private static List<Double> errorList = new ArrayList<>();
     //endregion
 
     //region Getters and Setters
 
+
+    public static List<Double> getErrorList() {
+        return errorList;
+    }
+
+    public static void setErrorList(List<Double> errorList) {
+        Global.errorList = errorList;
+    }
 
     public static int getNberOfCaissesWithSameDate() {
         return nberOfCaissesWithSameDate;
@@ -70,6 +75,7 @@ public class Global {
     public static void setAvailableCaisseNumber(String availableCaisseNumber) {
         Global.availableCaisseNumber = availableCaisseNumber;
     }
+
 
     public static Stage getStage() {
         return stage;
@@ -163,6 +169,14 @@ public class Global {
 
     //region Methods
 
+    public static Double getSumError (){
+        Double sum = 0.0;
+        for (Double v : errorList){
+            sum += v;
+        }
+        return sum;
+    }
+
     public static void showErrorMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.ERROR);
         alertDialog.setTitle(appName);
@@ -196,7 +210,27 @@ public class Global {
         return false;
     }
 
-    public static void closeAndGoToWindow(URL location, String windowName) {
+    public static void navigateModal (URL location, String windowName){
+        Stage stage = new Stage();
+
+        try {
+            Parent root = FXMLLoader.load(location);
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(appName + " " + windowName);
+            //Set app logo
+            Image image = new Image("/sample/Ressources/images/icon.png");
+            stage.getIcons().add(image);
+            stage.setResizable(false);
+            stage.centerOnScreen();
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void navigateTo(URL location, String windowName) {
 
         /*if (closeWindow){
             anyBtn.getScene().getWindow().hide();
@@ -273,7 +307,10 @@ public class Global {
         Parent root = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
+        Image image = new Image("/sample/Ressources/images/icon.png");
+        stage.getIcons().add(image);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.setTitle(appName + " - Connexion");
         stage.show();
 
@@ -318,7 +355,7 @@ public class Global {
 
     public static String getSystemDate()  {
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(date);
     }
 
@@ -326,6 +363,22 @@ public class Global {
         String format = String.format("%.2f", value);
         return format;
     }
+
+    public static void setProfileIcon(ImageView photo) {
+        Image image;
+        // set welcome text
+        if (Global.getConnectedUser().getSex() == "Male"){
+            // set profile photo
+            image = new Image("/sample/Ressources/images/userMale.png");
+            photo.setImage(image);
+        }else {
+            // set profile photo
+            image = new Image("/sample/Ressources/images/userFemale.png");
+            photo.setImage(image);
+        }
+    }
+
+
 
 /*    public static int generateCaisseID() {
 

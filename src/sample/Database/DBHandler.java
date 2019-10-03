@@ -472,6 +472,24 @@ public class DBHandler extends DBConfig {
         }
     }
 
+    public void updateErrorAmount(Double amount, int idCaisse) {
+        String query = "UPDATE " + Static.CAISSE_TABLE + " SET error_amount = ? WHERE idCaisse = ?";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDouble(1, amount);
+            ps.setInt(2, idCaisse);
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /*------------------------------ DELETE -------------------------------------*/
 }

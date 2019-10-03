@@ -30,6 +30,9 @@ public class caisseDashboardController{
     private JFXButton btnRefresh;
 
     @FXML
+    private ImageView photo;
+
+    @FXML
     private JFXButton btnCancel;
 
     @FXML
@@ -89,9 +92,12 @@ public class caisseDashboardController{
         // get all caisses
         getAllCaisses();
 
+        // set profile photo
+        Global.setProfileIcon(photo);
+
         btnCancel.setOnAction(event -> {
             URL navPath = getClass().getResource("/sample/View/dashboard.fxml");
-            Global.closeAndGoToWindow(navPath,"Dashboard");
+            Global.navigateTo(navPath,"Dashboard");
         });
 
         btnFillCaisse.setOnAction(event -> {
@@ -120,7 +126,7 @@ public class caisseDashboardController{
                Global.setPreviewCaisse(previewCaisse);
                // open preview window
                URL navPath = getClass().getResource("/sample/View/CashRegister/detailsCaisse.fxml");
-               Global.closeAndGoToWindow(navPath,"Details");
+               Global.navigateTo(navPath,"Details");
            }
        });
 
@@ -138,7 +144,7 @@ public class caisseDashboardController{
         btnIncomeExpense.setOnAction(event -> {
            if (Global.getNberOfCaisses() >= 1){
                URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
-               Global.closeAndGoToWindow(navPath,"Actions");
+               Global.navigateTo(navPath,"Actions");
            }
        });
     }
@@ -171,7 +177,7 @@ public class caisseDashboardController{
             if (action){
                 // go to fermeture
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Fermeture");
+                Global.navigateTo(navPath,"Fermeture");
             }
         }
     }
@@ -182,7 +188,7 @@ public class caisseDashboardController{
                 // 0 = closed
                 // go to infos Caisse
                 URL location = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
-                Global.closeAndGoToWindow(location, "Recap");
+                Global.navigateTo(location, "Recap");
 
             } else {
                 // 1 = opened
@@ -194,7 +200,7 @@ public class caisseDashboardController{
         }else {
             // go to infos Caisse
             URL location = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-            Global.closeAndGoToWindow(location, "Creation");
+            Global.navigateTo(location, "Creation");
         }
     }
 
@@ -276,7 +282,8 @@ public class caisseDashboardController{
                         caisseRow.getInt("employees_id"),
                         caisseRow.getString("date_fermeture"),
                         caisseRow.getString("numeroCaisse"),
-                        caisseRow.getInt("has_error")
+                        caisseRow.getInt("has_error"),
+                        caisseRow.getDouble("error_amount")
                         );
 
                 data.add(0, caisse);

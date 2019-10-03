@@ -1,7 +1,6 @@
 package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -172,7 +171,7 @@ public class infosLastCaisseController  {
 
         btnRetour.setOnAction(event -> {
             URL url = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(url, "Caisse");
+            Global.navigateTo(url, "Caisse");
         });
 
         btnOK.setOnAction(event -> {
@@ -184,10 +183,10 @@ public class infosLastCaisseController  {
 
             if (action){
                 URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Creation");
+                Global.navigateTo(navPath,"Creation");
             }else {
                 URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Comptage");
+                Global.navigateModal(navPath,"Comptage");
             }
         });
     }

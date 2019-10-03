@@ -1,9 +1,12 @@
 package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import sample.Controller.Global;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
@@ -15,13 +18,25 @@ public class createCaisseController{
 
     //region UI
     @FXML
+    private Label lblConnectedUser;
+
+    @FXML
+    private ImageView btnLogOut;
+
+    @FXML
     private JFXButton btnCancel;
+
+    @FXML
+    private ImageView photo;
 
     @FXML
     private JFXButton btnCreate;
 
     @FXML
     private Label lblDate;
+
+    @FXML
+    private Label lblNumCaisse;
 
     @FXML
     private Label lblMontant;
@@ -32,6 +47,12 @@ public class createCaisseController{
     @FXML
     private Label lblUser;
     //endregion
+
+    @FXML
+    void logOut(MouseEvent event) {
+        URL location = getClass().getResource("/sample/View/login.fxml");
+        Global.logOut(location, btnCancel);
+    }
 
     private DBHandler db = new DBHandler();
     private Double amountLastCaisse = 0.0;
@@ -55,7 +76,7 @@ public class createCaisseController{
         });
 
         btnCancel.setOnAction(event -> {
-            Global.closeAndGoToWindow(toCaisseDashboard,"Caisse");
+            Global.navigateTo(toCaisseDashboard,"Caisse");
         });
     }
     /*----------------------------------------------------------------------------------------------------------*/
@@ -83,7 +104,7 @@ public class createCaisseController{
         // show success message
         congrats();
         // go to dashboard
-        Global.closeAndGoToWindow(toCaisseDashboard,"Caisse");
+        Global.navigateTo(toCaisseDashboard,"Caisse");
 
     }
 
@@ -112,7 +133,12 @@ public class createCaisseController{
     }
 
     private void fillUiElmts() {
+        // set profile photo
+        Global.setProfileIcon(photo);
+        // set user profile
+        Global.setUserProfile(lblConnectedUser, btnLogOut);
         lblDate.setText(Global.getSystemDate());
+        lblNumCaisse.setText(Global.getAvailableCaisseNumber());
         lblMontant.setText(Global.formatDouble(amountLastCaisse) + " €");
         lblUser.setText(Global.getConnectedUser().getFirstName() + " " + Global.getConnectedUser().getLastName());
     }

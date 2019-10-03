@@ -18,8 +18,6 @@ import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
 
 import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
 
 public class countCashCaisseController {
 
@@ -30,8 +28,8 @@ public class countCashCaisseController {
     @FXML
     private ComboBox<Integer> txtBoxOneHundred;
 
-    @FXML
-    private JFXButton btnRetour;
+    /*@FXML
+    private JFXButton btnRetour;*/
 
     @FXML
     private ComboBox<Integer> txtBoxfiftyEuros;
@@ -93,15 +91,15 @@ public class countCashCaisseController {
             }
         });
 
-        btnRetour.setOnAction(event -> {
+/*        btnRetour.setOnAction(event -> {
             if (Global.navFrom == "CloseCaisse"){
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Fermeture");
+                Global.navigateTo(navPath,"Fermeture");
             }else {
                 URL navPath = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Recap");
+                Global.navigateTo(navPath,"Recap");
             }
-        });
+        });*/
 
         btnOK.setOnAction(event -> {
             // set globally
@@ -115,7 +113,7 @@ public class countCashCaisseController {
                     Global.showInfoMessage(
                             "Vérification Correcte !",
                             "La monnaie disponible en caisse correspond bien à celle du système");
-                    btnOK.getScene().getWindow().hide();
+
                     // caisse has no error
                     Global.getCurrentCaisse().setHasError(0);
                 } else {
@@ -166,7 +164,7 @@ public class countCashCaisseController {
             Global.getCurrentCaisse().setHasError(0);
             //Global.closeWindow("Fermeture");
             URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-            Global.closeAndGoToWindow(navPath,"Fermeture");
+            Global.navigateTo(navPath,"Fermeture");
         } else {
             // add error to caisse
             boolean result = Global.showInfoMessageWithBtn(
@@ -199,13 +197,15 @@ public class countCashCaisseController {
                     "Ceci à lieu car il y a " + solde * -1 +" € en plus dans la caisse.");
 
             addErrorLineToCaisse(solde);
+            // add error to error list
+            Global.getErrorList().add(solde);
             // make solde positive
             solde = solde * -1;
 
             if (Global.navFrom == "CloseCaisse"){
                 Global.closeWindow("Fermeture");
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Fermeture");
+                Global.navigateTo(navPath,"Fermeture");
                 // error sent
 
                 // update amount caisse
@@ -217,7 +217,7 @@ public class countCashCaisseController {
                 Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() + solde);
 
                 URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Creation");
+                Global.navigateTo(navPath,"Creation");
             }
 
 
@@ -231,7 +231,7 @@ public class countCashCaisseController {
             if (Global.navFrom == "CloseCaisse"){
                 Global.closeWindow("Fermeture");
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Fermeture");
+                Global.navigateTo(navPath,"Fermeture");
                 // error sent
 
                 // update amount caisse
@@ -242,7 +242,7 @@ public class countCashCaisseController {
                 // update amount caisse
                 Global.getCurrentCaisse().setMontant(Global.getCurrentCaisse().getMontant() - solde);
                 URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
-                Global.closeAndGoToWindow(navPath,"Creation");
+                Global.navigateTo(navPath,"Creation");
             }
 
 
@@ -297,6 +297,9 @@ public class countCashCaisseController {
         Platform.runLater(() ->{
             DBHandler dbHandler = new DBHandler();
             dbHandler.addErrorLine(errorExpense);
+            // add error amount
+            Double amount = Global.getCurrentCaisse().getError_amount() + solde;
+            dbHandler.updateErrorAmount(amount , Global.getCurrentCaisse().getId());
         });
 
     }

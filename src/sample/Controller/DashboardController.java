@@ -3,6 +3,7 @@ package sample.Controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,16 +18,25 @@ public class DashboardController implements Initializable {
     private Label lblConnectedUser;
 
     @FXML
+    private Label lblWelcome;
+
+    @FXML
+    private ImageView photo;
+
+    @FXML
     private ImageView btnLogOut;
 
     @FXML
-    private JFXButton btnNavToCaisse;
+    private JFXButton btnhide;
+
+    @FXML
+    private Button btnNavToCaisse;
     //endregion
 
     @FXML
     void logOut(MouseEvent event) {
         URL location = getClass().getResource("/sample/View/login.fxml");
-        Global.logOut(location, btnNavToCaisse);
+        Global.logOut(location, btnhide);
     }
 
     @Override
@@ -37,11 +47,20 @@ public class DashboardController implements Initializable {
 
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
+        // set welcome text
+        setWelcomeText();
+
+        // set profile photo
+        Global.setProfileIcon(photo);
+
+
         btnNavToCaisse.setOnAction(event -> {
             // nav to caisse when data are fetched
             URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.closeAndGoToWindow(toCaisse, "Caisse");
+            Global.navigateTo(toCaisse, "Caisse");
         });
+
+
     }
 
     /*--------------------------------------------------------------------------------------*/
@@ -60,6 +79,14 @@ public class DashboardController implements Initializable {
             case 3:
                 adminUserRole();
                 break;
+        }
+    }
+
+    private void setWelcomeText() {
+        if (Global.getConnectedUser().getSex() == "Male"){
+            lblWelcome.setText("Bienvenu, " + Global.getConnectedUser().getLastName() + " !");
+        }else {
+            lblWelcome.setText("Bienvenue, " + Global.getConnectedUser().getLastName() + " !");
         }
     }
 

@@ -52,7 +52,7 @@ public class LoginController {
     @FXML
     void goToDashboard(ActionEvent event) {
         URL navPath = getClass().getResource("/sample/View/signup.fxml");
-        Global.closeAndGoToWindow(navPath," - SignUp");
+        Global.navigateTo(navPath," - SignUp");
     }
 
     @FXML
@@ -99,6 +99,7 @@ public class LoginController {
                             user.setLastName(userRow.getString("lastName"));
                             user.setRole(userRow.getInt("role"));
                             user.setId(userRow.getInt("id"));
+                            user.setSex(userRow.getString("sex"));
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -123,7 +124,7 @@ public class LoginController {
                             Global.setConnectedUser(user);
                             // goToDashboard
                             URL navPath = getClass().getResource("/sample/View/dashboard.fxml");
-                            Global.closeAndGoToWindow(navPath,"Dashboard");
+                            Global.navigateTo(navPath,"Dashboard");
 
                         } else {
                             System.out.println("login failed");

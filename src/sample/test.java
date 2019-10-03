@@ -22,9 +22,10 @@ public class test {
             System.out.println("fouund");
         }*/
 
-        int a = 4441;
-        String b = String.format("%04d", a);
-        System.out.println(b);
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        System.out.println(formatter.format(date));
 
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
