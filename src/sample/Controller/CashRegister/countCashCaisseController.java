@@ -3,21 +3,18 @@ package sample.Controller.CashRegister;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
 
 import java.net.URL;
+import java.util.Objects;
 
 public class countCashCaisseController {
 
@@ -27,9 +24,6 @@ public class countCashCaisseController {
 
     @FXML
     private ComboBox<Integer> txtBoxOneHundred;
-
-    /*@FXML
-    private JFXButton btnRetour;*/
 
     @FXML
     private ComboBox<Integer> txtBoxfiftyEuros;
@@ -63,83 +57,74 @@ public class countCashCaisseController {
     //endregion
 
     private Double totalCaisseCount = 0.0;
-    Double solde;
-
-    @FXML
-    void computeTotal(ActionEvent event) {
-        //System.out.println("changed");
-        renderTotal();
-    }
-
-    @FXML
-    void selectText(MouseEvent event) {
-        txtLessThanFiftyCents.selectAll();
-    }
+    private ObservableList<Integer> data = FXCollections.observableArrayList();
+    private Double solde;
 
     @FXML
     void initialize() {
         setComboBoxValues();
 
         // force the field to be float only
-        txtLessThanFiftyCents.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
-                    txtLessThanFiftyCents.setText(oldValue);
+        txtLessThanFiftyCents.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,3}([.]\\d{0,2})?")) {
+                txtLessThanFiftyCents.setText(oldValue);
+            }else {
+                if (!newValue.equals("")){
+                    renderTotal();
                 }
             }
         });
-
-/*        btnRetour.setOnAction(event -> {
-            if (Global.navFrom == "CloseCaisse"){
-                URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
-                Global.navigateTo(navPath,"Fermeture");
-            }else {
-                URL navPath = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
-                Global.navigateTo(navPath,"Recap");
-            }
-        });*/
 
         btnOK.setOnAction(event -> {
-            // set globally
-            Global.setCountCashResult(totalCaisseCount);
+            if (!Objects.equals(txtLessThanFiftyCents.getText(), "")){
 
-            if (Global.navFrom == "CloseCaisse"){
-                setCashForCurrentCaisse();
-            } else {
-                // check if counted cash = caisse cash
-                if (Global.formatDouble(totalCaisseCount) == Global.formatDouble(Global.getCurrentCaisse().getMontant())){
-                    Global.showInfoMessage(
-                            "Vérification Correcte !",
-                            "La monnaie disponible en caisse correspond bien à celle du système");
+                // set globally
+                Global.setCountCashResult(totalCaisseCount);
 
-                    // caisse has no error
-                    Global.getCurrentCaisse().setHasError(0);
+                if (Global.navFrom.equals("CloseCaisse")){
+                    setCashForCurrentCaisse();
                 } else {
+                    // check if counted cash = caisse cash
+                    if (Global.formatDouble(totalCaisseCount).equals(Global.formatDouble(Global.getCurrentCaisse().getMontant()))){
+                        Global.showInfoMessage(
+                                "Vérification Correcte !",
+                                "La monnaie disponible en caisse correspond bien à celle du système");
 
-                    boolean result = Global.showInfoMessageWithBtn(
-                            "Vérification Incorrecte",
-                            "Le montant compté n'est pas égal au montant enregistré dans le système. " +
-                                    "Voulez vous recompter ou signaler l'erreur ?",
-                            "Compter à nouveau",
-                            "Signaler l'erreur");
+                        // caisse has no error
+                        Global.getCurrentCaisse().setHasError(0);
+                    } else {
 
+                        boolean result = Global.showInfoMessageWithBtn(
+                                "Vérification Incorrecte",
+                                "Le montant compté n'est pas égal au montant enregistré dans le système. " +
+                                        "Voulez vous recompter ou signaler l'erreur ?",
+                                "Compter à nouveau",
+                                "Signaler l'erreur");
 
-
-                    if (!result){
-                        // caisse has error
-                        Global.getCurrentCaisse().setHasError(1);
-                        addErrorToCurrentCaisse();
+                        if (!result){
+                            // caisse has error
+                            Global.getCurrentCaisse().setHasError(1);
+                            addErrorToCurrentCaisse();
+                            btnOK.getScene().getWindow().hide();
+                        }
                     }
                 }
+            }else {
+                Global.showErrorMessage("Valeurs entrées incorrectes!",
+                        "Veuillez verifier vos entrées.");
             }
-
         });
-
     }
 
     /*-------------------------------------------------------------------------------*/
+
+    public void onValueChanged(){
+        renderTotal();
+    }
+
+    public void clear(){
+        txtLessThanFiftyCents.selectAll();
+    }
 
     private void setCashForCurrentCaisse() {
         Cash cash = new Cash(
@@ -165,6 +150,7 @@ public class countCashCaisseController {
             //Global.closeWindow("Fermeture");
             URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
             Global.navigateTo(navPath,"Fermeture");
+            btnOK.getScene().getWindow().hide();
         } else {
             // add error to caisse
             boolean result = Global.showInfoMessageWithBtn(
@@ -184,7 +170,7 @@ public class countCashCaisseController {
 
     private void addErrorToCurrentCaisse() {
 
-        if (Global.navFrom == "CloseCaisse"){
+        if (Global.navFrom.equals("CloseCaisse")){
             solde = Global.getComputedSoldeCaisse() - totalCaisseCount;
         }else {
             solde = Global.getCurrentCaisse().getMontant() - totalCaisseCount;
@@ -194,15 +180,15 @@ public class countCashCaisseController {
         if (solde < 0){
             Global.showErrorMessage(
                     "Une erreur de caisse vient d'être signalée dans la section 'commentaires' de cette caisse",
-                    "Ceci à lieu car il y a " + solde * -1 +" € en plus dans la caisse.");
+                    "Ceci a lieu car il y a " + solde * -1 +" € en plus dans la caisse.");
 
             addErrorLineToCaisse(solde);
             // add error to error list
             Global.getErrorList().add(solde);
             // make solde positive
-            solde = solde * -1;
+            //solde = solde * -1;
 
-            if (Global.navFrom == "CloseCaisse"){
+            if (Global.navFrom.equals("CloseCaisse")){
                 Global.closeWindow("Fermeture");
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
                 Global.navigateTo(navPath,"Fermeture");
@@ -228,7 +214,7 @@ public class countCashCaisseController {
 
             addErrorLineToCaisse(solde);
 
-            if (Global.navFrom == "CloseCaisse"){
+            if (Global.navFrom.equals("CloseCaisse")){
                 Global.closeWindow("Fermeture");
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
                 Global.navigateTo(navPath,"Fermeture");
@@ -305,6 +291,10 @@ public class countCashCaisseController {
     }
 
     private void setComboBoxValues() {
+        for (int i = 0; i < 50; i++){
+            data.add(i);
+        }
+
         setValuesFor(txtBoxTwoHundred);
         setValuesFor(txtBoxOneHundred);
         setValuesFor(txtBoxfiftyEuros);
@@ -317,28 +307,29 @@ public class countCashCaisseController {
     }
 
     private void setValuesFor(ComboBox<Integer> comboBox) {
-        ObservableList<Integer> data = FXCollections.observableArrayList();
-        for (int i = 0; i < 20; i++){
-            data.add(i);
-        }
         comboBox.setItems(data);
         comboBox.getSelectionModel().select(0);
     }
 
     private void renderTotal() {
-        totalCaisseCount = (Double.valueOf(txtLessThanFiftyCents.getText()) / 100
-        + txtBoxFiftyCents.getValue() * 0.5
-        + txtBoxOne.getValue()
-        + txtBoxTwo.getValue() * 2
-        + txtBoxFive.getValue() * 5
-        + txtBoxTen.getValue() * 10
-        + txtBoxTwenty.getValue() * 20
-        + txtBoxfiftyEuros.getValue() * 50
-        + txtBoxOneHundred.getValue() * 100
-        + txtBoxTwoHundred.getValue() * 200);
 
-        countTotal.setText(totalCaisseCount + "");
+        if (!Objects.equals(txtLessThanFiftyCents.getText(), "")){
+            totalCaisseCount = (Double.valueOf(txtLessThanFiftyCents.getText())
+                    + txtBoxFiftyCents.getValue() * 0.5
+                    + txtBoxOne.getValue()
+                    + txtBoxTwo.getValue() * 2
+                    + txtBoxFive.getValue() * 5
+                    + txtBoxTen.getValue() * 10
+                    + txtBoxTwenty.getValue() * 20
+                    + txtBoxfiftyEuros.getValue() * 50
+                    + txtBoxOneHundred.getValue() * 100
+                    + txtBoxTwoHundred.getValue() * 200);
 
+            countTotal.setText(totalCaisseCount + "");
+        }else {
+            Global.showErrorMessage("Valeurs entrées incorrectes!",
+                    "Veuillez verifier vos entrées.");
+        }
     }
 
 }

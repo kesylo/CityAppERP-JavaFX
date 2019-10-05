@@ -9,19 +9,18 @@ import sample.Model.User;
 import java.sql.*;
 
 public class DBHandler extends DBConfig {
-    Connection dbConnection;
-    ResultSet rs;
 
-    public Connection getDbConnection() throws ClassNotFoundException, SQLException {
+    private ResultSet rs;
+
+    private Connection getDbConnection() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://"
                 + dbHost + ":"
                 + dbPort + "/"
                 + dbName;
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
 
-        return dbConnection;
+        return DriverManager.getConnection(connectionString, dbUser, dbPass);
     }
 
     /*------------------------------ SELECT -------------------------------------*/
@@ -38,35 +37,11 @@ public class DBHandler extends DBConfig {
                 count ++;
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         return count;
-    }
-
-    public double getLastAmountCaisse() {
-        Double amount = 0.0;
-        // prepare the query
-        String query = "SELECT montant FROM " + Static.CAISSE_TABLE + " ORDER BY idCaisse DESC LIMIT 1";
-        // run it
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                amount = rs.getDouble("montant");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return amount;
     }
 
     public ResultSet getUser(User user) {
@@ -84,9 +59,7 @@ public class DBHandler extends DBConfig {
 
                 rs = ps.executeQuery();
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
@@ -108,97 +81,10 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return rs;
-    }
-
-    public ResultSet getCaisseDataByNumShiftAndDate(int numeroShift, Date date) {
-        rs = null;
-
-        // prepare the query
-        String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date =? AND numeroShift=?";
-        // run it
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-            ps.setDate(1, date);
-            ps.setInt(2, numeroShift);
-
-            rs = ps.executeQuery();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return rs;
-    }
-
-    public Boolean checkIfDateExists(String date) {
-        rs = null;
-
-        // prepare the query
-        String query = "SELECT * FROM " + Static.CAISSE_TABLE + " WHERE date=?";
-        // run it
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-            ps.setString(1, date);
-
-            int cnt = 0;
-
-            rs = ps.executeQuery();
-
-            try {
-                while (rs.next()) {
-                    cnt++;
-                }
-
-                if (cnt >= 1) {
-                    return true;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public int getCaisseIdByDate(String date) {
-        rs = null;
-        int id = 0;
-
-        // prepare the query
-        String query = "SELECT idCaisse FROM " + Static.CAISSE_TABLE + " WHERE date=?";
-        // run it
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-            ps.setString(1, date);
-
-            rs = ps.executeQuery();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            while (rs.next()) {
-                id = rs.getInt("idCaisse");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return id;
     }
 
     public ResultSet getAllEmployeesNames() {
@@ -213,9 +99,7 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return rs;
@@ -234,9 +118,7 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return rs;
@@ -278,9 +160,7 @@ public class DBHandler extends DBConfig {
                 );
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -303,9 +183,7 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return rs;
@@ -324,9 +202,7 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return rs;
@@ -362,9 +238,7 @@ public class DBHandler extends DBConfig {
             ps.setInt(9, errorExpense.getIdUser());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -385,9 +259,7 @@ public class DBHandler extends DBConfig {
             ps.setString(6, caisse.getNumeroCaisse());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -412,9 +284,7 @@ public class DBHandler extends DBConfig {
             ps.setInt(11, caisseAction.getIdCaisse());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -441,9 +311,7 @@ public class DBHandler extends DBConfig {
 
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -465,9 +333,7 @@ public class DBHandler extends DBConfig {
 
             ps.executeUpdate();
             ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -483,13 +349,10 @@ public class DBHandler extends DBConfig {
 
             ps.executeUpdate();
             ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-
 
     /*------------------------------ DELETE -------------------------------------*/
 }

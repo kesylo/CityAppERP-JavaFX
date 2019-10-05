@@ -22,7 +22,7 @@
             <DropShadow />
          </effect>
          <children>
-             <Label layoutX="902.0" layoutY="606.0" text="City Center App ERP 2019 ©" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="902.0" AnchorPane.rightAnchor="14.0">
+             <Label layoutX="902.0" layoutY="606.0" text="City Center App ERP 2019 ©" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="14.0">
                  <font>
                      <Font name="Poppins Regular" size="14.0" />
                  </font>
@@ -50,7 +50,7 @@
                         <Font name="Poppins Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNavToCaisse1" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button7" stylesheets="@../Ressources/css/style.css" text="Paramètres" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="btnNavToCaisse1" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button7" stylesheets="@../Ressources/css/style.css" text="Paramètres" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <graphic>
                         <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -86,11 +86,23 @@
                         <Font name="Poppins Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNavToCaisse22" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button5" stylesheets="@../Ressources/css/style.css" text="A propos" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="btnNavToCaisse22" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button5" stylesheets="@../Ressources/css/style.css" text="A propos" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <graphic>
                         <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Ressources/images/icons8_ask_question_100px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnNavToCaisse221" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button6" stylesheets="@../Ressources/css/style.css" text="Contrats" GridPane.rowIndex="1">
+                     <graphic>
+                        <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Ressources/images/icons8_contract_100px.png" />
                            </image>
                         </ImageView>
                      </graphic>

@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +33,7 @@ public class DashboardController implements Initializable {
     //endregion
 
     @FXML
-    void logOut(MouseEvent event) {
+    void logOut() {
         URL location = getClass().getResource("/sample/View/login.fxml");
         Global.logOut(location, btnhide);
     }
@@ -65,7 +64,7 @@ public class DashboardController implements Initializable {
 
     /*--------------------------------------------------------------------------------------*/
 
-    private void manageRoles(int role) {
+    /*private void manageRoles(int role) {
         switch (role) {
             case 0:
                 basicUserRole();
@@ -80,10 +79,10 @@ public class DashboardController implements Initializable {
                 adminUserRole();
                 break;
         }
-    }
+    }*/
 
     private void setWelcomeText() {
-        if (Global.getConnectedUser().getSex() == "Male"){
+        if (Global.getConnectedUser().getSex().equals("Male")){
             lblWelcome.setText("Bienvenu, " + Global.getConnectedUser().getLastName() + " !");
         }else {
             lblWelcome.setText("Bienvenue, " + Global.getConnectedUser().getLastName() + " !");
@@ -91,7 +90,7 @@ public class DashboardController implements Initializable {
     }
 
     /*------------------------------------------ ROLES ----------------------------------------------*/
-    // Role : 0
+/*    // Role : 0
     private void basicUserRole() {
         btnNavToCaisse.setDisable(true);
     }
@@ -109,5 +108,5 @@ public class DashboardController implements Initializable {
     // Role : 3
     private void adminUserRole() {
         btnNavToCaisse.setDisable(false);
-    }
+    }*/
 }

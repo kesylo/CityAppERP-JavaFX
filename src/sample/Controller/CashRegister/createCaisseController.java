@@ -115,7 +115,7 @@ public class createCaisseController{
             wd.exec("123", inputParam -> {
                 db.createCaisse(caisse);
 
-                return new Integer(1);
+                return 1;
             });
 
         });

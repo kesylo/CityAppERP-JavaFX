@@ -5,7 +5,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import sample.Controller.DialogController;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
@@ -29,13 +28,7 @@ public class closeCaisseController {
     @FXML
     private ImageView photo;
 
-    DBHandler dbHandler = new DBHandler();
 
-    Double totalIncome = 0.0;
-
-    Double totalExpense = 0.0;
-
-    Double caisseFinalAmount = 0.0;
 
     @FXML
     private Label lblShiftNum;
@@ -68,10 +61,14 @@ public class closeCaisseController {
     private JFXButton btnCloseCaisse;
     //endregion
 
-    private DialogController wd = null;
+    private DialogController<String> wd = null;
+    private DBHandler dbHandler = new DBHandler();
+    private Double totalIncome = 0.0;
+    private Double totalExpense = 0.0;
+    private Double caisseFinalAmount = 0.0;
 
     @FXML
-    void logOut(MouseEvent event) {
+    void logOut() {
         URL location = getClass().getResource("/sample/View/login.fxml");
         Global.logOut(location, btnBack);
     }
@@ -111,11 +108,7 @@ public class closeCaisseController {
                 // close only if its open
                 if (Global.getCurrentCaisse().getClosed() == 1){
 
-                    Platform.runLater(() ->{
-
-                        closeCaisse();
-
-                    });
+                    Platform.runLater(this::closeCaisse);
 
                     Global.showInfoMessage(
                             "Action éffectuée.",
@@ -139,17 +132,31 @@ public class closeCaisseController {
 
     private void closeCaisse() {
         DBHandler db = new DBHandler();
-        db.updateCaisseStatus(caisseFinalAmount,
-                0,
-                Global.getSystemDateTime(),
-                Global.getCurrentCaisse());
-        db.addCaisseCash(Global.getCaisseCash());
+        // if caisse < 0 put 0 in database and add error
+        if (caisseFinalAmount < 0){
+            // addError
+            Global.getCurrentCaisse().setError_amount(caisseFinalAmount);
+            Global.getCurrentCaisse().setRemarque("Caisse avec solde négatif");
+
+            db.updateCaisseStatus(0.0,
+                    0,
+                    Global.getSystemDateTime(),
+                    Global.getCurrentCaisse());
+
+
+        } else {
+            db.updateCaisseStatus(caisseFinalAmount,
+                    0,
+                    Global.getSystemDateTime(),
+                    Global.getCurrentCaisse());
+            db.addCaisseCash(Global.getCaisseCash());
+        }
     }
 
     private void loadData() {
 
         Platform.runLater(() ->{
-            wd = new DialogController(btnBack.getScene().getWindow(), "Chargement...");
+            wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
 
@@ -183,7 +190,7 @@ public class closeCaisseController {
 
                 });
 
-                return new Integer(1);
+                return 1;
             });
         });
     }
@@ -203,7 +210,7 @@ public class closeCaisseController {
     }
 
     private Double computeExpense() {
-        Double totalExpense = 0.0;
+        double totalExpense = 0.0;
         ResultSet row = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(),
                 Global.getCurrentCaisse().getNumeroShift(),
                 1);
@@ -220,7 +227,7 @@ public class closeCaisseController {
     }
 
     private Double computeIncome() {
-        Double totalIncome = 0.0;
+        double totalIncome = 0.0;
         ResultSet row = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(),
                 Global.getCurrentCaisse().getNumeroShift(),
                 0);

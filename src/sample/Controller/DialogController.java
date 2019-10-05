@@ -2,7 +2,6 @@ package sample.Controller;
 
 import com.jfoenix.controls.JFXSpinner;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -11,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -21,7 +19,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-import java.util.function.Consumer;
 import java.util.function.ToIntFunction;
 
 public class DialogController<P> {
@@ -41,9 +38,9 @@ public class DialogController<P> {
     private final VBox vbox = new VBox();
 
     /** Placing a listener on this list allows to get notified BY the result when the task has finished. */
-    public ObservableList<Integer> resultNotificationList= FXCollections.observableArrayList();
+    private ObservableList<Integer> resultNotificationList= FXCollections.observableArrayList();
 
-    public Integer resultValue;
+    private Integer resultValue;
 
     /**
      *
@@ -53,16 +50,6 @@ public class DialogController<P> {
         dialog.initOwner(owner);
         dialog.setResizable(false);
         this.label.setText(label);
-    }
-
-    /**
-     *
-     */
-    public void addTaskEndNotification(Consumer<Integer> c) {
-        resultNotificationList.addListener((ListChangeListener<? super Integer>) n -> {
-            resultNotificationList.clear();
-            c.accept(resultValue);
-        });
     }
 
     /**
@@ -101,7 +88,7 @@ public class DialogController<P> {
 
         animationWorker = new Task() {
             @Override
-            protected Object call() throws Exception {
+            protected Object call() {
                 /*
                 This is activated when we have a "progressing" indicator.
                 This thread is used to advance progress every XXX milliseconds.
@@ -159,13 +146,6 @@ public class DialogController<P> {
         taskWorker.setOnFailed(eh);
 
         new Thread(taskWorker).start();
-    }
-
-    /**
-     * For those that like beans :)
-     */
-    public Integer getResultValue() {
-        return resultValue;
     }
 
 }

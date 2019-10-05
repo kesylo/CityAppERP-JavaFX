@@ -136,7 +136,7 @@
                <children>
                   <ComboBox fx:id="comboSource" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#comboBoxProvenance" prefHeight="25.0" prefWidth="270.0" promptText="Provenance" visibleRowCount="5" />
                   <ComboBox fx:id="comboIncomeBank" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Banque" visibleRowCount="5" />
-                  <JFXTextField fx:id="txtClientIndex" focusColor="#f8ae2e" labelFloat="true" onKeyTyped="#onType" prefHeight="30.0" prefWidth="271.0" promptText="Index client">
+                  <JFXTextField fx:id="txtClientIndex" focusColor="#f8ae2e" labelFloat="true" prefHeight="30.0" prefWidth="271.0" promptText="Index client">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>

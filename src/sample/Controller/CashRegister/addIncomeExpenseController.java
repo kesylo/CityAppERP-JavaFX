@@ -2,28 +2,21 @@ package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.*;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import sample.Controller.Global;
 import sample.Controller.DialogController;
+import sample.Controller.Global;
 import sample.Database.DBHandler;
+import sample.Model.CaisseIncExp;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import sample.Model.CaisseIncExp;
 
 public class addIncomeExpenseController {
     //region UI
@@ -61,9 +54,6 @@ public class addIncomeExpenseController {
     private JFXRadioButton radioIncome;
 
     @FXML
-    private ToggleGroup group;
-
-    @FXML
     private JFXRadioButton radioExpense;
 
     @FXML
@@ -96,32 +86,25 @@ public class addIncomeExpenseController {
     @FXML
     private JFXButton btnCreate;
 
-    @FXML
-    private Label lblIndexIndicator;
     //endregion
 
     @FXML
-    void selectText(MouseEvent event) {
+    void selectText() {
         txtAmount.selectAll();
     }
 
     @FXML
-    void logOut(MouseEvent event) {
+    void logOut() {
         URL location = getClass().getResource("/sample/View/login.fxml");
         Global.logOut(location, btnCreate);
     }
 
-    @FXML
-    void onType(KeyEvent event) {
 
-    }
-
-    DBHandler dbHandler = new DBHandler();
-    boolean isIncome = true;
-    boolean isExpense = false;
-    private DialogController wd = null;
-    boolean isRegistrationComplete = false;
-    Double amount = 0.0;
+    private DBHandler dbHandler = new DBHandler();
+    private boolean isIncome = true;
+    private boolean isExpense = false;
+    private DialogController<String> wd = null;
+    private Double amount = 0.0;
 
     @FXML
     void initialize() {
@@ -136,13 +119,9 @@ public class addIncomeExpenseController {
         loadBody();
 
         // force the field to be float only
-        txtAmount.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
-                    txtAmount.setText(oldValue);
-                }
+        txtAmount.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([.]\\d{0,4})?")) {
+                txtAmount.setText(oldValue);
             }
         });
 
@@ -189,7 +168,7 @@ public class addIncomeExpenseController {
     /*----------------------------------------------------------------------------------*/
 
     private void loadHeader() {
-        lblDate.setText(Global.getCurrentCaisse().getDate().toString());
+        lblDate.setText(Global.getCurrentCaisse().getDate());
         lblShiftNum.setText(Global.getCurrentCaisse().getNumeroShift() + "");
         lblUser.setText(Global.getConnectedUser().getFirstName());
     }
@@ -229,10 +208,10 @@ public class addIncomeExpenseController {
         comboSource.getSelectionModel().selectFirst();
     }
 
-    public void loadUserList(){
+    private void loadUserList(){
 
         Platform.runLater(() ->{
-            wd = new DialogController(btnCreate.getScene().getWindow(), "Chargement des utilisateurs...");
+            wd = new DialogController<>(btnCreate.getScene().getWindow(), "Chargement des utilisateurs...");
 
             wd.exec("123", inputParam -> {
 
@@ -253,11 +232,9 @@ public class addIncomeExpenseController {
                     e.printStackTrace();
                 }
 
-                Platform.runLater(() ->{
-                    comboSalaryBeneficial.setItems(usersList);
-                });
+                Platform.runLater(() -> comboSalaryBeneficial.setItems(usersList));
 
-                return new Integer(1);
+                return 1;
             });
         });
 
@@ -265,7 +242,7 @@ public class addIncomeExpenseController {
 
     }
 
-    public void comboBoxProvenance(ActionEvent event){
+    public void comboBoxProvenance(){
        if (comboSource.getSelectionModel().getSelectedIndex() == 0){ // client selected
            txtClientIndex.setDisable(false);
            comboIncomeBank.setDisable(true);
@@ -288,7 +265,7 @@ public class addIncomeExpenseController {
        }
    }
 
-    public void comboBoxReason(ActionEvent event){
+    public void comboBoxReason(){
         if (comboRaison.getSelectionModel().getSelectedIndex() == 0){ // salary selected
             comboSalaryBeneficial.getSelectionModel().selectFirst();
             comboSalaryBeneficial.setDisable(false);
@@ -308,7 +285,7 @@ public class addIncomeExpenseController {
         }
     }
 
-    public void radioSelect(ActionEvent event){
+    public void radioSelect(){
         if (radioIncome.isSelected()){
             vboxIncome.setDisable(false);
             vboxExpense.setDisable(true);
@@ -444,15 +421,8 @@ public class addIncomeExpenseController {
                             0,
                             "");
                     // add to DB
-                    Platform.runLater(() ->{
-                        dbHandler.addIncORExp(income);
-                    });
+                    Platform.runLater(() -> dbHandler.addIncORExp(income));
 
-                    isRegistrationComplete = true;
-                }else {
-                    /*Global.showInfoMessage(
-                            "Verifiez le numero d'index.",
-                            "Il doit être au format: XX-XXXX-XXXXX");*/
                 }
             }
             else if (comboSource.getSelectionModel().getSelectedIndex() == 1){ // bank
@@ -468,10 +438,7 @@ public class addIncomeExpenseController {
                         0,
                         "");
                 // add to DB
-                Platform.runLater(() ->{
-                    dbHandler.addIncORExp(income);
-                });
-                isRegistrationComplete = true;
+                Platform.runLater(() -> dbHandler.addIncORExp(income));
             }
             else if (comboSource.getSelectionModel().getSelectedIndex() == 2){ // other
 
@@ -487,15 +454,11 @@ public class addIncomeExpenseController {
                         0,
                         "");
                 // add to DB
-                Platform.runLater(() ->{
-                    dbHandler.addIncORExp(income);
-                });
-                isRegistrationComplete = true;
+                Platform.runLater(() -> dbHandler.addIncORExp(income));
             }
             else {
                 Global.showErrorMessage("Veuillez remplir le formulaire",
                         "Les informations remplies ne sont pas complètes");
-                isRegistrationComplete = false;
             }
         }
 
@@ -513,10 +476,7 @@ public class addIncomeExpenseController {
                         1,
                         comboSalaryBeneficial.getValue());
                 // add to DB
-                Platform.runLater(() ->{
-                    dbHandler.addIncORExp(expense);
-                });
-                isRegistrationComplete = true;
+                Platform.runLater(() -> dbHandler.addIncORExp(expense));
             }
             else if (comboRaison.getSelectionModel().getSelectedIndex() == 1){ // bank
                 comboExpenseBank.getSelectionModel().selectFirst();
@@ -533,10 +493,7 @@ public class addIncomeExpenseController {
                         1,
                         "");
                 // add to DB
-                Platform.runLater(() ->{
-                    dbHandler.addIncORExp(expense);
-                });
-                isRegistrationComplete = true;
+                Platform.runLater(() -> dbHandler.addIncORExp(expense));
 
             }
             else if (comboRaison.getSelectionModel().getSelectedIndex() == 2){ // other
@@ -552,15 +509,11 @@ public class addIncomeExpenseController {
                         1,
                         "");
                 // add to DB
-                Platform.runLater(() ->{
-                    dbHandler.addIncORExp(expense);
-                });
-                isRegistrationComplete = true;
+                Platform.runLater(() -> dbHandler.addIncORExp(expense));
             }
             else {
                 Global.showErrorMessage("Veuillez remplir le formulaire",
                         "Les informations remplies ne sont pas complètes");
-                isRegistrationComplete = true;
             }
         }
     }

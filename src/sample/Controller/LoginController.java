@@ -4,9 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import sample.Database.DBHandler;
@@ -20,9 +18,6 @@ import java.sql.SQLException;
 public class LoginController {
 
     //region Description
-
-    @FXML
-    private Hyperlink lblRegister;
 
     @FXML
     private Label lblErrorMessage;
@@ -46,23 +41,15 @@ public class LoginController {
     private DBHandler dbHandler;
     //endregion
 
-    private DialogController wd = null;
+    private DialogController<String> wd = null;
     private int counter = 0;
-
-    @FXML
-    void goToDashboard(ActionEvent event) {
-        URL navPath = getClass().getResource("/sample/View/signup.fxml");
-        Global.navigateTo(navPath," - SignUp");
-    }
 
     @FXML
     void initialize() {
 
         dbHandler = new DBHandler();
 
-        btnConnection.setOnAction(event -> {
-            login();
-        });
+        btnConnection.setOnAction(event -> login());
 
     }
 
@@ -86,7 +73,7 @@ public class LoginController {
 
 
             Platform.runLater(() ->{
-                wd = new DialogController(btnConnection.getScene().getWindow(), "Connexion...");
+                wd = new DialogController<>(btnConnection.getScene().getWindow(), "Connexion...");
 
                 wd.exec("123", inputParam -> {
 
@@ -113,6 +100,8 @@ public class LoginController {
 
                         // if we found a match
                         if (counter == 1) {
+                            // define user variables globally
+                            Global.setConnectedUser(user);
                             System.out.println("login ok");
                             // show notification
                             Global.successSystemNotif(
@@ -120,8 +109,6 @@ public class LoginController {
                                     "#f7a631");
                             // close windows
                             btnConnection.getScene().getWindow().hide();
-                            // define user variables globally
-                            Global.setConnectedUser(user);
                             // goToDashboard
                             URL navPath = getClass().getResource("/sample/View/dashboard.fxml");
                             Global.navigateTo(navPath,"Dashboard");
@@ -134,7 +121,7 @@ public class LoginController {
 
                     });
 
-                    return new Integer(1);
+                    return 1;
                 });
             });
 

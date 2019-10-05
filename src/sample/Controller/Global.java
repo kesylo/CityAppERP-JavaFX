@@ -2,7 +2,6 @@ package sample.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.sun.glass.ui.Window;
-import com.sun.jndi.toolkit.url.UrlUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +31,7 @@ public class Global {
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
-    public static Stage stage;
+    private static Stage stage;
     //endregion
 
     //region Caisse App
@@ -56,10 +55,6 @@ public class Global {
         return errorList;
     }
 
-    public static void setErrorList(List<Double> errorList) {
-        Global.errorList = errorList;
-    }
-
     public static int getNberOfCaissesWithSameDate() {
         return nberOfCaissesWithSameDate;
     }
@@ -74,19 +69,6 @@ public class Global {
 
     public static void setAvailableCaisseNumber(String availableCaisseNumber) {
         Global.availableCaisseNumber = availableCaisseNumber;
-    }
-
-
-    public static Stage getStage() {
-        return stage;
-    }
-
-    public static String getAppName() {
-        return appName;
-    }
-
-    public static void setAppName(String appName) {
-        Global.appName = appName;
     }
 
     public static void setStage(Stage stage) {
@@ -145,7 +127,7 @@ public class Global {
         return connectedUser;
     }
 
-    public static void setConnectedUser(User connectedUser) {
+    static void setConnectedUser(User connectedUser) {
         Global.connectedUser = connectedUser;
     }
 
@@ -168,14 +150,6 @@ public class Global {
     //endregion
 
     //region Methods
-
-    public static Double getSumError (){
-        Double sum = 0.0;
-        for (Double v : errorList){
-            sum += v;
-        }
-        return sum;
-    }
 
     public static void showErrorMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.ERROR);
@@ -204,10 +178,7 @@ public class Global {
 
         Optional<ButtonType> result = alertDialog.showAndWait();
 
-        if (result.orElse(no) == yes){
-            return true;
-        }
-        return false;
+        return result.orElse(no) == yes;
     }
 
     public static void navigateModal (URL location, String windowName){
@@ -332,7 +303,6 @@ public class Global {
 
     public static void closeWindow(String windowName){
         List<Window> windows = Window.getWindows();
-        Stage mywindow = new Stage();
         for (Window win : windows) {
             if (win.getTitle().contains(windowName)) {
                     win.close();
@@ -360,18 +330,17 @@ public class Global {
     }
 
     public static String formatDouble (Double value){
-        String format = String.format("%.2f", value);
-        return format;
+        return String.format("%.2f", value);
     }
 
     public static void setProfileIcon(ImageView photo) {
         Image image;
         // set welcome text
-        if (Global.getConnectedUser().getSex() == "Male"){
+        if (connectedUser.getSex().equals("Male")){
             // set profile photo
             image = new Image("/sample/Ressources/images/userMale.png");
             photo.setImage(image);
-        }else {
+        }else{
             // set profile photo
             image = new Image("/sample/Ressources/images/userFemale.png");
             photo.setImage(image);

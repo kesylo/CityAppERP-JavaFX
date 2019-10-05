@@ -222,6 +222,40 @@
                   <Font name="Poppins Regular" size="18.0" />
                </font>
             </Label>
+            <Label fx:id="lblDate" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="46.0" layoutY="39.0" prefHeight="20.0" prefWidth="85.0" text="12-12-2017">
+               <font>
+                  <Font name="Poppins Bold" size="14.0" />
+               </font>
+            </Label>
+            <JFXTextArea fx:id="txtAreaCommentCaisse" editable="false" focusColor="#f7a631" layoutX="620.0" layoutY="7.0" prefHeight="58.0" prefWidth="480.0" promptText="Commentaire" wrapText="true">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Pane layoutX="32.0" layoutY="473.0" prefHeight="10.0" prefWidth="1058.0" style="-fx-background-color: #AEB6BF;">
+               <children>
+                  <Label focusTraversable="false" layoutX="-250.0" layoutY="-98.0" prefHeight="20.0" prefWidth="139.0" text="Recetttes" textAlignment="CENTER">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label focusTraversable="false" layoutX="-251.0" layoutY="127.0" prefHeight="20.0" prefWidth="139.0" text="Dépenses" textAlignment="CENTER">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label focusTraversable="false" layoutX="-250.0" layoutY="349.0" prefHeight="20.0" prefWidth="139.0" text="Monnaie en caisse" textAlignment="CENTER">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblDate1" focusTraversable="false" layoutX="-250.0" layoutY="-151.0" prefHeight="20.0" prefWidth="124.0" text="1">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
             <JFXButton fx:id="btnOk" alignment="CENTER" buttonType="RAISED" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="686.0" layoutY="575.0" prefHeight="38.0" prefWidth="116.0" style="-fx-background-color: #5dbcd2;" text="Ok" AnchorPane.bottomAnchor="30.0">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
@@ -246,16 +280,6 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <Label fx:id="lblDate" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="46.0" layoutY="39.0" prefHeight="20.0" prefWidth="85.0" text="12-12-2017">
-               <font>
-                  <Font name="Poppins Bold" size="14.0" />
-               </font>
-            </Label>
-            <JFXTextArea fx:id="txtAreaCommentCaisse" editable="false" focusColor="#f7a631" layoutX="620.0" layoutY="7.0" prefHeight="58.0" prefWidth="480.0" promptText="Commentaire" wrapText="true">
-               <font>
-                  <Font name="Poppins Regular" size="14.0" />
-               </font>
-            </JFXTextArea>
          </children>
       </AnchorPane>
    </children>

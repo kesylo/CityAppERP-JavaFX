@@ -10,10 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import sample.Controller.Global;
 import sample.Controller.DialogController;
+import sample.Controller.Global;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
@@ -63,16 +61,14 @@ public class caisseDashboardController{
     @FXML
     private JFXButton btnIncomeExpense;
 
-    @FXML
-    private AnchorPane anchorParent;
     //endregion
 
     private DBHandler dbHandler;
-    private DialogController wd = null;
+    private DialogController<String> wd = null;
     private int caisseWithSameDate = 0;
 
     @FXML
-    void logOut(MouseEvent event) {
+    void logOut() {
         URL location = getClass().getResource("/sample/View/login.fxml");
         Global.logOut(location, btnFillCaisse);
     }
@@ -247,7 +243,7 @@ public class caisseDashboardController{
 
         Platform.runLater(() ->{
             // prepare loading screen
-            wd = new DialogController(btnFillCaisse.getScene().getWindow(), "Chargement...");
+            wd = new DialogController<>(btnFillCaisse.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
                 // run long longTask
@@ -261,7 +257,7 @@ public class caisseDashboardController{
                     System.out.println(Global.getAvailableCaisseNumber());
                 });
 
-                return new Integer(1);
+                return 1;
             });
         });
     }

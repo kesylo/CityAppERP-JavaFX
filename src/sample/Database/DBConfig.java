@@ -1,17 +1,17 @@
 package sample.Database;
 
-public class DBConfig {
+class DBConfig {
     // my local Server
-    /*protected String dbHost = "localhost";
-    protected String dbPort = "3307";
-    protected String dbUser = "root";
-    protected String dbPass = "azerty";
-    protected String dbName = "cityappdatabase";*/
+    String dbHost = "localhost";
+    String dbPort = "3307";
+    String dbUser = "root";
+    String dbPass = "azerty";
+    String dbName = "cityappdberp";
 
-    // online server
-    protected String dbHost = "brusselsdreamteam.com";
-    protected String dbPort = "3306";
-    protected String dbUser = "test";
-    protected String dbPass = "test";
-    protected String dbName = "cityAppDbERP";
+    /*// online server
+    String dbHost = "brusselsdreamteam.com";
+    String dbPort = "3306";
+    String dbUser = "test";
+    String dbPass = "test";
+    String dbName = "cityAppDbERP";*/
 }
