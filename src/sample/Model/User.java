@@ -11,23 +11,54 @@ public class User {
     private String email;
     private String firstName;
     private int houseNumber;
-    private Date dateInService;
+    private String dateInService;
     private String lastName;
     private String letterBoxNumber;
     private String nationalRegistreryNumber;
-    private Date dateOutService;
+    private String dateOutService;
     private String password;
     private int postalCode;
     private String pseudo;
     private String sex;
     private int role;
+    private String phoneNumber;
+    private double salary1;
+    private double salary2;
+    private String status;
+    private int employeeNumber;
 
 
     //region controller
     public User() {
     }
 
-    public User(int id, String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, Date dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, Date dateOutService, String password, int postalCode, String pseudo, String sex, int role) {
+    // new constructor
+    public User(String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber) {
+        this.adress = adress;
+        this.city = city;
+        this.maritalStatus = maritalStatus;
+        this.departement = departement;
+        this.email = email;
+        this.firstName = firstName;
+        this.houseNumber = houseNumber;
+        this.dateInService = dateInService;
+        this.lastName = lastName;
+        this.letterBoxNumber = letterBoxNumber;
+        this.nationalRegistreryNumber = nationalRegistreryNumber;
+        this.dateOutService = dateOutService;
+        this.password = password;
+        this.postalCode = postalCode;
+        this.pseudo = pseudo;
+        this.sex = sex;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.salary1 = salary1;
+        this.salary2 = salary2;
+        this.status = status;
+        this.employeeNumber = employeeNumber;
+    }
+
+    public User(int id, String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role) {
         this.id = id;
         this.adress = adress;
         this.city = city;
@@ -147,11 +178,11 @@ public class User {
         this.houseNumber = houseNumber;
     }
 
-    public Date getDateInService() {
+    public String getDateInService() {
         return dateInService;
     }
 
-    public void setDateInService(Date dateInService) {
+    public void setDateInService(String dateInService) {
         this.dateInService = dateInService;
     }
 
@@ -179,11 +210,11 @@ public class User {
         this.nationalRegistreryNumber = nationalRegistreryNumber;
     }
 
-    public Date getDateOutService() {
+    public String getDateOutService() {
         return dateOutService;
     }
 
-    public void setDateOutService(Date dateOutService) {
+    public void setDateOutService(String dateOutService) {
         this.dateOutService = dateOutService;
     }
 

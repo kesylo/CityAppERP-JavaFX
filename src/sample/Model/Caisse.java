@@ -141,12 +141,5 @@ public class Caisse {
         this.remarque = remarque;
     }
 
-    public String getClosedDate() {
-        return closedDate;
-    }
-
-    public void setClosedDate(String closedDate) {
-        this.closedDate = closedDate;
-    }
     //endregion
 }

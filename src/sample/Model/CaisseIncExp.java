@@ -1,11 +1,8 @@
 package sample.Model;
 
-import java.sql.Date;
-
 public class CaisseIncExp {
 
     //region pojo
-    private int idCaisseIncExp;
     private double amount;
     private String creationDate;
     private String time;
@@ -23,7 +20,6 @@ public class CaisseIncExp {
     @Override
     public String toString() {
         return "CaisseIncExp{" +
-                "idCaisseIncExp=" + idCaisseIncExp +
                 ", amount=" + amount +
                 ", creationDate=" + creationDate +
                 ", time='" + time + '\'' +
@@ -52,29 +48,12 @@ public class CaisseIncExp {
         this.salaryBeneficial = salaryBeneficial;
     }
 
-    //region Getters and setters
-    public int getIdCaisseIncExp() {
-        return idCaisseIncExp;
-    }
-
-    public void setIdCaisseIncExp(int idCaisseIncExp) {
-        this.idCaisseIncExp = idCaisseIncExp;
-    }
-
     public double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
     public String getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
     }
 
     public String getTime() {
@@ -97,16 +76,8 @@ public class CaisseIncExp {
         return comment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public int getShiftNumber() {
         return shiftNumber;
-    }
-
-    public void setShiftNumber(int shiftNumber) {
-        this.shiftNumber = shiftNumber;
     }
 
     public int getIdCaisse() {
@@ -121,16 +92,8 @@ public class CaisseIncExp {
         return reason;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
     public String getClientIndex() {
         return clientIndex;
-    }
-
-    public void setClientIndex(String clientIndex) {
-        this.clientIndex = clientIndex;
     }
 
     public int getType() {
@@ -145,8 +108,5 @@ public class CaisseIncExp {
         return salaryBeneficial;
     }
 
-    public void setSalaryBeneficial(String salaryBeneficial) {
-        this.salaryBeneficial = salaryBeneficial;
-    }
     //endregion
 }
