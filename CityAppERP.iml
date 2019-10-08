@@ -52,5 +52,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="controlsfx-8.40.15" level="project" />
   </component>
 </module>

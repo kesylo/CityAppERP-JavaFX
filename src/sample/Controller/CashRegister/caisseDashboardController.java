@@ -254,7 +254,7 @@ public class caisseDashboardController{
                     fillTable(Global.getCaisseList());
                     // generate a caisse number for further use
                     createCaisseNumber();
-                    System.out.println(Global.getAvailableCaisseNumber());
+                    //System.out.println(Global.getAvailableCaisseNumber());
                 });
 
                 return 1;

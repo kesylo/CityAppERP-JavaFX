@@ -30,6 +30,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button btnNavToCaisse;
+
+    @FXML
+    private Button btnNavToCollaborators;
     //endregion
 
     @FXML
@@ -54,9 +57,13 @@ public class DashboardController implements Initializable {
 
 
         btnNavToCaisse.setOnAction(event -> {
-            // nav to caisse when data are fetched
             URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
             Global.navigateTo(toCaisse, "Caisse");
+        });
+
+        btnNavToCollaborators.setOnAction(event -> {
+            URL toUsers = getClass().getResource("/sample/View/Collaborators/usersDashboard.fxml");
+            Global.navigateTo(toUsers, "Collaborateurs");
         });
 
 

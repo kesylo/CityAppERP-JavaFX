@@ -106,16 +106,9 @@ public class User {
     }
 
     //region getters and setters
+
     public int getId() {
         return id;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
     }
 
     public void setId(int id) {
@@ -249,5 +242,55 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public double getSalary1() {
+        return salary1;
+    }
+
+    public void setSalary1(double salary1) {
+        this.salary1 = salary1;
+    }
+
+    public double getSalary2() {
+        return salary2;
+    }
+
+    public void setSalary2(double salary2) {
+        this.salary2 = salary2;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getEmployeeNumber() {
+        return employeeNumber;
+    }
+
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+
     //endregion
 }

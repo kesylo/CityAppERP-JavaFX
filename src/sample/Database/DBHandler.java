@@ -87,6 +87,23 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    public ResultSet getAllEmployees(){
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE;
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public ResultSet getAllEmployeesNames() {
 
         rs = null;

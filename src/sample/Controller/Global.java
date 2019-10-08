@@ -48,8 +48,19 @@ public class Global {
     private static List<Double> errorList = new ArrayList<>();
     //endregion
 
+    //region Employee App
+    private static ObservableList<User> usersList = FXCollections.observableArrayList();
+    //endregion
+
     //region Getters and Setters
 
+    public static ObservableList<User> getUsersList() {
+        return usersList;
+    }
+
+    public static void setUsersList(ObservableList<User> usersList) {
+        Global.usersList = usersList;
+    }
 
     public static List<Double> getErrorList() {
         return errorList;
