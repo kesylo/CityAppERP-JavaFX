@@ -152,8 +152,12 @@ public class caisseDashboardController{
     private void initGlobal() {
         Global.navFrom = "";
         Global.setComputedSoldeCaisse(0.0);
+        // this is used to make sure count was used. so reset if this windows is opened
         Global.setCaisseCash(null);
+        Global.setErrorAmount(0.0);
         Global.setCountCashResult(0.0);
+        Global.setNewCaisseAmount(0.0);
+        Global.setIncExpError(null);
     }
 
     private void closeCaisse() {

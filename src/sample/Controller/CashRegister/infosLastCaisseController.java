@@ -144,8 +144,8 @@ public class infosLastCaisseController  {
 
     private DBHandler dbHandler;
     private double totalCash;
-    private double totalExpense = 0;
-    private double totalIncome = 0;
+    private double totalExpense;
+    private double totalIncome;
     private DialogController<String> wd = null;
     private String name = "";
 
@@ -158,7 +158,7 @@ public class infosLastCaisseController  {
 
     @FXML
     void initialize() {
-        totalCash = 0.0;
+        reset();
 
         // init DB access
         dbHandler = new DBHandler();
@@ -220,34 +220,33 @@ public class infosLastCaisseController  {
 
         // fill cash table
         getCashFromDB();
+
+        // set caisse total
+        computeCaisse();
+    }
+
+    private void reset(){
+        dbHandler = null;
+        totalIncome = 0.0;
+        totalExpense = 0.0;
+        totalCash = 0.0;
+        wd = null;
     }
 
     private void computeCaisse() {
 
-        Double balance;
-        if (Global.getNberOfCaisses() >= 1){
-            balance = 0.0
-                    - totalExpense
-                    + totalIncome;
+        double balance;
 
-            lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
+        if (Global.getNberOfCaisses() > 0){
 
-            // add to global var
-            Global.getCurrentCaisse().setMontant(balance);
+                balance = Global.getCurrentCaisse().getMontant();
 
-            if (Global.getNberOfCaisses() >= 2){
-                // formula: Caisse before - expenses + incomes
-                 balance = Global.getBeforeCurrentCaisse().getMontant()
-                        - totalExpense
-                        + totalIncome;
+                lblTotalCaisse.setText(Global.roundDouble(balance) + " €");
 
-                lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
-
-                // add to global var
-                Global.getCurrentCaisse().setMontant(balance);
-                // add to DB ?
-            }
+                // set new caisse amount
+                Global.setNewCaisseAmount(Global.roundDouble(balance));
         }
+
     }
 
     private void getCashFromDB() {
@@ -325,9 +324,6 @@ public class infosLastCaisseController  {
 
         // add list to table
         tableCash.setItems(data);
-
-        // calculate caisse
-        computeCaisse();
     }
 
     private void getExpenseFromDB(){
@@ -389,9 +385,6 @@ public class infosLastCaisseController  {
 
         // add list to table
         tableExpenses.setItems(data);
-
-        // calculate caisse
-        computeCaisse();
     }
 
     private void getIncomeFromDB(){
@@ -450,9 +443,6 @@ public class infosLastCaisseController  {
 
         // add list to table
         tableIncomes.setItems(data);
-
-        // calculate caisse
-        computeCaisse();
     }
 
     private void setCreatorName(int idEmployes) {

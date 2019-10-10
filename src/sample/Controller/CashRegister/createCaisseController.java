@@ -55,7 +55,7 @@ public class createCaisseController{
     }
 
     private DBHandler db = new DBHandler();
-    private Double amountLastCaisse = 0.0;
+    private double amountLastCaisse = 0.0;
     private DialogController wd = null;
     private URL toCaisseDashboard = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
 
@@ -65,7 +65,7 @@ public class createCaisseController{
         // get last caisse amount
         /*amountLastCaisse = db.getLastAmountCaisse();*/
         if (Global.getNberOfCaisses() > 0){
-            amountLastCaisse = Global.getCurrentCaisse().getMontant();
+            amountLastCaisse = Global.getNewCaisseAmount();
         }
 
         // init fields

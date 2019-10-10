@@ -8,7 +8,7 @@ public class Caisse {
 
     private String date;
 
-    private Double montant;
+    private double montant;
 
     private String remarque;
 
@@ -24,7 +24,7 @@ public class Caisse {
 
     private int hasError;
 
-    private Double error_amount;
+    private double error_amount;
 
     public Caisse() {
     }
@@ -44,7 +44,7 @@ public class Caisse {
                 '}';
     }
 
-    public Caisse(int id, String date, Double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, String numeroCaisse, int hasError, Double error_amount) {
+    public Caisse(int id, String date, double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, String numeroCaisse, int hasError, double error_amount) {
         this.id = id;
         this.date = date;
         this.montant = montant;
@@ -61,11 +61,11 @@ public class Caisse {
     //region Getters
 
 
-    public Double getError_amount() {
+    public double getError_amount() {
         return error_amount;
     }
 
-    public void setError_amount(Double error_amount) {
+    public void setError_amount(double error_amount) {
         this.error_amount = error_amount;
     }
 
@@ -125,11 +125,11 @@ public class Caisse {
         this.date = date;
     }
 
-    public Double getMontant() {
+    public double getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(double montant) {
         this.montant = montant;
     }
 

@@ -4,7 +4,7 @@ public class Cash {
 
     private int idCaisse;
     private int numShift;
-    private Double lessThanFiftyCents;
+    private double lessThanFiftyCents;
     private int fiftyCents;
     private int oneEuro;
     private int twoEuros;
@@ -15,7 +15,7 @@ public class Cash {
     private int onehundredeuros;
     private int twoHundredEuros;
 
-    public Cash(int idCaisse, int numShift, Double lessThanFiftyCents, int fiftyCents, int oneEuro, int twoEuros, int fiveEuros, int tenEuros, int twentyEuros, int fiftyEuros, int onehundredeuros, int twoHundredEuros) {
+    public Cash(int idCaisse, int numShift, double lessThanFiftyCents, int fiftyCents, int oneEuro, int twoEuros, int fiveEuros, int tenEuros, int twentyEuros, int fiftyEuros, int onehundredeuros, int twoHundredEuros) {
         this.idCaisse = idCaisse;
         this.numShift = numShift;
         this.lessThanFiftyCents = lessThanFiftyCents;
@@ -42,7 +42,7 @@ public class Cash {
         return numShift;
     }
 
-    public Double getLessThanFiftyCents() {
+    public double getLessThanFiftyCents() {
         return lessThanFiftyCents;
     }
 

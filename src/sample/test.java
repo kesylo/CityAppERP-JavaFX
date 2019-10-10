@@ -22,10 +22,9 @@ public class test {
             System.out.println("fouund");
         }*/
 
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        System.out.println(formatter.format(date));
+        double i = -81.78999999999999;
+        double r= Math.round(i * 100D) / 100D;
+        System.out.println(r);
 
 
         int year = Calendar.getInstance().get(Calendar.YEAR);

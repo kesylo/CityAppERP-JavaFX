@@ -17,6 +17,9 @@ public class CaisseIncExp {
     //endregion
 
 
+    public CaisseIncExp() {
+    }
+
     @Override
     public String toString() {
         return "CaisseIncExp{" +

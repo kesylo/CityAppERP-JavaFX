@@ -104,7 +104,7 @@ public class addIncomeExpenseController {
     private boolean isIncome = true;
     private boolean isExpense = false;
     private DialogController<String> wd = null;
-    private Double amount = 0.0;
+    private double amount = 0.0;
 
     @FXML
     void initialize() {

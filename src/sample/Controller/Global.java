@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Model.Caisse;
+import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
 import sample.Model.User;
 import tray.animations.AnimationType;
@@ -39,13 +40,16 @@ public class Global {
     private static Caisse previewCaisse = new Caisse();
     private static Caisse beforeCurrentCaisse = new Caisse();
     private static int nberOfCaisses;
-    private static Double computedSoldeCaisse;
-    private static Cash caisseCash;
-    private static Double countCashResult = 0.0;
+    private static double computedSoldeCaisse;
+    private static double newCaisseAmount;
+    private static Cash caisseCash = null;
+    private static double countCashResult = 0.0;
+    private static double errorAmount = 0.0;
+    private static CaisseIncExp incExpError = new CaisseIncExp();
     private static ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
     private static int nberOfCaissesWithSameDate;
     private static String availableCaisseNumber;
-    private static List<Double> errorList = new ArrayList<>();
+    private static List<Double> errorList = new ArrayList<>();  // delete
     //endregion
 
     //region Employee App
@@ -53,6 +57,15 @@ public class Global {
     //endregion
 
     //region Getters and Setters
+
+
+    public static double getErrorAmount() {
+        return errorAmount;
+    }
+
+    public static void setErrorAmount(double errorAmount) {
+        Global.errorAmount = errorAmount;
+    }
 
     public static ObservableList<User> getUsersList() {
         return usersList;
@@ -102,11 +115,11 @@ public class Global {
         Global.previewCaisse = previewCaisse;
     }
 
-    public static Double getCountCashResult() {
+    public static double getCountCashResult() {
         return countCashResult;
     }
 
-    public static void setCountCashResult(Double countCashResult) {
+    public static void setCountCashResult(double countCashResult) {
         Global.countCashResult = countCashResult;
     }
 
@@ -114,11 +127,11 @@ public class Global {
         return caisseCash;
     }
 
-    public static Double getComputedSoldeCaisse() {
+    public static double getComputedSoldeCaisse() {
         return computedSoldeCaisse;
     }
 
-    public static void setComputedSoldeCaisse(Double computedSoldeCaisse) {
+    public static void setComputedSoldeCaisse(double computedSoldeCaisse) {
         Global.computedSoldeCaisse = computedSoldeCaisse;
     }
 
@@ -161,6 +174,23 @@ public class Global {
     //endregion
 
     //region Methods
+
+
+    public static double getNewCaisseAmount() {
+        return newCaisseAmount;
+    }
+
+    public static void setNewCaisseAmount(double newCaisseAmount) {
+        Global.newCaisseAmount = newCaisseAmount;
+    }
+
+    public static CaisseIncExp getIncExpError() {
+        return incExpError;
+    }
+
+    public static void setIncExpError(CaisseIncExp incExpError) {
+        Global.incExpError = incExpError;
+    }
 
     public static void showErrorMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.ERROR);
@@ -239,30 +269,6 @@ public class Global {
         }
     }
 
-    /*public static void stayButGoToWindow(URL location, String windowName, boolean toback){
-        Stage mystage = new Stage();
-        try {
-            Parent root = FXMLLoader.load(location);
-            //Scene scene = new Scene(root);
-            //stage.setScene(scene);
-            mystage.setScene(new Scene(root));
-            mystage.setTitle(appName + " " + windowName);
-            mystage.setResizable(false);
-            mystage.centerOnScreen();
-
-            mystage.show();
-            if (toback){
-                mystage.toBack();
-                stage = mystage;
-
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     public static void setUserProfile(Label userName, ImageView logOutBtn){
         userName.setText(connectedUser.getFirstName() + " " + connectedUser.getLastName());
         // set disconnect tooltip
@@ -340,8 +346,12 @@ public class Global {
         return formatter.format(date);
     }
 
-    public static String formatDouble (Double value){
+    public static String formatDouble (double value){
         return String.format("%.2f", value);
+    }
+
+    public static double roundDouble(double value){
+        return Math.round(value * 100D) / 100D;
     }
 
     public static void setProfileIcon(ImageView photo) {

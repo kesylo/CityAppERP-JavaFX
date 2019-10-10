@@ -335,8 +335,8 @@ public class DBHandler extends DBConfig {
 
     /*------------------------------ UPDATE -------------------------------------*/
 
-    public void updateCaisseStatus(Double montant, int statusToSet, String dateClosed, Caisse caisse){
-        String query = "UPDATE " + Static.CAISSE_TABLE + " SET montant = ?, closed = ?, date_fermeture = ?, has_error = ? WHERE idCaisse = ?";
+    public void updateCaisseStatus(double montant, int statusToSet, String dateClosed, Caisse caisse, double errAmount){
+        String query = "UPDATE " + Static.CAISSE_TABLE + " SET montant = ?, closed = ?, date_fermeture = ?, has_error = ?, error_amount = ? WHERE idCaisse = ?";
 
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
@@ -345,7 +345,8 @@ public class DBHandler extends DBConfig {
             ps.setInt(2, statusToSet);
             ps.setString(3, dateClosed);
             ps.setInt(4, caisse.getHasError());
-            ps.setInt(5, caisse.getId());
+            ps.setDouble(5, errAmount);
+            ps.setInt(6, caisse.getId());
 
 
             ps.executeUpdate();
@@ -355,7 +356,7 @@ public class DBHandler extends DBConfig {
         }
     }
 
-    public void updateErrorAmount(Double amount, int idCaisse) {
+    public void updateErrorAmount(double amount, int idCaisse) {
         String query = "UPDATE " + Static.CAISSE_TABLE + " SET error_amount = ? WHERE idCaisse = ?";
 
         try {

@@ -150,10 +150,10 @@ public class detailsCaisseController {
     //endregion
 
     private DBHandler dbHandler;
-    private Double totalIncome = 0.0;
-    private Double totalExpense = 0.0;
-    private Double totalCash = 0.0;
-    private Double balance = 0.0;
+    private double totalIncome = 0.0;
+    private double totalExpense = 0.0;
+    private double totalCash = 0.0;
+    private double balance = 0.0;
     private DialogController<String> wd = null;
 
     @FXML
