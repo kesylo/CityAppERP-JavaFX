@@ -227,7 +227,7 @@ public class DBHandler extends DBConfig {
 
     /*------------------------------ INSERT -------------------------------------*/
 
-    public void addErrorLine(CaisseIncExp errorExpense) {
+/*    public void addErrorLine(CaisseIncExp errorExpense) {
         //INSERT INTO `cityappdatabase`.`caisse_recettes` (`id_caisse_recettes`, `fk_idCaisse`, `montant`,
         // `type`, `date`, `time`, `indexClient`, `remarque`, `numeroShift`, `reason`, `employees_id`) VALUES ('231', '1', '256', '1', '2019-09-11', '23:12', '158-256-2322', 'ccc', '2', 'ccc', '1');
         String query = "INSERT INTO " + Static.CAISSE_RECETTES_TABLE + " ( " +
@@ -258,12 +258,10 @@ public class DBHandler extends DBConfig {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void createCaisse(Caisse caisse) {
-        // INSERT INTO `cityappdatabase`.`caisse` ( `date`, `montant`, `numeroShift`, `closed`, `employees_id`) VALUES ('128', '2019-09-11', '321.52', '1', '1', '7');
-        // prepare the query
-        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id, numeroCaisse) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id, numeroCaisse, remarque, has_error, error_amount) VALUES (?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
@@ -274,6 +272,9 @@ public class DBHandler extends DBConfig {
             ps.setInt(4, caisse.getClosed());
             ps.setInt(5, Global.getConnectedUser().getId());
             ps.setString(6, caisse.getNumeroCaisse());
+            ps.setString(7, caisse.getRemarque());
+            ps.setInt(8, caisse.getHasError());
+            ps.setDouble(9, caisse.getError_amount());
 
             ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {

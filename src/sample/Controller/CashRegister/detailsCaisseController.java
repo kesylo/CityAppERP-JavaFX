@@ -226,11 +226,9 @@ public class detailsCaisseController {
                 lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
 
                 if (Global.getNberOfCaisses() >= 2){
-                    // formula: Caisse before - expenses + incomes - error
-                    balance = Global.getCurrentCaisse().getMontant()
+                    balance = Global.getPreviewCaisse().getMontant()
                             - totalExpense
-                            + totalIncome
-                            - Global.getCurrentCaisse().getError_amount();
+                            + totalIncome;
 
                     lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
                 }

@@ -64,7 +64,6 @@ public class countCashCaisseController {
     void initialize() {
         setComboBoxValues();
 
-        resetVariables();
 
         // force the field to be float only
         txtLessThanFiftyCents.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -78,14 +77,21 @@ public class countCashCaisseController {
         });
 
         btnOK.setOnAction(event -> {
-           // check if we come from CloseCaisse or infos
-            if (Objects.equals(Global.navFrom, "CloseCaisse"))
-            {
-                comingFromClose();
-            }
-            else if (Objects.equals(Global.navFrom, "InfosCaisse"))
-            {
-                comingFromInfo();
+           // check if txtLesThan50 is not empty
+            if (!Objects.equals(txtLessThanFiftyCents.getText(), "") || txtLessThanFiftyCents.getText() != null){
+
+                // check if we come from CloseCaisse or infos
+                if (Objects.equals(Global.navFrom, "CloseCaisse"))
+                {
+                    comingFromClose();
+                }
+                else if (Objects.equals(Global.navFrom, "InfosCaisse"))
+                {
+                    comingFromInfo();
+                }
+            } else {
+                Global.showErrorMessage("Erreur! Les données entrées sont incorrectes",
+                        "Veuillez Vérifier tous les champs.");
             }
         });
     }
@@ -96,13 +102,88 @@ public class countCashCaisseController {
 
     /*-------------------------------------------------------------------------------*/
 
-    private void resetVariables() {
-        solde = 0.0;
-        totalCaisseCount = 0.0;
-    }
+
 
     private void comingFromInfo() {
+        // check if solde caisse = counted cash
+        if (Global.getCurrentCaisse().getMontant() == totalCaisseCount)
+        {
+            // set count cash result globally
+            Global.setCountCashResult(Global.roundDouble(totalCaisseCount));
 
+            countDone();
+
+            // nav to creation
+            URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
+            Global.navigateTo(navPath,"Creation");
+
+            // close windows
+            btnOK.getScene().getWindow().hide();
+        }else {
+            // ask if user wants to count again or not
+            boolean result = Global.showInfoMessageWithBtn(
+                    "Vérification Incorrecte",
+                    "Le montant compté n'est pas égal au montant enregistré dans le système. " +
+                            "Voulez vous recompter ou signaler l'erreur ?",
+                    "Compter à nouveau",
+                    "Signaler l'erreur");
+
+            if (result){
+                System.out.println("compter a nouveau");
+            }else {
+                addErrorOnInfos();
+            }
+        }
+        // tell system count has been done
+        countDone();
+    }
+
+    private void addErrorOnInfos() {
+
+        // compute solde
+        solde = totalCaisseCount - Global.getCurrentCaisse().getMontant();
+
+        // round solde before anything else
+        solde = Global.roundDouble(solde);
+
+        // check if we have more or less cash
+        if (solde > 0){ // we have MORE money than expected
+            // show message
+            Global.showErrorMessage(
+                    "Erreur de caisse signalée",
+                    "Ceci a lieu car il y a " + solde +" € en plus dans la caisse.");
+        }
+        else if (solde < 0){ // we have LESS money than expected
+            // show message
+            Global.showErrorMessage(
+                    "Erreur de caisse signalée",
+                    "Ceci a lieu car on a " + solde +" € dans la caisse.");
+        }
+
+        // create Expense error line and set globally
+        Global.setIncExpError(createExpenseErrorline());
+
+        // set error amount globally
+        Global.setErrorAmount(solde);
+
+        // set count result globally
+        Global.setCountCashResult(totalCaisseCount);
+
+        // set caisse error count
+        Global.getNewCaisse().setHasError(1);
+
+        // set caisse cash even if error
+        //countDone();
+
+        // close window
+        btnOK.getScene().getWindow().hide();
+
+        // set the new caisse's amount since it has been edited // not current caisse amount
+        Global.getNewCaisse().setMontant(totalCaisseCount);
+
+        // nav to creation
+        URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
+        Global.navigateTo(navPath,"Creation");
     }
 
     private void comingFromClose() {
@@ -111,6 +192,9 @@ public class countCashCaisseController {
         {
             // everything ok so close
             btnOK.getScene().getWindow().hide();
+
+            countDone();
+
             // set count cash result globally
             Global.setCountCashResult(Global.roundDouble(totalCaisseCount));
             // close
@@ -156,10 +240,7 @@ public class countCashCaisseController {
         Global.setCaisseCash(countedCash);
     }
 
-
     private void addErrorOnClose() {
-        // set error mark on this caisse
-        Global.getCurrentCaisse().setHasError(1);
 
         // compute solde
         solde = totalCaisseCount - Global.getComputedSoldeCaisse();
@@ -186,10 +267,18 @@ public class countCashCaisseController {
         }
 
         // set error amount globally
-        Global.setErrorAmount(solde);
+        if (Global.getCurrentCaisse().getError_amount() != 0){
+            // add error amount don't override
+            Global.setErrorAmount((Global.getCurrentCaisse().getError_amount()) + (solde));
+        }else {
+            Global.setErrorAmount(solde);
+        }
 
         // set count result globally
         Global.setCountCashResult(totalCaisseCount);
+
+        // set erro globally to compute balance better on close
+        Global.setErrorOnClose(1);
 
         // set caisse error count
         Global.getCurrentCaisse().setHasError(1);

@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
+import sample.Model.Caisse;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
 
@@ -158,7 +159,7 @@ public class infosLastCaisseController  {
 
     @FXML
     void initialize() {
-        reset();
+        initGlobal();
 
         // init DB access
         dbHandler = new DBHandler();
@@ -184,6 +185,9 @@ public class infosLastCaisseController  {
                 URL navPath = getClass().getResource("/sample/View/CashRegister/createCaisse.fxml");
                 Global.navigateTo(navPath,"Creation");
             }else {
+                // tell count windows we are coming from Infos caisse for different behaviour
+                Global.navFrom = "InfosCaisse";
+
                 URL navPath = getClass().getResource("/sample/View/CashRegister/countCashCaisse.fxml");
                 Global.navigateModal(navPath,"Comptage");
             }
@@ -225,7 +229,18 @@ public class infosLastCaisseController  {
         computeCaisse();
     }
 
-    private void reset(){
+    private void initGlobal() {
+        Global.navFrom = "";
+        Global.setErrorAmount(0.0);
+        Global.getNewCaisse().setHasError(0);
+        Global.getCurrentCaisse().setHasError(0);
+        //Global.setComputedSoldeCaisse(0.0);
+        // this is used to make sure count was used. so reset if this windows is opened
+        /*Global.setCaisseCash(null);
+
+        Global.setCountCashResult(0.0);
+        Global.setNewCaisse(new Caisse());
+        Global.setIncExpError(null);*/
         dbHandler = null;
         totalIncome = 0.0;
         totalExpense = 0.0;
@@ -244,7 +259,7 @@ public class infosLastCaisseController  {
                 lblTotalCaisse.setText(Global.roundDouble(balance) + " €");
 
                 // set new caisse amount
-                Global.setNewCaisseAmount(Global.roundDouble(balance));
+                Global.getNewCaisse().setMontant(Global.roundDouble(balance));
         }
 
     }

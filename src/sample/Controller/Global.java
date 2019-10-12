@@ -26,7 +26,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Global {
+public final class Global {
 
     //region Global variables
     private static User connectedUser = new User();
@@ -41,7 +41,7 @@ public class Global {
     private static Caisse beforeCurrentCaisse = new Caisse();
     private static int nberOfCaisses;
     private static double computedSoldeCaisse;
-    private static double newCaisseAmount;
+    private static Caisse newCaisse = new Caisse();
     private static Cash caisseCash = null;
     private static double countCashResult = 0.0;
     private static double errorAmount = 0.0;
@@ -49,7 +49,8 @@ public class Global {
     private static ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
     private static int nberOfCaissesWithSameDate;
     private static String availableCaisseNumber;
-    private static List<Double> errorList = new ArrayList<>();  // delete
+    private static int errorOnClose;
+    //private static List<Double> errorList = new ArrayList<>();  // delete
     //endregion
 
     //region Employee App
@@ -58,6 +59,22 @@ public class Global {
 
     //region Getters and Setters
 
+
+    public static Caisse getNewCaisse() {
+        return newCaisse;
+    }
+
+    public static void setNewCaisse(Caisse newCaisse) {
+        Global.newCaisse = newCaisse;
+    }
+
+    public static int getErrorOnClose() {
+        return errorOnClose;
+    }
+
+    public static void setErrorOnClose(int errorOnClose) {
+        Global.errorOnClose = errorOnClose;
+    }
 
     public static double getErrorAmount() {
         return errorAmount;
@@ -73,10 +90,6 @@ public class Global {
 
     public static void setUsersList(ObservableList<User> usersList) {
         Global.usersList = usersList;
-    }
-
-    public static List<Double> getErrorList() {
-        return errorList;
     }
 
     public static int getNberOfCaissesWithSameDate() {
@@ -174,15 +187,6 @@ public class Global {
     //endregion
 
     //region Methods
-
-
-    public static double getNewCaisseAmount() {
-        return newCaisseAmount;
-    }
-
-    public static void setNewCaisseAmount(double newCaisseAmount) {
-        Global.newCaisseAmount = newCaisseAmount;
-    }
 
     public static CaisseIncExp getIncExpError() {
         return incExpError;

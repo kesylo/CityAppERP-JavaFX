@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
 import sample.Controller.Global;
 import sample.Database.DBHandler;
+import sample.Model.Caisse;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -28,8 +29,6 @@ public class closeCaisseController {
 
     @FXML
     private ImageView photo;
-
-
 
     @FXML
     private Label lblShiftNum;
@@ -62,10 +61,10 @@ public class closeCaisseController {
     private JFXButton btnCloseCaisse;
     //endregion
 
-    private DialogController<String> wd = null;
-    private DBHandler dbHandler = new DBHandler();
-    private double totalIncome = 0.0;
-    private double totalExpense = 0.0;
+    private DialogController<String> wd;
+    private DBHandler dbHandler;
+    private double totalIncome;
+    private double totalExpense;
     private double caisseFinalAmount;
 
     @FXML
@@ -76,6 +75,7 @@ public class closeCaisseController {
 
     @FXML
     void initialize() {
+        initGlobal();
 
         // set profile photo
         Global.setProfileIcon(photo);
@@ -138,6 +138,21 @@ public class closeCaisseController {
 
     /*-------------------------------------------------------------------------------------------------------------*/
 
+    private void initGlobal() {
+        Global.navFrom = "";
+        //Global.setComputedSoldeCaisse(0.0);
+        // this is used to make sure count was used. so reset if this windows is opened
+        /*Global.setCaisseCash(null);
+        Global.setErrorAmount(0.0);
+        Global.setCountCashResult(0.0);
+        Global.setNewCaisse(new Caisse());
+        Global.setIncExpError(null);*/
+
+
+        wd = null;
+        dbHandler = new DBHandler();
+    }
+
     private void toogleCountBtn() {
         if (Global.getCaisseCash() == null){
             // count not done yet, show btn
@@ -153,7 +168,7 @@ public class closeCaisseController {
     }
 
     private void closeCaisse() {
-        wd = new DialogController(btnBack.getScene().getWindow(), "Fermeture en Cours...");
+        wd = new DialogController<>(btnBack.getScene().getWindow(), "Fermeture en Cours...");
 
         wd.exec("123", inputParam -> {
 
@@ -223,7 +238,7 @@ public class closeCaisseController {
                     lblTotalCaisse.setText(Global.formatDouble(caisseFinalAmount) + " €");
 
                     // set count cash result
-                    lblTotalCountAmount.setText(Global.getCountCashResult() + " €");
+                    lblTotalCountAmount.setText(Global.roundDouble(Global.getCountCashResult()) + " €");
 
                 });
 
@@ -237,10 +252,18 @@ public class closeCaisseController {
         double balance;
         if (Global.getNberOfCaisses() > 1 ){
 
-            balance = Global.getBeforeCurrentCaisse().getMontant() + totalIncome - totalExpense + Global.getErrorAmount();
+            balance = Global.getBeforeCurrentCaisse().getMontant()
+                    + totalIncome
+                    - totalExpense
+                    + Global.getCurrentCaisse().getError_amount();
 
         } else {
             balance = 0.0 + totalIncome - totalExpense + Global.getErrorAmount();
+        }
+
+        // if caisse already has error before close, compute balance differently
+        if (Global.getCurrentCaisse().getHasError() == 1 && Global.getErrorOnClose() > 0){
+            balance = Global.getCountCashResult();
         }
 
         // round up result

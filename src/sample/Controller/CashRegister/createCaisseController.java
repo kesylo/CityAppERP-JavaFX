@@ -1,12 +1,10 @@
 package sample.Controller.CashRegister;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextArea;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import sample.Controller.Global;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
@@ -42,42 +40,35 @@ public class createCaisseController{
     private Label lblMontant;
 
     @FXML
-    private Label lblNumeroShift;
-
-    @FXML
     private Label lblUser;
     //endregion
 
     @FXML
-    void logOut(MouseEvent event) {
+    void logOut() {
         URL location = getClass().getResource("/sample/View/login.fxml");
         Global.logOut(location, btnCancel);
     }
 
     private DBHandler db = new DBHandler();
-    private double amountLastCaisse = 0.0;
-    private DialogController wd = null;
+    private double amountNewCaisse;
+    private DialogController<String> wd = null;
     private URL toCaisseDashboard = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
 
     @FXML
     void initialize() {
 
         // get last caisse amount
-        /*amountLastCaisse = db.getLastAmountCaisse();*/
+        /*amountNewCaisse = db.getLastAmountCaisse();*/
         if (Global.getNberOfCaisses() > 0){
-            amountLastCaisse = Global.getNewCaisseAmount();
+            amountNewCaisse = Global.getNewCaisse().getMontant();
         }
 
         // init fields
         fillUiElmts();
 
-        btnCreate.setOnAction(event -> {
-            createCaisse();
-        });
+        btnCreate.setOnAction(event -> createCaisse());
 
-        btnCancel.setOnAction(event -> {
-            Global.navigateTo(toCaisseDashboard,"Caisse");
-        });
+        btnCancel.setOnAction(event -> Global.navigateTo(toCaisseDashboard,"Caisse"));
     }
     /*----------------------------------------------------------------------------------------------------------*/
 
@@ -110,7 +101,7 @@ public class createCaisseController{
 
     private void sendDataToDB(Caisse caisse) {
         Platform.runLater(() ->{
-            wd = new DialogController(btnCancel.getScene().getWindow(), "Chargement...");
+            wd = new DialogController<>(btnCancel.getScene().getWindow(), "Chargement...");
 
             wd.exec("123", inputParam -> {
                 db.createCaisse(caisse);
@@ -125,11 +116,18 @@ public class createCaisseController{
     private void configureCaisse (Caisse caisse){
 
         caisse.setDate(Global.getSystemDate());
-        caisse.setMontant(amountLastCaisse);
+        caisse.setMontant(amountNewCaisse);
         caisse.setRemarque("");
         caisse.setClosed(1);
+        caisse.setHasError(Global.getNewCaisse().getHasError());
+        caisse.setError_amount(Global.getErrorAmount());
         caisse.setNumeroCaisse(Global.getAvailableCaisseNumber());
         caisse.setIdEmployes(Global.getConnectedUser().getId());
+
+        // for error while creating caisse
+        // if error ?
+            // set error expense
+            //
     }
 
     private void fillUiElmts() {
@@ -139,7 +137,7 @@ public class createCaisseController{
         Global.setUserProfile(lblConnectedUser, btnLogOut);
         lblDate.setText(Global.getSystemDate());
         lblNumCaisse.setText(Global.getAvailableCaisseNumber());
-        lblMontant.setText(Global.formatDouble(amountLastCaisse) + " €");
+        lblMontant.setText(Global.formatDouble(amountNewCaisse) + " €");
         lblUser.setText(Global.getConnectedUser().getFirstName() + " " + Global.getConnectedUser().getLastName());
     }
 

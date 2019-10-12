@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class caisseDashboardController{
 
@@ -79,9 +80,6 @@ public class caisseDashboardController{
         // init DB access
         dbHandler = new DBHandler();
 
-        // init global variables
-        initGlobal();
-
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
@@ -101,7 +99,6 @@ public class caisseDashboardController{
             caisseWithSameDate = dbHandler.getNbrCaisseWithSameDate(Global.getSystemDate());
             // set it globally
             Global.setNberOfCaissesWithSameDate(caisseWithSameDate);
-            System.out.println(caisseWithSameDate);
 
             if (caisseWithSameDate > 2){
                 // we can't create another caisse for this date
@@ -146,21 +143,10 @@ public class caisseDashboardController{
     }
 
 
-
     /*----------------------------------------------------------------------------------------------*/
 
-    private void initGlobal() {
-        Global.navFrom = "";
-        Global.setComputedSoldeCaisse(0.0);
-        // this is used to make sure count was used. so reset if this windows is opened
-        Global.setCaisseCash(null);
-        Global.setErrorAmount(0.0);
-        Global.setCountCashResult(0.0);
-        Global.setNewCaisseAmount(0.0);
-        Global.setIncExpError(null);
-    }
-
     private void closeCaisse() {
+
         // get last row in table
         Caisse lastCaisse = tableDateShifts.getItems().get(0);
         if (lastCaisse.getClosed() == 0){
@@ -175,6 +161,12 @@ public class caisseDashboardController{
                     "Non");
 
             if (action){
+                // reset some global
+                Global.setErrorAmount(0.0);
+                Global.setCaisseCash(null);
+                Global.setCountCashResult(0.0);
+                Global.setErrorOnClose(0);
+
                 // go to fermeture
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
                 Global.navigateTo(navPath,"Fermeture");
