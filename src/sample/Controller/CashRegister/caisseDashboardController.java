@@ -11,7 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
-import sample.Controller.Global;
+import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
@@ -19,7 +20,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Objects;
 
 public class caisseDashboardController{
 
@@ -98,7 +98,7 @@ public class caisseDashboardController{
 
             caisseWithSameDate = dbHandler.getNbrCaisseWithSameDate(Global.getSystemDate());
             // set it globally
-            Global.setNberOfCaissesWithSameDate(caisseWithSameDate);
+            CashRegisterGlobal.setNberOfCaissesWithSameDate(caisseWithSameDate);
 
             if (caisseWithSameDate > 2){
                 // we can't create another caisse for this date
@@ -113,10 +113,10 @@ public class caisseDashboardController{
 
         btnDetailCaisse.setOnAction(event -> {
 
-           if (Global.getNberOfCaisses() >= 1){
+           if (CashRegisterGlobal.getNberOfCaisses() >= 1){
                // set the preview caisse globally
                Caisse previewCaisse = tableDateShifts.getSelectionModel().getSelectedItem();
-               Global.setPreviewCaisse(previewCaisse);
+               CashRegisterGlobal.setPreviewCaisse(previewCaisse);
                // open preview window
                URL navPath = getClass().getResource("/sample/View/CashRegister/detailsCaisse.fxml");
                Global.navigateTo(navPath,"Details");
@@ -124,7 +124,7 @@ public class caisseDashboardController{
        });
 
         btnCloseCaisse.setOnAction(event -> {
-           if (Global.getNberOfCaisses() >= 1){
+           if (CashRegisterGlobal.getNberOfCaisses() >= 1){
                closeCaisse();
            }
        });
@@ -135,7 +135,7 @@ public class caisseDashboardController{
        });
 
         btnIncomeExpense.setOnAction(event -> {
-           if (Global.getNberOfCaisses() >= 1){
+           if (CashRegisterGlobal.getNberOfCaisses() >= 1){
                URL navPath = getClass().getResource("/sample/View/CashRegister/addIncomeExpense.fxml");
                Global.navigateTo(navPath,"Actions");
            }
@@ -162,10 +162,10 @@ public class caisseDashboardController{
 
             if (action){
                 // reset some global
-                Global.setErrorAmount(0.0);
-                Global.setCaisseCash(null);
-                Global.setCountCashResult(0.0);
-                Global.setErrorOnClose(0);
+                CashRegisterGlobal.setErrorAmount(0.0);
+                CashRegisterGlobal.setCaisseCash(null);
+                CashRegisterGlobal.setCountCashResult(0.0);
+                CashRegisterGlobal.setErrorOnClose(0);
 
                 // go to fermeture
                 URL navPath = getClass().getResource("/sample/View/CashRegister/closeCaisse.fxml");
@@ -175,8 +175,8 @@ public class caisseDashboardController{
     }
 
     private void initCaissesInfos() {
-        if (Global.getNberOfCaisses() >= 1){
-            if (Global.getCurrentCaisse().getClosed() == 0) {
+        if (CashRegisterGlobal.getNberOfCaisses() >= 1){
+            if (CashRegisterGlobal.getCurrentCaisse().getClosed() == 0) {
                 // 0 = closed
                 // go to infos Caisse
                 URL location = getClass().getResource("/sample/View/CashRegister/infosLastCaisse.fxml");
@@ -199,11 +199,11 @@ public class caisseDashboardController{
     private void createCaisseNumber (){
 
         int currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100; // returns 19
-        String currentCaisseNumber = Global.getCurrentCaisse().getNumeroCaisse();
+        String currentCaisseNumber = CashRegisterGlobal.getCurrentCaisse().getNumeroCaisse();
         String numeroCaisse;
 
         // check if we have at least 1 caisse
-        if (Global.getNberOfCaisses() >= 1){
+        if (CashRegisterGlobal.getNberOfCaisses() >= 1){
             // check if last caisse id is of format XX-XXXX
             if (currentCaisseNumber.matches("\\d{2}[-+]\\d{4}")){
                 // create new one base on that one
@@ -217,20 +217,20 @@ public class caisseDashboardController{
                 // final
                 numeroCaisse = currentYear + "-" + x;
                 // set globally
-                Global.setAvailableCaisseNumber(numeroCaisse);
+                CashRegisterGlobal.setAvailableCaisseNumber(numeroCaisse);
             }else {
                 // create new caisse number
                 // final
                 numeroCaisse = currentYear + "-" + "0001";
                 // set globally
-                Global.setAvailableCaisseNumber(numeroCaisse);
+                CashRegisterGlobal.setAvailableCaisseNumber(numeroCaisse);
             }
         }else {
             // create new caisse number
             // final
             numeroCaisse = currentYear + "-" + "0001";
             // set globally
-            Global.setAvailableCaisseNumber(numeroCaisse);
+            CashRegisterGlobal.setAvailableCaisseNumber(numeroCaisse);
         }
 
     }
@@ -244,13 +244,13 @@ public class caisseDashboardController{
             wd.exec("123", inputParam -> {
                 // run long longTask
                 final ObservableList<Caisse> data = longTask();
-                Global.setCaisseList(data);
+                CashRegisterGlobal.setCaisseList(data);
 
                 Platform.runLater(() ->{
-                    fillTable(Global.getCaisseList());
+                    fillTable(CashRegisterGlobal.getCaisseList());
                     // generate a caisse number for further use
                     createCaisseNumber();
-                    //System.out.println(Global.getAvailableCaisseNumber());
+                    //System.out.println(CashRegisterGlobal.getAvailableCaisseNumber());
                 });
 
                 return 1;
@@ -294,7 +294,7 @@ public class caisseDashboardController{
         tableDateShifts.setItems(data);
 
         // set table size globally for future tests:
-        Global.setNberOfCaisses(data.size());
+        CashRegisterGlobal.setNberOfCaisses(data.size());
 
         if (data.size() >= 1){
             tableDateShifts.getSelectionModel().select(0);
@@ -303,13 +303,13 @@ public class caisseDashboardController{
             Caisse lastCaisse = tableDateShifts.getItems().get(0);
 
             // make last caisse global
-            Global.setCurrentCaisse(lastCaisse);
+            CashRegisterGlobal.setCurrentCaisse(lastCaisse);
 
             if (data.size() >= 2){
                 // get before last row in table
                 Caisse beforeLastCaisse = tableDateShifts.getItems().get(1);
                 // make before last caisse global
-                Global.setBeforeCurrentCaisse(beforeLastCaisse);
+                CashRegisterGlobal.setBeforeCurrentCaisse(beforeLastCaisse);
             }
         }
         tableDateShifts.getSelectionModel().selectFirst();

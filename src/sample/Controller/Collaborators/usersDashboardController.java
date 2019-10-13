@@ -7,14 +7,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
-import sample.Controller.Global;
+import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.CollaboratorGlobal;
+import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.User;
 
@@ -87,9 +88,6 @@ public class usersDashboardController {
     private DialogController<String> wd = null;
     private ResultSet rs = null;
     FilteredList<User> filteredUser = null;
-    //private ObservableList<User> users = FXCollections.observableArrayList();
-    //private User user = null;
-
 
     @FXML
     void initialize() {
@@ -102,8 +100,6 @@ public class usersDashboardController {
 
         // add users to table
         getAllUsers();
-
-
 
 
         // AutoSearch feature
@@ -158,12 +154,12 @@ public class usersDashboardController {
             wd.exec("123", inputParam -> {
                 final ObservableList<User> data = longTask();
                 // set users Globally
-                Global.setUsersList(data);
+                CollaboratorGlobal.setUsersList(data);
                 // turn users list in filtered list for search
                 filteredUser = new FilteredList<>(data, b -> true);
 
                 Platform.runLater(() ->{
-                    fillTable(Global.getUsersList());
+                    fillTable(CollaboratorGlobal.getUsersList());
                 });
                 return 1;
             });

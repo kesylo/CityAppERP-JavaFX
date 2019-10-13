@@ -1,12 +1,8 @@
 package sample;
 
 
-import sample.Controller.Global;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,7 +25,7 @@ public class test {
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
         //double n = 0.05264;
-        //System.out.println(Global.getSystemDate());
+        //System.out.println(CashRegisterGlobal.getSystemDate());
 
         final String stringDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         LocalDate m = LocalDate.parse(stringDate);

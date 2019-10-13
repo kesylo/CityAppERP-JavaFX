@@ -7,9 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
-import sample.Controller.Global;
+import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
-import sample.Model.Caisse;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -98,7 +98,7 @@ public class closeCaisseController {
 
         btnBack.setOnAction(event -> {
             // reset count cash result
-            Global.setCountCashResult(0.0);
+            CashRegisterGlobal.setCountCashResult(0.0);
 
             URL navPath = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
             Global.navigateTo(navPath,"Caisse");
@@ -106,9 +106,9 @@ public class closeCaisseController {
 
         btnCloseCaisse.setOnAction(event -> {
 
-            if (Global.getCaisseCash() != null){
+            if (CashRegisterGlobal.getCaisseCash() != null){
                 // close only if its open
-                if (Global.getCurrentCaisse().getClosed() == 1){
+                if (CashRegisterGlobal.getCurrentCaisse().getClosed() == 1){
 
                     // close the caisse
                     //Platform.runLater(this::);
@@ -140,13 +140,13 @@ public class closeCaisseController {
 
     private void initGlobal() {
         Global.navFrom = "";
-        //Global.setComputedSoldeCaisse(0.0);
+        //CashRegisterGlobal.setComputedSoldeCaisse(0.0);
         // this is used to make sure count was used. so reset if this windows is opened
-        /*Global.setCaisseCash(null);
-        Global.setErrorAmount(0.0);
-        Global.setCountCashResult(0.0);
-        Global.setNewCaisse(new Caisse());
-        Global.setIncExpError(null);*/
+        /*CashRegisterGlobal.setCaisseCash(null);
+        CashRegisterGlobal.setErrorAmount(0.0);
+        CashRegisterGlobal.setCountCashResult(0.0);
+        CashRegisterGlobal.setNewCaisse(new Caisse());
+        CashRegisterGlobal.setIncExpError(null);*/
 
 
         wd = null;
@@ -154,7 +154,7 @@ public class closeCaisseController {
     }
 
     private void toogleCountBtn() {
-        if (Global.getCaisseCash() == null){
+        if (CashRegisterGlobal.getCaisseCash() == null){
             // count not done yet, show btn
             btnCount.setDisable(false);
             System.out.println("show");
@@ -176,28 +176,28 @@ public class closeCaisseController {
             // if caisse < 0 put 0 in database and add error
             if (caisseFinalAmount < 0){
                 // addError
-                Global.getCurrentCaisse().setError_amount(caisseFinalAmount);
-                Global.getCurrentCaisse().setRemarque("Caisse avec solde négatif de " + caisseFinalAmount);
-                Global.getCurrentCaisse().setHasError(1);
+                CashRegisterGlobal.getCurrentCaisse().setError_amount(caisseFinalAmount);
+                CashRegisterGlobal.getCurrentCaisse().setRemarque("Caisse avec solde négatif de " + caisseFinalAmount);
+                CashRegisterGlobal.getCurrentCaisse().setHasError(1);
 
                 db.updateCaisseStatus(0.0,
                         0,
                         Global.getSystemDateTime(),
-                        Global.getCurrentCaisse(),
-                        Global.getErrorAmount());
+                        CashRegisterGlobal.getCurrentCaisse(),
+                        CashRegisterGlobal.getErrorAmount());
 
             } else {
                 // no error found
                 db.updateCaisseStatus(caisseFinalAmount,
                         0,
                         Global.getSystemDateTime(),
-                        Global.getCurrentCaisse(),
-                        Global.getErrorAmount());
+                        CashRegisterGlobal.getCurrentCaisse(),
+                        CashRegisterGlobal.getErrorAmount());
                 // add cash caisse
-                db.addCaisseCash(Global.getCaisseCash());
+                db.addCaisseCash(CashRegisterGlobal.getCaisseCash());
                 // if caisse has error, set error IncExp
-                if (Global.getCurrentCaisse().getHasError() == 1){
-                    db.addIncORExp(Global.getIncExpError());
+                if (CashRegisterGlobal.getCurrentCaisse().getHasError() == 1){
+                    db.addIncORExp(CashRegisterGlobal.getIncExpError());
                 }
             }
 
@@ -221,24 +221,24 @@ public class closeCaisseController {
                 caisseFinalAmount = computeFinalCaisseAmount();
 
                 // set globally
-                Global.setComputedSoldeCaisse(caisseFinalAmount);
-                Global.getCurrentCaisse().setMontant(caisseFinalAmount);
+                CashRegisterGlobal.setComputedSoldeCaisse(caisseFinalAmount);
+                CashRegisterGlobal.getCurrentCaisse().setMontant(caisseFinalAmount);
 
 
 
 
                 Platform.runLater(() ->{
 
-                    lblDate.setText(Global.getCurrentCaisse().getDate());
-                    lblShiftNum.setText(Global.getCurrentCaisse().getNumeroShift() + "");
-                    lblComments.setText(Global.getCurrentCaisse().getRemarque());
+                    lblDate.setText(CashRegisterGlobal.getCurrentCaisse().getDate());
+                    lblShiftNum.setText(CashRegisterGlobal.getCurrentCaisse().getNumeroShift() + "");
+                    lblComments.setText(CashRegisterGlobal.getCurrentCaisse().getRemarque());
                     lblEtat.setText("Ouverte");
                     lblTotalIncome.setText(Global.formatDouble(totalIncome) + " €");
                     lblTotalExpenses.setText(Global.formatDouble(totalExpense) + " €");
                     lblTotalCaisse.setText(Global.formatDouble(caisseFinalAmount) + " €");
 
                     // set count cash result
-                    lblTotalCountAmount.setText(Global.roundDouble(Global.getCountCashResult()) + " €");
+                    lblTotalCountAmount.setText(Global.roundDouble(CashRegisterGlobal.getCountCashResult()) + " €");
 
                 });
 
@@ -250,20 +250,20 @@ public class closeCaisseController {
     private double computeFinalCaisseAmount(){
         // return balance
         double balance;
-        if (Global.getNberOfCaisses() > 1 ){
+        if (CashRegisterGlobal.getNberOfCaisses() > 1 ){
 
-            balance = Global.getBeforeCurrentCaisse().getMontant()
+            balance = CashRegisterGlobal.getBeforeCurrentCaisse().getMontant()
                     + totalIncome
                     - totalExpense
-                    + Global.getCurrentCaisse().getError_amount();
+                    + CashRegisterGlobal.getCurrentCaisse().getError_amount();
 
         } else {
-            balance = 0.0 + totalIncome - totalExpense + Global.getErrorAmount();
+            balance = 0.0 + totalIncome - totalExpense + CashRegisterGlobal.getErrorAmount();
         }
 
         // if caisse already has error before close, compute balance differently
-        if (Global.getCurrentCaisse().getHasError() == 1 && Global.getErrorOnClose() > 0){
-            balance = Global.getCountCashResult();
+        if (CashRegisterGlobal.getCurrentCaisse().getHasError() == 1 && CashRegisterGlobal.getErrorOnClose() > 0){
+            balance = CashRegisterGlobal.getCountCashResult();
         }
 
         // round up result
@@ -274,8 +274,8 @@ public class closeCaisseController {
 
     private double computeExpense() {
         double totalExpense = 0.0;
-        ResultSet row = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(),
-                Global.getCurrentCaisse().getNumeroShift(),
+        ResultSet row = dbHandler.getIncomeExpense(CashRegisterGlobal.getCurrentCaisse().getId(),
+                CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
                 1);
 
         try {
@@ -291,8 +291,8 @@ public class closeCaisseController {
 
     private double computeIncome() {
         double totalIncome = 0.0;
-        ResultSet row = dbHandler.getIncomeExpense(Global.getCurrentCaisse().getId(),
-                Global.getCurrentCaisse().getNumeroShift(),
+        ResultSet row = dbHandler.getIncomeExpense(CashRegisterGlobal.getCurrentCaisse().getId(),
+                CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
                 0);
 
         try {

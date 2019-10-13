@@ -1,6 +1,7 @@
 package sample.Database;
 
-import sample.Controller.Global;
+import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.Global;
 import sample.Model.Caisse;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;

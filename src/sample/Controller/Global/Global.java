@@ -1,9 +1,7 @@
-package sample.Controller;
+package sample.Controller.Global;
 
 import com.jfoenix.controls.JFXButton;
 import com.sun.glass.ui.Window;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,9 +12,6 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sample.Model.Caisse;
-import sample.Model.CaisseIncExp;
-import sample.Model.Cash;
 import sample.Model.User;
 import tray.animations.AnimationType;
 import tray.notification.TrayNotification;
@@ -24,177 +19,44 @@ import tray.notification.TrayNotification;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
-public final class Global {
+public class Global {
 
-    //region Global variables
+    //region variables
+
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
     private static Stage stage;
-    //endregion
 
-    //region Caisse App
-    private static Caisse currentCaisse = new Caisse();
-    private static Caisse previewCaisse = new Caisse();
-    private static Caisse beforeCurrentCaisse = new Caisse();
-    private static int nberOfCaisses;
-    private static double computedSoldeCaisse;
-    private static Caisse newCaisse = new Caisse();
-    private static Cash caisseCash = null;
-    private static double countCashResult = 0.0;
-    private static double errorAmount = 0.0;
-    private static CaisseIncExp incExpError = new CaisseIncExp();
-    private static ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
-    private static int nberOfCaissesWithSameDate;
-    private static String availableCaisseNumber;
-    private static int errorOnClose;
-    //private static List<Double> errorList = new ArrayList<>();  // delete
-    //endregion
-
-    //region Employee App
-    private static ObservableList<User> usersList = FXCollections.observableArrayList();
     //endregion
 
     //region Getters and Setters
 
 
-    public static Caisse getNewCaisse() {
-        return newCaisse;
+    public static User getConnectedUser() {
+        return connectedUser;
     }
 
-    public static void setNewCaisse(Caisse newCaisse) {
-        Global.newCaisse = newCaisse;
+    public static void setConnectedUser(User connectedUser) {
+        Global.connectedUser = connectedUser;
     }
 
-    public static int getErrorOnClose() {
-        return errorOnClose;
-    }
-
-    public static void setErrorOnClose(int errorOnClose) {
-        Global.errorOnClose = errorOnClose;
-    }
-
-    public static double getErrorAmount() {
-        return errorAmount;
-    }
-
-    public static void setErrorAmount(double errorAmount) {
-        Global.errorAmount = errorAmount;
-    }
-
-    public static ObservableList<User> getUsersList() {
-        return usersList;
-    }
-
-    public static void setUsersList(ObservableList<User> usersList) {
-        Global.usersList = usersList;
-    }
-
-    public static int getNberOfCaissesWithSameDate() {
-        return nberOfCaissesWithSameDate;
-    }
-
-    public static void setNberOfCaissesWithSameDate(int nberOfCaissesWithSameDate) {
-        Global.nberOfCaissesWithSameDate = nberOfCaissesWithSameDate;
-    }
-
-    public static String getAvailableCaisseNumber() {
-        return availableCaisseNumber;
-    }
-
-    public static void setAvailableCaisseNumber(String availableCaisseNumber) {
-        Global.availableCaisseNumber = availableCaisseNumber;
+    public static Stage getStage() {
+        return stage;
     }
 
     public static void setStage(Stage stage) {
         Global.stage = stage;
     }
 
-    public static ObservableList<Caisse> getCaisseList() {
-        return caisseList;
-    }
-
-    public static void setCaisseList(ObservableList<Caisse> caisseList) {
-        Global.caisseList = caisseList;
-    }
-
-    public static Caisse getPreviewCaisse() {
-        return previewCaisse;
-    }
-
-    public static void setPreviewCaisse(Caisse previewCaisse) {
-        Global.previewCaisse = previewCaisse;
-    }
-
-    public static double getCountCashResult() {
-        return countCashResult;
-    }
-
-    public static void setCountCashResult(double countCashResult) {
-        Global.countCashResult = countCashResult;
-    }
-
-    public static Cash getCaisseCash() {
-        return caisseCash;
-    }
-
-    public static double getComputedSoldeCaisse() {
-        return computedSoldeCaisse;
-    }
-
-    public static void setComputedSoldeCaisse(double computedSoldeCaisse) {
-        Global.computedSoldeCaisse = computedSoldeCaisse;
-    }
-
-    public static void setCaisseCash(Cash caisseCash) {
-        Global.caisseCash = caisseCash;
-    }
-
-    public static int getNberOfCaisses() {
-        return nberOfCaisses;
-    }
-
-    public static void setNberOfCaisses(int nberOfCaisses) {
-        Global.nberOfCaisses = nberOfCaisses;
-    }
-
-    public static User getConnectedUser() {
-        return connectedUser;
-    }
-
-    static void setConnectedUser(User connectedUser) {
-        Global.connectedUser = connectedUser;
-    }
-
-    public static Caisse getBeforeCurrentCaisse() {
-        return beforeCurrentCaisse;
-    }
-
-    public static void setBeforeCurrentCaisse(Caisse beforeCurrentCaisse) {
-        Global.beforeCurrentCaisse = beforeCurrentCaisse;
-    }
-
-    public static Caisse getCurrentCaisse() {
-        return currentCaisse;
-    }
-
-    public static void setCurrentCaisse(Caisse currentCaisse) {
-        Global.currentCaisse = currentCaisse;
-    }
-
     //endregion
 
     //region Methods
-
-    public static CaisseIncExp getIncExpError() {
-        return incExpError;
-    }
-
-    public static void setIncExpError(CaisseIncExp incExpError) {
-        Global.incExpError = incExpError;
-    }
 
     public static void showErrorMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.ERROR);
@@ -326,7 +188,7 @@ public final class Global {
         List<Window> windows = Window.getWindows();
         for (Window win : windows) {
             if (win.getTitle().contains(windowName)) {
-                    win.close();
+                win.close();
             }
         }
     }
@@ -372,22 +234,5 @@ public final class Global {
         }
     }
 
-
-
-/*    public static int generateCaisseID() {
-
-        return 1;
-    }
-
-    public static int generateCaisseNumber(){
-
-        int number;
-
-
-
-        return number;
-    }*/
-
     //endregion
-
 }

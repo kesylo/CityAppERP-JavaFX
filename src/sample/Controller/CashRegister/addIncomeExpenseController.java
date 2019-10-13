@@ -10,7 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import sample.Controller.DialogController;
-import sample.Controller.Global;
+import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
 
@@ -133,7 +134,7 @@ public class addIncomeExpenseController {
         btnCreate.setOnAction(event -> {
 
             // check if caisse opened before adding
-            if (Global.getCurrentCaisse().getClosed() == 1) {
+            if (CashRegisterGlobal.getCurrentCaisse().getClosed() == 1) {
 
                 // check if amount textbox is not empty
                 if (!txtAmount.getText().isEmpty()){
@@ -168,8 +169,8 @@ public class addIncomeExpenseController {
     /*----------------------------------------------------------------------------------*/
 
     private void loadHeader() {
-        lblDate.setText(Global.getCurrentCaisse().getDate());
-        lblShiftNum.setText(Global.getCurrentCaisse().getNumeroShift() + "");
+        lblDate.setText(CashRegisterGlobal.getCurrentCaisse().getDate());
+        lblShiftNum.setText(CashRegisterGlobal.getCurrentCaisse().getNumeroShift() + "");
         lblUser.setText(Global.getConnectedUser().getFirstName());
     }
 
@@ -414,8 +415,8 @@ public class addIncomeExpenseController {
                             Global.getSystemTime(),
                             Global.getConnectedUser().getId(),
                             "",
-                            Global.getCurrentCaisse().getNumeroShift(),
-                            Global.getCurrentCaisse().getId(),
+                            CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
+                            CashRegisterGlobal.getCurrentCaisse().getId(),
                             "",
                             txtClientIndex.getText(),
                             0,
@@ -431,8 +432,8 @@ public class addIncomeExpenseController {
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         "",
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
+                        CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
+                        CashRegisterGlobal.getCurrentCaisse().getId(),
                         comboIncomeBank.getValue(),
                         "",
                         0,
@@ -447,8 +448,8 @@ public class addIncomeExpenseController {
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         txtAreaCommentCaisse.getText(),
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
+                        CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
+                        CashRegisterGlobal.getCurrentCaisse().getId(),
                         "",
                         "",
                         0,
@@ -469,8 +470,8 @@ public class addIncomeExpenseController {
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         "",
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
+                        CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
+                        CashRegisterGlobal.getCurrentCaisse().getId(),
                         comboRaison.getValue(),
                         "",
                         1,
@@ -486,8 +487,8 @@ public class addIncomeExpenseController {
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         "",
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
+                        CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
+                        CashRegisterGlobal.getCurrentCaisse().getId(),
                         comboExpenseBank.getValue(),
                         "",
                         1,
@@ -502,8 +503,8 @@ public class addIncomeExpenseController {
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
                         txtAreaComment.getText(),
-                        Global.getCurrentCaisse().getNumeroShift(),
-                        Global.getCurrentCaisse().getId(),
+                        CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
+                        CashRegisterGlobal.getCurrentCaisse().getId(),
                         comboRaison.getValue(),
                         "",
                         1,

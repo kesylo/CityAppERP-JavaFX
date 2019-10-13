@@ -12,7 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
-import sample.Controller.Global;
+import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
@@ -204,18 +205,18 @@ public class detailsCaisseController {
     //region Methods
 
     private boolean isSelectedCaisseClosed (){
-        if (Global.getPreviewCaisse() == Global.getCurrentCaisse()){
-            return Global.getCurrentCaisse().getClosed() == 0;
+        if (CashRegisterGlobal.getPreviewCaisse() == CashRegisterGlobal.getCurrentCaisse()){
+            return CashRegisterGlobal.getCurrentCaisse().getClosed() == 0;
         }
         return true;
     }
 
     private void computeCaisse() {
-        if (Global.getNberOfCaisses() >= 1){
+        if (CashRegisterGlobal.getNberOfCaisses() >= 1){
 
             if (isSelectedCaisseClosed()){
                 // selected caisse is closed so get caisse amount from preview
-                lblTotalCaisse.setText(Global.formatDouble(Global.getPreviewCaisse().getMontant()) + " €");
+                lblTotalCaisse.setText(Global.formatDouble(CashRegisterGlobal.getPreviewCaisse().getMontant()) + " €");
 
             } else {
                 // selected caisse is opened so compute caisse
@@ -225,8 +226,8 @@ public class detailsCaisseController {
 
                 lblTotalCaisse.setText(Global.formatDouble(balance) + " €");
 
-                if (Global.getNberOfCaisses() >= 2){
-                    balance = Global.getPreviewCaisse().getMontant()
+                if (CashRegisterGlobal.getNberOfCaisses() >= 2){
+                    balance = CashRegisterGlobal.getPreviewCaisse().getMontant()
                             - totalExpense
                             + totalIncome;
 
@@ -239,10 +240,10 @@ public class detailsCaisseController {
     private void fillHeader() {
 
         // set date
-        lblDate.setText(Global.getPreviewCaisse().getDate());
+        lblDate.setText(CashRegisterGlobal.getPreviewCaisse().getDate());
 
         // set number shift
-        lblShiftNumber.setText(Global.getPreviewCaisse().getNumeroShift() + "");
+        lblShiftNumber.setText(CashRegisterGlobal.getPreviewCaisse().getNumeroShift() + "");
 
         // set created by
         Platform.runLater(() ->{
@@ -250,7 +251,7 @@ public class detailsCaisseController {
             wd.exec("123", inputParam -> {
 
                 Platform.runLater(() ->{
-                    int idCreator = Global.getPreviewCaisse().getIdEmployes();
+                    int idCreator = CashRegisterGlobal.getPreviewCaisse().getIdEmployes();
                     User currentUser = dbHandler.getEmployeObjByID(idCreator);
                     lblCaisseCreator.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
                 });
@@ -260,15 +261,15 @@ public class detailsCaisseController {
 
 
         // set state
-        if (Global.getPreviewCaisse().getClosed() == 0){
+        if (CashRegisterGlobal.getPreviewCaisse().getClosed() == 0){
             lblCaisseStatus.setText("Fermée");
         }
-        if (Global.getPreviewCaisse().getClosed() == 1){
+        if (CashRegisterGlobal.getPreviewCaisse().getClosed() == 1){
             lblCaisseStatus.setText("Ouverte");
         }
 
         // set comment
-        txtAreaCommentCaisse.setText(Global.getPreviewCaisse().getRemarque());
+        txtAreaCommentCaisse.setText(CashRegisterGlobal.getPreviewCaisse().getRemarque());
     }
 
     private void reset(){
@@ -289,7 +290,7 @@ public class detailsCaisseController {
 
             wd.exec("123", inputParam -> {
 
-                ResultSet rs = dbHandler.getCash(Global.getPreviewCaisse().getId(), Global.getPreviewCaisse().getNumeroShift());
+                ResultSet rs = dbHandler.getCash(CashRegisterGlobal.getPreviewCaisse().getId(), CashRegisterGlobal.getPreviewCaisse().getNumeroShift());
 
                 try {
                     while (rs.next()) {
@@ -371,7 +372,7 @@ public class detailsCaisseController {
 
             wd.exec("123", inputParam -> {
                 // get data from db
-                ResultSet rs = dbHandler.getIncomeExpense(Global.getPreviewCaisse().getId(), Global.getPreviewCaisse().getNumeroShift(), 1);
+                ResultSet rs = dbHandler.getIncomeExpense(CashRegisterGlobal.getPreviewCaisse().getId(), CashRegisterGlobal.getPreviewCaisse().getNumeroShift(), 1);
 
                 try {
                     while (rs.next()) {
@@ -432,7 +433,7 @@ public class detailsCaisseController {
             wd = new DialogController<>(btnOk.getScene().getWindow(), "Chargement des recettes ...");
 
             wd.exec("123", inputParam -> {
-                ResultSet rs = dbHandler.getIncomeExpense(Global.getPreviewCaisse().getId(), Global.getPreviewCaisse().getNumeroShift(), 0);
+                ResultSet rs = dbHandler.getIncomeExpense(CashRegisterGlobal.getPreviewCaisse().getId(), CashRegisterGlobal.getPreviewCaisse().getNumeroShift(), 0);
                 //ResultSet rs = dbHandler.getIncomeExpense(0, 0, 1);
 
                 try {

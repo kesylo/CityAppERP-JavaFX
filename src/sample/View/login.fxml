@@ -74,11 +74,16 @@
                         <Image url="@../Ressources/images/logo.jpg" />
                     </image>
                 </ImageView>
-              <Label layoutX="133.0" layoutY="662.0" text="City Center Apartments ERP 2019 ©">
+              <Label layoutX="133.0" layoutY="660.0" text="City Center Apartments ERP 2019 ©">
                   <font>
                       <Font name="Poppins Regular" size="14.0" />
                   </font>
               </Label>
+            <Label layoutX="239.0" layoutY="14.0" text="V 1.1">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <ImageView fitHeight="446.0" fitWidth="345.0" layoutX="115.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">

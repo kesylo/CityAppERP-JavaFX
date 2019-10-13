@@ -5,8 +5,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import sample.Controller.Global;
+import sample.Controller.Global.CashRegisterGlobal;
 import sample.Controller.DialogController;
+import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 
@@ -59,8 +60,8 @@ public class createCaisseController{
 
         // get last caisse amount
         /*amountNewCaisse = db.getLastAmountCaisse();*/
-        if (Global.getNberOfCaisses() > 0){
-            amountNewCaisse = Global.getNewCaisse().getMontant();
+        if (CashRegisterGlobal.getNberOfCaisses() > 0){
+            amountNewCaisse = CashRegisterGlobal.getNewCaisse().getMontant();
         }
 
         // init fields
@@ -76,14 +77,14 @@ public class createCaisseController{
         // insert caisse in DB
         Caisse caisse = new Caisse();
 
-        if (Global.getNberOfCaissesWithSameDate() == 0){
+        if (CashRegisterGlobal.getNberOfCaissesWithSameDate() == 0){
             // there is no shift at that date, create first
             caisse.setNumeroShift(1);
-        }else if (Global.getNberOfCaissesWithSameDate() == 1){
+        }else if (CashRegisterGlobal.getNberOfCaissesWithSameDate() == 1){
             // there 1 shift at that date, create second
             caisse.setNumeroShift(2);
         }
-        else if (Global.getNberOfCaissesWithSameDate() == 2){
+        else if (CashRegisterGlobal.getNberOfCaissesWithSameDate() == 2){
             // there 2 shift at that date, create third
             caisse.setNumeroShift(3);
         }
@@ -119,9 +120,9 @@ public class createCaisseController{
         caisse.setMontant(amountNewCaisse);
         caisse.setRemarque("");
         caisse.setClosed(1);
-        caisse.setHasError(Global.getNewCaisse().getHasError());
-        caisse.setError_amount(Global.getErrorAmount());
-        caisse.setNumeroCaisse(Global.getAvailableCaisseNumber());
+        caisse.setHasError(CashRegisterGlobal.getNewCaisse().getHasError());
+        caisse.setError_amount(CashRegisterGlobal.getErrorAmount());
+        caisse.setNumeroCaisse(CashRegisterGlobal.getAvailableCaisseNumber());
         caisse.setIdEmployes(Global.getConnectedUser().getId());
 
         // for error while creating caisse
@@ -136,7 +137,7 @@ public class createCaisseController{
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
         lblDate.setText(Global.getSystemDate());
-        lblNumCaisse.setText(Global.getAvailableCaisseNumber());
+        lblNumCaisse.setText(CashRegisterGlobal.getAvailableCaisseNumber());
         lblMontant.setText(Global.formatDouble(amountNewCaisse) + " €");
         lblUser.setText(Global.getConnectedUser().getFirstName() + " " + Global.getConnectedUser().getLastName());
     }

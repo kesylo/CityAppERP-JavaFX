@@ -7,6 +7,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.User;
 import sample.Ressources.animation.Shaker;
@@ -124,15 +126,6 @@ public class LoginController {
                     return 1;
                 });
             });
-
-
-
-
-
-
-
-
-
         } else {
             showErrorAndShake();
         }

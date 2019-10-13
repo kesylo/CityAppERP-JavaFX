@@ -118,7 +118,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <Pane layoutX="110.0" layoutY="86.0" prefHeight="10.0" prefWidth="879.0" style="-fx-background-color: #AEB6BF;" />
+            <Pane layoutX="20.0" layoutY="85.0" prefHeight="11.0" prefWidth="1060.0" style="-fx-background-color: #AEB6BF;" />
             <JFXCheckBox fx:id="chkBoxEnservice" checkedColor="#f7a631" layoutX="491.0" layoutY="48.0" text="En service">
                <font>
                   <Font size="14.0" />
