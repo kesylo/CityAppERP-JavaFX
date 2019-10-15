@@ -3,6 +3,7 @@ package sample.Controller.Global;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.glass.ui.Window;
+import com.sun.xml.internal.ws.util.StringUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -234,7 +235,7 @@ public final class Global {
         }
     }
 
-    public static void txtFormater(JFXTextField textField, int maxLength, int type, boolean toUpperCase){
+    public static void txtFormater(JFXTextField textField, int maxLength, int type, int stringCase){
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (type == 1){     // validate letters only
@@ -243,17 +244,46 @@ public final class Global {
                 }
             }
 
-            if (type == 2){ // validate all
-                System.out.println("gfd");
+            if (type == 2){ // validate salary
+                if (!newValue.matches("\\d{0,7}([.]\\d{0,2})?")) {
+                    textField.setText(oldValue);
+                }
             }
+
+            if (type == 3){ // validate int
+                if (!newValue.matches("\\d*$?")) {
+                    textField.setText(oldValue);
+                }
+            }
+
+            if (type == 0){ // validate all
+                System.out.println("validate all");
+            }
+
+
+
 
             if (textField.getLength() > maxLength){
                 textField.setText(oldValue);
             }
 
-            if (toUpperCase){
+            if (stringCase == 1){
                 textField.focusedProperty().addListener((obs, oldVal, newVal) -> textField.setText(textField.getText().toUpperCase()));
             }
+
+            if (stringCase == 2){
+                textField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+                    String cap = StringUtils.capitalize(textField.getText());
+                    textField.setText(cap);
+                });
+            }
+
+            if (stringCase == 3){
+                System.out.println("do nothing");
+            }
+
+
+
         });
     }
 

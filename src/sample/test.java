@@ -1,6 +1,8 @@
 package sample;
 
 
+import com.sun.xml.internal.ws.util.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -38,7 +40,7 @@ public class test {
                 arr) {
             System.out.println(a);
         }
-        //String i = arr[]
+        System.out.println(StringUtils.capitalize("jujkdi jhfu jnhf"));
 
         String test  = "12.12.12-569.60";
         if (test.matches("\\d{0,2}([.]\\d{0,2})([.]\\d{0,2})([-]\\d{0,3})([.]\\d{0,2})?")){
