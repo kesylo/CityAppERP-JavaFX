@@ -161,9 +161,9 @@ public class addCollaboratorController {
 
         Global.txtFormater(txtName, 20,1, 1);
         Global.txtFormater(txtSurname, 20,1, 1);
-        Global.txtFormater(txtEmail, 50,0, 2);
+        Global.txtFormater(txtEmail, 30,0, 2);
         Global.txtFormater(txtNumEmployee, 4,3, 3);
-        Global.txtFormater(txtAddress, 50,0, 2);
+        Global.txtFormater(txtAddress, 30,0, 2);
         Global.txtFormater(txtNumeroRue, 6,3, 3);
         Global.txtFormater(txtNumeroBoite, 3,0, 1);
         Global.txtFormater(txtCity, 15,1, 2);
