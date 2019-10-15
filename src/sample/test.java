@@ -5,6 +5,7 @@ import com.sun.xml.internal.ws.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,12 +43,18 @@ public class test {
         }
         System.out.println(StringUtils.capitalize("jujkdi jhfu jnhf"));
 
-        String test  = "12.12.12-569.60";
-        if (test.matches("\\d{0,2}([.]\\d{0,2})([.]\\d{0,2})([-]\\d{0,3})([.]\\d{0,2})?")){
+        String test  = "kemingukdd@dj.col";
+        if (test.matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$")){
             System.out.println("ok");
         }else {
             System.out.println("no");
         }
+
+
+        LocalDate birthday = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedString = birthday.format(formatter);
+        System.out.println(formattedString);
 
        /* int num = 4400009;
         if (num % 97 == 0){

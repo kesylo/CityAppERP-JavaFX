@@ -107,12 +107,12 @@
             <Separator layoutX="15.0" layoutY="421.0" prefHeight="11.0" prefWidth="537.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
             <HBox layoutX="382.0" layoutY="522.0" spacing="30.0" AnchorPane.leftAnchor="382.0">
                <children>
-                  <JFXTextField fx:id="txtPseudo" cache="true" focusColor="#5dbcd2" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Pseudo" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtPseudo" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Pseudo" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtPassword" cache="true" focusColor="#5dbcd2" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Mot de passe" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtPassword" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Mot de passe" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -149,21 +149,8 @@
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <HBox spacing="65.0">
-                     <children>
-                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Rue" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Poppins Regular" size="14.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXTextField fx:id="txtNumeroBoite" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Boite" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Poppins Regular" size="14.0" />
-                           </font>
-                        </JFXTextField>
-                     </children>
-                  </HBox>
-                  <HBox spacing="58.0">
+                  <JFXComboBox fx:id="comboCountry" focusColor="#5dbcd2" focusTraversable="false" prefHeight="30.0" prefWidth="236.0" promptText="Pays" />
+                  <HBox spacing="30.0">
                      <children>
                         <JFXRadioButton fx:id="radioSexeMale" focusTraversable="false" prefHeight="30.0" selected="true" style="-jfx-selected-color: #5dbcd2;" text="Masculin">
                            <font>
@@ -178,6 +165,20 @@
                               <Font name="Poppins Regular" size="14.0" />
                            </font>
                         </JFXRadioButton>
+                     </children>
+                  </HBox>
+                  <HBox spacing="65.0">
+                     <children>
+                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Rue" unFocusColor="BLACK">
+                           <font>
+                              <Font name="Poppins Regular" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="txtNumeroBoite" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Boite" unFocusColor="BLACK">
+                           <font>
+                              <Font name="Poppins Regular" size="14.0" />
+                           </font>
+                        </JFXTextField>
                      </children>
                   </HBox>
                </children>
@@ -221,7 +222,7 @@
                   </JFXTextField>
                   <HBox spacing="5.0">
                      <children>
-                        <JFXComboBox fx:id="comboPhoneCountry" focusTraversable="false" prefHeight="30.0" />
+                        <JFXComboBox fx:id="comboPhoneCountry" focusColor="#5dbcd2" focusTraversable="false" prefHeight="30.0" />
                         <JFXTextField fx:id="txtPhoneNumber" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="175.0" promptText="Téléphone" unFocusColor="BLACK">
                            <font>
                               <Font name="Poppins Regular" size="14.0" />
@@ -243,20 +244,6 @@
             </VBox>
             <HBox layoutX="14.0" layoutY="143.0" spacing="47.0" />
             <HBox layoutX="283.0" layoutY="302.0" spacing="60.0" />
-            <HBox layoutX="38.0" layoutY="223.0" spacing="110.0">
-               <children>
-                  <ImageView fx:id="photo1" fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Ressources/images/userMale.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="photo11" fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Ressources/images/userFemale.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
             <HBox layoutX="15.0" layoutY="354.0" prefHeight="68.0" prefWidth="776.0" spacing="81.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <children>
                   <VBox>
@@ -361,8 +348,8 @@
                   </JFXRadioButton>
                </children>
             </VBox>
-            <JFXDatePicker fx:id="datePickerStartService" defaultColor="#5dbcd2" editable="false" focusTraversable="false" layoutX="213.0" layoutY="451.0" prefHeight="31.0" prefWidth="161.0" promptText="Debut Dervice" />
-            <JFXDatePicker fx:id="datePickerEndService" defaultColor="#5dbcd2" editable="false" focusTraversable="false" layoutX="422.0" layoutY="451.0" prefHeight="31.0" prefWidth="161.0" promptText="Fin Service" />
+            <JFXDatePicker fx:id="datePickerStartService" defaultColor="#5dbcd2" editable="false" focusTraversable="false" layoutX="213.0" layoutY="451.0" prefHeight="31.0" prefWidth="140.0" promptText="Debut Dervice" />
+            <JFXDatePicker fx:id="datePickerEndService" defaultColor="#5dbcd2" editable="false" focusTraversable="false" layoutX="422.0" layoutY="451.0" prefHeight="31.0" prefWidth="140.0" promptText="Fin Service" />
          </children>
       </AnchorPane>
    </children>

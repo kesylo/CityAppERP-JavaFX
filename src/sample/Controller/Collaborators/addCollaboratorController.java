@@ -7,9 +7,12 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
+import sample.Database.DBHandler;
 import sample.Model.User;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -93,6 +96,9 @@ public class addCollaboratorController {
     private JFXComboBox<String> comboPhoneCountry;
 
     @FXML
+    private JFXComboBox<String> comboCountry;
+
+    @FXML
     private JFXTextField txtPhoneNumber;
 
     @FXML
@@ -173,6 +179,7 @@ public class addCollaboratorController {
 
     private List<String> formErrorsList = new ArrayList<>();
     private User user = new User();
+    private DBHandler dbHandler;
 
     @FXML
     void initialize() {
@@ -317,6 +324,11 @@ public class addCollaboratorController {
         }else {
             fieldsAreOk = true;
         }
+
+        if (txtName.getLength() != 0 || txtName.getText() != null){
+            fieldsAreOk = true;
+        }
+
         //endregion
 
         //region Surname
@@ -331,13 +343,13 @@ public class addCollaboratorController {
         //region Date
         if (datePicker.getValue() == null){
             // add error to list
-            formErrorsList.add("La 'Date' entrée est incorrecte !");
+            formErrorsList.add("La 'Date anniversaire' entrée est incorrecte !");
         }else {
             fieldsAreOk = true;
         }
         //endregion
 
-        //region Date
+        //region DateIn
         if (datePickerStartService.getValue() == null){
             // add error to list
             formErrorsList.add("La 'Date en service' entrée est incorrecte !");
@@ -404,8 +416,6 @@ public class addCollaboratorController {
         if (txtPhoneNumber.getLength() == 0 || txtPhoneNumber.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Numéro Téléphone' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -413,8 +423,6 @@ public class addCollaboratorController {
         if (txtSalaryMonth.getLength() == 0 || txtSalaryMonth.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Salaire Mensuel' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -422,8 +430,6 @@ public class addCollaboratorController {
         if (txtSalaryHour.getLength() == 0 || txtSalaryHour.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Salaire Horaire' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -431,8 +437,6 @@ public class addCollaboratorController {
         if (txtZipCode.getLength() == 0 || txtZipCode.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Code Postal' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -440,8 +444,6 @@ public class addCollaboratorController {
         if (txtRegisterNumber.getLength() == 0 || txtRegisterNumber.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Numero National' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -449,8 +451,6 @@ public class addCollaboratorController {
         if (txtPseudo.getLength() == 0 || txtPseudo.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Pseudo' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -458,13 +458,14 @@ public class addCollaboratorController {
         if (txtPassword.getLength() == 0 || txtPassword.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Mot de passe' entré est incorrect !");
+        }
+
+        if (formErrorsList.size() > 0){
+            // show all errors if exists
+            showAllErrors();
         }else {
             fieldsAreOk = true;
         }
-        //endregion
-
-        // show all errors if exists
-        showAllErrors();
 
         return fieldsAreOk;
     }
@@ -484,10 +485,45 @@ public class addCollaboratorController {
     }
 
     private void addCollaboratorToDB() {
+        dbHandler = new DBHandler();
+
+        // Date
+        String birthDate = Global.localDateToString(datePicker.getValue());
+        String dateInService = Global.localDateToString(datePickerStartService.getValue());
+        if (datePickerEndService.getValue() != null){
+            String dateOutService = Global.localDateToString(datePickerEndService.getValue());
+        }
+
+
+
+
         // get all data from fields
         user.setFirstName(txtName.getText());
         user.setLastName(txtSurname.getText());
-        
+        user.setBirthday(birthDate);
+        user.setDateInService(dateInService);
+        user.setDateOutService(null);
+        // check
+        user.setEmail(txtEmail.getText());
+        user.setEmployeeNumber(Integer.parseInt(txtNumEmployee.getText()));
+        user.setAdress(txtAddress.getText());
+        user.setHouseNumber(Integer.parseInt(txtNumeroRue.getText()));
+        user.setLetterBoxNumber(txtNumeroBoite.getText());
+        user.setCity(txtCity.getText());
+        user.setPhoneCountry(comboPhoneCountry.getSelectionModel().getSelectedItem());
+        user.setPhoneNumber(txtPhoneNumber.getText());
+        user.setSalary1(Float.parseFloat(txtSalaryMonth.getText()));
+        user.setSalary2(Float.parseFloat(txtSalaryHour.getText()));
+        user.setPostalCode(Integer.parseInt(txtZipCode.getText()));
+        // check
+        user.setNationalRegistreryNumber(txtRegisterNumber.getText());
+        user.setPseudo(txtPseudo.getText());
+        user.setPassword(txtPassword.getText());
+
+
+        // send to DB
+        System.out.println(user.toString());
+        dbHandler.createUser(user);
 
     }
 

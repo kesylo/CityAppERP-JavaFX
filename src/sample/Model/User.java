@@ -17,8 +17,11 @@ public class User {
     private String nationalRegistreryNumber;
     private String dateOutService;
     private String password;
+    private String country;
+    private String phoneCountry;
     private int postalCode;
     private String pseudo;
+    private String birthday;
     private String sex;
     private int role;
     private String phoneNumber;
@@ -33,6 +36,34 @@ public class User {
     }
 
     // new constructor
+    public User(String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber, String birthday, String phoneCountry, String country) {
+        this.adress = adress;
+        this.city = city;
+        this.maritalStatus = maritalStatus;
+        this.departement = departement;
+        this.email = email;
+        this.firstName = firstName;
+        this.houseNumber = houseNumber;
+        this.dateInService = dateInService;
+        this.lastName = lastName;
+        this.letterBoxNumber = letterBoxNumber;
+        this.nationalRegistreryNumber = nationalRegistreryNumber;
+        this.dateOutService = dateOutService;
+        this.password = password;
+        this.postalCode = postalCode;
+        this.pseudo = pseudo;
+        this.sex = sex;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.salary1 = salary1;
+        this.salary2 = salary2;
+        this.status = status;
+        this.employeeNumber = employeeNumber;
+        this.birthday = birthday;
+        this.country = country;
+        this.phoneCountry = phoneCountry;
+    }
+
     public User(String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber) {
         this.adress = adress;
         this.city = city;
@@ -80,7 +111,6 @@ public class User {
     }
     //endregion
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -92,20 +122,54 @@ public class User {
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", houseNumber=" + houseNumber +
-                ", dateInService=" + dateInService +
+                ", dateInService='" + dateInService + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", letterBoxNumber='" + letterBoxNumber + '\'' +
                 ", nationalRegistreryNumber='" + nationalRegistreryNumber + '\'' +
-                ", dateOutService=" + dateOutService +
+                ", dateOutService='" + dateOutService + '\'' +
                 ", password='" + password + '\'' +
+                ", country='" + country + '\'' +
+                ", phoneCountry='" + phoneCountry + '\'' +
                 ", postalCode=" + postalCode +
                 ", pseudo='" + pseudo + '\'' +
+                ", birthday='" + birthday + '\'' +
                 ", sex='" + sex + '\'' +
                 ", role=" + role +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", salary1=" + salary1 +
+                ", salary2=" + salary2 +
+                ", status='" + status + '\'' +
+                ", employeeNumber=" + employeeNumber +
                 '}';
     }
 
+
     //region getters and setters
+
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPhoneCountry() {
+        return phoneCountry;
+    }
+
+    public void setPhoneCountry(String phoneCountry) {
+        this.phoneCountry = phoneCountry;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 
     public int getId() {
         return id;

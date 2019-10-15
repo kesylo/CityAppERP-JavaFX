@@ -1,6 +1,7 @@
 package sample.Controller.Global;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.glass.ui.Window;
 import com.sun.xml.internal.ws.util.StringUtils;
@@ -21,6 +22,8 @@ import tray.notification.TrayNotification;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +80,12 @@ public final class Global {
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
         alertDialog.showAndWait();
+    }
+
+    public static String localDateToString(LocalDate date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedString = date.format(formatter);
+        return formattedString;
     }
 
     public static Boolean showInfoMessageWithBtn(String header, String content, String btnYes, String btnNo) {
@@ -261,7 +270,7 @@ public final class Global {
             }
 
             if (type == 0){ // validate all
-                System.out.println("validate all");
+                System.out.print("");
             }
 
 
@@ -283,7 +292,7 @@ public final class Global {
             }
 
             if (stringCase == 3){
-                System.out.println("do nothing");
+                System.out.print("");
             }
 
 

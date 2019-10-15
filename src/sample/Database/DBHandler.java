@@ -374,5 +374,9 @@ public class DBHandler extends DBConfig {
         }
     }
 
+    public void createUser(User user) {
+
+    }
+
     /*------------------------------ DELETE -------------------------------------*/
 }
