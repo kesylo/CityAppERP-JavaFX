@@ -64,6 +64,10 @@ public final class Global {
         alertDialog.setTitle(appName);
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
+        //Set app logo
+        Image image = new Image("/sample/Ressources/images/icon.png");
+        stage.getIcons().add(image);
+
         alertDialog.showAndWait();
     }
 

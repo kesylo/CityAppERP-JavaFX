@@ -102,7 +102,7 @@ public class usersDashboardController {
         Global.setProfileIcon(photo);
 
         // add users to table
-        getAllUsers();
+        //getAllUsers();
 
         // AutoSearch feature
         searchBar.setOnKeyReleased(event -> {

@@ -3,9 +3,11 @@ package sample.Controller.Collaborators;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
+import sample.Model.User;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -82,6 +84,12 @@ public class addCollaboratorController {
     private JFXTextField txtAddress;
 
     @FXML
+    private JFXDatePicker datePickerStartService;
+
+    @FXML
+    private JFXDatePicker datePickerEndService;
+
+    @FXML
     private JFXComboBox<String> comboPhoneCountry;
 
     @FXML
@@ -89,6 +97,12 @@ public class addCollaboratorController {
 
     @FXML
     private JFXTextField txtSalaryHour;
+
+    @FXML
+    private JFXRadioButton radioMaried;
+
+    @FXML
+    private JFXRadioButton radioSingle;
 
     @FXML
     private JFXDatePicker datePicker;
@@ -121,6 +135,18 @@ public class addCollaboratorController {
     private JFXRadioButton radioStEtudiantEmploye;
 
     @FXML
+    private ToggleGroup departementGroup;
+
+    @FXML
+    private ToggleGroup statusMaritaireGroup;
+
+    @FXML
+    private ToggleGroup sexGroup;
+
+    @FXML
+    private ToggleGroup statusGroup;
+
+    @FXML
     private JFXRadioButton radioStEmployeFlexi;
 
     @FXML
@@ -145,7 +171,8 @@ public class addCollaboratorController {
         Global.logOut(location, btnBack);
     }
 
-    List<String> formErrorsList = new ArrayList<>();
+    private List<String> formErrorsList = new ArrayList<>();
+    private User user = new User();
 
     @FXML
     void initialize() {
@@ -176,7 +203,71 @@ public class addCollaboratorController {
         Global.txtFormater(txtPassword, 20,0, 3);
         //endregion
 
+        // check which radio is checked
+        sexGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
+            if (radioSexeMale.isSelected()){
+                user.setMaritalStatus("Masculin");
+            }
+            if (radioSexeFemale.isSelected()){
+                user.setMaritalStatus("Feminin");
+            }
+        });
 
+        departementGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
+            if (radioDeptFO.isSelected()){
+                user.setDepartement("FO");
+            }
+            if (radioDeptBO.isSelected()){
+                user.setDepartement("BO");
+            }
+            if (radioDeptHK.isSelected()){
+                user.setDepartement("HK");
+            }
+            if (radioDeptMN.isSelected()){
+                user.setDepartement("MN");
+            }
+        });
+
+        statusGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
+            if (radioStOvrier.isSelected()){
+                user.setStatus("OV");
+            }
+            if (radioStEmploye.isSelected()){
+                user.setStatus("EM");
+            }
+            if (radioStEtudiantOuvrier.isSelected()){
+                user.setStatus("EOV");
+            }
+            if (radioStEtudiantEmploye.isSelected()){
+                user.setStatus("EEM");
+            }
+            if (radioStOuvrierExtra.isSelected()){
+                user.setStatus("OEX");
+            }
+            if (radioStEtudiantExtra.isSelected()){
+                user.setStatus("EEX");
+            }
+            if (radioStOuvrierFlexi.isSelected()){
+                user.setStatus("OFL");
+            }
+            if (radioStEmployeFlexi.isSelected()){
+                user.setStatus("EFL");
+            }
+        });
+
+        statusMaritaireGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
+            if (radioMaried.isSelected()){
+                user.setMaritalStatus("Marie");
+            }
+            if (radioSingle.isSelected()){
+                user.setMaritalStatus("Celibataire");
+            }
+        });
+
+        // set datepicker font
+        datePicker.setStyle("-fx-font: 14px Poppins;");
+        datePickerEndService.setStyle("-fx-font: 14px Poppins;");
+        datePickerStartService.setStyle("-fx-font: 14px Poppins;");
 
 
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
@@ -196,7 +287,7 @@ public class addCollaboratorController {
     }
 
 
-
+    /*--------------------------------------------------------------------------------*/
     private void saveUser() {
         // if button pressed name if details, add or edit
         if (Objects.equals(CollaboratorGlobal.getActionName(), "details")){
@@ -220,23 +311,157 @@ public class addCollaboratorController {
         boolean fieldsAreOk = false;
 
         //region Name
-        if (!Objects.equals(txtName.getText(), "") || txtName.getText() != null){
-            fieldsAreOk = true;
-        }else {
+        if (txtName.getLength() == 0 || txtName.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Nom' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
         }
         //endregion
 
         //region Surname
-        if (!Objects.equals(txtSurname.getText(), "") || txtSurname.getText() != null){
-            fieldsAreOk = true;
-        }else {
+        if (txtSurname.getLength() == 0 || txtSurname.getText() == null){
             // add error to list
-            formErrorsList.add("Le 'Prenom' entré est incorrect !");
+            formErrorsList.add("Le 'Prénom' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
         }
         //endregion
 
+        //region Date
+        if (datePicker.getValue() == null){
+            // add error to list
+            formErrorsList.add("La 'Date' entrée est incorrecte !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Date
+        if (datePickerStartService.getValue() == null){
+            // add error to list
+            formErrorsList.add("La 'Date en service' entrée est incorrecte !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Email
+        if (txtEmail.getLength() == 0 || txtEmail.getText() == null){
+            // add error to list
+            formErrorsList.add("L'adresse 'E-mail' entrée est incorrecte !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Employee number
+        if (txtNumEmployee.getLength() == 0 || txtNumEmployee.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Numéro Employé' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Address
+        if (txtAddress.getLength() == 0 || txtAddress.getText() == null){
+            // add error to list
+            formErrorsList.add("L' 'adresse' entrée est incorrecte !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region street Number
+        if (txtNumeroRue.getLength() == 0 || txtNumeroRue.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Numéro Rue' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Box number
+        if (txtNumeroBoite.getLength() == 0 || txtNumeroBoite.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Numéro Boite' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Ville
+        if (txtCity.getLength() == 0 || txtCity.getText() == null){
+            // add error to list
+            formErrorsList.add("La 'ville' entrée est incorrecte !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region phone
+        if (txtPhoneNumber.getLength() == 0 || txtPhoneNumber.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Numéro Téléphone' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region salary Month
+        if (txtSalaryMonth.getLength() == 0 || txtSalaryMonth.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Salaire Mensuel' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region salary Hour
+        if (txtSalaryHour.getLength() == 0 || txtSalaryHour.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Salaire Horaire' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Zip code
+        if (txtZipCode.getLength() == 0 || txtZipCode.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Code Postal' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region National Registry
+        if (txtRegisterNumber.getLength() == 0 || txtRegisterNumber.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Numero National' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Pseudo
+        if (txtPseudo.getLength() == 0 || txtPseudo.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Pseudo' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
+
+        //region Password
+        if (txtPassword.getLength() == 0 || txtPassword.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'Mot de passe' entré est incorrect !");
+        }else {
+            fieldsAreOk = true;
+        }
+        //endregion
 
         // show all errors if exists
         showAllErrors();
@@ -259,5 +484,11 @@ public class addCollaboratorController {
     }
 
     private void addCollaboratorToDB() {
+        // get all data from fields
+        user.setFirstName(txtName.getText());
+        user.setLastName(txtSurname.getText());
+        
+
     }
+
 }
