@@ -1,6 +1,7 @@
 package sample.Controller.Global;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.sun.glass.ui.Window;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class Global {
+public final class Global {
 
     //region variables
 
@@ -36,7 +37,6 @@ public class Global {
     //endregion
 
     //region Getters and Setters
-
 
     public static User getConnectedUser() {
         return connectedUser;
@@ -232,6 +232,29 @@ public class Global {
             image = new Image("/sample/Ressources/images/userFemale.png");
             photo.setImage(image);
         }
+    }
+
+    public static void txtFormater(JFXTextField textField, int maxLength, int type, boolean toUpperCase){
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (type == 1){     // validate letters only
+                if (!newValue.matches("^[a-zA-Z]*$?")) {
+                    textField.setText(oldValue);
+                }
+            }
+
+            if (type == 2){ // validate all
+                System.out.println("gfd");
+            }
+
+            if (textField.getLength() > maxLength){
+                textField.setText(oldValue);
+            }
+
+            if (toUpperCase){
+                textField.focusedProperty().addListener((obs, oldVal, newVal) -> textField.setText(textField.getText().toUpperCase()));
+            }
+        });
     }
 
     //endregion

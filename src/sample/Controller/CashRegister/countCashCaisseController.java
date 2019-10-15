@@ -95,13 +95,7 @@ public class countCashCaisseController {
         });
     }
 
-
-
-
-
     /*-------------------------------------------------------------------------------*/
-
-
 
     private void comingFromInfo() {
         // check if solde caisse = counted cash

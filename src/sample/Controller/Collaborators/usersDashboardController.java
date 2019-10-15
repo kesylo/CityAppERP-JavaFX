@@ -1,19 +1,20 @@
 package sample.Controller.Collaborators;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
-import sample.Controller.Global.CashRegisterGlobal;
 import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
@@ -22,6 +23,8 @@ import sample.Model.User;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class usersDashboardController {
 
@@ -101,7 +104,6 @@ public class usersDashboardController {
         // add users to table
         getAllUsers();
 
-
         // AutoSearch feature
         searchBar.setOnKeyReleased(event -> {
             searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -129,9 +131,6 @@ public class usersDashboardController {
             tableUsers.setItems(sortedUsers);
         });
 
-
-
-
         btnBack.setOnAction(event -> {
             URL url = getClass().getResource("/sample/View/dashboard.fxml");
             Global.navigateTo(url, "Dashboard");
@@ -139,6 +138,21 @@ public class usersDashboardController {
 
         btnRefresh.setOnAction(event -> {
             getAllUsers();
+        });
+
+        btnCreate.setOnAction(event -> {
+            // specify which button is pressed
+            CollaboratorGlobal.setActionName("add");
+
+            URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
+            Global.navigateModal(url, "Ajouter-Collaborateur");
+        });
+
+        btnDetails.setOnAction(event -> {
+
+
+
+
         });
 
 

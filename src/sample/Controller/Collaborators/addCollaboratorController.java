@@ -4,11 +4,12 @@ import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import sample.Controller.Global.CashRegisterGlobal;
 import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class addCollaboratorController {
@@ -144,23 +145,40 @@ public class addCollaboratorController {
         Global.logOut(location, btnBack);
     }
 
+    List<String> formErrorsList = new ArrayList<>();
+
     @FXML
     void initialize() {
         // set profile photo
-        Global.setProfileIcon(photo);
+        //Global.setProfileIcon(photo);
 
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
+
+        Global.txtFormater(txtRegisterNumber, 6,1, true);
+        Global.txtFormater(txtEmail, 12,1, false);
+
+
+
+
+        datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
+            System.out.println("date changed");
+        });
+
         btnSave.setOnAction(event -> {
             saveUser();
+
+            // reset error list
+            formErrorsList.clear();
         });
 
         btnBack.setOnAction(event -> {
-            URL navPath = getClass().getResource("/sample/View/Collaborators/usersDashboard.fxml");
-            Global.navigateTo(navPath,"Collaborateurs");
+            btnBack.getScene().getWindow().hide();
         });
     }
+
+
 
     private void saveUser() {
         // if button pressed name if details, add or edit
@@ -170,8 +188,11 @@ public class addCollaboratorController {
 
         }else if (Objects.equals(CollaboratorGlobal.getActionName(), "add")){
 
-            // check if fields are well
+            // check if fields are well filled
             boolean areFieldsCorrect = checkAllFields();
+            if (areFieldsCorrect){
+                addCollaboratorToDB();
+            }
 
         }else if (Objects.equals(CollaboratorGlobal.getActionName(), "edit")){
 
@@ -181,6 +202,45 @@ public class addCollaboratorController {
     private boolean checkAllFields() {
         boolean fieldsAreOk = false;
 
+        //region Name
+        if (!Objects.equals(txtName.getText(), "") || txtName.getText() != null){
+            fieldsAreOk = true;
+        }else {
+            // add error to list
+            formErrorsList.add("Le 'Nom' entré est incorrect !");
+        }
+        //endregion
+
+        //region Surname
+        if (!Objects.equals(txtSurname.getText(), "") || txtSurname.getText() != null){
+            fieldsAreOk = true;
+        }else {
+            // add error to list
+            formErrorsList.add("Le 'Prenom' entré est incorrect !");
+        }
+        //endregion
+
+
+        // show all errors if exists
+        showAllErrors();
+
         return fieldsAreOk;
+    }
+
+    private void showAllErrors() {
+        // show error if exist
+        if (formErrorsList.size() > 0 ){
+            StringBuilder allErrors = new StringBuilder();
+
+            for (String item : formErrorsList){
+                allErrors.append(item).append("\n");
+            }
+
+            Global.showErrorMessage("Les champs suivants sont incorrects !",
+                    allErrors.toString());
+        }
+    }
+
+    private void addCollaboratorToDB() {
     }
 }

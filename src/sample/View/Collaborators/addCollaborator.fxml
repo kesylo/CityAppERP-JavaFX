@@ -214,11 +214,7 @@
             </VBox>
             <VBox alignment="TOP_RIGHT" layoutX="551.0" layoutY="41.0" spacing="20.0" AnchorPane.rightAnchor="15.0">
                <children>
-                  <JFXTextField fx:id="txtRegisterNumber" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Registre national" unFocusColor="BLACK">
-                     <font>
-                        <Font name="Poppins Regular" size="14.0" />
-                     </font>
-                  </JFXTextField>
+                  <JFXDatePicker fx:id="datePicker" defaultColor="#5dbcd2" editable="false" focusTraversable="false" prefHeight="30.0" prefWidth="151.0" promptText="Date de naissance" />
                   <JFXTextField fx:id="txtAddress" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Adresse" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
@@ -239,7 +235,11 @@
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXDatePicker fx:id="datePicker" defaultColor="#5dbcd2" editable="false" focusTraversable="false" prefHeight="30.0" prefWidth="151.0" promptText="Date de naissance" />
+                  <JFXTextField fx:id="txtRegisterNumber" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Registre national" unFocusColor="BLACK">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </JFXTextField>
                </children>
             </VBox>
             <HBox layoutX="14.0" layoutY="143.0" spacing="47.0" />
@@ -262,7 +262,7 @@
                <children>
                   <VBox>
                      <children>
-                        <JFXRadioButton fx:id="radioStOvrier" prefHeight="30.0" style="-jfx-selected-color: #5dbcd2;" text="Ouvrier">
+                        <JFXRadioButton fx:id="radioStOvrier" prefHeight="30.0" selected="true" style="-jfx-selected-color: #5dbcd2;" text="Ouvrier">
                            <font>
                               <Font name="Poppins Regular" size="14.0" />
                            </font>
@@ -321,7 +321,7 @@
                   </VBox>
                </children>
             </HBox>
-            <JFXRadioButton fx:id="radioDeptFO" layoutX="15.0" layoutY="304.0" prefHeight="30.0" style="-jfx-selected-color: #f7a631;" text="Front Office" AnchorPane.leftAnchor="15.0">
+            <JFXRadioButton fx:id="radioDeptFO" layoutX="15.0" layoutY="304.0" prefHeight="30.0" selected="true" style="-jfx-selected-color: #f7a631;" text="Front Office" AnchorPane.leftAnchor="15.0">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
