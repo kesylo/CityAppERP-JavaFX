@@ -124,11 +124,6 @@ public class createCaisseController{
         caisse.setError_amount(CashRegisterGlobal.getErrorAmount());
         caisse.setNumeroCaisse(CashRegisterGlobal.getAvailableCaisseNumber());
         caisse.setIdEmployes(Global.getConnectedUser().getId());
-
-        // for error while creating caisse
-        // if error ?
-            // set error expense
-            //
     }
 
     private void fillUiElmts() {

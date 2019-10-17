@@ -1,6 +1,7 @@
 package sample.Database;
 
 import sample.Controller.Global.CashRegisterGlobal;
+import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
 import sample.Model.Caisse;
 import sample.Model.CaisseIncExp;
@@ -376,6 +377,104 @@ public class DBHandler extends DBConfig {
 
     public void createUser(User user) {
 
+        String query = "INSERT INTO " + Static.EMPLOYES_TABLE + " (firstName, lastName, inService, outService, nationalRegisterNum," +
+                " address, houseNum, letterBoxNum, postalCode, city, CivilStatus, sex, pseudo, email, password, dept, role," +
+                " phoneNumber, salary1, salary2, status, employeeNumber, country, phoneCountry, birthday) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getDateInService());
+            ps.setString(4, user.getDateOutService());
+            ps.setString(5, user.getNationalRegistreryNumber());
+            ps.setString(6, user.getAddress());
+            ps.setInt(7, user.getHouseNumber());
+            ps.setString(8, user.getLetterBoxNumber());
+            ps.setInt(9, user.getPostalCode());
+            ps.setString(10, user.getCity());
+            ps.setString(11, user.getMaritalStatus());
+            ps.setString(12, user.getSex());
+            ps.setString(13, user.getPseudo());
+            ps.setString(14, user.getEmail());
+            ps.setString(15, user.getPassword());
+            ps.setString(16, user.getDepartement());
+            ps.setInt(17, user.getRole());
+            ps.setString(18, user.getPhoneNumber());
+            ps.setDouble(19, user.getSalary1());
+            ps.setDouble(20, user.getSalary2());
+            ps.setString(21, user.getStatus());
+            ps.setInt(22, user.getEmployeeNumber());
+            ps.setString(23, user.getCountry());
+            ps.setString(24, user.getPhoneCountry());
+            ps.setString(25, user.getBirthday());
+
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUser(User user) {
+        String query = "UPDATE " + Static.EMPLOYES_TABLE + " SET firstName = ?, lastName = ?, inService = ?, outService = ?," +
+                " nationalRegisterNum = ?, address = ?, houseNum = ?, letterBoxNum = ?, postalCode = ?, city = ?," +
+                " CivilStatus = ?, sex = ?, pseudo = ?, email = ?, password = ?, dept = ?, role = ?, phoneNumber = ?," +
+                " salary1 = ?, salary2 = ?, status = ?, employeeNumber = ?, country = ?, phoneCountry = ?, birthday = ?" +
+                " WHERE id = ?";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getDateInService());
+            ps.setString(4, user.getDateOutService());
+            ps.setString(5, user.getNationalRegistreryNumber());
+            ps.setString(6, user.getAddress());
+            ps.setInt(7, user.getHouseNumber());
+            ps.setString(8, user.getLetterBoxNumber());
+            ps.setInt(9, user.getPostalCode());
+            ps.setString(10, user.getCity());
+            ps.setString(11, user.getMaritalStatus());
+            ps.setString(12, user.getSex());
+            ps.setString(13, user.getPseudo());
+            ps.setString(14, user.getEmail());
+            ps.setString(15, user.getPassword());
+            ps.setString(16, user.getDepartement());
+            ps.setInt(17, user.getRole());
+            ps.setString(18, user.getPhoneNumber());
+            ps.setDouble(19, user.getSalary1());
+            ps.setDouble(20, user.getSalary2());
+            ps.setString(21, user.getStatus());
+            ps.setInt(22, user.getEmployeeNumber());
+            ps.setString(23, user.getCountry());
+            ps.setString(24, user.getPhoneCountry());
+            ps.setString(25, user.getBirthday());
+            ps.setInt(26, CollaboratorGlobal.getPreviewUser().getId());
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void archiveCollaborator(User previewUser) {
+        String query = "UPDATE " + Static.EMPLOYES_TABLE + " SET outService = ? WHERE id = ?";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setString(1, previewUser.getDateOutService());
+            ps.setInt(2, previewUser.getId());
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /*------------------------------ DELETE -------------------------------------*/

@@ -1,13 +1,9 @@
 package sample;
 
 
-import com.sun.xml.internal.ws.util.StringUtils;
+import sample.Controller.Global.Global;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class test {
     public static void main(String[] args) {
@@ -35,7 +31,7 @@ public class test {
 
         //System.out.println(m);
 
-        String date = "2019-12-03";
+        /*String date = "2019-12-03";
         String arr[] = date.split("-");
         for (String a :
                 arr) {
@@ -48,13 +44,13 @@ public class test {
             System.out.println("ok");
         }else {
             System.out.println("no");
-        }
+        }*/
 
 
-        LocalDate birthday = LocalDate.now();
+        /*LocalDate birthday = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedString = birthday.format(formatter);
-        System.out.println(formattedString);
+        System.out.println(formattedString);*/
 
        /* int num = 4400009;
         if (num % 97 == 0){
@@ -62,5 +58,11 @@ public class test {
         }else {
             System.out.println("not even");
         }*/
+
+
+        System.out.println(Global.stringToLocalDate("2019-02-16"));
+
+
+
     }
 }

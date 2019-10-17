@@ -1,18 +1,24 @@
 package sample.Controller.Collaborators;
 
 import com.jfoenix.controls.*;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import sample.Controller.DialogController;
 import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
+import sample.Model.Country;
 import sample.Model.User;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,13 +30,16 @@ public class addCollaboratorController {
     private Label lblConnectedUser;
 
     @FXML
+    private Pane badgeUserArchived;
+
+    @FXML
+    private Label lblHeadingText;
+
+    @FXML
     private ImageView btnLogOut;
 
     @FXML
     private ImageView photo;
-
-    @FXML
-    private JFXButton btnhide;
 
     @FXML
     private JFXButton btnBack;
@@ -43,9 +52,6 @@ public class addCollaboratorController {
 
     @FXML
     private JFXTextField txtPassword;
-
-    @FXML
-    private JFXCheckBox ckcAddManyEntries;
 
     @FXML
     private JFXTextField txtName;
@@ -180,14 +186,52 @@ public class addCollaboratorController {
     private List<String> formErrorsList = new ArrayList<>();
     private User user = new User();
     private DBHandler dbHandler;
+    private ObservableList<String> countriesNamesList = FXCollections.observableArrayList();
+    private ObservableList<String> countriesCodeList = FXCollections.observableArrayList();
+    private boolean saveDone = false;
 
     @FXML
     void initialize() {
         // set profile photo
-        //Global.setProfileIcon(photo);
+        Global.setProfileIcon(photo);
+
+        // set focus on name
+        txtName.requestFocus();
 
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
+
+        System.out.println(CollaboratorGlobal.getPreviewUser().getDateOutService());
+
+        if (Objects.equals(CollaboratorGlobal.getActionName(), "details")){
+            // set header Text
+            lblHeadingText.setText("Détails du collaborateur");
+
+            fillComboCountry();
+            fillComboPhoneCountry();
+            loadCurrentUserData();
+            makeFieldsNotEditable();
+            // disable Outdate dateTime if user is already archived
+            if (CollaboratorGlobal.getPreviewUser().getDateOutService() != null){
+                // show archived badge
+                badgeUserArchived.setVisible(true);
+            }
+
+        }else if (Objects.equals(CollaboratorGlobal.getActionName(), "add")){
+            // set header Text
+            lblHeadingText.setText("Ajouter un collaborateur");
+
+            fillComboCountry();
+            fillComboPhoneCountry();
+
+        }else if (Objects.equals(CollaboratorGlobal.getActionName(), "edit")){
+            // set header Text
+            lblHeadingText.setText("Modifier un collaborateur");
+
+            fillComboCountry();
+            fillComboPhoneCountry();
+            loadCurrentUserData();
+        }
 
         //region Fields Constraints
         // types: 1 : string,       2 : float,       3 : int,       0 : all
@@ -210,71 +254,13 @@ public class addCollaboratorController {
         Global.txtFormater(txtPassword, 20,0, 3);
         //endregion
 
-        // check which radio is checked
-        sexGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
-            if (radioSexeMale.isSelected()){
-                user.setMaritalStatus("Masculin");
-            }
-            if (radioSexeFemale.isSelected()){
-                user.setMaritalStatus("Feminin");
-            }
-        });
-
-        departementGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
-            if (radioDeptFO.isSelected()){
-                user.setDepartement("FO");
-            }
-            if (radioDeptBO.isSelected()){
-                user.setDepartement("BO");
-            }
-            if (radioDeptHK.isSelected()){
-                user.setDepartement("HK");
-            }
-            if (radioDeptMN.isSelected()){
-                user.setDepartement("MN");
-            }
-        });
-
-        statusGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
-            if (radioStOvrier.isSelected()){
-                user.setStatus("OV");
-            }
-            if (radioStEmploye.isSelected()){
-                user.setStatus("EM");
-            }
-            if (radioStEtudiantOuvrier.isSelected()){
-                user.setStatus("EOV");
-            }
-            if (radioStEtudiantEmploye.isSelected()){
-                user.setStatus("EEM");
-            }
-            if (radioStOuvrierExtra.isSelected()){
-                user.setStatus("OEX");
-            }
-            if (radioStEtudiantExtra.isSelected()){
-                user.setStatus("EEX");
-            }
-            if (radioStOuvrierFlexi.isSelected()){
-                user.setStatus("OFL");
-            }
-            if (radioStEmployeFlexi.isSelected()){
-                user.setStatus("EFL");
-            }
-        });
-
-        statusMaritaireGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> {
-            if (radioMaried.isSelected()){
-                user.setMaritalStatus("Marie");
-            }
-            if (radioSingle.isSelected()){
-                user.setMaritalStatus("Celibataire");
-            }
-        });
-
         // set datepicker font
         datePicker.setStyle("-fx-font: 14px Poppins;");
         datePickerEndService.setStyle("-fx-font: 14px Poppins;");
         datePickerStartService.setStyle("-fx-font: 14px Poppins;");
+        // set comboBox font
+        comboPhoneCountry.setStyle("-fx-font: 14px Poppins;");
+        comboCountry.setStyle("-fx-font: 14px Poppins;");
 
 
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
@@ -289,28 +275,187 @@ public class addCollaboratorController {
         });
 
         btnBack.setOnAction(event -> {
-            btnBack.getScene().getWindow().hide();
+            if (saveDone){
+                // nav with refresh
+                Global.closeWindow("Collaborateurs");
+                URL navPath = getClass().getResource("/sample/View/Collaborators/usersDashboard.fxml");
+                Global.navigateTo(navPath,"Collaborateurs");
+                btnBack.getScene().getWindow().hide();
+            }else {
+                btnBack.getScene().getWindow().hide();
+            }
         });
+
+
     }
 
-
     /*--------------------------------------------------------------------------------*/
+
+    private void loadCurrentUserData() {
+        User previewUser = CollaboratorGlobal.getPreviewUser();
+        System.out.println(previewUser.getDateOutService());
+
+        txtName.setText(previewUser.getFirstName());
+        txtSurname.setText(previewUser.getLastName());
+        if (previewUser.getBirthday() != null){
+            datePicker.setValue(Global.stringToLocalDate(previewUser.getBirthday()));
+        }
+        txtEmail.setText(previewUser.getEmail());
+        txtNumEmployee.setText(previewUser.getEmployeeNumber() + "");
+        txtAddress.setText(previewUser.getAddress());
+        comboCountry.getSelectionModel().select(previewUser.getCountry());
+        txtCity.setText(previewUser.getCity());
+        comboPhoneCountry.getSelectionModel().select(previewUser.getPhoneCountry());
+        txtPhoneNumber.setText(previewUser.getPhoneNumber());
+        // Sex
+        if (Objects.equals(previewUser.getSex(), "Masculin")){
+            radioSexeMale.setSelected(true);
+        }else {
+            radioSexeFemale.setSelected(true);
+        }
+        txtSalaryMonth.setText(previewUser.getSalary1() + "");
+        txtSalaryHour.setText(previewUser.getSalary2() + "");
+        txtNumeroRue.setText(previewUser.getHouseNumber() + "");
+        txtNumeroBoite.setText(previewUser.getLetterBoxNumber());
+        txtZipCode.setText(previewUser.getPostalCode() + "");
+        txtRegisterNumber.setText(previewUser.getNationalRegistreryNumber());
+        // Dept
+        if (Objects.equals(previewUser.getDepartement(), "Front Office")){
+            radioDeptFO.setSelected(true);
+        }else if (Objects.equals(previewUser.getDepartement(), "Back Office")){
+            radioDeptBO.setSelected(true);
+        }else if (Objects.equals(previewUser.getDepartement(), "House Keeping")){
+            radioDeptHK.setSelected(true);
+        }else if (Objects.equals(previewUser.getDepartement(), "Maintenance")){
+            radioDeptMN.setSelected(true);
+        }
+        // Status
+        if (Objects.equals(previewUser.getStatus(), "Ouvrier")){
+            radioStOvrier.setSelected(true);
+        }else if (Objects.equals(previewUser.getStatus(), "Employé")){
+            radioStEmploye.setSelected(true);
+        }else if (Objects.equals(previewUser.getStatus(), "Etudiant Ouvrier")){
+            radioStEtudiantOuvrier.setSelected(true);
+        }else if (Objects.equals(previewUser.getStatus(), "Etudiant Employé")){
+            radioStEtudiantEmploye.setSelected(true);
+        }else if (Objects.equals(previewUser.getStatus(), "Ouvrier Extra")){
+            radioStOuvrierExtra.setSelected(true);
+        }else if (Objects.equals(previewUser.getStatus(), "Etudiant Extra")){
+            radioStEtudiantExtra.setSelected(true);
+        }else if (Objects.equals(previewUser.getStatus(), "Ouvrier Flexi")){
+            radioStOuvrierFlexi.setSelected(true);
+        }else if (Objects.equals(previewUser.getStatus(), "Employé Flexi")){
+            radioStEmployeFlexi.setSelected(true);
+        }
+        // Matrimonial
+        if (Objects.equals(previewUser.getMaritalStatus(), "Célibataire")){
+            radioSingle.setSelected(true);
+        }else {
+            radioMaried.setSelected(true);
+        }
+        datePickerStartService.setValue(Global.stringToLocalDate(previewUser.getDateInService()));
+        if (previewUser.getDateOutService()!= null){
+            datePickerEndService.setValue(Global.stringToLocalDate(previewUser.getDateOutService()));
+        }
+        txtPseudo.setText(previewUser.getPseudo());
+        txtPassword.setText(previewUser.getPassword());
+
+    }
+
+    private void makeFieldsNotEditable() {
+        txtName.setEditable(false);
+        txtSurname.setEditable(false);
+        //datePicker.setDisable(true);
+        txtEmail.setEditable(false);
+        txtNumEmployee.setEditable(false);
+        txtAddress.setEditable(false);
+        comboCountry.setEditable(false);
+        txtCity.setEditable(false);
+        comboPhoneCountry.setEditable(false);
+        txtPhoneNumber.setEditable(false);
+        //radioSexeFemale.setDisable(true);
+        //radioSexeMale.setDisable(true);
+        txtSalaryMonth.setEditable(false);
+        txtSalaryHour.setEditable(false);
+        txtNumeroRue.setEditable(false);
+        txtNumeroBoite.setEditable(false);
+        txtZipCode.setEditable(false);
+        txtRegisterNumber.setEditable(false);
+        /*radioDeptFO.setDisable(true);
+        radioDeptBO.setDisable(true);
+        radioDeptHK.setDisable(true);
+        radioDeptMN.setDisable(true);
+        radioStOvrier.setDisable(true);
+        radioStEmploye.setDisable(true);
+        radioStEtudiantOuvrier.setDisable(true);
+        radioStEtudiantEmploye.setDisable(true);
+        radioStOuvrierExtra.setDisable(true);
+        radioStEtudiantExtra.setDisable(true);
+        radioStOuvrierFlexi.setDisable(true);
+        radioStEmployeFlexi.setDisable(true);
+        radioSingle.setDisable(true);
+        radioMaried.setDisable(true);
+        datePickerStartService.setDisable(true);
+        datePickerEndService.setDisable(true);*/
+        txtPseudo.setEditable(false);
+        txtPassword.setEditable(false);
+        btnSave.setDisable(true);
+    }
+
+    private void fillComboCountry() {
+        List<Country> countriesList = Global.getCountriesList();
+
+        for (Country c : countriesList) {
+            countriesNamesList.add(c.getName());
+            countriesCodeList.add(c.getCode());
+        }
+        // set Country elements
+        comboCountry.setItems(countriesNamesList);
+        comboCountry.getSelectionModel().selectFirst();
+    }
+
+    private void fillComboPhoneCountry() {
+        comboPhoneCountry.setItems(countriesCodeList);
+        comboPhoneCountry.getSelectionModel().selectFirst();
+    }
+
     private void saveUser() {
         // if button pressed name if details, add or edit
-        if (Objects.equals(CollaboratorGlobal.getActionName(), "details")){
-
-            // gray out save btn
-
-        }else if (Objects.equals(CollaboratorGlobal.getActionName(), "add")){
+        if (Objects.equals(CollaboratorGlobal.getActionName(), "add")){
 
             // check if fields are well filled
             boolean areFieldsCorrect = checkAllFields();
             if (areFieldsCorrect){
                 addCollaboratorToDB();
+                // Back to userDashboard
+                if (saveDone){
+                    btnBack.getScene().getWindow().hide();
+                    // nav with refresh
+                    Global.closeWindow("Collaborateurs");
+                    URL navPath = getClass().getResource("/sample/View/Collaborators/usersDashboard.fxml");
+                    Global.navigateTo(navPath,"Collaborateurs");
+                }else {
+                    btnBack.getScene().getWindow().hide();
+                }
             }
 
         }else if (Objects.equals(CollaboratorGlobal.getActionName(), "edit")){
 
+            // check if fields are well filled
+            boolean areFieldsCorrect = checkAllFields();
+            if (areFieldsCorrect){
+                updateCollaboratorInDB();
+                // Back to userDashboard
+                if (saveDone){
+                    btnBack.getScene().getWindow().hide();
+                    // nav with refresh
+                    Global.closeWindow("Collaborateurs");
+                    URL navPath = getClass().getResource("/sample/View/Collaborators/usersDashboard.fxml");
+                    Global.navigateTo(navPath,"Collaborateurs");
+                }else {
+                    btnBack.getScene().getWindow().hide();
+                }
+            }
         }
     }
 
@@ -321,22 +466,13 @@ public class addCollaboratorController {
         if (txtName.getLength() == 0 || txtName.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Nom' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
-
-        if (txtName.getLength() != 0 || txtName.getText() != null){
-            fieldsAreOk = true;
-        }
-
         //endregion
 
         //region Surname
         if (txtSurname.getLength() == 0 || txtSurname.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Prénom' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -344,8 +480,6 @@ public class addCollaboratorController {
         if (datePicker.getValue() == null){
             // add error to list
             formErrorsList.add("La 'Date anniversaire' entrée est incorrecte !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -353,8 +487,6 @@ public class addCollaboratorController {
         if (datePickerStartService.getValue() == null){
             // add error to list
             formErrorsList.add("La 'Date en service' entrée est incorrecte !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -362,8 +494,6 @@ public class addCollaboratorController {
         if (txtEmail.getLength() == 0 || txtEmail.getText() == null){
             // add error to list
             formErrorsList.add("L'adresse 'E-mail' entrée est incorrecte !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -371,8 +501,6 @@ public class addCollaboratorController {
         if (txtNumEmployee.getLength() == 0 || txtNumEmployee.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Numéro Employé' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -380,8 +508,6 @@ public class addCollaboratorController {
         if (txtAddress.getLength() == 0 || txtAddress.getText() == null){
             // add error to list
             formErrorsList.add("L' 'adresse' entrée est incorrecte !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -389,26 +515,20 @@ public class addCollaboratorController {
         if (txtNumeroRue.getLength() == 0 || txtNumeroRue.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Numéro Rue' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
         //region Box number
-        if (txtNumeroBoite.getLength() == 0 || txtNumeroBoite.getText() == null){
+        /*if (txtNumeroBoite.getLength() == 0 || txtNumeroBoite.getText() == null){
             // add error to list
             formErrorsList.add("Le 'Numéro Boite' entré est incorrect !");
-        }else {
-            fieldsAreOk = true;
-        }
+        }*/
         //endregion
 
         //region Ville
         if (txtCity.getLength() == 0 || txtCity.getText() == null){
             // add error to list
             formErrorsList.add("La 'ville' entrée est incorrecte !");
-        }else {
-            fieldsAreOk = true;
         }
         //endregion
 
@@ -459,6 +579,7 @@ public class addCollaboratorController {
             // add error to list
             formErrorsList.add("Le 'Mot de passe' entré est incorrect !");
         }
+        //endregion
 
         if (formErrorsList.size() > 0){
             // show all errors if exists
@@ -485,46 +606,168 @@ public class addCollaboratorController {
     }
 
     private void addCollaboratorToDB() {
+
+        user = new User();
         dbHandler = new DBHandler();
 
-        // Date
-        String birthDate = Global.localDateToString(datePicker.getValue());
-        String dateInService = Global.localDateToString(datePickerStartService.getValue());
-        if (datePickerEndService.getValue() != null){
-            String dateOutService = Global.localDateToString(datePickerEndService.getValue());
-        }
-
-
-
-
-        // get all data from fields
+        //region get all data from fields
+        // name
         user.setFirstName(txtName.getText());
+        // surname
         user.setLastName(txtSurname.getText());
-        user.setBirthday(birthDate);
-        user.setDateInService(dateInService);
-        user.setDateOutService(null);
+        // birthday
+        user.setBirthday(Global.localDateToString(datePicker.getValue()));
         // check
         user.setEmail(txtEmail.getText());
         user.setEmployeeNumber(Integer.parseInt(txtNumEmployee.getText()));
-        user.setAdress(txtAddress.getText());
-        user.setHouseNumber(Integer.parseInt(txtNumeroRue.getText()));
-        user.setLetterBoxNumber(txtNumeroBoite.getText());
+        user.setAddress(txtAddress.getText());
+        // combo country
+        user.setCountry(comboCountry.getSelectionModel().getSelectedItem());
+        // city
         user.setCity(txtCity.getText());
+        // telephone
         user.setPhoneCountry(comboPhoneCountry.getSelectionModel().getSelectedItem());
         user.setPhoneNumber(txtPhoneNumber.getText());
-        user.setSalary1(Float.parseFloat(txtSalaryMonth.getText()));
-        user.setSalary2(Float.parseFloat(txtSalaryHour.getText()));
+        // radio sex
+        RadioButton selectedSex = (RadioButton) sexGroup.getSelectedToggle();
+        String selectedItemName = selectedSex.getText();
+        user.setSex(selectedItemName);
+        // salary 1
+        user.setSalary1(Global.roundDouble(Float.parseFloat(txtSalaryMonth.getText())));
+        // salary 2
+        user.setSalary2(Global.roundDouble(Float.parseFloat(txtSalaryHour.getText())));
+        // house number
+        user.setHouseNumber(Integer.parseInt(txtNumeroRue.getText()));
+        // letterBox
+        user.setLetterBoxNumber(txtNumeroBoite.getText());
+        // zip Code
         user.setPostalCode(Integer.parseInt(txtZipCode.getText()));
-        // check
+        // check registry number
         user.setNationalRegistreryNumber(txtRegisterNumber.getText());
+        // radio department
+        RadioButton selectedDepartment = (RadioButton) departementGroup.getSelectedToggle();
+        selectedItemName = selectedDepartment.getText();
+        user.setDepartement(selectedItemName);
+        // radio status
+        RadioButton selectedStatus = (RadioButton) statusGroup.getSelectedToggle();
+        selectedItemName = selectedStatus.getText();
+        user.setStatus(selectedItemName);
+        // radio matrimonial
+        RadioButton selectedMatrimonial = (RadioButton) statusMaritaireGroup.getSelectedToggle();
+        selectedItemName = selectedMatrimonial.getText();
+        user.setMaritalStatus(selectedItemName);
+        // inService
+        user.setDateInService(Global.localDateToString(datePickerStartService.getValue()));
+        // OutService
+        user.setDateOutService(Global.localDateToString(datePickerEndService.getValue()));
+        // pseudo
         user.setPseudo(txtPseudo.getText());
+        // password
         user.setPassword(txtPassword.getText());
+        //endregion
 
+        DialogController wd = new DialogController(btnBack.getScene().getWindow(), "Enrégistrement...");
 
-        // send to DB
-        System.out.println(user.toString());
-        dbHandler.createUser(user);
+        wd.exec("123", inputParam -> {
 
+            // send to DB
+            dbHandler.createUser(user);
+
+            Platform.runLater(() ->{
+                // show notification
+                Global.successSystemNotif(
+                        "Opération réussie!",
+                        "#f7a631");
+            });
+
+            return 1;
+        });
+
+        // Tell app save is made
+        saveDone = true;
     }
 
+    private void updateCollaboratorInDB() {
+        dbHandler = new DBHandler();
+        user = new User();
+
+        //region get all data from fields
+        // name
+        user.setFirstName(txtName.getText());
+        // surname
+        user.setLastName(txtSurname.getText());
+        // birthday
+        user.setBirthday(Global.localDateToString(datePicker.getValue()));
+        // check
+        user.setEmail(txtEmail.getText());
+        user.setEmployeeNumber(Integer.parseInt(txtNumEmployee.getText()));
+        user.setAddress(txtAddress.getText());
+        // combo country
+        user.setCountry(comboCountry.getSelectionModel().getSelectedItem());
+        // city
+        user.setCity(txtCity.getText());
+        // telephone
+        user.setPhoneCountry(comboPhoneCountry.getSelectionModel().getSelectedItem());
+        user.setPhoneNumber(txtPhoneNumber.getText());
+        // radio sex
+        RadioButton selectedSex = (RadioButton) sexGroup.getSelectedToggle();
+        String selectedItemName = selectedSex.getText();
+        user.setSex(selectedItemName);
+        // salary 1
+        user.setSalary1(Global.roundDouble(Float.parseFloat(txtSalaryMonth.getText())));
+        // salary 2
+        user.setSalary2(Global.roundDouble(Float.parseFloat(txtSalaryHour.getText())));
+        // house number
+        user.setHouseNumber(Integer.parseInt(txtNumeroRue.getText()));
+        // letterBox
+        user.setLetterBoxNumber(txtNumeroBoite.getText());
+        // zip Code
+        user.setPostalCode(Integer.parseInt(txtZipCode.getText()));
+        // check registry number
+        user.setNationalRegistreryNumber(txtRegisterNumber.getText());
+        // radio department
+        RadioButton selectedDepartment = (RadioButton) departementGroup.getSelectedToggle();
+        selectedItemName = selectedDepartment.getText();
+        user.setDepartement(selectedItemName);
+        // radio status
+        RadioButton selectedStatus = (RadioButton) statusGroup.getSelectedToggle();
+        selectedItemName = selectedStatus.getText();
+        user.setStatus(selectedItemName);
+        // radio matrimonial
+        RadioButton selectedMatrimonial = (RadioButton) statusMaritaireGroup.getSelectedToggle();
+        selectedItemName = selectedMatrimonial.getText();
+        user.setMaritalStatus(selectedItemName);
+        // inService
+        user.setDateInService(Global.localDateToString(datePickerStartService.getValue()));
+        // OutService
+        if (datePickerEndService.getValue() != null){
+            user.setDateOutService(Global.localDateToString(datePickerEndService.getValue()));
+        }
+
+        // pseudo
+        user.setPseudo(txtPseudo.getText());
+        // password
+        user.setPassword(txtPassword.getText());
+        //endregion
+
+        DialogController wd = new DialogController(btnBack.getScene().getWindow(), "Mise à jour...");
+
+        wd.exec("123", inputParam -> {
+
+            // send to DB
+            dbHandler.updateUser(user);
+
+            Platform.runLater(() ->{
+                // show notification
+                Global.successSystemNotif(
+                        "Opération réussie!",
+                        "#f7a631");
+            });
+
+            return 1;
+        });
+
+        // Tell app save is made
+        saveDone = true;
+    }
 }

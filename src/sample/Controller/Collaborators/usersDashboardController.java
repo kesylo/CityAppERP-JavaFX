@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import sample.Controller.DialogController;
 import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
@@ -102,7 +104,7 @@ public class usersDashboardController {
         Global.setProfileIcon(photo);
 
         // add users to table
-        //getAllUsers();
+        getAllUsers();
 
         // AutoSearch feature
         searchBar.setOnKeyReleased(event -> {
@@ -149,16 +151,74 @@ public class usersDashboardController {
         });
 
         btnDetails.setOnAction(event -> {
+            // set preview user globally
+            CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
+            // specify which button is pressed
+            CollaboratorGlobal.setActionName("details");
 
+            URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
+            Global.navigateModal(url, "Details-Collaborateur");
+        });
 
+        btnEdit.setOnAction(event -> {
+            // set preview user globally
+            CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
 
+            // load edit if user is not archived
+            if (CollaboratorGlobal.getPreviewUser().getDateOutService() == null){
+                // user not archived
+                // specify which button is pressed
+                CollaboratorGlobal.setActionName("edit");
 
+                URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
+                Global.navigateModal(url, "Modifier-Collaborateur");
+            }else {
+                // user archived
+                Global.showInfoMessage("Modification du collaborateur impossible.",
+                        "Ce collaborateur a déja été archivé !");
+            }
+        });
+
+        btnDelete.setOnAction(event -> {
+            // set preview user globally
+            CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
+            boolean action = Global.showInfoMessageWithBtn(
+                    "Archivage d'un collaborateur",
+                    "Etes vous sûre de vouloir archiver le profil de " + CollaboratorGlobal.getPreviewUser().getFirstName() + " ?",
+                    "Oui",
+                    "Non");
+
+            if (action){
+                archiveCollaborator();
+                // show notification
+                Global.successSystemNotif(
+                        "Opération réussie!",
+                        "#f7a631");
+                // refresh
+                getAllUsers();
+            }
         });
 
 
     }
 
     /*-------------------------------------------------------------------------------*/
+
+    public void clickItem() {
+        tableUsers.setOnMouseClicked(event1 -> {
+            if (event1.getClickCount() == 2){
+                //System.out.println("Clicked on " + (tableUsers.getSelectionModel().getSelectedCells().get(0)).getRow());
+
+                // set preview user globally
+                CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
+                // specify which button is pressed
+                CollaboratorGlobal.setActionName("details");
+
+                URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
+                Global.navigateModal(url, "Details-Collaborateur");
+            }
+        });
+    }
 
     private void getAllUsers() {
         Platform.runLater(() ->{
@@ -203,6 +263,7 @@ public class usersDashboardController {
         try {
             while (rs.next()){
                 User user = new User(
+                        rs.getInt("id"),
                         rs.getString("address"),
                         rs.getString("city"),
                         rs.getString("CivilStatus"),
@@ -224,7 +285,10 @@ public class usersDashboardController {
                         rs.getDouble("salary1"),
                         rs.getDouble("salary2"),
                         rs.getString("status"),
-                        rs.getInt("employeeNumber")
+                        rs.getInt("employeeNumber"),
+                        rs.getString("birthday"),
+                        rs.getString("phoneCountry"),
+                        rs.getString("country")
                 );
                 data.add(user);
             }
@@ -233,5 +297,21 @@ public class usersDashboardController {
             e.printStackTrace();
         }
         return data;
+    }
+
+    private void archiveCollaborator() {
+        dbHandler = new DBHandler();
+        CollaboratorGlobal.getPreviewUser().setDateOutService(Global.getSystemDate());
+
+        wd = new DialogController<>(btnEdit.getScene().getWindow(), "Archivage...");
+
+        wd.exec("123", inputParam -> {
+
+            // archive user
+            dbHandler.archiveCollaborator(CollaboratorGlobal.getPreviewUser());
+
+            return 1;
+        });
+
     }
 }

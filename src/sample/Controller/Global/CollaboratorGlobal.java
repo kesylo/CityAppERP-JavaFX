@@ -8,6 +8,7 @@ public final class CollaboratorGlobal {
 
     //region Collaborator App
     private static ObservableList<User> usersList = FXCollections.observableArrayList();
+    private static User previewUser = new User();
     private static String actionName;
     //endregion
 
@@ -27,6 +28,14 @@ public final class CollaboratorGlobal {
 
     public static void setActionName(String actionName) {
         CollaboratorGlobal.actionName = actionName;
+    }
+
+    public static User getPreviewUser() {
+        return previewUser;
+    }
+
+    public static void setPreviewUser(User previewUser) {
+        CollaboratorGlobal.previewUser = previewUser;
     }
 
     //endregion

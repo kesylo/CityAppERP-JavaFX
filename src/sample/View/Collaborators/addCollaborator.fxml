@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXRadioButton?>
@@ -23,7 +22,7 @@
    <children>
       <Pane fx:id="pane" layoutY="6.0" prefHeight="168.0" prefWidth="1160.0" stylesheets="@../../Ressources/css/gradient.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="90.0" layoutY="30.0" text="Collaborateurs">
+            <Label fx:id="lblHeadingText" layoutX="90.0" layoutY="30.0" text="Collaborateurs">
                <font>
                   <Font name="Century Gothic Bold Italic" size="30.0" />
                </font>
@@ -71,7 +70,7 @@
          </effect>
          <children>
             <JFXButton fx:id="btnhide" layoutX="23.0" layoutY="594.0" visible="false" />
-            <HBox layoutX="256.0" layoutY="575.0" spacing="30.0" AnchorPane.bottomAnchor="20.0">
+            <HBox layoutX="258.0" layoutY="581.0" spacing="30.0" AnchorPane.bottomAnchor="21.0">
                <children>
                   <JFXButton fx:id="btnBack" alignment="CENTER" cancelButton="true" focusTraversable="false" graphicTextGap="5.0" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #E0E0E0;" text="Retour">
                      <font>
@@ -105,14 +104,14 @@
                </children>
             </VBox>
             <Separator layoutX="15.0" layoutY="421.0" prefHeight="11.0" prefWidth="537.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-            <HBox layoutX="382.0" layoutY="522.0" spacing="30.0" AnchorPane.leftAnchor="382.0">
+            <HBox layoutX="202.0" layoutY="517.0" spacing="30.0" AnchorPane.leftAnchor="202.0">
                <children>
-                  <JFXTextField fx:id="txtPseudo" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Pseudo" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtPseudo" cache="true" focusColor="#5dbcd2" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Pseudo" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtPassword" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Mot de passe" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtPassword" cache="true" focusColor="#5dbcd2" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Mot de passe" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -121,11 +120,6 @@
             </HBox>
             <HBox layoutX="19.0" layoutY="143.0" spacing="30.0" />
             <HBox layoutX="19.0" layoutY="444.0" spacing="92.0" AnchorPane.leftAnchor="19.0" />
-            <JFXCheckBox fx:id="ckcAddManyEntries" checkedColor="#5dbcd2" focusTraversable="false" layoutX="15.0" layoutY="529.0" selected="true" text="Effectuer plusieurs enregistrements" AnchorPane.leftAnchor="15.0">
-               <font>
-                  <Font name="Poppins Regular" size="14.0" />
-               </font>
-            </JFXCheckBox>
             <VBox layoutX="25.0" layoutY="426.0" spacing="10.0">
                <children>
                   <HBox spacing="27.0" />
@@ -169,7 +163,7 @@
                   </HBox>
                   <HBox spacing="65.0">
                      <children>
-                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Rue" unFocusColor="BLACK">
+                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Maison" unFocusColor="BLACK">
                            <font>
                               <Font name="Poppins Regular" size="14.0" />
                            </font>
@@ -205,7 +199,7 @@
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtZipCode" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="Code P." unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtZipCode" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="Code Postal" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -349,7 +343,16 @@
                </children>
             </VBox>
             <JFXDatePicker fx:id="datePickerStartService" defaultColor="#5dbcd2" editable="false" focusTraversable="false" layoutX="213.0" layoutY="451.0" prefHeight="31.0" prefWidth="140.0" promptText="Debut Dervice" />
-            <JFXDatePicker fx:id="datePickerEndService" defaultColor="#5dbcd2" editable="false" focusTraversable="false" layoutX="422.0" layoutY="451.0" prefHeight="31.0" prefWidth="140.0" promptText="Fin Service" />
+            <JFXDatePicker fx:id="datePickerEndService" defaultColor="#5dbcd2" disable="true" editable="false" focusTraversable="false" layoutX="422.0" layoutY="451.0" prefHeight="31.0" prefWidth="140.0" promptText="Fin Service" />
+            <Pane fx:id="badgeUserArchived" layoutX="479.0" layoutY="532.0" prefHeight="68.0" prefWidth="508.0" rotate="-45.0" style="-fx-background-color: #EC7063;" visible="false">
+               <children>
+                  <Label layoutX="152.0" layoutY="17.0" text="Collaborateur Archivé" textFill="WHITE">
+                     <font>
+                        <Font name="Poppins Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </children>

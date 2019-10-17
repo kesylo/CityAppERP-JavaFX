@@ -1,7 +1,6 @@
 package sample.Controller.Global;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.glass.ui.Window;
 import com.sun.xml.internal.ws.util.StringUtils;
@@ -15,6 +14,8 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.Model.Country;
+import sample.Model.CountryComparator;
 import sample.Model.User;
 import tray.animations.AnimationType;
 import tray.notification.TrayNotification;
@@ -24,10 +25,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public final class Global {
 
@@ -36,6 +34,7 @@ public final class Global {
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
+    public static Double appVersion = 1.2;
     private static Stage stage;
 
     //endregion
@@ -298,6 +297,33 @@ public final class Global {
 
 
         });
+    }
+
+    public static List<Country> getCountriesList(){
+        List<Country> countries = new ArrayList<Country>();
+
+        String[] isoCountries = Locale.getISOCountries();
+        for (String country : isoCountries) {
+            Locale locale = new Locale("en", country);
+            String iso = locale.getISO3Country();
+            String code = locale.getCountry();
+            String name = locale.getDisplayCountry();
+
+            if (!"".equals(iso) && !"".equals(code) && !"".equals(name)) {
+                countries.add(new Country(iso, code, name));
+            }
+        }
+
+        // Sort the country by their name and then display the content
+        // of countries collection object.
+        Collections.sort(countries, new CountryComparator());
+
+        return countries;
+    }
+
+    public static LocalDate stringToLocalDate(String stringDate){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(stringDate, dtf);
     }
 
     //endregion

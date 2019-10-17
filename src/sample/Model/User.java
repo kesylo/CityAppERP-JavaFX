@@ -1,10 +1,8 @@
 package sample.Model;
 
-import java.sql.Date;
-
 public class User {
     private int id;
-    private String adress;
+    private String address;
     private String city;
     private String maritalStatus;
     private String departement;
@@ -36,8 +34,9 @@ public class User {
     }
 
     // new constructor
-    public User(String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber, String birthday, String phoneCountry, String country) {
-        this.adress = adress;
+    public User(int id, String address, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber, String birthday, String phoneCountry, String country) {
+        this.id = id;
+        this.address = address;
         this.city = city;
         this.maritalStatus = maritalStatus;
         this.departement = departement;
@@ -64,34 +63,9 @@ public class User {
         this.phoneCountry = phoneCountry;
     }
 
-    public User(String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber) {
-        this.adress = adress;
-        this.city = city;
-        this.maritalStatus = maritalStatus;
-        this.departement = departement;
-        this.email = email;
-        this.firstName = firstName;
-        this.houseNumber = houseNumber;
-        this.dateInService = dateInService;
-        this.lastName = lastName;
-        this.letterBoxNumber = letterBoxNumber;
-        this.nationalRegistreryNumber = nationalRegistreryNumber;
-        this.dateOutService = dateOutService;
-        this.password = password;
-        this.postalCode = postalCode;
-        this.pseudo = pseudo;
-        this.sex = sex;
-        this.role = role;
-        this.phoneNumber = phoneNumber;
-        this.salary1 = salary1;
-        this.salary2 = salary2;
-        this.status = status;
-        this.employeeNumber = employeeNumber;
-    }
-
-    public User(int id, String adress, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role) {
+    public User(int id, String address, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role) {
         this.id = id;
-        this.adress = adress;
+        this.address = address;
         this.city = city;
         this.maritalStatus = maritalStatus;
         this.departement = departement;
@@ -115,7 +89,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", adress='" + adress + '\'' +
+                ", address='" + address + '\'' +
                 ", city='" + city + '\'' +
                 ", maritalStatus='" + maritalStatus + '\'' +
                 ", departement='" + departement + '\'' +
@@ -179,12 +153,12 @@ public class User {
         this.id = id;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {

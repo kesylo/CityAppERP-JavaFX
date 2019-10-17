@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import sample.Controller.Global.CashRegisterGlobal;
 import sample.Controller.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.User;
@@ -20,6 +19,8 @@ import java.sql.SQLException;
 public class LoginController {
 
     //region Description
+    @FXML
+    private Label lblAppVersion;
 
     @FXML
     private Label lblErrorMessage;
@@ -50,6 +51,8 @@ public class LoginController {
     void initialize() {
 
         dbHandler = new DBHandler();
+
+        lblAppVersion.setText(Global.appVersion.toString());
 
         btnConnection.setOnAction(event -> login());
 
