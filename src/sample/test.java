@@ -3,6 +3,9 @@ package sample;
 
 import sample.Controller.Global.Global;
 
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class test {
@@ -36,11 +39,28 @@ public class test {
         for (String a :
                 arr) {
             System.out.println(a);
-        }
-        System.out.println(StringUtils.capitalize("jujkdi jhfu jnhf"));
+        }*/
 
-        String test  = "kemingukdd@dj.col";
+        // Creates a Year object
+      /*  Year firstYear = Year.of(Integer.parseInt(arr[0]));
+
+        // Create a DateTimeFormatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy");
+
+        // Print the current year after formatting
+        System.out.println(firstYear.format(formatter));*/
+
+        //System.out.println(StringUtils.capitalize("jujkdi jhfu jnhf"));
+
+        /*String test  = "kemingukdddj.col";
         if (test.matches("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$")){
+            System.out.println("ok");
+        }else {
+            System.out.println("no");
+        }*/
+
+       /* String test  = "15.15.12-856.25";
+        if (test.matches("([0-9]{2})\\.([0-9]{2})\\.([0-9]{2})\\-([0-9]{3})\\.([0-9]{2})")){
             System.out.println("ok");
         }else {
             System.out.println("no");
@@ -59,10 +79,10 @@ public class test {
             System.out.println("not even");
         }*/
 
+        //System.out.println(Global.stringToLocalDate("2019-02-16"));
 
-        System.out.println(Global.stringToLocalDate("2019-02-16"));
 
-
+        //System.out.println(Global.convertBirthdayToRegisterNber(LocalDate.now()));
 
     }
 }

@@ -1,6 +1,5 @@
 package sample.Database;
 
-import sample.Controller.Global.CashRegisterGlobal;
 import sample.Controller.Global.CollaboratorGlobal;
 import sample.Controller.Global.Global;
 import sample.Model.Caisse;

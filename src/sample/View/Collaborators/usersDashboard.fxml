@@ -24,7 +24,7 @@
          </effect>
          <children>
             <JFXButton fx:id="btnhide" layoutX="23.0" layoutY="594.0" visible="false" />
-            <JFXTextField fx:id="searchBar" focusColor="#f7a631" labelFloat="true" layoutX="23.0" layoutY="33.0" prefHeight="25.0" prefWidth="436.0" promptText="Recherche" AnchorPane.leftAnchor="20.0">
+            <JFXTextField fx:id="searchBar" focusColor="#f7a631" labelFloat="true" layoutX="23.0" layoutY="33.0" onMouseClicked="#selectAll" prefHeight="25.0" prefWidth="436.0" promptText="Recherche" AnchorPane.leftAnchor="20.0">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
@@ -119,7 +119,7 @@
                </graphic>
             </JFXButton>
             <Pane layoutX="20.0" layoutY="85.0" prefHeight="11.0" prefWidth="1060.0" style="-fx-background-color: #AEB6BF;" />
-            <JFXCheckBox fx:id="chkBoxEnservice" checkedColor="#f7a631" layoutX="494.0" layoutY="38.0" text="En service">
+            <JFXCheckBox fx:id="chkBoxEnservice" allowIndeterminate="true" checkedColor="#f7a631" layoutX="494.0" layoutY="38.0" selected="true" text="Tous les collaborateurs">
                <font>
                   <Font size="14.0" />
                </font>

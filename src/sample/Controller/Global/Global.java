@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -324,6 +325,27 @@ public final class Global {
     public static LocalDate stringToLocalDate(String stringDate){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(stringDate, dtf);
+    }
+
+    public static String convertBirthdayToRegisterNber(LocalDate birthDate) {
+        String date = localDateToString(birthDate);
+        String arr[] = date.split("-");
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Year firstYear = Year.of(Integer.parseInt(arr[0]));
+
+        // Create a DateTimeFormatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy");
+
+        // rebuild string
+        stringBuilder.append(firstYear.format(formatter));
+        stringBuilder.append(".");
+        stringBuilder.append(arr[1]);
+        stringBuilder.append(".");
+        stringBuilder.append(arr[2]);
+        stringBuilder.append("-");
+
+        return stringBuilder.toString();
     }
 
     //endregion

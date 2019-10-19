@@ -89,6 +89,11 @@ public class usersDashboardController {
         Global.logOut(location, btnBack);
     }
 
+    @FXML
+    void selectAll() {
+        searchBar.selectAll();
+    }
+
     private DBHandler dbHandler = new DBHandler();
     private DialogController<String> wd = null;
     private ResultSet rs = null;

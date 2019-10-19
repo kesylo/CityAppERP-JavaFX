@@ -201,8 +201,6 @@ public class addCollaboratorController {
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
-        System.out.println(CollaboratorGlobal.getPreviewUser().getDateOutService());
-
         if (Objects.equals(CollaboratorGlobal.getActionName(), "details")){
             // set header Text
             lblHeadingText.setText("Détails du collaborateur");
@@ -264,7 +262,8 @@ public class addCollaboratorController {
 
 
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
-            System.out.println("date changed");
+            txtRegisterNumber.clear();
+            txtRegisterNumber.setText(Global.convertBirthdayToRegisterNber(newValue));
         });
 
         btnSave.setOnAction(event -> {
@@ -491,7 +490,7 @@ public class addCollaboratorController {
         //endregion
 
         //region Email
-        if (txtEmail.getLength() == 0 || txtEmail.getText() == null){
+        if (txtEmail.getLength() == 0 || txtEmail.getText() == null || !txtEmail.getText().matches("^([\\w-.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$")){
             // add error to list
             formErrorsList.add("L'adresse 'E-mail' entrée est incorrecte !");
         }
@@ -561,9 +560,11 @@ public class addCollaboratorController {
         //endregion
 
         //region National Registry
-        if (txtRegisterNumber.getLength() == 0 || txtRegisterNumber.getText() == null){
+        if (txtRegisterNumber.getLength() == 0 || txtRegisterNumber.getText() == null ||
+                !txtRegisterNumber.getText().matches("([0-9]{2})\\.([0-9]{2})\\.([0-9]{2})-([0-9]{3})\\.([0-9]{2})")){
             // add error to list
-            formErrorsList.add("Le 'Numero National' entré est incorrect !");
+            formErrorsList.add("Le 'Numero National' entré est incorrect!");
+            formErrorsList.add("Format souhaité: XX.XX.XX-XXX.XX");
         }
         //endregion
 
