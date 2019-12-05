@@ -100,9 +100,9 @@ public class DashboardController implements Initializable {
 
     private void setWelcomeText() {
         if (Global.getConnectedUser().getSex().equals("Male")){
-            lblWelcome.setText("Bienvenu, " + Global.getConnectedUser().getLastName() + " !");
+            lblWelcome.setText("Bienvenu, " + Global.getConnectedUser().getFirstName() + " !");
         }else {
-            lblWelcome.setText("Bienvenue, " + Global.getConnectedUser().getLastName() + " !");
+            lblWelcome.setText("Bienvenue, " + Global.getConnectedUser().getFirstName() + " !");
         }
     }
 

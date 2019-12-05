@@ -148,11 +148,17 @@ public class usersDashboardController {
         });
 
         btnCreate.setOnAction(event -> {
-            // specify which button is pressed
-            CollaboratorGlobal.setActionName("add");
+            // check if user is admin first
+            if (Global.getConnectedUser().getRole() > 3){
+                // specify which button is pressed
+                CollaboratorGlobal.setActionName("add");
 
-            URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
-            Global.navigateModal(url, "Ajouter-Collaborateur");
+                URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
+                Global.navigateModal(url, "Ajouter-Collaborateur");
+            } else {
+                Global.showErrorMessage("Problème de droits",
+                        "Vous n'avez pas le droit de créer un profil.");
+            }
         });
 
         btnDetails.setOnAction(event -> {
@@ -181,7 +187,7 @@ public class usersDashboardController {
                     Global.navigateModal(url, "Modifier-Collaborateur");
                 }else {
                     // user archived
-                    Global.showInfoMessage("Modification du collaborateur impossible.",
+                    Global.showErrorMessage("Modification du collaborateur impossible.",
                             "Ce collaborateur a déja été archivé !");
                 }
             } else {
@@ -191,22 +197,28 @@ public class usersDashboardController {
         });
 
         btnDelete.setOnAction(event -> {
-            // set preview user globally
-            CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
-            boolean action = Global.showInfoMessageWithBtn(
-                    "Archivage d'un collaborateur",
-                    "Etes vous sûre de vouloir archiver le profil de " + CollaboratorGlobal.getPreviewUser().getFirstName() + " ?",
-                    "Oui",
-                    "Non");
+            // check if user is admin first
+            if (Global.getConnectedUser().getRole() > 4){
+                // set preview user globally
+                CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
+                boolean action = Global.showInfoMessageWithBtn(
+                        "Archivage d'un collaborateur",
+                        "Etes vous sûre de vouloir archiver le profil de " + CollaboratorGlobal.getPreviewUser().getFirstName() + " ?",
+                        "Oui",
+                        "Non");
 
-            if (action){
-                archiveCollaborator();
-                // show notification
-                Global.successSystemNotif(
-                        "Opération réussie!",
-                        "#f7a631");
-                // refresh
-                getAllUsers();
+                if (action){
+                    archiveCollaborator();
+                    // show notification
+                    Global.successSystemNotif(
+                            "Opération réussie!",
+                            "#f7a631");
+                    // refresh
+                    getAllUsers();
+                }
+            } else {
+                Global.showErrorMessage("Problème de droits",
+                        "Vous n'avez pas le droit d'archiver un profil.");
             }
         });
 
