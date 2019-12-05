@@ -7,8 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import sample.Controller.Global.Global;
-
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +30,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button btnNavToCaisse;
+
+    @FXML
+    private Button btnNavToContracts;
 
     @FXML
     private Button btnNavToCollaborators;
@@ -75,6 +76,11 @@ public class DashboardController implements Initializable {
             if (!Global.openInBrowser("https://192.168.0.123")){
                 Global.showErrorMessage("Erreur", "Un problème est survenu lors de l'ouverture de l'application.");
             }
+        });
+
+        btnNavToContracts.setOnAction(event -> {
+            URL toContracts = getClass().getResource("/sample/View/Contracts/contractsDashboard.fxml");
+            Global.navigateTo(toContracts, "Contrats");
         });
 
     }
