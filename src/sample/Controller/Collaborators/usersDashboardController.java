@@ -166,21 +166,27 @@ public class usersDashboardController {
         });
 
         btnEdit.setOnAction(event -> {
-            // set preview user globally
-            CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
+            // check if user is admin first
+            if (Global.getConnectedUser().getRole() > 3){
+                // set preview user globally
+                CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
 
-            // load edit if user is not archived
-            if (CollaboratorGlobal.getPreviewUser().getDateOutService() == null){
-                // user not archived
-                // specify which button is pressed
-                CollaboratorGlobal.setActionName("edit");
+                // load edit if user is not archived
+                if (CollaboratorGlobal.getPreviewUser().getDateOutService() == null){
+                    // user not archived
+                    // specify which button is pressed
+                    CollaboratorGlobal.setActionName("edit");
 
-                URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
-                Global.navigateModal(url, "Modifier-Collaborateur");
-            }else {
-                // user archived
-                Global.showInfoMessage("Modification du collaborateur impossible.",
-                        "Ce collaborateur a déja été archivé !");
+                    URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
+                    Global.navigateModal(url, "Modifier-Collaborateur");
+                }else {
+                    // user archived
+                    Global.showInfoMessage("Modification du collaborateur impossible.",
+                            "Ce collaborateur a déja été archivé !");
+                }
+            } else {
+                Global.showInfoMessage("Problème de droits",
+                        "Vous n'avez pas le droit de modifier un profil.");
             }
         });
 
