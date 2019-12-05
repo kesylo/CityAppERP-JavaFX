@@ -1,8 +1,11 @@
 package sample.Controller.Collaborators;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -31,6 +34,12 @@ import java.util.List;
 public class usersDashboardController {
 
     //region UI
+    @FXML
+    private JFXRadioButton radioShowAllUsers;
+
+    @FXML
+    private JFXRadioButton radioShowActiveUsers;
+
     @FXML
     private JFXTextField searchBar;
 
@@ -109,7 +118,7 @@ public class usersDashboardController {
         Global.setProfileIcon(photo);
 
         // add users to table
-        getAllUsers();
+        getActiveUsers();
 
         // AutoSearch feature
         searchBar.setOnKeyReleased(event -> {
@@ -123,11 +132,7 @@ public class usersDashboardController {
 
                     if (user.getFirstName().toLowerCase().contains(lowerCaseFilter)){
                         return true;
-                    }else if (user.getLastName().toLowerCase().contains(lowerCaseFilter)){
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    }else return user.getLastName().toLowerCase().contains(lowerCaseFilter);
                 });
             });
 
@@ -222,6 +227,18 @@ public class usersDashboardController {
             }
         });
 
+        // handle radio button events
+        radioShowActiveUsers.selectedProperty().addListener((obs, wasPreviouslySelected, isNowSelected) -> {
+            if (isNowSelected) {
+                getActiveUsers();
+            }
+        });
+
+        radioShowAllUsers.selectedProperty().addListener((obs, wasPreviouslySelected, isNowSelected) -> {
+            if (isNowSelected) {
+                getAllUsers();
+            }
+        });
 
     }
 
@@ -249,7 +266,7 @@ public class usersDashboardController {
             wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement des collaborateurs...");
 
             wd.exec("123", inputParam -> {
-                final ObservableList<User> data = longTask();
+                final ObservableList<User> data = longTask("all");
                 // set users Globally
                 CollaboratorGlobal.setUsersList(data);
                 // turn users list in filtered list for search
@@ -258,6 +275,25 @@ public class usersDashboardController {
                 Platform.runLater(() ->{
                     fillTable(CollaboratorGlobal.getUsersList());
                 });
+                return 1;
+            });
+        });
+
+    }
+
+    private void getActiveUsers() {
+        Platform.runLater(() ->{
+            // prepare loading screen
+            wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement des collaborateurs...");
+
+            wd.exec("123", inputParam -> {
+                final ObservableList<User> data = longTask("active");
+                // set users Globally
+                CollaboratorGlobal.setUsersList(data);
+                // turn users list in filtered list for search
+                filteredUser = new FilteredList<>(data, b -> true);
+
+                Platform.runLater(() -> fillTable(CollaboratorGlobal.getUsersList()));
                 return 1;
             });
         });
@@ -279,9 +315,14 @@ public class usersDashboardController {
         tableUsers.getSelectionModel().selectFirst();
     }
 
-    private ObservableList<User> longTask() {
+    private ObservableList<User> longTask(String choice) {
         ObservableList<User> data = FXCollections.observableArrayList();
-        rs = dbHandler.getAllEmployees();
+
+        if (choice.equals("all")){
+            rs = dbHandler.getAllEmployees();
+        }else if (choice.equals("active")){
+            rs = dbHandler.getActiveEmployees();
+        }
 
         try {
             while (rs.next()){

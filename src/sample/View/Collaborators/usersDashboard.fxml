@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -119,11 +120,19 @@
                </graphic>
             </JFXButton>
             <Pane layoutX="20.0" layoutY="85.0" prefHeight="11.0" prefWidth="1060.0" style="-fx-background-color: #AEB6BF;" />
-            <JFXCheckBox fx:id="chkBoxEnservice" allowIndeterminate="true" checkedColor="#f7a631" layoutX="494.0" layoutY="38.0" selected="true" text="Tous les collaborateurs">
+            <JFXRadioButton fx:id="radioShowAllUsers" focusTraversable="false" layoutX="685.0" layoutY="33.0" prefHeight="30.0" style="-jfx-selected-color: #f7a631;" text="Tous les collaborateurs">
                <font>
                   <Font size="14.0" />
                </font>
-            </JFXCheckBox>
+               <toggleGroup>
+                  <ToggleGroup fx:id="filter" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="radioShowActiveUsers" focusTraversable="false" layoutX="488.0" layoutY="33.0" prefHeight="30.0" selected="true" style="-jfx-selected-color: #f7a631;" text="Collaborateurs en service" toggleGroup="$filter">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXRadioButton>
          </children>
       </AnchorPane>
       <Pane layoutX="815.0" layoutY="18.0" prefHeight="62.0" prefWidth="315.0" style="-fx-background-color: #FFFF; -fx-background-radius: 50;">

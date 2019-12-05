@@ -105,6 +105,23 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    public ResultSet getActiveEmployees() {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE + " WHERE outService is null or outService = ''";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public ResultSet getAllEmployeesNames() {
 
         rs = null;
@@ -475,6 +492,8 @@ public class DBHandler extends DBConfig {
             e.printStackTrace();
         }
     }
+
+
 
     /*------------------------------ DELETE -------------------------------------*/
 }
