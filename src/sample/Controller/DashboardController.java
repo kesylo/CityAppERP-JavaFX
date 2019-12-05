@@ -6,9 +6,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import sample.Controller.Global.CashRegisterGlobal;
 import sample.Controller.Global.Global;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,6 +35,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button btnNavToCollaborators;
+
+    @FXML
+    private Button btnNavToPlanning;
     //endregion
 
     @FXML
@@ -68,6 +71,11 @@ public class DashboardController implements Initializable {
             Global.navigateTo(toUsers, "Collaborateurs");
         });
 
+        btnNavToPlanning.setOnAction(event -> {
+            if (!Global.openInBrowser("https://192.168.0.123")){
+                Global.showErrorMessage("Erreur", "Un problème est survenu lors de l'ouverture de l'application.");
+            }
+        });
 
     }
 

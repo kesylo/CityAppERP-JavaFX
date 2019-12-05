@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
@@ -20,13 +21,18 @@ import sample.Model.User;
 import tray.animations.AnimationType;
 import tray.notification.TrayNotification;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.List;
 
 public final class Global {
 
@@ -346,6 +352,29 @@ public final class Global {
         stringBuilder.append("-");
 
         return stringBuilder.toString();
+    }
+
+    static boolean openWebPage(URI uri) {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(uri);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public static boolean openInBrowser(String address) {
+        try {
+            URL url = new URL(address);
+            return openWebPage(url.toURI());
+        } catch (URISyntaxException | MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     //endregion
