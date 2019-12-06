@@ -1,8 +1,16 @@
 package sample;
 
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import sample.Controller.Global.Global;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -83,6 +91,45 @@ public class test {
 
 
         //System.out.println(Global.convertBirthdayToRegisterNber(LocalDate.now()));
+
+        if (Global.isWindows()){
+
+            String contractsFolder = "Contracts";
+            String contractFileName = "Contrat-Employe-";
+            String collaboratorName = "dcs";
+
+            String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
+            File path = new File(myDocumentsPath + "\\" + contractsFolder);
+            path.mkdirs();
+
+            System.out.println(path.toString());
+
+
+            Document pdf = new Document();
+
+            try {
+
+                PdfWriter writer = PdfWriter.getInstance(pdf,
+                        new FileOutputStream(myDocumentsPath
+                                +"\\"
+                                + contractsFolder
+                                +"\\"
+                                + contractFileName
+                                + collaboratorName
+                                + ".pdf"));
+                pdf.open();
+                pdf.add(new Paragraph("gfd"));
+                pdf.close();
+                writer.close();
+
+            } catch (DocumentException | FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+        }
 
     }
 }

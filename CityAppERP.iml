@@ -53,5 +53,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="controlsfx-8.40.15" level="project" />
+    <orderEntry type="library" name="itextpdf-5.4.5" level="project" />
   </component>
 </module>

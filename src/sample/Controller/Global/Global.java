@@ -80,6 +80,16 @@ public final class Global {
         alertDialog.showAndWait();
     }
 
+    public static boolean isUnix() {
+        String OS = System.getProperty("os.name");
+        return (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"));
+    }
+
+    public static boolean isWindows() {
+        String OS = System.getProperty("os.name");
+        return OS.contains("Win");
+    }
+
     public static void showInfoMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.INFORMATION);
         alertDialog.setTitle(appName);
