@@ -106,12 +106,12 @@
             <Separator layoutX="15.0" layoutY="421.0" prefHeight="11.0" prefWidth="537.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
             <HBox layoutX="202.0" layoutY="517.0" spacing="30.0" AnchorPane.leftAnchor="202.0">
                <children>
-                  <JFXTextField fx:id="txtPseudo" cache="true" focusColor="#5dbcd2" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Pseudo" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtPseudo" cache="true" focusColor="#5dbcd2" focusTraversable="false" prefHeight="30.0" prefWidth="186.0" promptText="Pseudo" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtPassword" cache="true" focusColor="#5dbcd2" focusTraversable="false" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Mot de passe" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtPassword" cache="true" focusColor="#5dbcd2" focusTraversable="false" prefHeight="30.0" prefWidth="186.0" promptText="Mot de passe" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -131,14 +131,14 @@
             <Separator layoutX="15.0" layoutY="295.0" prefHeight="11.0" prefWidth="537.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
             <HBox layoutX="17.0" layoutY="26.0" spacing="30.0" />
             <HBox layoutX="6.0" layoutY="143.0" spacing="30.0" />
-            <VBox layoutX="14.0" layoutY="41.0" spacing="20.0" AnchorPane.leftAnchor="15.0">
+            <VBox layoutX="15.0" layoutY="8.0" spacing="20.0" AnchorPane.leftAnchor="15.0">
                <children>
-                  <JFXTextField fx:id="txtName" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Nom" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtName" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Nom" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtEmail" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="E-mail" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtEmail" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="E-mail" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -163,12 +163,12 @@
                   </HBox>
                   <HBox spacing="65.0">
                      <children>
-                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Maison" unFocusColor="BLACK">
+                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="85.0" promptText="N° Maison" unFocusColor="BLACK">
                            <font>
                               <Font name="Poppins Regular" size="14.0" />
                            </font>
                         </JFXTextField>
-                        <JFXTextField fx:id="txtNumeroBoite" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Boite" unFocusColor="BLACK">
+                        <JFXTextField fx:id="txtNumeroBoite" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="85.0" promptText="N° Boite" unFocusColor="BLACK">
                            <font>
                               <Font name="Poppins Regular" size="14.0" />
                            </font>
@@ -177,39 +177,39 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox layoutX="285.0" layoutY="41.0" spacing="20.0">
+            <VBox layoutX="285.0" layoutY="8.0" spacing="20.0">
                <children>
-                  <JFXTextField fx:id="txtSurname" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Prénom" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtSurname" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Prénom" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtNumEmployee" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="100.0" promptText="N° Employé" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtNumEmployee" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="100.0" promptText="N° Employé" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtCity" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="186.0" promptText="Ville" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtCity" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="186.0" promptText="Ville" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtSalaryMonth" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Mensuel" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtSalaryMonth" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Mensuel" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtZipCode" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="Code Postal" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtZipCode" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="85.0" promptText="Code Postal" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
                </children>
             </VBox>
-            <VBox alignment="TOP_RIGHT" layoutX="551.0" layoutY="41.0" spacing="20.0" AnchorPane.rightAnchor="15.0">
+            <VBox alignment="TOP_RIGHT" layoutX="554.0" layoutY="8.0" spacing="20.0" AnchorPane.rightAnchor="15.0">
                <children>
                   <JFXDatePicker fx:id="datePicker" defaultColor="#5dbcd2" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="234.0" promptText="Date de naissance" />
-                  <JFXTextField fx:id="txtAddress" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Adresse" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtAddress" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Adresse" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -217,19 +217,24 @@
                   <HBox spacing="5.0">
                      <children>
                         <JFXComboBox fx:id="comboPhoneCountry" focusColor="#5dbcd2" focusTraversable="false" prefHeight="30.0" />
-                        <JFXTextField fx:id="txtPhoneNumber" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="175.0" promptText="Téléphone" unFocusColor="BLACK">
+                        <JFXTextField fx:id="txtPhoneNumber" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="175.0" promptText="Téléphone" unFocusColor="BLACK">
                            <font>
                               <Font name="Poppins Regular" size="14.0" />
                            </font>
                         </JFXTextField>
                      </children>
                   </HBox>
-                  <JFXTextField fx:id="txtSalaryHour" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Horaire" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtSalaryHour" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Horaire" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtRegisterNumber" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Registre national" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtRegisterNumber" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Registre national" unFocusColor="BLACK">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txtIBAN" cache="true" focusColor="#5dbcd2" layoutX="10.0" layoutY="211.0" prefHeight="30.0" prefWidth="236.0" promptText="IBAN" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>

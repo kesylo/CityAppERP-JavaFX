@@ -51,6 +51,9 @@ public class addCollaboratorController {
     private JFXTextField txtPseudo;
 
     @FXML
+    private JFXTextField txtIBAN;
+
+    @FXML
     private JFXTextField txtPassword;
 
     @FXML
@@ -235,9 +238,9 @@ public class addCollaboratorController {
         // types: 1 : string,       2 : float,       3 : int,       0 : all
         // String case: 1 : toUpper,       2 : one letter Caps,       3 : nothing
 
-        Global.txtFormater(txtName, 20,1, 1);
-        Global.txtFormater(txtSurname, 20,1, 1);
-        Global.txtFormater(txtEmail, 30,0, 2);
+        Global.txtFormater(txtName, 20,0, 1);
+        Global.txtFormater(txtSurname, 20,0, 1);
+        Global.txtFormater(txtEmail, 40,0, 2);
         Global.txtFormater(txtNumEmployee, 4,3, 3);
         Global.txtFormater(txtAddress, 30,0, 2);
         Global.txtFormater(txtNumeroRue, 6,3, 3);
@@ -291,7 +294,6 @@ public class addCollaboratorController {
 
     private void loadCurrentUserData() {
         User previewUser = CollaboratorGlobal.getPreviewUser();
-        System.out.println(previewUser.getDateOutService());
 
         txtName.setText(previewUser.getFirstName());
         txtSurname.setText(previewUser.getLastName());
@@ -357,6 +359,7 @@ public class addCollaboratorController {
         }
         txtPseudo.setText(previewUser.getPseudo());
         txtPassword.setText(previewUser.getPassword());
+        txtIBAN.setText(previewUser.getIban());
 
     }
 
@@ -382,6 +385,7 @@ public class addCollaboratorController {
         txtPseudo.setEditable(false);
         txtPassword.setEditable(false);
         btnSave.setDisable(true);
+        txtIBAN.setEditable(false);
     }
 
     private void fillComboCountry() {
@@ -473,7 +477,7 @@ public class addCollaboratorController {
         //endregion
 
         //region Email
-        if (txtEmail.getLength() == 0 || txtEmail.getText() == null || !txtEmail.getText().matches("^([\\w-.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$")){
+        if (txtEmail.getLength() == 0 || txtEmail.getText() == null ){
             // add error to list
             formErrorsList.add("L'adresse 'E-mail' entrée est incorrecte !");
         }
@@ -565,6 +569,13 @@ public class addCollaboratorController {
         }
         //endregion
 
+        //region iban
+        if (txtIBAN.getLength() == 0 || txtIBAN.getText() == null){
+            // add error to list
+            formErrorsList.add("Le 'numero IBAN' entré est incorrect !");
+        }
+        //endregion
+
         if (formErrorsList.size() > 0){
             // show all errors if exists
             showAllErrors();
@@ -648,6 +659,8 @@ public class addCollaboratorController {
         user.setPseudo(txtPseudo.getText());
         // password
         user.setPassword(txtPassword.getText());
+        // iban
+        user.setIban(txtIBAN.getText());
         //endregion
 
         DialogController wd = new DialogController(btnBack.getScene().getWindow(), "Enrégistrement...");
@@ -732,6 +745,8 @@ public class addCollaboratorController {
         user.setPseudo(txtPseudo.getText());
         // password
         user.setPassword(txtPassword.getText());
+        // iban
+        user.setIban(txtIBAN.getText());
         //endregion
 
         DialogController wd = new DialogController(btnBack.getScene().getWindow(), "Mise à jour...");

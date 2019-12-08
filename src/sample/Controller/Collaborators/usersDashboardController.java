@@ -149,7 +149,11 @@ public class usersDashboardController {
         });
 
         btnRefresh.setOnAction(event -> {
-            getAllUsers();
+            if (radioShowActiveUsers.isSelected()){
+                getActiveUsers();
+            }else {
+                getAllUsers();
+            }
         });
 
         btnCreate.setOnAction(event -> {
@@ -219,7 +223,11 @@ public class usersDashboardController {
                             "Opération réussie!",
                             "#f7a631");
                     // refresh
-                    getAllUsers();
+                    if (radioShowActiveUsers.isSelected()){
+                        getActiveUsers();
+                    }else {
+                        getAllUsers();
+                    }
                 }
             } else {
                 Global.showErrorMessage("Problème de droits",
@@ -352,7 +360,8 @@ public class usersDashboardController {
                         rs.getInt("employeeNumber"),
                         rs.getString("birthday"),
                         rs.getString("phoneCountry"),
-                        rs.getString("country")
+                        rs.getString("country"),
+                        rs.getString("iban")
                 );
                 data.add(user);
             }

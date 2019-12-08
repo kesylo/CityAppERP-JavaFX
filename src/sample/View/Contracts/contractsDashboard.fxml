@@ -75,7 +75,7 @@
                   </JFXTextField>
                   <JFXDatePicker fx:id="datePickerStartContract" defaultColor="#5dbcd2" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="375.0" promptText="Date de début du contrat" />
                   <JFXDatePicker fx:id="datePickerEndContract" defaultColor="#5dbcd2" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="375.0" promptText="Date de fin du contrat" />
-                  <JFXTextField fx:id="txtHoursPerWeek" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Durée moyenne de travail" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtHoursPerWeek" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Durée hebdomadaire moyenne de travail" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>

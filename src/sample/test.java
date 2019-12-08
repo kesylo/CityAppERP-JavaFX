@@ -166,128 +166,254 @@ public class test {
             pdf.open();
 
             // ========================================================================== PDF START
-            // ======================================================================================== HEADER
+
             Paragraph p;
             Font headerFont = FontFactory.getFont(FontFactory.HELVETICA);
             headerFont.setStyle(Font.BOLD);
             headerFont.setSize(18);
 
-            Font textFont = FontFactory.getFont(FontFactory.HELVETICA);
-            textFont.setStyle(Font.NORMAL);
-            textFont.setSize(12);
+            Font textBold = FontFactory.getFont(FontFactory.HELVETICA);
+            textBold.setStyle(Font.BOLD);
+            textBold.setSize(12);
 
-            // Heading
+            Font textNormal = FontFactory.getFont(FontFactory.HELVETICA);
+            textNormal.setStyle(Font.NORMAL);
+            textNormal.setSize(12);
+
+            // ======================================================================================== HEADER
             p = new Paragraph(fileLines.get(0), headerFont);
             p.setAlignment(Element.ALIGN_CENTER);
             p.setSpacingAfter(25);
             pdf.add(p);
 
-            p = new Paragraph(fileLines.get(3), textFont);
+            p = new Paragraph(fileLines.get(3), textNormal);
             pdf.add(p);
 
             PdfPTable table = new PdfPTable(2);
             table.getDefaultCell().setBorder(0);
             table.setWidthPercentage(100);
             p = new Paragraph();
-            table.addCell(new Phrase(fileLines.get(4), textFont));
-            table.addCell(new Phrase("TRANS TECHNICS SERVICES", textFont));
-            table.addCell(new Phrase(fileLines.get(5), textFont));
-            table.addCell(new Phrase("Rue de la Fourche, 8", textFont));
+            table.addCell(new Phrase(fileLines.get(4), textNormal));
+            table.addCell(new Phrase("TRANS TECHNICS SERVICES", textBold));
+            table.addCell(new Phrase(fileLines.get(5), textNormal));
+            table.addCell(new Phrase("Rue de la Fourche, 8", textBold));
             table.addCell(" ");
-            table.addCell(new Phrase("1000 – BRUXELLES 1", textFont));
+            table.addCell(new Phrase("1000 – BRUXELLES 1", textBold));
             table.addCell(" ");
-            table.addCell(new Phrase("RPM: BE0.422.634.443", textFont));
+            table.addCell(new Phrase("RPM: BE0.422.634.443", textBold));
             table.addCell(" ");
-            table.addCell(new Phrase("ONSS: 0488.450-28", textFont));
-            table.addCell(new Phrase(fileLines.get(9), textFont));
-            table.addCell(new Phrase("Christian Drappier", textFont));
+            table.addCell(new Phrase("ONSS: 0488.450-28", textBold));
+            table.addCell(new Phrase(fileLines.get(9), textNormal));
+            table.addCell(new Phrase("Christian Drappier", textBold));
             p.add(table);
             p.setIndentationLeft(20);
             pdf.add(p);
 
-            p = new Paragraph(fileLines.get(11));
+            p = new Paragraph(fileLines.get(11), textNormal);
             pdf.add(p);
 
+            // add user data in this section
             table = new PdfPTable(2);
             table.getDefaultCell().setBorder(0);
             table.setWidthPercentage(100);
             p = new Paragraph();
-            table.addCell(new Phrase(fileLines.get(12), textFont));
-            table.addCell(new Phrase("Christian Drappier", textFont));
-            table.addCell(new Phrase(fileLines.get(13), textFont));
-            table.addCell(new Phrase("41444444444444444444", textFont));
-            table.addCell(new Phrase(fileLines.get(14), textFont));
-            table.addCell(new Phrase("grfdhgf", textFont));
-            table.addCell(new Phrase(fileLines.get(15), textFont));
-            table.addCell(new Phrase("541123151563", textFont));
-            table.addCell(new Phrase(fileLines.get(16), textFont));
-            table.addCell(new Phrase("grfdhgf", textFont));
-            table.addCell(new Phrase(fileLines.get(17), textFont));
-            table.addCell(new Phrase("gfdgfdgfdfdsds", textFont));
-            table.addCell(new Phrase(fileLines.get(21), textFont));
+            table.addCell(new Phrase(fileLines.get(12), textNormal));
+            table.addCell(new Phrase("Christian Drappier", textBold));
+            table.addCell(new Phrase(fileLines.get(13), textNormal));
+            table.addCell(new Phrase("41444444444444444444", textBold));
+            table.addCell(new Phrase(fileLines.get(14), textNormal));
+            table.addCell(new Phrase("grfdhgf", textBold));
+            table.addCell(new Phrase(fileLines.get(15), textNormal));
+            table.addCell(new Phrase("541123151563", textBold));
+            table.addCell(new Phrase(fileLines.get(16), textNormal));
+            table.addCell(new Phrase("grfdhgf", textBold));
+            table.addCell(new Phrase(fileLines.get(17), textNormal));
+            table.addCell(new Phrase("gfdgfdgfdfdsds", textBold));
+            table.addCell(new Phrase(fileLines.get(21), textNormal));
             table.addCell("");
             p.add(table);
             p.setIndentationLeft(20);
             pdf.add(p);
             pdf.add( Chunk.NEWLINE );
 
-            p = new Paragraph(new Phrase(fileLines.get(22), textFont));
+            p = new Paragraph(new Phrase(fileLines.get(22), textNormal));
             pdf.add(p);
 
             // ======================================================================================== BODY
             // We create a list:
             pdf.add( Chunk.NEWLINE );
             ZapfDingbatsList list = new ZapfDingbatsList(70, 15);
-            list.add(new ListItem(new Phrase(fileLines.get(25), textFont)));
+            list.add(new ListItem(new Phrase(fileLines.get(25), textBold)));
             pdf.add(list);
-            pdf.add( Chunk.NEWLINE );
 
+            // add user data in this section
             p = new Paragraph();
-            p.add(new Phrase(fileLines.get(27), textFont));
-            p.add(new Phrase(" testeur", textFont));
+            p.add(new Phrase(fileLines.get(27), textNormal));
+            p.add(new Phrase(" testeur", textBold));
             pdf.add(p);
 
+            // add user data in this section
             p = new Paragraph();
-            p.add(new Phrase(fileLines.get(28), textFont));
-            p.add(new Phrase(" testeur", textFont));
+            p.add(new Phrase(fileLines.get(28), textNormal));
+            p.add(new Phrase(" testeur", textBold));
             pdf.add(p);
 
             p = new Paragraph();
             p.setAlignment(Element.ALIGN_JUSTIFIED);
-            p.add(new Phrase(fileLines.get(30), textFont));
+            p.add(new Phrase(fileLines.get(30), textNormal));
             pdf.add(p);
 
             pdf.add( Chunk.NEWLINE );
             list = new ZapfDingbatsList(70, 15);
-            list.add(new ListItem(new Phrase(fileLines.get(32), textFont)));
+            list.add(new ListItem(new Phrase(fileLines.get(32), textBold)));
             pdf.add(list);
-            pdf.add( Chunk.NEWLINE );
 
+            // add user data in this section
             table = new PdfPTable(4);
             table.getDefaultCell().setBorder(0);
             table.setWidthPercentage(100);
-            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
             table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
             p = new Paragraph();
-            table.addCell(new Phrase(fileLines.get(34), textFont));
-            table.addCell(new Phrase("12-12-12", textFont));
-            table.addCell(new Phrase("au", textFont));
-            table.addCell(new Phrase("12-12-12", textFont));
+            table.addCell(new Phrase(fileLines.get(34), textNormal));
+            table.addCell(new Phrase("2019-12-12", textBold));
+            table.addCell(new Phrase("au", textNormal));
+            table.addCell(new Phrase("2301-25-45", textBold));
             p.add(table);
-            float[] columnWidths = new float[]{70f, 10f, 10f, 10f};
+            float[] columnWidths = new float[]{70f, 13f, 3.5f, 14.5f};
             table.setWidths(columnWidths);
             pdf.add(p);
+
             pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(37), textBold)));
+            pdf.add(list);
+
+            // add user data in this section
+            table = new PdfPTable(3);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(39), textNormal));
+            table.addCell(new Phrase("1510.20", textBold));
+            table.addCell(new Phrase("€ par mois.", textNormal));
+            p.add(table);
+            columnWidths = new float[]{47f, 10f, 43f};
+            table.setWidths(columnWidths);
+            pdf.add(p);
+
+            p = new Paragraph(new Phrase(fileLines.get(41), textNormal));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(43), textNormal));
+            pdf.add(p);
+
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(45), textBold)));
+            pdf.add(list);
+
+            // add user data in this section
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(47) + " ", textNormal));
+            p.add(new Phrase("12,02", textBold));
+            p.add(new Phrase(" heures sera réalisée sur base annuelle.", textNormal));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(49), textNormal));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(51), textNormal));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(53), textNormal));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(55), textNormal));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(57), textNormal));
+            pdf.add(p);
+
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(60), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(62), textNormal));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(64), textNormal));
+            pdf.add(p);
+
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(66), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph(new Phrase(fileLines.get(68), textNormal));
+            pdf.add(p);
+
+            // ======================================================================================== FOOTER
+
+            // add user data in this section
+            p = new Paragraph();
+            p.add(new Phrase(fileLines.get(73), textNormal));
+            p.add(new Phrase("12-08-2019" + ".", textBold));
+            pdf.add(p);
+
+            p = new Paragraph(new Phrase(fileLines.get(74), textNormal));
+            p.setSpacingAfter(30);
+            pdf.add(p);
 
 
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(77), textBold));
+            table.addCell(new Phrase(fileLines.get(78), textBold));
+            table.addCell(new Phrase(fileLines.get(79), textNormal));
+            table.addCell(new Phrase(fileLines.get(80), textNormal));
+            table.addCell(new Phrase(fileLines.get(81), textNormal));
+            table.addCell(new Phrase(fileLines.get(82), textNormal));
+            p.add(table);
+            columnWidths = new float[]{50f, 50f};
+            table.setWidths(columnWidths);
+            p.setSpacingAfter(50);
+            pdf.add(p);
 
-
-
-
-
-
-
-
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(83), textNormal));
+            table.addCell(new Phrase(fileLines.get(83), textNormal));
+            p.add(table);
+            columnWidths = new float[]{50f, 50f};
+            table.setWidths(columnWidths);
+            pdf.add(p);
 
             pdf.close();
             writer.close();

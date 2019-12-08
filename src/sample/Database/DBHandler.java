@@ -122,24 +122,6 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
-    public ResultSet getActiveEmployeesNames() {
-
-        rs = null;
-
-        // prepare the query
-        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE + " WHERE outService is null or outService = ''";
-        // run it
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-
-            rs = ps.executeQuery();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return rs;
-    }
-
     public ResultSet getEmployeByID(int idEmployes) {
 
         rs = null;
@@ -191,7 +173,16 @@ public class DBHandler extends DBConfig {
                         rs.getInt("postalCode"),
                         rs.getString("pseudo"),
                         rs.getString("sex"),
-                        rs.getInt("role")
+                        rs.getInt("role"),
+                        rs.getString("phoneNumber"),
+                        rs.getDouble("salary1"),
+                        rs.getDouble("salary2"),
+                        rs.getString("status"),
+                        rs.getInt("employeeNumber"),
+                        rs.getString("birthday"),
+                        rs.getString("phoneCountry"),
+                        rs.getString("country"),
+                        rs.getString("iban")
                 );
             }
 
@@ -375,28 +366,12 @@ public class DBHandler extends DBConfig {
         }
     }
 
-    public void updateErrorAmount(double amount, int idCaisse) {
-        String query = "UPDATE " + Static.CAISSE_TABLE + " SET error_amount = ? WHERE idCaisse = ?";
-
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-
-            ps.setDouble(1, amount);
-            ps.setInt(2, idCaisse);
-
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void createUser(User user) {
 
         String query = "INSERT INTO " + Static.EMPLOYES_TABLE + " (firstName, lastName, inService, outService, nationalRegisterNum," +
                 " address, houseNum, letterBoxNum, postalCode, city, CivilStatus, sex, pseudo, email, password, dept, role," +
-                " phoneNumber, salary1, salary2, status, employeeNumber, country, phoneCountry, birthday) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                " phoneNumber, salary1, salary2, status, employeeNumber, country, phoneCountry, birthday, iban) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
@@ -426,6 +401,7 @@ public class DBHandler extends DBConfig {
             ps.setString(23, user.getCountry());
             ps.setString(24, user.getPhoneCountry());
             ps.setString(25, user.getBirthday());
+            ps.setString(26, user.getIban());
 
             ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
@@ -437,8 +413,8 @@ public class DBHandler extends DBConfig {
         String query = "UPDATE " + Static.EMPLOYES_TABLE + " SET firstName = ?, lastName = ?, inService = ?, outService = ?," +
                 " nationalRegisterNum = ?, address = ?, houseNum = ?, letterBoxNum = ?, postalCode = ?, city = ?," +
                 " CivilStatus = ?, sex = ?, pseudo = ?, email = ?, password = ?, dept = ?, role = ?, phoneNumber = ?," +
-                " salary1 = ?, salary2 = ?, status = ?, employeeNumber = ?, country = ?, phoneCountry = ?, birthday = ?" +
-                " WHERE id = ?";
+                " salary1 = ?, salary2 = ?, status = ?, employeeNumber = ?, country = ?, phoneCountry = ?, birthday = ?," +
+                " iban = ?" + " WHERE id = ?";
 
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
@@ -468,7 +444,8 @@ public class DBHandler extends DBConfig {
             ps.setString(23, user.getCountry());
             ps.setString(24, user.getPhoneCountry());
             ps.setString(25, user.getBirthday());
-            ps.setInt(26, CollaboratorGlobal.getPreviewUser().getId());
+            ps.setString(26, user.getIban());
+            ps.setInt(27, CollaboratorGlobal.getPreviewUser().getId());
 
             ps.executeUpdate();
             ps.close();

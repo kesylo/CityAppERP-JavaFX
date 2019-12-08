@@ -27,6 +27,7 @@ public class User {
     private double salary2;
     private String status;
     private int employeeNumber;
+    private String iban;
 
 
     //region controller
@@ -34,7 +35,7 @@ public class User {
     }
 
     // new constructor
-    public User(int id, String address, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber, String birthday, String phoneCountry, String country) {
+    public User(int id, String address, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role, String phoneNumber, double salary1, double salary2, String status, int employeeNumber, String birthday, String phoneCountry, String country, String iban) {
         this.id = id;
         this.address = address;
         this.city = city;
@@ -61,65 +62,29 @@ public class User {
         this.birthday = birthday;
         this.country = country;
         this.phoneCountry = phoneCountry;
+        this.iban = iban;
     }
 
-    public User(int id, String address, String city, String maritalStatus, String departement, String email, String firstName, int houseNumber, String dateInService, String lastName, String letterBoxNumber, String nationalRegistreryNumber, String dateOutService, String password, int postalCode, String pseudo, String sex, int role) {
-        this.id = id;
-        this.address = address;
-        this.city = city;
-        this.maritalStatus = maritalStatus;
-        this.departement = departement;
-        this.email = email;
-        this.firstName = firstName;
-        this.houseNumber = houseNumber;
-        this.dateInService = dateInService;
-        this.lastName = lastName;
-        this.letterBoxNumber = letterBoxNumber;
-        this.nationalRegistreryNumber = nationalRegistreryNumber;
-        this.dateOutService = dateOutService;
-        this.password = password;
-        this.postalCode = postalCode;
-        this.pseudo = pseudo;
-        this.sex = sex;
-        this.role = role;
-    }
     //endregion
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                ", departement='" + departement + '\'' +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", houseNumber=" + houseNumber +
-                ", dateInService='" + dateInService + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", letterBoxNumber='" + letterBoxNumber + '\'' +
-                ", nationalRegistreryNumber='" + nationalRegistreryNumber + '\'' +
-                ", dateOutService='" + dateOutService + '\'' +
-                ", password='" + password + '\'' +
-                ", country='" + country + '\'' +
-                ", phoneCountry='" + phoneCountry + '\'' +
-                ", postalCode=" + postalCode +
-                ", pseudo='" + pseudo + '\'' +
-                ", birthday='" + birthday + '\'' +
-                ", sex='" + sex + '\'' +
-                ", role=" + role +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", salary1=" + salary1 +
-                ", salary2=" + salary2 +
-                ", status='" + status + '\'' +
-                ", employeeNumber=" + employeeNumber +
-                '}';
+        return firstName.toUpperCase() + " " + lastName.toUpperCase();
     }
+
+
 
 
     //region getters and setters
 
+
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
 
     public String getCountry() {
         return country;
