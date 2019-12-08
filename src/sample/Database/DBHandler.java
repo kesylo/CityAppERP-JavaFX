@@ -122,12 +122,12 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
-    public ResultSet getAllEmployeesNames() {
+    public ResultSet getActiveEmployeesNames() {
 
         rs = null;
 
         // prepare the query
-        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE;
+        String query = "SELECT * FROM " + Static.EMPLOYES_TABLE + " WHERE outService is null or outService = ''";
         // run it
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);

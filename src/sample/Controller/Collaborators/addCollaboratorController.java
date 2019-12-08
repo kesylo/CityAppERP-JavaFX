@@ -379,22 +379,6 @@ public class addCollaboratorController {
         txtNumeroBoite.setEditable(false);
         txtZipCode.setEditable(false);
         txtRegisterNumber.setEditable(false);
-        /*radioDeptFO.setDisable(true);
-        radioDeptBO.setDisable(true);
-        radioDeptHK.setDisable(true);
-        radioDeptMN.setDisable(true);
-        radioStOvrier.setDisable(true);
-        radioStEmploye.setDisable(true);
-        radioStEtudiantOuvrier.setDisable(true);
-        radioStEtudiantEmploye.setDisable(true);
-        radioStOuvrierExtra.setDisable(true);
-        radioStEtudiantExtra.setDisable(true);
-        radioStOuvrierFlexi.setDisable(true);
-        radioStEmployeFlexi.setDisable(true);
-        radioSingle.setDisable(true);
-        radioMaried.setDisable(true);
-        datePickerStartService.setDisable(true);
-        datePickerEndService.setDisable(true);*/
         txtPseudo.setEditable(false);
         txtPassword.setEditable(false);
         btnSave.setDisable(true);

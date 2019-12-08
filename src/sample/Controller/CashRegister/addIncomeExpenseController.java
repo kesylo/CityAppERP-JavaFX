@@ -220,7 +220,7 @@ public class addIncomeExpenseController {
                 String firstName;
                 String lastName;
                 String fullName;
-                ResultSet userRow = dbHandler.getAllEmployeesNames();
+                ResultSet userRow = dbHandler.getActiveEmployeesNames();
 
                 try {
                     while (userRow.next()){
