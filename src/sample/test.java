@@ -1,9 +1,9 @@
 package sample;
 
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
+import com.itextpdf.text.List;
+import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfWriter;
 import sample.Controller.Global.Global;
 
@@ -92,7 +92,7 @@ public class test {
 
         //System.out.println(Global.convertBirthdayToRegisterNber(LocalDate.now()));
 
-        if (Global.isWindows()){
+        /*if (Global.isWindows()){
 
             String contractsFolder = "Contracts";
             String contractFileName = "Contrat-Employe-";
@@ -129,6 +129,39 @@ public class test {
 
 
 
+        }*/
+
+        Document pdf = new Document();
+        try {
+
+            PdfWriter writer = PdfWriter.getInstance(pdf,
+                    new FileOutputStream("test.pdf"));
+            pdf.open();
+
+            // ========================================================================== PDF START
+            Font font = new Font();
+            font.setStyle(Font.BOLD);
+            font.setSize(18);
+
+            // Heading
+            Paragraph heading = new Paragraph("CONTRAT DE TRAVAIL A DUREE DETERMINEE POUR EMPLOYES", font);
+            heading.setAlignment(Element.ALIGN_CENTER);
+            heading.setSpacingAfter(15);
+            pdf.add(heading);
+            pdf.add(new Paragraph("ENTRE les parties soussignées:"));
+            // list
+            List unorderedList = new List(List.UNORDERED);
+            unorderedList.add(new ListItem("d'une part "));
+            pdf.add(unorderedList);
+
+
+            pdf.add(unorderedList);
+
+            pdf.close();
+            writer.close();
+
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
         }
 
     }
