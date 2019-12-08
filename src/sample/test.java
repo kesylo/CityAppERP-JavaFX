@@ -4,16 +4,12 @@ package sample;
 import com.itextpdf.text.*;
 import com.itextpdf.text.List;
 import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import sample.Controller.Global.Global;
+import javafx.scene.text.TextAlignment;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.time.LocalDate;
-import java.time.Year;
-import java.time.format.DateTimeFormatter;
+import java.io.*;
 import java.util.*;
 
 public class test {
@@ -131,7 +127,38 @@ public class test {
 
         }*/
 
-        Document pdf = new Document();
+
+        // read file
+
+        ArrayList<String> fileLines = new ArrayList<>();
+        try
+        {
+            //the file to be opened for reading
+            FileInputStream fis=new FileInputStream("src/sample/Ressources/documents/CDD_EMPLOYES_VARIABLE.txt");
+
+            Scanner sc=new Scanner(fis);    //file to be scanned
+            //returns true if there is another line to read
+            while(sc.hasNextLine())
+            {
+                fileLines.add(sc.nextLine());
+                //System.out.println(sc.nextLine());      //returns the line that was skipped
+            }
+            sc.close();     //closes the scanner
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        //System.out.println(System.getProperty("user.dir"));
+
+        /*for(String line : fileLines) {
+            System.out.println(line);
+        }*/
+
+        /*System.out.println(fileLines.get(0));*/
+
+    Document pdf = new Document();
         try {
 
             PdfWriter writer = PdfWriter.getInstance(pdf,
@@ -139,23 +166,128 @@ public class test {
             pdf.open();
 
             // ========================================================================== PDF START
-            Font font = new Font();
-            font.setStyle(Font.BOLD);
-            font.setSize(18);
+            // ======================================================================================== HEADER
+            Paragraph p;
+            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA);
+            headerFont.setStyle(Font.BOLD);
+            headerFont.setSize(18);
+
+            Font textFont = FontFactory.getFont(FontFactory.HELVETICA);
+            textFont.setStyle(Font.NORMAL);
+            textFont.setSize(12);
 
             // Heading
-            Paragraph heading = new Paragraph("CONTRAT DE TRAVAIL A DUREE DETERMINEE POUR EMPLOYES", font);
-            heading.setAlignment(Element.ALIGN_CENTER);
-            heading.setSpacingAfter(15);
-            pdf.add(heading);
-            pdf.add(new Paragraph("ENTRE les parties soussignées:"));
-            // list
-            List unorderedList = new List(List.UNORDERED);
-            unorderedList.add(new ListItem("d'une part "));
-            pdf.add(unorderedList);
+            p = new Paragraph(fileLines.get(0), headerFont);
+            p.setAlignment(Element.ALIGN_CENTER);
+            p.setSpacingAfter(25);
+            pdf.add(p);
+
+            p = new Paragraph(fileLines.get(3), textFont);
+            pdf.add(p);
+
+            PdfPTable table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(4), textFont));
+            table.addCell(new Phrase("TRANS TECHNICS SERVICES", textFont));
+            table.addCell(new Phrase(fileLines.get(5), textFont));
+            table.addCell(new Phrase("Rue de la Fourche, 8", textFont));
+            table.addCell(" ");
+            table.addCell(new Phrase("1000 – BRUXELLES 1", textFont));
+            table.addCell(" ");
+            table.addCell(new Phrase("RPM: BE0.422.634.443", textFont));
+            table.addCell(" ");
+            table.addCell(new Phrase("ONSS: 0488.450-28", textFont));
+            table.addCell(new Phrase(fileLines.get(9), textFont));
+            table.addCell(new Phrase("Christian Drappier", textFont));
+            p.add(table);
+            p.setIndentationLeft(20);
+            pdf.add(p);
+
+            p = new Paragraph(fileLines.get(11));
+            pdf.add(p);
+
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(12), textFont));
+            table.addCell(new Phrase("Christian Drappier", textFont));
+            table.addCell(new Phrase(fileLines.get(13), textFont));
+            table.addCell(new Phrase("41444444444444444444", textFont));
+            table.addCell(new Phrase(fileLines.get(14), textFont));
+            table.addCell(new Phrase("grfdhgf", textFont));
+            table.addCell(new Phrase(fileLines.get(15), textFont));
+            table.addCell(new Phrase("541123151563", textFont));
+            table.addCell(new Phrase(fileLines.get(16), textFont));
+            table.addCell(new Phrase("grfdhgf", textFont));
+            table.addCell(new Phrase(fileLines.get(17), textFont));
+            table.addCell(new Phrase("gfdgfdgfdfdsds", textFont));
+            table.addCell(new Phrase(fileLines.get(21), textFont));
+            table.addCell("");
+            p.add(table);
+            p.setIndentationLeft(20);
+            pdf.add(p);
+            pdf.add( Chunk.NEWLINE );
+
+            p = new Paragraph(new Phrase(fileLines.get(22), textFont));
+            pdf.add(p);
+
+            // ======================================================================================== BODY
+            // We create a list:
+            pdf.add( Chunk.NEWLINE );
+            ZapfDingbatsList list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(25), textFont)));
+            pdf.add(list);
+            pdf.add( Chunk.NEWLINE );
+
+            p = new Paragraph();
+            p.add(new Phrase(fileLines.get(27), textFont));
+            p.add(new Phrase(" testeur", textFont));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.add(new Phrase(fileLines.get(28), textFont));
+            p.add(new Phrase(" testeur", textFont));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(30), textFont));
+            pdf.add(p);
+
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(32), textFont)));
+            pdf.add(list);
+            pdf.add( Chunk.NEWLINE );
+
+            table = new PdfPTable(4);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(34), textFont));
+            table.addCell(new Phrase("12-12-12", textFont));
+            table.addCell(new Phrase("au", textFont));
+            table.addCell(new Phrase("12-12-12", textFont));
+            p.add(table);
+            float[] columnWidths = new float[]{70f, 10f, 10f, 10f};
+            table.setWidths(columnWidths);
+            pdf.add(p);
+            pdf.add( Chunk.NEWLINE );
 
 
-            pdf.add(unorderedList);
+
+
+
+
+
+
+
+
 
             pdf.close();
             writer.close();
@@ -163,6 +295,5 @@ public class test {
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }
