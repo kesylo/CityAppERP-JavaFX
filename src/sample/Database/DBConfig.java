@@ -9,7 +9,7 @@ class DBConfig {
     String dbName = "cityappdberp";
 
     // deployment server
-/*    String dbHost = "192.168.0.123";
+    /*String dbHost = "192.168.0.123";
     String dbPort = "3306";
     String dbUser = "root";
     String dbPass = "ZKZ7ajZxLMn3";

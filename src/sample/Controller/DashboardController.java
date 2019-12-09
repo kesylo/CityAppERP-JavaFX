@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import sample.Controller.Global.Global;
+import sample.Global.Global;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -73,7 +73,7 @@ public class DashboardController implements Initializable {
         });
 
         btnNavToPlanning.setOnAction(event -> {
-            if (!Global.openInBrowser("https://192.168.0.123")){
+            if (!Global.openInBrowser("http://192.168.0.123/public/")){
                 Global.showErrorMessage("Erreur", "Un problème est survenu lors de l'ouverture de l'application.");
             }
         });

@@ -1,4 +1,4 @@
-package sample.Controller.Global;
+package sample.Global;
 
 public class ContractGlobal {
 

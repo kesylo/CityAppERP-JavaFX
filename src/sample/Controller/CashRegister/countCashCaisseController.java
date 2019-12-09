@@ -7,8 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import sample.Controller.Global.CashRegisterGlobal;
-import sample.Controller.Global.Global;
+import sample.Global.CashRegisterGlobal;
+import sample.Global.Global;
 import sample.Model.CaisseIncExp;
 import sample.Model.Cash;
 

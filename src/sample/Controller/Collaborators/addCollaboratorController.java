@@ -9,11 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import sample.Controller.DialogController;
-import sample.Controller.Global.CollaboratorGlobal;
-import sample.Controller.Global.Global;
+import sample.Global.CollaboratorGlobal;
+import sample.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.Country;
 import sample.Model.User;
@@ -654,7 +653,9 @@ public class addCollaboratorController {
         // inService
         user.setDateInService(Global.localDateToString(datePickerStartService.getValue()));
         // OutService
-        user.setDateOutService(Global.localDateToString(datePickerEndService.getValue()));
+        if (datePickerEndService.getValue() != null){
+            user.setDateOutService(Global.localDateToString(datePickerEndService.getValue()));
+        }
         // pseudo
         user.setPseudo(txtPseudo.getText());
         // password

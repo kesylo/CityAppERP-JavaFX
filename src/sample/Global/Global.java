@@ -1,4 +1,4 @@
-package sample.Controller.Global;
+package sample.Global;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;

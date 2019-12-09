@@ -5,9 +5,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import sample.Controller.Global.CashRegisterGlobal;
+import sample.Global.CashRegisterGlobal;
 import sample.Controller.DialogController;
-import sample.Controller.Global.Global;
+import sample.Global.Global;
 import sample.Database.DBHandler;
 import sample.Model.Caisse;
 

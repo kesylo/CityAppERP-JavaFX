@@ -7,8 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
-import sample.Controller.Global.CashRegisterGlobal;
-import sample.Controller.Global.Global;
+import sample.Global.CashRegisterGlobal;
+import sample.Global.Global;
 import sample.Database.DBHandler;
 
 import java.net.URL;
