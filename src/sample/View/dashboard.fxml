@@ -74,7 +74,7 @@
                         <Font name="Poppins Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNavToCaisse22" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button5" stylesheets="@../Ressources/css/style.css" text="Paramètres" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="btnNavToSettings" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button5" stylesheets="@../Ressources/css/style.css" text="Paramètres" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <graphic>
                         <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                            <image>

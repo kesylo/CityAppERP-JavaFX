@@ -364,7 +364,7 @@ public final class Global {
         return stringBuilder.toString();
     }
 
-    static boolean openWebPage(URI uri) {
+    private static boolean openWebPage(URI uri) {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {

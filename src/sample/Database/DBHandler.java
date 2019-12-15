@@ -470,7 +470,20 @@ public class DBHandler extends DBConfig {
         }
     }
 
+    public void updateRole(User selectedUser, int newRole) {
+        String query = "UPDATE " + Static.EMPLOYES_TABLE + " SET role = ? WHERE id = ?";
 
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
 
+            ps.setInt(1, newRole);
+            ps.setInt(2, selectedUser.getId());
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     /*------------------------------ DELETE -------------------------------------*/
 }

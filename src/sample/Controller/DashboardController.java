@@ -35,6 +35,9 @@ public class DashboardController implements Initializable {
     private Button btnNavToContracts;
 
     @FXML
+    private Button btnNavToSettings;
+
+    @FXML
     private Button btnNavToCollaborators;
 
     @FXML
@@ -81,6 +84,11 @@ public class DashboardController implements Initializable {
         btnNavToContracts.setOnAction(event -> {
             URL toContracts = getClass().getResource("/sample/View/Contracts/contractsDashboard.fxml");
             Global.navigateTo(toContracts, "Contrats");
+        });
+
+        btnNavToSettings.setOnAction(event -> {
+            URL toSettings = getClass().getResource("/sample/View/Settings/settingsDashboard.fxml");
+            Global.navigateTo(toSettings, "Settings");
         });
 
     }
