@@ -236,15 +236,15 @@ public class addCollaboratorController {
         // types: 1 : string,       2 : float,       3 : int,       0 : all
         // String case: 1 : toUpper,       2 : one letter Caps,       3 : nothing
 
-        Global.txtFormater(txtName, 20,0, 1);
-        Global.txtFormater(txtSurname, 20,0, 1);
-        Global.txtFormater(txtEmail, 40,0, 2);
+        Global.txtFormater(txtName, 30,0, 1);
+        Global.txtFormater(txtSurname, 30,0, 1);
+        Global.txtFormater(txtEmail, 50,0, 2);
         Global.txtFormater(txtNumEmployee, 4,3, 3);
-        Global.txtFormater(txtAddress, 30,0, 2);
+        Global.txtFormater(txtAddress, 60,0, 2);
         Global.txtFormater(txtNumeroRue, 6,3, 3);
         Global.txtFormater(txtNumeroBoite, 3,0, 1);
-        Global.txtFormater(txtCity, 15,1, 2);
-        Global.txtFormater(txtPhoneNumber, 15,3, 3);
+        Global.txtFormater(txtCity, 40,1, 2);
+        Global.txtFormater(txtPhoneNumber, 30,3, 3);
         Global.txtFormater(txtSalaryMonth, 10,2, 3);
         Global.txtFormater(txtSalaryHour, 10,2, 3);
         Global.txtFormater(txtZipCode, 5,2, 3);
