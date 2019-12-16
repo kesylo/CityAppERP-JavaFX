@@ -39,7 +39,8 @@
                   <TableColumn fx:id="clmSurname" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Prénom" />
                   <TableColumn fx:id="clmSex" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Sexe" />
                   <TableColumn fx:id="clmDept" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Dept." />
-                  <TableColumn fx:id="clmPhone" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Téléphone" />
+                  <TableColumn fx:id="clmPhoneCountry" prefWidth="125.0" style="-fx-alignment: CENTER;" text="Pays (Mobile)" />
+                  <TableColumn fx:id="clmPhone" prefWidth="178.0" style="-fx-alignment: CENTER;" text="Téléphone" />
                   <TableColumn fx:id="clmNationalNumber" prefWidth="75.0" style="-fx-alignment: CENTER;" text="N° National" />
                </columns>
             </TableView>

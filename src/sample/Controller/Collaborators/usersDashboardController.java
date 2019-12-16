@@ -55,6 +55,9 @@ public class usersDashboardController {
     private TableColumn<User, String> clmPhone;
 
     @FXML
+    private TableColumn<User, String> clmPhoneCountry;
+
+    @FXML
     private TableColumn<User, String> clmNationalNumber;
 
     @FXML
@@ -99,7 +102,7 @@ public class usersDashboardController {
     private DBHandler dbHandler = new DBHandler();
     private DialogController<String> wd = null;
     private ResultSet rs = null;
-    FilteredList<User> filteredUser = null;
+    private FilteredList<User> filteredUser = null;
 
     @FXML
     void initialize() {
@@ -305,6 +308,7 @@ public class usersDashboardController {
         clmDept.setCellValueFactory(new PropertyValueFactory<>("Departement"));
         clmName.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
         clmNationalNumber.setCellValueFactory(new PropertyValueFactory<>("NationalRegistreryNumber"));
+        clmPhoneCountry.setCellValueFactory(new PropertyValueFactory<>("PhoneCountry"));
         clmPhone.setCellValueFactory(new PropertyValueFactory<>("PhoneNumber"));
         clmSex.setCellValueFactory(new PropertyValueFactory<>("Sex"));
         clmSurname.setCellValueFactory(new PropertyValueFactory<>("LastName"));
