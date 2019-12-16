@@ -66,13 +66,23 @@ public class DashboardController implements Initializable {
 
 
         btnNavToCaisse.setOnAction(event -> {
-            URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
-            Global.navigateTo(toCaisse, "Caisse");
+            if (Global.getConnectedUser().getRole() > 2 ){
+                URL toCaisse = getClass().getResource("/sample/View/CashRegister/caisseDashboard.fxml");
+                Global.navigateTo(toCaisse, "Caisse");
+            }else {
+                Global.showErrorMessage("Erreur de droits.",
+                        "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");
+            }
         });
 
         btnNavToCollaborators.setOnAction(event -> {
-            URL toUsers = getClass().getResource("/sample/View/Collaborators/usersDashboard.fxml");
-            Global.navigateTo(toUsers, "Collaborateurs");
+            if (Global.getConnectedUser().getRole() > 3 ){
+                URL toUsers = getClass().getResource("/sample/View/Collaborators/usersDashboard.fxml");
+                Global.navigateTo(toUsers, "Collaborateurs");
+            }else {
+                Global.showErrorMessage("Erreur de droits.",
+                        "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");
+            }
         });
 
         btnNavToPlanning.setOnAction(event -> {
@@ -82,35 +92,28 @@ public class DashboardController implements Initializable {
         });
 
         btnNavToContracts.setOnAction(event -> {
-            URL toContracts = getClass().getResource("/sample/View/Contracts/contractsDashboard.fxml");
-            Global.navigateTo(toContracts, "Contrats");
+            if (Global.getConnectedUser().getRole() > 4 ){
+                URL toContracts = getClass().getResource("/sample/View/Contracts/contractsDashboard.fxml");
+                Global.navigateTo(toContracts, "Contrats");
+            }else {
+                Global.showErrorMessage("Erreur de droits.",
+                        "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");
+            }
         });
 
         btnNavToSettings.setOnAction(event -> {
-            URL toSettings = getClass().getResource("/sample/View/Settings/settingsDashboard.fxml");
-            Global.navigateTo(toSettings, "Settings");
+            if (Global.getConnectedUser().getRole() > 4 ){
+                URL toSettings = getClass().getResource("/sample/View/Settings/settingsDashboard.fxml");
+                Global.navigateTo(toSettings, "Settings");
+            }else {
+                Global.showErrorMessage("Erreur de droits.",
+                        "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");
+            }
         });
 
     }
 
     /*--------------------------------------------------------------------------------------*/
-
-    /*private void manageRoles(int role) {
-        switch (role) {
-            case 0:
-                basicUserRole();
-                break;
-            case 1:
-                mediumUserRole();
-                break;
-            case 2:
-                advancedUserRole();
-                break;
-            case 3:
-                adminUserRole();
-                break;
-        }
-    }*/
 
     private void setWelcomeText() {
         if (Global.getConnectedUser().getSex().equals("Male")){
@@ -119,25 +122,4 @@ public class DashboardController implements Initializable {
             lblWelcome.setText("Bienvenue, " + Global.getConnectedUser().getFirstName() + " !");
         }
     }
-
-    /*------------------------------------------ ROLES ----------------------------------------------*/
-/*    // Role : 0
-    private void basicUserRole() {
-        btnNavToCaisse.setDisable(true);
-    }
-
-    // Role : 1
-    private void mediumUserRole() {
-        btnNavToCaisse.setDisable(true);
-    }
-
-    // Role : 2
-    private void advancedUserRole() {
-        btnNavToCaisse.setDisable(false);
-    }
-
-    // Role : 3
-    private void adminUserRole() {
-        btnNavToCaisse.setDisable(false);
-    }*/
 }
