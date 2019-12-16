@@ -19,6 +19,7 @@ import sample.Model.User;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -175,8 +176,6 @@ public class addCollaboratorController {
     @FXML
     private JFXRadioButton radioDeptMN;
 
-    @FXML
-    private ImageView photoDownUser;
     //endregion
 
     @FXML
@@ -395,11 +394,14 @@ public class addCollaboratorController {
             countriesCodeList.add(c.getCode());
         }
         // set Country elements
+        countriesNamesList.sort(Comparator.naturalOrder());
         comboCountry.setItems(countriesNamesList);
         comboCountry.getSelectionModel().selectFirst();
     }
 
     private void fillComboPhoneCountry() {
+        // order alphabetic order Collections.sort(names);  list.sort(Comparator.naturalOrder());
+        countriesCodeList.sort(Comparator.naturalOrder());
         comboPhoneCountry.setItems(countriesCodeList);
         comboPhoneCountry.getSelectionModel().selectFirst();
     }
@@ -527,14 +529,13 @@ public class addCollaboratorController {
         //region salary Month
         if (txtSalaryMonth.getLength() == 0 || txtSalaryMonth.getText() == null){
             // add error to list
-            formErrorsList.add("Le 'Salaire Mensuel' entré est incorrect !");
+            txtSalaryMonth.setText(0 + "");
         }
         //endregion
 
         //region salary Hour
         if (txtSalaryHour.getLength() == 0 || txtSalaryHour.getText() == null){
-            // add error to list
-            formErrorsList.add("Le 'Salaire Horaire' entré est incorrect !");
+            txtSalaryHour.setText(0 + "");
         }
         //endregion
 
