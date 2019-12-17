@@ -295,6 +295,12 @@ public final class Global {
                 }
             }
 
+            if (type == 4){ // validate salary
+                if (!newValue.matches("\\d{0,7}([.]\\d{0,3})?")) {
+                    textField.setText(oldValue);
+                }
+            }
+
             if (type == 0){ // validate all
                 System.out.print("");
             }

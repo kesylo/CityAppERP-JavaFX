@@ -233,7 +233,7 @@ public class addCollaboratorController {
         }
 
         //region Fields Constraints
-        // types: 1 : string,       2 : float,       3 : int,       0 : all
+        // types: 1 : string,       2 : float 0.00       3 : int,      4 : float 0.000     0 : all
         // String case: 1 : toUpper,       2 : one letter Caps,       3 : nothing
 
         Global.txtFormater(txtName, 30,0, 1);
@@ -246,7 +246,7 @@ public class addCollaboratorController {
         Global.txtFormater(txtCity, 40,1, 2);
         Global.txtFormater(txtPhoneNumber, 30,3, 3);
         Global.txtFormater(txtSalaryMonth, 10,2, 3);
-        Global.txtFormater(txtSalaryHour, 10,2, 3);
+        Global.txtFormater(txtSalaryHour, 10,4, 3);
         Global.txtFormater(txtZipCode, 5,2, 3);
         Global.txtFormater(txtRegisterNumber, 15,0, 1);
         Global.txtFormater(txtPseudo, 15,0, 3);
