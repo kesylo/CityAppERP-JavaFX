@@ -54,7 +54,11 @@ public class LoginController {
 
         lblAppVersion.setText(Global.appVersion.toString());
 
-        btnConnection.setOnAction(event -> login());
+        btnConnection.setOnAction(event -> {
+            login();
+        });
+
+
 
     }
 
@@ -64,6 +68,7 @@ public class LoginController {
 
         // create temp user
         User user = new User();
+
 
         // hide error text
         lblErrorMessage.setVisible(false);
@@ -123,6 +128,8 @@ public class LoginController {
                             // shake input text
                             showErrorAndShake();
                         }
+
+
 
                     });
 

@@ -52,7 +52,15 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="controlsfx-8.40.15" level="project" />
-    <orderEntry type="library" name="itextpdf-5.5.13.1" level="project" />
+    <orderEntry type="library" exported="" name="itextpdf-5.5.13.1" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libraries/controlsfx-8.40.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

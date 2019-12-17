@@ -36,8 +36,9 @@ import java.util.List;
 
 public final class Global {
 
-    //region variables
 
+    //region variables
+    public static String PlanningServerAddress;
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
@@ -47,6 +48,15 @@ public final class Global {
     //endregion
 
     //region Getters and Setters
+
+
+    public static String getPlanningServerAddress() {
+        return PlanningServerAddress;
+    }
+
+    public static void setPlanningServerAddress(String planningServerAddress) {
+        PlanningServerAddress = planningServerAddress;
+    }
 
     public static User getConnectedUser() {
         return connectedUser;

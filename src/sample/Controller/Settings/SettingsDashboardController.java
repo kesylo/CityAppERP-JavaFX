@@ -21,6 +21,9 @@ public class SettingsDashboardController {
     private JFXButton btnhide;
 
     @FXML
+    private Button btnNatChangeSvrAddress;
+
+    @FXML
     private ImageView btnLogOut;
 
     @FXML
@@ -50,6 +53,11 @@ public class SettingsDashboardController {
         btnRetour.setOnAction(event -> {
             URL url = getClass().getResource("/sample/View/dashboard.fxml");
             Global.navigateTo(url, "Dashboard");
+        });
+
+        btnNatChangeSvrAddress.setOnAction(event -> {
+            URL url = getClass().getResource("/sample/View/Settings/editServerAddress.fxml");
+            Global.navigateModal(url, "Adresse Serveur");
         });
 
     }

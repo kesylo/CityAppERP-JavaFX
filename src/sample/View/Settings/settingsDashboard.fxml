@@ -86,7 +86,7 @@
                               <Font name="Poppins Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnNavToPlanning" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="338.0" styleClass="button2" stylesheets="@../../Ressources/css/style.css" text="Changement de mot de passe" GridPane.columnIndex="1">
+                        <Button contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="338.0" styleClass="button2" stylesheets="@../../Ressources/css/style.css" text="Changement de mot de passe" GridPane.columnIndex="1">
                            <graphic>
                               <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -98,19 +98,7 @@
                               <Font name="Poppins Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnNavToCollaborators" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="338.0" styleClass="button3" stylesheets="@../../Ressources/css/style.css" text="Changer l'adresse du serveur planning" GridPane.columnIndex="2">
-                           <graphic>
-                              <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../Ressources/images/icons8_website_100px.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font name="Poppins Bold" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnNavToReports" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="338.0" styleClass="button7" stylesheets="@../../Ressources/css/style.css" text="Aide" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="338.0" styleClass="button7" stylesheets="@../../Ressources/css/style.css" text="Aide" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <graphic>
                               <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -122,11 +110,23 @@
                               <Font name="Poppins Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnNavToContracts" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="362.0" styleClass="button6" stylesheets="@../../Ressources/css/style.css" text="Langues" GridPane.rowIndex="1">
+                        <Button contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="362.0" styleClass="button6" stylesheets="@../../Ressources/css/style.css" text="Langues" GridPane.rowIndex="1">
                            <graphic>
                               <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../Ressources/images/icons8_language_100px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnNatChangeSvrAddress" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="338.0" styleClass="button3" stylesheets="@../../Ressources/css/style.css" text="Changer l'adresse du serveur" GridPane.columnIndex="2">
+                           <graphic>
+                              <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Ressources/images/icons8_website_100px.png" />
                                  </image>
                               </ImageView>
                            </graphic>

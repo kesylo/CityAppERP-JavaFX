@@ -141,6 +141,21 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    public ResultSet getPlanningServerAdress() {
+        String query = "SELECT * FROM erp_tools WHERE id_erp_tools=1";
+
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public User getEmployeObjByID(int idEmployes) {
         User user = null;
         rs = null;
@@ -485,5 +500,22 @@ public class DBHandler extends DBConfig {
             e.printStackTrace();
         }
     }
+
+    public void updateServerAddress(String address) {
+        String query = "UPDATE erp_tools SET planningServerAddress = ? WHERE id_erp_tools = 1";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setString(1, address);
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /*------------------------------ DELETE -------------------------------------*/
 }

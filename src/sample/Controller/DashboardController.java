@@ -1,13 +1,17 @@
 package sample.Controller;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import sample.Database.DBHandler;
 import sample.Global.Global;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -44,6 +48,9 @@ public class DashboardController implements Initializable {
     private Button btnNavToPlanning;
     //endregion
 
+    private DialogController<String> wd = null;
+    private DBHandler dbHandler = new DBHandler();
+
     @FXML
     void logOut() {
         URL location = getClass().getResource("/sample/View/login.fxml");
@@ -63,6 +70,9 @@ public class DashboardController implements Initializable {
 
         // set profile photo
         Global.setProfileIcon(photo);
+
+        // load server settings
+        getPlanningServerAddress();
 
 
         btnNavToCaisse.setOnAction(event -> {
@@ -86,8 +96,13 @@ public class DashboardController implements Initializable {
         });
 
         btnNavToPlanning.setOnAction(event -> {
-            if (!Global.openInBrowser("http://192.168.0.123/public/")){
-                Global.showErrorMessage("Erreur", "Un problème est survenu lors de l'ouverture de l'application.");
+            if (Global.getPlanningServerAddress() != null){
+                if (!Global.openInBrowser(Global.getPlanningServerAddress())){
+                    Global.showErrorMessage("Erreur", "Un problème est survenu lors de l'ouverture de l'application.");
+                }
+            }else {
+                Global.showErrorMessage("Impossible de recupérer les informations du serveur",
+                        "Veuillez vous reconnecter !");
             }
         });
 
@@ -114,6 +129,36 @@ public class DashboardController implements Initializable {
     }
 
     /*--------------------------------------------------------------------------------------*/
+
+    private void getPlanningServerAddress(){
+
+        final String[] address = {""};
+
+        Platform.runLater(() ->{
+            wd = new DialogController<>(btnhide.getScene().getWindow(), "Obtention du serveur...");
+
+            wd.exec("123", inputParam -> {
+
+                ResultSet row = dbHandler.getPlanningServerAdress();
+
+                try {
+                    while (row.next()) {
+                        address[0] = row.getString("planningServerAddress");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Platform.runLater(() ->{
+
+                    Global.setPlanningServerAddress(address[0]);
+
+                });
+
+                return 1;
+            });
+        });
+    }
 
     private void setWelcomeText() {
         if (Global.getConnectedUser().getSex().equals("Male")){
