@@ -234,7 +234,7 @@ public class addCollaboratorController {
 
         //region Fields Constraints
         // types: 1 : string,       2 : float 0.00       3 : int,      4 : float 0.000     0 : all
-        // String case: 1 : toUpper,       2 : one letter Caps,       3 : nothing
+        // String case: 1 : toUpper,       2 : one letter Caps,       3 : nothingF
 
         Global.txtFormater(txtName, 30,0, 1);
         Global.txtFormater(txtSurname, 30,0, 1);

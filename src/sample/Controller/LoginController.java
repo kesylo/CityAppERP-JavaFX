@@ -99,7 +99,9 @@ public class LoginController {
                             user.setSex(userRow.getString("sex"));
                         }
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                                "Voici les détails sur l'erreur ", e);
                     }
 
 

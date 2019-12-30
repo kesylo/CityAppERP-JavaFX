@@ -18,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import sample.Global.Global;
 
 import java.util.function.ToIntFunction;
 
@@ -138,7 +139,9 @@ public class DialogController<P> {
                 resultNotificationList.add(resultValue);
             }
             catch (Exception e) {
-                throw new RuntimeException(e);
+                //e.printStackTrace();
+                Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                        "Voici les détails sur l'erreur ", e);
             }
         };
 

@@ -39,13 +39,15 @@ public class DBHandler extends DBConfig {
             }
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
 
         return count;
     }
 
-    public ResultSet getUser(User user) {
+    public ResultSet getUser(User user)  {
 
         rs = null;
 
@@ -60,8 +62,9 @@ public class DBHandler extends DBConfig {
 
                 rs = ps.executeQuery();
 
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (Exception ex) {
+                Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                        "Voici les détails sur l'erreur ", ex);
             }
         } else {
             System.out.println("retry");
@@ -82,8 +85,10 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
         return rs;
     }
@@ -99,8 +104,10 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
         return rs;
     }
@@ -116,8 +123,10 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
         return rs;
     }
@@ -135,8 +144,10 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
         return rs;
     }
@@ -150,8 +161,10 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
         return rs;
     }
@@ -201,8 +214,10 @@ public class DBHandler extends DBConfig {
                 );
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
 
 
@@ -224,8 +239,10 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
         return rs;
     }
@@ -243,46 +260,15 @@ public class DBHandler extends DBConfig {
 
             rs = ps.executeQuery();
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
         return rs;
     }
 
     /*------------------------------ INSERT -------------------------------------*/
-
-/*    public void addErrorLine(CaisseIncExp errorExpense) {
-        //INSERT INTO `cityappdatabase`.`caisse_recettes` (`id_caisse_recettes`, `fk_idCaisse`, `montant`,
-        // `type`, `date`, `time`, `indexClient`, `remarque`, `numeroShift`, `reason`, `employees_id`) VALUES ('231', '1', '256', '1', '2019-09-11', '23:12', '158-256-2322', 'ccc', '2', 'ccc', '1');
-        String query = "INSERT INTO " + Static.CAISSE_RECETTES_TABLE + " ( " +
-                "fk_idCaisse," +
-                " montant," +
-                " type," +
-                " date, " +
-                " time, " +
-                " remarque, " +
-                " numeroShift, " +
-                " reason, " +
-                "employees_id ) VALUES (?,?,?,?,?,?,?,?,?)";
-
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-
-            ps.setInt(1, errorExpense.getIdCaisse());
-            ps.setDouble(2, errorExpense.getAmount());
-            ps.setInt(3, errorExpense.getType());
-            ps.setString(4, errorExpense.getCreationDate());
-            ps.setString(5, errorExpense.getTime());
-            ps.setString(6, errorExpense.getComment());
-            ps.setInt(7, errorExpense.getShiftNumber());
-            ps.setString(8, errorExpense.getReason());
-            ps.setInt(9, errorExpense.getIdUser());
-
-            ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     public void createCaisse(Caisse caisse) {
         String query = "INSERT INTO " + Static.CAISSE_TABLE + " ( date, montant, numeroShift, closed, employees_id, numeroCaisse, remarque, has_error, error_amount) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -301,8 +287,10 @@ public class DBHandler extends DBConfig {
             ps.setDouble(9, caisse.getError_amount());
 
             ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -326,8 +314,10 @@ public class DBHandler extends DBConfig {
             ps.setInt(11, caisseAction.getIdCaisse());
 
             ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -353,8 +343,10 @@ public class DBHandler extends DBConfig {
 
 
             ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -376,8 +368,10 @@ public class DBHandler extends DBConfig {
 
             ps.executeUpdate();
             ps.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -419,8 +413,10 @@ public class DBHandler extends DBConfig {
             ps.setString(26, user.getIban());
 
             ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -464,8 +460,10 @@ public class DBHandler extends DBConfig {
 
             ps.executeUpdate();
             ps.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -480,8 +478,10 @@ public class DBHandler extends DBConfig {
 
             ps.executeUpdate();
             ps.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -496,8 +496,10 @@ public class DBHandler extends DBConfig {
 
             ps.executeUpdate();
             ps.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 
@@ -511,8 +513,10 @@ public class DBHandler extends DBConfig {
 
             ps.executeUpdate();
             ps.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
         }
     }
 

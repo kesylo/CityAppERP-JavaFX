@@ -26,7 +26,7 @@
             <DropShadow />
          </effect>
          <children>
-            <JFXComboBox fx:id="comboUser" focusColor="#5dbcd2" focusTraversable="false" layoutX="49.0" layoutY="94.0" prefHeight="31.0" prefWidth="386.0" promptText="Collaborateur" />
+            <JFXComboBox fx:id="comboUser" focusColor="#5dbcd2" focusTraversable="false" layoutX="49.0" layoutY="94.0" onAction="#onChange" prefHeight="31.0" prefWidth="386.0" promptText="Collaborateur" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="81.0" layoutY="14.0" prefHeight="52.0" prefWidth="632.0" text="Générez facilement des contrats" textAlignment="CENTER">
                <font>
                   <Font name="Poppins Bold" size="36.0" />
@@ -63,16 +63,7 @@
             <Separator layoutX="27.0" layoutY="122.0" prefHeight="11.0" prefWidth="739.0" />
             <VBox layoutX="389.0" layoutY="151.0" prefHeight="333.0" prefWidth="376.0" spacing="20.0">
                <children>
-                  <JFXTextField fx:id="txtJobTitle" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Dénomination légale du poste" unFocusColor="BLACK">
-                     <font>
-                        <Font name="Poppins Regular" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="txtJobCategory" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Catégorie d'emploi du poste" unFocusColor="BLACK">
-                     <font>
-                        <Font name="Poppins Regular" size="14.0" />
-                     </font>
-                  </JFXTextField>
+                  <JFXComboBox fx:id="comboCategory" focusColor="#5dbcd2" focusTraversable="false" prefHeight="31.0" prefWidth="386.0" promptText="Catégorie" />
                   <JFXDatePicker fx:id="datePickerStartContract" defaultColor="#5dbcd2" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="375.0" promptText="Date de début du contrat" />
                   <JFXDatePicker fx:id="datePickerEndContract" defaultColor="#5dbcd2" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="375.0" promptText="Date de fin du contrat" />
                   <JFXTextField fx:id="txtHoursPerWeek" cache="true" focusColor="#5dbcd2" prefHeight="30.0" prefWidth="236.0" promptText="Durée hebdomadaire moyenne de travail" unFocusColor="BLACK">

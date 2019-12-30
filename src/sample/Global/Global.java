@@ -9,8 +9,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,7 +25,10 @@ import tray.animations.AnimationType;
 import tray.notification.TrayNotification;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -105,6 +111,44 @@ public final class Global {
         alertDialog.setTitle(appName);
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
+        alertDialog.showAndWait();
+    }
+
+    public static void showExceptionMessage(String header, String content, Exception ex) {
+        Alert alertDialog = new Alert(Alert.AlertType.ERROR);
+        alertDialog.setTitle(appName);
+        alertDialog.setHeaderText(header);
+        alertDialog.setContentText(content);
+
+
+        //ex = new FileNotFoundException("Could not find file blabla.txt");
+
+        // Create expandable Exception.
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        String exceptionText = sw.toString();
+
+        Label label = new Label("The exception stacktrace was:");
+
+        TextArea textArea = new TextArea(exceptionText);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
+
+        // Set expandable Exception into the dialog pane.
+        alertDialog.getDialogPane().setExpandableContent(expContent);
+
+
         alertDialog.showAndWait();
     }
 
