@@ -4,7 +4,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.*;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -145,7 +144,6 @@ public class ContractsDashboardController {
 
     // some variables
     private String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
-    private String contractsFolder = "Contracts";
     private DBHandler dbHandler = new DBHandler();
     private DialogController<String> wd = null;
 
@@ -191,8 +189,8 @@ public class ContractsDashboardController {
         radioCDDFlexiEmpl.selectedProperty().addListener((obs, wasPreviouslySelected, isNowSelected) -> {
             if (isNowSelected) {
                 // what i don't need to be active
-                comboCategory.setDisable(true);
                 txtHoursPerWeek.setDisable(true);
+                comboCategory.setDisable(true);
                 // what i need to be active
                 datePickerConvention.setVisible(true);
                 txtJobDescription.setDisable(false);
@@ -210,8 +208,6 @@ public class ContractsDashboardController {
             }
         });
 
-
-
         // action buttons
         btnGenerate.setOnAction(event -> {
             if (radioCDDEmp.isSelected()){
@@ -221,7 +217,7 @@ public class ContractsDashboardController {
             }else if (radioCDDFlexiEmpl.isSelected()){
                 createFlexiEmployeeContract();
             }else if (radioCDDFlexiOuvr.isSelected()){
-                createFlexiWorkerContract();
+                createFlexiOuvrierContract();
             }
         });
 
@@ -233,11 +229,51 @@ public class ContractsDashboardController {
     }
 
     private void createFlexiEmployeeContract() {
+        try {
+            if (!txtJobDescription.getText().isEmpty() &&
+                    datePickerConvention.getValue() != null){
 
+                // create contract folder on each os
+                createContractDir();
+
+                // create the pdf
+                if (buildFlexiEmployeePDF()){
+                    // success message
+                    Global.showInfoMessage("Contrat généré!", "Votre contrat se trouve dans le répertoire "
+                            + ContractGlobal.getContractsPath());
+                }
+
+            }else {
+                Global.showErrorMessage("Erreur sur le formulaire", "Remplissez tous les champs disponibles");
+            }
+        } catch (Exception e){
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
     }
 
-    private void createFlexiWorkerContract() {
+    private void createFlexiOuvrierContract() {
+        try {
+            if (!txtJobDescription.getText().isEmpty() &&
+                    datePickerConvention.getValue() != null){
 
+                // create contract folder on each os
+                createContractDir();
+
+                // create the pdf
+                if (buildFlexiOuvrierPDF()){
+                    // success message
+                    Global.showInfoMessage("Contrat généré!", "Votre contrat se trouve dans le répertoire "
+                            + ContractGlobal.getContractsPath());
+                }
+
+            }else {
+                Global.showErrorMessage("Erreur sur le formulaire", "Remplissez tous les champs disponibles");
+            }
+        } catch (Exception e){
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
     }
 
     private void createStudentEmplContract() {
@@ -295,6 +331,7 @@ public class ContractsDashboardController {
     private void createContractDir() {
         try {
             if (Global.isWindows()){
+                String contractsFolder = "Contracts";
                 File path = new File(myDocumentsPath + "\\" + contractsFolder);
                 // set globally
                 ContractGlobal.setContractsPath(path.toString());
@@ -369,7 +406,7 @@ public class ContractsDashboardController {
 
     /* ==============================================================================================================================*/
 
-    private Boolean buildEmplPDF(){
+    private boolean buildEmplPDF(){
         String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
 
         //region Read txt file
@@ -540,17 +577,12 @@ public class ContractsDashboardController {
             pdf.add(list);
 
             // add user data in this section
-            table = new PdfPTable(3);
-            table.getDefaultCell().setBorder(0);
-            table.setWidthPercentage(100);
-            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
             p = new Paragraph();
-            table.addCell(new Phrase(fileLines.get(39), textNormal));
-            table.addCell(new Phrase(" " + selectedUser.getSalary1(), textBold));
-            table.addCell(new Phrase("€ par mois.", textNormal));
-            p.add(table);
-            columnWidths = new float[]{47f, 10f, 43f};
-            table.setWidths(columnWidths);
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(39), textNormal));
+            p.add(new Phrase(" " + Global.formatDouble3(selectedUser.getSalary1()), textBold));
+            p.add(new Phrase(" € par mois.", textNormal));
+
             pdf.add(p);
 
             p = new Paragraph(new Phrase(fileLines.get(41), textNormal));
@@ -570,7 +602,7 @@ public class ContractsDashboardController {
             p = new Paragraph();
             p.setAlignment(Element.ALIGN_JUSTIFIED);
             p.add(new Phrase(fileLines.get(47) + " ", textNormal));
-            p.add(new Phrase(" " + txtHoursPerWeek.getText() , textBold));
+            p.add(new Phrase(Global.formatDouble(Double.valueOf(txtHoursPerWeek.getText())) , textBold));
             p.add(new Phrase(" heures sera réalisée sur base annuelle.", textNormal));
             pdf.add(p);
 
@@ -625,6 +657,8 @@ public class ContractsDashboardController {
             // ======================================================================================== FOOTER
 
             // add user data in this section
+            pdf.add( Chunk.NEWLINE );
+            pdf.add( Chunk.NEWLINE );
             p = new Paragraph();
             p.add(new Phrase(fileLines.get(73), textNormal));
             p.add(new Phrase(Global.getSystemDate() + ".", textBold));
@@ -681,7 +715,7 @@ public class ContractsDashboardController {
         return true;
     }
 
-    private Boolean buildEtudiantEmplPDF(){
+    private boolean buildEtudiantEmplPDF(){
         String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
 
         //region Read txt file
@@ -908,8 +942,8 @@ public class ContractsDashboardController {
             p = new Paragraph();
             p.setAlignment(Element.ALIGN_JUSTIFIED);
             p.add(new Phrase(fileLines.get(106), textNormal));
-            p.add(new Phrase(" " + txtHoursPerWeek.getText(), textNormal));
-            p.add(new Phrase(" heures " + fileLines.get(107), textBold));
+            p.add(new Phrase(" " + Global.formatDouble(Double.valueOf(txtHoursPerWeek.getText())), textBold));
+            p.add(new Phrase(" heures " + fileLines.get(107), textNormal));
             pdf.add(p);
 
             p = new Paragraph();
@@ -990,6 +1024,608 @@ public class ContractsDashboardController {
             p.add((new Phrase(fileLines.get(213), textNormal)));
             p.add((new Phrase(fileLines.get(214), textNormal)));
             pdf.add(p);
+
+            // ======================================================================================== FOOTER
+
+            pdf.add( Chunk.NEWLINE );
+            pdf.add( Chunk.NEWLINE );
+            // add user data in this section
+            p = new Paragraph();
+            p.add(new Phrase(fileLines.get(244), textNormal));
+            p.add(new Phrase(Global.getSystemDate() + ".", textBold));
+            pdf.add(p);
+
+            p = new Paragraph(new Phrase(fileLines.get(245), textNormal));
+            p.setSpacingAfter(30);
+            pdf.add(p);
+
+
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(248), textBold));
+            table.addCell(new Phrase(fileLines.get(249), textBold));
+            table.addCell(new Phrase(fileLines.get(250), textNormal));
+            table.addCell(new Phrase(fileLines.get(251), textNormal));
+            table.addCell(new Phrase(fileLines.get(252), textNormal));
+            table.addCell(new Phrase(fileLines.get(253), textNormal));
+            p.add(table);
+            columnWidths = new float[]{50f, 50f};
+            table.setWidths(columnWidths);
+            p.setSpacingAfter(50);
+            pdf.add(p);
+
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(254), textNormal));
+            table.addCell(new Phrase(fileLines.get(254), textNormal));
+            p.add(table);
+            columnWidths = new float[]{50f, 50f};
+            table.setWidths(columnWidths);
+            pdf.add(p);
+
+            pdf.close();
+            writer.close();
+
+        } catch (DocumentException e) {
+            Global.showErrorMessage("Erreur lors de la création", "Impossible de créer le PDF");
+            return false;
+        } catch (FileNotFoundException e) {
+            Global.showErrorMessage("Erreur lors de la génération", "Veuillez fermer le fichier pdf avant de générer.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean buildFlexiEmployeePDF(){
+        String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
+
+        //region Read txt file
+        ArrayList<String> fileLines = new ArrayList<>();
+        File file = new File(myDocumentsPath + "/ERPDocs/CDD_FLEXI_EMLPLOYE_VARIABLE.txt");
+
+        try {
+            FileReader reader = new FileReader(file);
+            BufferedReader br = new BufferedReader(reader);
+            String line;
+            while ((line = br.readLine()) != null) {
+                //System.out.println(line);
+                fileLines.add(line);
+            }
+        }catch (Exception e){
+            e.fillInStackTrace();
+        }
+
+        //endregion
+
+        //region PDF Generation
+        // variables
+        // Change Here
+        User selectedUser = comboUser.getSelectionModel().getSelectedItem();
+        String collaboratorName = selectedUser.getFirstName() + " " + selectedUser.getLastName() ;
+        String contractsFolder = "Contracts";
+        String contractFileName = "Contrat-Flexi-Employe-";
+        // pdf generation
+        Document pdf = new Document();
+        try {
+
+            PdfWriter writer = PdfWriter.getInstance(pdf,
+                    new FileOutputStream(myDocumentsPath
+                            +"\\"
+                            + contractsFolder
+                            +"\\"
+                            + contractFileName
+                            + collaboratorName
+                            + ".pdf"));
+            pdf.open();
+
+            // ========================================================================== PDF START
+
+            Paragraph p;
+            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA);
+            headerFont.setStyle(Font.BOLD);
+            headerFont.setSize(18);
+
+            Font textBold = FontFactory.getFont(FontFactory.HELVETICA);
+            textBold.setStyle(Font.BOLD);
+            textBold.setSize(12);
+
+            Font textNormal = FontFactory.getFont(FontFactory.HELVETICA);
+            textNormal.setStyle(Font.NORMAL);
+            textNormal.setSize(12);
+
+            // ======================================================================================== HEADER
+            p = new Paragraph(fileLines.get(0), headerFont);
+            p.setAlignment(Element.ALIGN_CENTER);
+            p.setSpacingAfter(25);
+            pdf.add(p);
+
+            p = new Paragraph(fileLines.get(3), textNormal);
+            pdf.add(p);
+
+            PdfPTable table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(4), textNormal));
+            table.addCell(new Phrase("TRANS TECHNICS SERVICES", textBold));
+            table.addCell(new Phrase(fileLines.get(5), textNormal));
+            table.addCell(new Phrase("Rue de la Fourche, 8", textBold));
+            table.addCell(" ");
+            table.addCell(new Phrase("1000 – BRUXELLES 1", textBold));
+            table.addCell(" ");
+            table.addCell(new Phrase("RPM: BE0.422.634.443", textBold));
+            table.addCell(" ");
+            table.addCell(new Phrase("ONSS: 0488.450-28", textBold));
+            table.addCell(new Phrase(fileLines.get(9), textNormal));
+            table.addCell(new Phrase("Christian Drappier", textBold));
+            p.add(table);
+            p.setIndentationLeft(20);
+            pdf.add(p);
+
+            p = new Paragraph(fileLines.get(11), textNormal);
+            pdf.add(p);
+
+            // add user data in this section
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(12), textNormal));
+            table.addCell(new Phrase(collaboratorName, textBold));
+            table.addCell(new Phrase(fileLines.get(13), textNormal));
+            table.addCell(new Phrase(selectedUser.getNationalRegistreryNumber(), textBold));
+            table.addCell(new Phrase(fileLines.get(14), textNormal));
+            table.addCell(new Phrase(selectedUser.getAddress() + " "
+                    + selectedUser.getHouseNumber() + " "
+                    + selectedUser.getPostalCode() + " "
+                    + selectedUser.getCity(),
+                    textBold));
+            table.addCell(new Phrase(fileLines.get(15), textNormal));
+            table.addCell(new Phrase(selectedUser.getPhoneNumber(), textBold));
+            table.addCell(new Phrase(fileLines.get(16), textNormal));
+            table.addCell(new Phrase(selectedUser.getEmail(), textBold));
+            table.addCell(new Phrase(fileLines.get(17), textNormal));
+            table.addCell(new Phrase(selectedUser.getIban(), textBold));
+            table.addCell(new Phrase(fileLines.get(21), textNormal));
+            table.addCell("");
+            p.add(table);
+            p.setIndentationLeft(20);
+            pdf.add(p);
+            pdf.add( Chunk.NEWLINE );
+
+            p = new Paragraph(new Phrase(fileLines.get(22), textNormal));
+            pdf.add(p);
+
+            // ======================================================================================== BODY
+            // Article 1
+            pdf.add( Chunk.NEWLINE );
+            ZapfDingbatsList list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(25), textBold)));
+            pdf.add(list);
+
+            // Change Here
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(27), textNormal));
+            p.add(new Phrase(" " + datePickerConvention.getValue().toString(), textBold));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(28), textNormal));
+            p.add(new Phrase(fileLines.get(30), textNormal));
+
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(32), textNormal));
+            pdf.add(p);
+
+            // Article 2
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(44), textBold)));
+            pdf.add(list);
+
+            // Change Here
+            // add user data in this section
+            table = new PdfPTable(4);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(46), textNormal));
+            table.addCell(new Phrase(datePickerStartContract.getValue().toString(), textBold));
+            table.addCell(new Phrase("au", textNormal));
+            table.addCell(new Phrase(datePickerEndContract.getValue().toString(), textBold));
+            p.add(table);
+            float[] columnWidths = new float[]{70f, 13f, 3.5f, 14.5f};
+            table.setWidths(columnWidths);
+            pdf.add(p);
+
+            // Article 3
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(61), textBold)));
+            pdf.add(list);
+
+            // add user data in this section
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(63), textNormal)));
+            p.add((new Phrase(" " + Global.formatDouble3(selectedUser.getSalary1()) + " euros", textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(65), textNormal)));
+            pdf.add(p);
+
+            // Article 4
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(80), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(82), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(83), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(85), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(87), textNormal)));
+            pdf.add(p);
+
+            // Article 5
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(128), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(130), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(131), textNormal)));
+            pdf.add(p);
+
+
+            // Article 6
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(195), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(197), textNormal)));
+            pdf.add(p);
+
+
+            // ======================================================================================== FOOTER
+
+            pdf.add( Chunk.NEWLINE );
+            pdf.add( Chunk.NEWLINE );
+            // add user data in this section
+            p = new Paragraph();
+            p.add(new Phrase(fileLines.get(244), textNormal));
+            p.add(new Phrase(Global.getSystemDate() + ".", textBold));
+            pdf.add(p);
+
+            p = new Paragraph(new Phrase(fileLines.get(245), textNormal));
+            p.setSpacingAfter(30);
+            pdf.add(p);
+
+
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(248), textBold));
+            table.addCell(new Phrase(fileLines.get(249), textBold));
+            table.addCell(new Phrase(fileLines.get(250), textNormal));
+            table.addCell(new Phrase(fileLines.get(251), textNormal));
+            table.addCell(new Phrase(fileLines.get(252), textNormal));
+            table.addCell(new Phrase(fileLines.get(253), textNormal));
+            p.add(table);
+            columnWidths = new float[]{50f, 50f};
+            table.setWidths(columnWidths);
+            p.setSpacingAfter(50);
+            pdf.add(p);
+
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(254), textNormal));
+            table.addCell(new Phrase(fileLines.get(254), textNormal));
+            p.add(table);
+            columnWidths = new float[]{50f, 50f};
+            table.setWidths(columnWidths);
+            pdf.add(p);
+
+            pdf.close();
+            writer.close();
+
+        } catch (DocumentException e) {
+            Global.showErrorMessage("Erreur lors de la création", "Impossible de créer le PDF");
+            return false;
+        } catch (FileNotFoundException e) {
+            Global.showErrorMessage("Erreur lors de la génération", "Veuillez fermer le fichier pdf avant de générer.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean buildFlexiOuvrierPDF() {
+        String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
+
+        //region Read txt file
+        ArrayList<String> fileLines = new ArrayList<>();
+        File file = new File(myDocumentsPath + "/ERPDocs/CDD_FLEXI_OUVRIER_VARIABLE.txt");
+
+        try {
+            FileReader reader = new FileReader(file);
+            BufferedReader br = new BufferedReader(reader);
+            String line;
+            while ((line = br.readLine()) != null) {
+                //System.out.println(line);
+                fileLines.add(line);
+            }
+        }catch (Exception e){
+            e.fillInStackTrace();
+        }
+
+        //endregion
+
+        //region PDF Generation
+        // variables
+        // Change Here
+        User selectedUser = comboUser.getSelectionModel().getSelectedItem();
+        String collaboratorName = selectedUser.getFirstName() + " " + selectedUser.getLastName() ;
+        String contractsFolder = "Contracts";
+        String contractFileName = "Contrat-Flexi-Ouvrier-";
+        // pdf generation
+        Document pdf = new Document();
+        try {
+
+            PdfWriter writer = PdfWriter.getInstance(pdf,
+                    new FileOutputStream(myDocumentsPath
+                            +"\\"
+                            + contractsFolder
+                            +"\\"
+                            + contractFileName
+                            + collaboratorName
+                            + ".pdf"));
+            pdf.open();
+
+            // ========================================================================== PDF START
+
+            Paragraph p;
+            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA);
+            headerFont.setStyle(Font.BOLD);
+            headerFont.setSize(18);
+
+            Font textBold = FontFactory.getFont(FontFactory.HELVETICA);
+            textBold.setStyle(Font.BOLD);
+            textBold.setSize(12);
+
+            Font textNormal = FontFactory.getFont(FontFactory.HELVETICA);
+            textNormal.setStyle(Font.NORMAL);
+            textNormal.setSize(12);
+
+            // ======================================================================================== HEADER
+            p = new Paragraph(fileLines.get(0), headerFont);
+            p.setAlignment(Element.ALIGN_CENTER);
+            p.setSpacingAfter(25);
+            pdf.add(p);
+
+            p = new Paragraph(fileLines.get(3), textNormal);
+            pdf.add(p);
+
+            PdfPTable table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(4), textNormal));
+            table.addCell(new Phrase("TRANS TECHNICS SERVICES", textBold));
+            table.addCell(new Phrase(fileLines.get(5), textNormal));
+            table.addCell(new Phrase("Rue de la Fourche, 8", textBold));
+            table.addCell(" ");
+            table.addCell(new Phrase("1000 – BRUXELLES 1", textBold));
+            table.addCell(" ");
+            table.addCell(new Phrase("RPM: BE0.422.634.443", textBold));
+            table.addCell(" ");
+            table.addCell(new Phrase("ONSS: 0488.450-28", textBold));
+            table.addCell(new Phrase(fileLines.get(9), textNormal));
+            table.addCell(new Phrase("Christian Drappier", textBold));
+            p.add(table);
+            p.setIndentationLeft(20);
+            pdf.add(p);
+
+            p = new Paragraph(fileLines.get(11), textNormal);
+            pdf.add(p);
+
+            // add user data in this section
+            table = new PdfPTable(2);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(12), textNormal));
+            table.addCell(new Phrase(collaboratorName, textBold));
+            table.addCell(new Phrase(fileLines.get(13), textNormal));
+            table.addCell(new Phrase(selectedUser.getNationalRegistreryNumber(), textBold));
+            table.addCell(new Phrase(fileLines.get(14), textNormal));
+            table.addCell(new Phrase(selectedUser.getAddress() + " "
+                    + selectedUser.getHouseNumber() + " "
+                    + selectedUser.getPostalCode() + " "
+                    + selectedUser.getCity(),
+                    textBold));
+            table.addCell(new Phrase(fileLines.get(15), textNormal));
+            table.addCell(new Phrase(selectedUser.getPhoneNumber(), textBold));
+            table.addCell(new Phrase(fileLines.get(16), textNormal));
+            table.addCell(new Phrase(selectedUser.getEmail(), textBold));
+            table.addCell(new Phrase(fileLines.get(17), textNormal));
+            table.addCell(new Phrase(selectedUser.getIban(), textBold));
+            table.addCell(new Phrase(fileLines.get(21), textNormal));
+            table.addCell("");
+            p.add(table);
+            p.setIndentationLeft(20);
+            pdf.add(p);
+            pdf.add( Chunk.NEWLINE );
+
+            p = new Paragraph(new Phrase(fileLines.get(22), textNormal));
+            pdf.add(p);
+
+            // ======================================================================================== BODY
+            // Article 1
+            pdf.add( Chunk.NEWLINE );
+            ZapfDingbatsList list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(25), textBold)));
+            pdf.add(list);
+
+            // Change Here
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(27), textNormal));
+            p.add(new Phrase(" " + datePickerConvention.getValue().toString(), textBold));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(28), textNormal));
+            p.add(new Phrase(fileLines.get(30), textNormal));
+
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add(new Phrase(fileLines.get(32), textNormal));
+            pdf.add(p);
+
+            // Article 2
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(44), textBold)));
+            pdf.add(list);
+
+            // Change Here
+            // add user data in this section
+            table = new PdfPTable(4);
+            table.getDefaultCell().setBorder(0);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            p = new Paragraph();
+            table.addCell(new Phrase(fileLines.get(46), textNormal));
+            table.addCell(new Phrase(datePickerStartContract.getValue().toString(), textBold));
+            table.addCell(new Phrase("au", textNormal));
+            table.addCell(new Phrase(datePickerEndContract.getValue().toString(), textBold));
+            p.add(table);
+            float[] columnWidths = new float[]{70f, 13f, 3.5f, 14.5f};
+            table.setWidths(columnWidths);
+            pdf.add(p);
+
+            // Article 3
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(61), textBold)));
+            pdf.add(list);
+
+            // add user data in this section
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(63), textNormal)));
+            p.add((new Phrase(" " + Global.formatDouble3(selectedUser.getSalary1()) + " euros", textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(65), textNormal)));
+            pdf.add(p);
+
+            // Article 4
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(80), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(82), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(83), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(85), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(87), textNormal)));
+            pdf.add(p);
+
+            // Article 5
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(128), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(130), textNormal)));
+            pdf.add(p);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(131), textNormal)));
+            pdf.add(p);
+
+
+            // Article 6
+            pdf.add( Chunk.NEWLINE );
+            list = new ZapfDingbatsList(70, 15);
+            list.add(new ListItem(new Phrase(fileLines.get(195), textBold)));
+            pdf.add(list);
+
+            p = new Paragraph();
+            p.setAlignment(Element.ALIGN_JUSTIFIED);
+            p.add((new Phrase(fileLines.get(197), textNormal)));
+            pdf.add(p);
+
 
             // ======================================================================================== FOOTER
 

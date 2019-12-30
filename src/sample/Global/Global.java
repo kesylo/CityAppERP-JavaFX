@@ -300,6 +300,10 @@ public final class Global {
         return String.format("%.2f", value);
     }
 
+    public static String formatDouble3 (double value){
+        return String.format("%.3f", value);
+    }
+
     public static double roundDouble(double value){
         return Math.round(value * 100D) / 100D;
     }
