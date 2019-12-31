@@ -9,8 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import sample.Database.DBHandler;
 import sample.Global.Global;
-
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,6 +46,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button btnNavToPlanning;
+
+    @FXML
+    private Button btnNavToReports;
     //endregion
 
     private DialogController<String> wd = null;
@@ -122,6 +123,16 @@ public class DashboardController implements Initializable {
             if (Global.getConnectedUser().getRole() > 4 ){
                 URL toSettings = getClass().getResource("/sample/View/Settings/settingsDashboard.fxml");
                 Global.navigateTo(toSettings, "Settings");
+            }else {
+                Global.showErrorMessage("Erreur de droits.",
+                        "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");
+            }
+        });
+
+        btnNavToReports.setOnAction(event -> {
+            if (Global.getConnectedUser().getRole() > 1 ){
+                URL toSettings = getClass().getResource("/sample/View/Reports/reportDashboard.fxml");
+                Global.navigateTo(toSettings, "Rapports");
             }else {
                 Global.showErrorMessage("Erreur de droits.",
                         "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");

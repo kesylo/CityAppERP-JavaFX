@@ -37,8 +37,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Global {
 
@@ -219,6 +222,15 @@ public final class Global {
         }
     }
 
+    public static List<LocalDate> getYearsBetween(LocalDate startDate, LocalDate endDate) {
+
+        long numOfDaysBetween = ChronoUnit.YEARS.between(startDate, endDate);
+        return IntStream.iterate(0, i -> i + 1)
+                .limit(numOfDaysBetween)
+                .mapToObj(startDate::plusYears)
+                .collect(Collectors.toList());
+    }
+
     public static void setUserProfile(Label userName, ImageView logOutBtn){
         userName.setText(connectedUser.getFirstName() + " " + connectedUser.getLastName());
         // set disconnect tooltip
@@ -296,6 +308,15 @@ public final class Global {
         return formatter.format(date);
     }
 
+    public static String minutesToTime(long minutes){
+        int h = 0;
+        while (minutes >=60){
+            minutes -=60;
+            h++;
+        }
+        return String.format("%02d", h) + " : " + String.format("%02d", minutes);
+    }
+
     public static String formatDouble (double value){
         return String.format("%.2f", value);
     }
@@ -344,7 +365,7 @@ public final class Global {
             }
 
             if (type == 4){ // validate salary
-                if (!newValue.matches("\\d{0,7}([.]\\d{0,3})?")) {
+                if (!newValue.matches("\\d{0,7}([.]\\d{0,4})?")) {
                     textField.setText(oldValue);
                 }
             }
@@ -449,6 +470,37 @@ public final class Global {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static int monthToInt(String monthValue) {
+        switch (monthValue) {
+            case "Janvier":
+                return 1;
+            case "Février":
+                return 2;
+            case "Mars":
+                return 3;
+            case "Avril":
+                return 4;
+            case "Mai":
+                return 5;
+            case "Juin":
+                return 6;
+            case "Juillet":
+                return 7;
+            case "Aout":
+                return 8;
+            case "Septembre":
+                return 9;
+            case "Octobre":
+                return 10;
+            case "Novembre":
+                return 11;
+            case "Decembre":
+                return 12;
+
+                default: return 0;
+        }
     }
 
     //endregion

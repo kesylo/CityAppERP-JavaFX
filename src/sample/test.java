@@ -1,19 +1,20 @@
 package sample;
 
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.List;
-import com.itextpdf.text.pdf.CMYKColor;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import javafx.scene.text.TextAlignment;
 import sample.Global.Global;
-import sample.Model.User;
 
-import javax.swing.*;
-import java.io.*;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.List;
+
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class test {
     public static void main(String[] args) {
@@ -133,6 +134,7 @@ public class test {
         //endregion
 
         // read file
+/*
 
         //region PDF
 
@@ -510,6 +512,38 @@ public class test {
             //return false;
         }
         //endregion
+*/
+        /*LocalDate startDate = LocalDate.of(2015,1,1);
+        LocalDate endDate = LocalDate.of(2030,1,1);
+        List<LocalDate> dates = Global.getYearsBetween(startDate, endDate);
+
+        for (LocalDate date : dates) {
+            int intDate = date.getYear();
+            System.out.println(intDate);
+        }*/
+
+
+
+        LocalTime l1 = LocalTime.parse("02:53");
+        LocalTime l2 = LocalTime.parse("17:54");
+        System.out.println();
+
+        long min = MINUTES.between(l1, l2);
+        int h = 0;
+
+        long hours = min / 60; //since both are ints, you get an int
+        long minutes = min % 60;
+
+        System.out.printf("%d:%02d", hours, minutes);
+
+        System.out.println();
+
+        while (min >=60){
+            min -=60;
+            h++;
+        }
+
+        System.out.println(h + " " + min);
 
 
 

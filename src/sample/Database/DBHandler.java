@@ -520,6 +520,33 @@ public class DBHandler extends DBConfig {
         }
     }
 
+    public ResultSet getUserServicesInMonth(int idUser, int month, int year) {
+        rs = null;
+        String status = "Accepté";
+
+        // prepare the query
+        String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+                "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
+                "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
+                "and status =? ";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, idUser);
+            ps.setInt(2, year);
+            ps.setInt(3, month);
+            ps.setString(4, status);
+
+            rs = ps.executeQuery();
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+        return rs;
+    }
+
 
     /*------------------------------ DELETE -------------------------------------*/
 }

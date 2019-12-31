@@ -45,6 +45,11 @@ public class SettingsDashboardController {
     @FXML
     void initialize() {
 
+        Global.setUserProfile(lblConnectedUser, btnLogOut);
+
+        // set profile photo
+        Global.setProfileIcon(photo);
+
         btnNavToPermissions.setOnAction(event -> {
             URL toEditSettings = getClass().getResource("/sample/View/Settings/editPermissions.fxml");
             Global.navigateModal(toEditSettings, "Droits");

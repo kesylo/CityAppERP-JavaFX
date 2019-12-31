@@ -144,6 +144,20 @@
                      </font>
                   </JFXTextField>
                   <JFXComboBox fx:id="comboCountry" focusColor="#5dbcd2" focusTraversable="false" prefHeight="30.0" prefWidth="236.0" promptText="Pays" />
+                  <HBox spacing="65.0">
+                     <children>
+                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Maison" unFocusColor="BLACK">
+                           <font>
+                              <Font name="Poppins Regular" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="txtNumeroBoite" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Boite" unFocusColor="BLACK">
+                           <font>
+                              <Font name="Poppins Regular" size="14.0" />
+                           </font>
+                        </JFXTextField>
+                     </children>
+                  </HBox>
                   <HBox spacing="30.0">
                      <children>
                         <JFXRadioButton fx:id="radioSexeMale" focusTraversable="false" prefHeight="30.0" selected="true" style="-jfx-selected-color: #5dbcd2;" text="Masculin">
@@ -159,20 +173,6 @@
                               <Font name="Poppins Regular" size="14.0" />
                            </font>
                         </JFXRadioButton>
-                     </children>
-                  </HBox>
-                  <HBox spacing="65.0">
-                     <children>
-                        <JFXTextField fx:id="txtNumeroRue" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Maison" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Poppins Regular" size="14.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXTextField fx:id="txtNumeroBoite" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="N° Boite" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Poppins Regular" size="14.0" />
-                           </font>
-                        </JFXTextField>
                      </children>
                   </HBox>
                </children>
@@ -194,12 +194,12 @@
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtSalaryMonth" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Mensuel" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtZipCode" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="Code Postal" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtZipCode" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="85.0" promptText="Code Postal" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtSalaryMonth" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Mensuel" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -224,12 +224,12 @@
                         </JFXTextField>
                      </children>
                   </HBox>
-                  <JFXTextField fx:id="txtSalaryHour" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Horaire" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtRegisterNumber" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Registre national" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtRegisterNumber" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="236.0" promptText="Registre national" unFocusColor="BLACK">
+                  <JFXTextField fx:id="txtSalaryHour" cache="true" focusColor="#5dbcd2" labelFloat="true" prefHeight="30.0" prefWidth="134.0" promptText="Salaire Horaire" unFocusColor="BLACK">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
