@@ -96,12 +96,12 @@
             <Pane layoutX="460.0" layoutY="98.0" prefHeight="9.0" prefWidth="200.0" style="-fx-background-color: #AEB6BF;" />
             <Separator layoutX="700.0" layoutY="33.0" prefHeight="11.0" prefWidth="386.0" />
             <HBox layoutX="765.0" layoutY="594.0" spacing="10.0" />
-            <Label layoutX="662.0" layoutY="577.0" text="Total :">
+            <Label layoutX="661.0" layoutY="581.0" text="Total :">
                <font>
                   <Font name="Poppins Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="hoursPrested" layoutX="662.0" layoutY="606.0" prefHeight="20.0" prefWidth="114.0" text="00 : 00">
+            <Label fx:id="hoursPrested" layoutX="661.0" layoutY="603.0" prefHeight="20.0" prefWidth="114.0" text="00 : 00">
                <font>
                   <Font name="Poppins Bold" size="14.0" />
                </font>

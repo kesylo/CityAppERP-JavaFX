@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 import sample.Global.Global;
-import sample.Global.PlanningGlobal;
 import sample.Model.Planning;
 import sample.Model.Report;
 import sample.Model.User;
@@ -267,93 +266,51 @@ public class reportDashboardController {
 
     }
 
-    /*private void getServices(String choice) {
-        Platform.runLater(() ->{
-
-            // prepare loading screen
-            wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement des Prestations...");
-
-            wd.exec("123", inputParam -> {
-
-                ObservableList<Planning> data = FXCollections.observableArrayList();
-                ObservableList<Report> reportList = FXCollections.observableArrayList();
-                switch (choice) {
-                    case "userMonth":
-                        data = longTask("userMonth");
-                        break;
-                    case "userYear":
-                        data = longTask("userYear");
-                        break;
-                    case "deptMonth":
-                        data = longTask("deptMonth");
-                        break;
-                    case "deptYear":
-                        data = longTask("deptYear");
-                        break;
-                }
-
-                // set users Globally
-                PlanningGlobal.setPlanningsList(data);
-                for (Planning p : data) {
-
-                    LocalTime startTime = LocalTime.parse(p.getStartTime());
-                    LocalTime endTime = LocalTime.parse(p.getEndTime());
-
-                    long min = MINUTES.between(startTime, endTime);
-
-                    Report report = new Report(min + "", p.getPrestationDate());
-                    reportList.add(report);
-                }
-                PlanningGlobal.setReportList(reportList);
-
-                Platform.runLater(() ->{
-                    fillTable(PlanningGlobal.getReportList());
-                });
-                return 1;
-            });
-        });
-
-    }*/
-
     private void fillTable(String choice){
-        ObservableList<Planning> data = FXCollections.observableArrayList();
+        ObservableList<Planning> planningList = FXCollections.observableArrayList();
         ObservableList<Report> reportList = FXCollections.observableArrayList();
-        long min, totalMin=0;
-        String totalTime;
+        ObservableList<Integer> usersInSameDept;
+
+        long min, totalMin = 0;
 
         int selectedYear = comboYear.getValue();
-        int seletedMonth = Global.monthToInt(comboMonth.getValue());
-        int seletedUser = comboUser.getSelectionModel().getSelectedItem().getId();
+        int selectedMonth = Global.monthToInt(comboMonth.getValue());
+        String selectedService =comboDept.getValue();
+        int selectedUser = comboUser.getSelectionModel().getSelectedItem().getId();
 
         switch (choice) {
             case "userMonth":
-                rs = dbHandler.getUserServicesInMonth(seletedUser,seletedMonth, selectedYear);
+                rs = dbHandler.getUserServicesInMonth(selectedUser,selectedMonth, selectedYear);
                 break;
             case "userYear":
-                //rs = dbHandler.getUserServicesInYear();
+                rs = dbHandler.getUserServicesInYear(selectedUser, selectedYear);
                 break;
             case "deptMonth":
-                //rs = dbHandler.getDeptServiceInMonth();
+                usersInSameDept = getUsersIDInSameDept(selectedService);
+                planningList = dbHandler.getDeptServiceInMonth(usersInSameDept,selectedMonth, selectedYear);
                 break;
             case "deptYear":
-                //rs = dbHandler.getDeptServiceInYear();
+                usersInSameDept = getUsersIDInSameDept(selectedService);
+                planningList = dbHandler.getDeptServiceInYear(usersInSameDept, selectedYear);
                 break;
         }
 
-        try {
-            while (rs.next()){
-                Planning planning = new Planning(
-                        rs.getString("date"),
-                        rs.getString("startTime"),
-                        rs.getString("endTime")
-                );
-                data.add(planning);
+        if (choice.equals("userMonth") || choice.equals("userYear")){
+            try {
+                while (rs.next()){
+                    Planning planning = new Planning(
+                            rs.getString("date"),
+                            rs.getString("startTime"),
+                            rs.getString("endTime")
+                    );
+                    planningList.add(planning);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
-        for (Planning p : data) {
+        for (Planning p : planningList) {
 
             LocalTime startTime = LocalTime.parse(p.getStartTime());
             LocalTime endTime = LocalTime.parse(p.getEndTime());
@@ -366,56 +323,39 @@ public class reportDashboardController {
             reportList.add(report);
         }
 
-
-        clmDate.setCellValueFactory(new PropertyValueFactory<>("ServiceDate"));
-        clmShift.setCellValueFactory(new PropertyValueFactory<>("Minutes"));
-
         // add list to table
         for (Report r :reportList) {
             r.setMinutes(Global.minutesToTime(Integer.valueOf(r.getMinutes())));
         }
+
+
+        clmDate.setCellValueFactory(new PropertyValueFactory<>("ServiceDate"));
+        clmShift.setCellValueFactory(new PropertyValueFactory<>("Minutes"));
+
         tableDateHours.setItems(reportList);
 
         // set text
-
-        hoursPrested.setText(Global.minutesToTime(totalMin));
+        String totalTime = Global.minutesToTime(totalMin);
+        hoursPrested.setText(totalTime);
 
         // select first
         tableDateHours.getSelectionModel().selectFirst();
     }
 
-    /*private ObservableList<Planning> longTask(String choice) {
-        ObservableList<Planning> data = FXCollections.observableArrayList();
-        int selectedYear = comboYear.getValue();
-        int seletedMonth = Global.monthToInt(comboMonth.getValue());
+    private ObservableList<Integer> getUsersIDInSameDept(String selectedService) {
 
-        switch (choice) {
-            case "userMonth":
-                rs = dbHandler.getUserServicesInMonth(seletedMonth, selectedYear);
-                break;
-            case "userYear":
-                //rs = dbHandler.getUserServicesInYear();
-                break;
-            case "deptMonth":
-                //rs = dbHandler.getDeptServiceInMonth();
-                break;
-            case "deptYear":
-                //rs = dbHandler.getDeptServiceInYear();
-                break;
-        }
+        ObservableList<Integer> usersInSameDept = FXCollections.observableArrayList();
+        rs = dbHandler.getUserIDInSelectedDept(selectedService);
 
         try {
             while (rs.next()){
-                Planning planning = new Planning(
-                        rs.getString("date"),
-                        rs.getString("startTime"),
-                        rs.getString("endTime")
-                );
-                data.add(planning);
+                usersInSameDept.add(rs.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return data;
-    }*/
+        return usersInSameDept;
+    }
+
+
 }

@@ -1,11 +1,10 @@
 package sample.Database;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.Global.CollaboratorGlobal;
 import sample.Global.Global;
-import sample.Model.Caisse;
-import sample.Model.CaisseIncExp;
-import sample.Model.Cash;
-import sample.Model.User;
+import sample.Model.*;
 
 import java.sql.*;
 
@@ -45,6 +44,159 @@ public class DBHandler extends DBConfig {
         }
 
         return count;
+    }
+
+    public ResultSet getUserServicesInMonth(int idUser, int month, int year) {
+        rs = null;
+        String status = "Accepté";
+
+        // prepare the query
+        String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+                "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
+                "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
+                "and status =? ";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, idUser);
+            ps.setInt(2, year);
+            ps.setInt(3, month);
+            ps.setString(4, status);
+
+            rs = ps.executeQuery();
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+        return rs;
+    }
+
+    public ResultSet getUserServicesInYear(int idUser, int year) {
+        rs = null;
+        String status = "Accepté";
+
+        // prepare the query
+        String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+                "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
+                "and status =? ";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, idUser);
+            ps.setInt(2, year);
+            ps.setString(3, status);
+
+            rs = ps.executeQuery();
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+        return rs;
+    }
+
+    public ResultSet getUserIDInSelectedDept(String selectedService) {
+        rs = null;
+
+        // prepare the query
+        String query = "SELECT id FROM cityappdberp.employees where dept=? " +
+                "and outService is null or outService = '' ";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setString(1, selectedService);
+
+            rs = ps.executeQuery();
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+        return rs;
+    }
+
+    public ObservableList<Planning> getDeptServiceInMonth(ObservableList<Integer> usersInSameDept, int seletedMonth, int selectedYear) {
+
+        ObservableList<Planning> planningList = FXCollections.observableArrayList();
+        String status = "Accepté";
+        rs = null;
+
+        for (Integer id : usersInSameDept) {
+
+            String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+                    "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
+                    "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
+                    "and status =? ";
+            // run it
+            try {
+                PreparedStatement ps = getDbConnection().prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setInt(2, selectedYear);
+                ps.setInt(3, seletedMonth);
+                ps.setString(4, status);
+
+                rs = ps.executeQuery();
+
+                while (rs.next()){
+                    Planning planning = new Planning(
+                            rs.getString("date"),
+                            rs.getString("startTime"),
+                            rs.getString("endTime")
+                    );
+                    planningList.add(planning);
+                }
+
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                        "Voici les détails sur l'erreur ", e);
+            }
+        }
+
+        return planningList;
+    }
+
+    public ObservableList<Planning> getDeptServiceInYear(ObservableList<Integer> usersInSameDept, int selectedYear) {
+
+        ObservableList<Planning> planningList = FXCollections.observableArrayList();
+        String status = "Accepté";
+        rs = null;
+
+        for (Integer id : usersInSameDept) {
+
+            String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+                    "and extract(year from str_to_date(date, '%d-%m-%Y')) =? "+
+                    "and status =? ";
+            // run it
+            try {
+                PreparedStatement ps = getDbConnection().prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setInt(2, selectedYear);
+                ps.setString(3, status);
+
+                rs = ps.executeQuery();
+
+                while (rs.next()){
+                    Planning planning = new Planning(
+                            rs.getString("date"),
+                            rs.getString("startTime"),
+                            rs.getString("endTime")
+                    );
+                    planningList.add(planning);
+                }
+
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                        "Voici les détails sur l'erreur ", e);
+            }
+        }
+
+        return planningList;
     }
 
     public ResultSet getUser(User user)  {
@@ -350,31 +502,6 @@ public class DBHandler extends DBConfig {
         }
     }
 
-    /*------------------------------ UPDATE -------------------------------------*/
-
-    public void updateCaisseStatus(double montant, int statusToSet, String dateClosed, Caisse caisse, double errAmount){
-        String query = "UPDATE " + Static.CAISSE_TABLE + " SET montant = ?, closed = ?, date_fermeture = ?, has_error = ?, error_amount = ? WHERE idCaisse = ?";
-
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-
-            ps.setDouble(1, montant);
-            ps.setInt(2, statusToSet);
-            ps.setString(3, dateClosed);
-            ps.setInt(4, caisse.getHasError());
-            ps.setDouble(5, errAmount);
-            ps.setInt(6, caisse.getId());
-
-
-            ps.executeUpdate();
-            ps.close();
-        } catch (Exception e) {
-            //e.printStackTrace();
-            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
-                    "Voici les détails sur l'erreur ", e);
-        }
-    }
-
     public void createUser(User user) {
 
         String query = "INSERT INTO " + Static.EMPLOYES_TABLE + " (firstName, lastName, inService, outService, nationalRegisterNum," +
@@ -413,6 +540,31 @@ public class DBHandler extends DBConfig {
             ps.setString(26, user.getIban());
 
             ps.executeUpdate();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+    }
+
+    /*------------------------------ UPDATE -------------------------------------*/
+
+    public void updateCaisseStatus(double montant, int statusToSet, String dateClosed, Caisse caisse, double errAmount){
+        String query = "UPDATE " + Static.CAISSE_TABLE + " SET montant = ?, closed = ?, date_fermeture = ?, has_error = ?, error_amount = ? WHERE idCaisse = ?";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDouble(1, montant);
+            ps.setInt(2, statusToSet);
+            ps.setString(3, dateClosed);
+            ps.setInt(4, caisse.getHasError());
+            ps.setDouble(5, errAmount);
+            ps.setInt(6, caisse.getId());
+
+
+            ps.executeUpdate();
+            ps.close();
         } catch (Exception e) {
             //e.printStackTrace();
             Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
@@ -519,34 +671,6 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
     }
-
-    public ResultSet getUserServicesInMonth(int idUser, int month, int year) {
-        rs = null;
-        String status = "Accepté";
-
-        // prepare the query
-        String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
-                "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
-                "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
-                "and status =? ";
-        // run it
-        try {
-            PreparedStatement ps = getDbConnection().prepareStatement(query);
-            ps.setInt(1, idUser);
-            ps.setInt(2, year);
-            ps.setInt(3, month);
-            ps.setString(4, status);
-
-            rs = ps.executeQuery();
-
-        } catch (Exception e) {
-            //e.printStackTrace();
-            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
-                    "Voici les détails sur l'erreur ", e);
-        }
-        return rs;
-    }
-
 
     /*------------------------------ DELETE -------------------------------------*/
 }

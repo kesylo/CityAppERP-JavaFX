@@ -111,7 +111,7 @@
                         <Font name="Poppins Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNavToProcedures" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button6" stylesheets="@../Ressources/css/style.css" text="Procédures" GridPane.rowIndex="2">
+                  <Button fx:id="btnNavToProcedures" contentDisplay="TOP" ellipsisString="" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="252.0" styleClass="button2" stylesheets="@../Ressources/css/style.css" text="Procédures" GridPane.rowIndex="2">
                      <graphic>
                         <ImageView fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                            <image>
