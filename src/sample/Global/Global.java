@@ -329,7 +329,7 @@ public final class Global {
     public static void setProfileIcon(ImageView photo) {
         Image image;
         // set welcome text
-        if (connectedUser.getSex().equals("Male")){
+        if (connectedUser.getSex().equals("Masculin")){
             // set profile photo
             image = new Image("/sample/Ressources/images/userMale.png");
             photo.setImage(image);
