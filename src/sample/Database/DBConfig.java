@@ -8,10 +8,11 @@ class DBConfig {
     String dbPass = "azerty";
     String dbName = "cityappdberp";
 
-    // deployment server
-    /*String dbHost = "192.168.0.123";
+
+    // deployment server SITEGROUND
+   /* String dbHost = "gnld1010.siteground.eu";
     String dbPort = "3306";
-    String dbUser = "root";
-    String dbPass = "ZKZ7ajZxLMn3";
-    String dbName = "cityappdberp";*/
+    String dbUser = "un6hxtz8jfccu";
+    String dbPass = "7duzpdu9km6k";
+    String dbName = "db2gy8y9y58had";*/
 }

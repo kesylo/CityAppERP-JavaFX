@@ -39,6 +39,9 @@ public class DashboardController implements Initializable {
     private Button btnNavToContracts;
 
     @FXML
+    private Button btnNavToProcedures;
+
+    @FXML
     private Button btnNavToSettings;
 
     @FXML
@@ -68,11 +71,11 @@ public class DashboardController implements Initializable {
 
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
-        // set welcome text
-        setWelcomeText();
-
         // set profile photo
         Global.setProfileIcon(photo);
+
+        // set welcome text
+        setWelcomeText();
 
         // load server settings
         getPlanningServerAddress();
@@ -133,6 +136,16 @@ public class DashboardController implements Initializable {
             if (Global.getConnectedUser().getRole() > 1 ){
                 URL toSettings = getClass().getResource("/sample/View/Reports/reportDashboard.fxml");
                 Global.navigateTo(toSettings, "Rapports");
+            }else {
+                Global.showErrorMessage("Erreur de droits.",
+                        "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");
+            }
+        });
+
+        btnNavToProcedures.setOnAction(event -> {
+            if (Global.getConnectedUser().getRole() > 1 ){
+                URL toSettings = getClass().getResource("/sample/View/Procedure/ProcedureMain.fxml");
+                Global.navigateTo(toSettings, "Procédures");
             }else {
                 Global.showErrorMessage("Erreur de droits.",
                         "Vous n'avez pas le droit d'accéder à ce menu. Veuillez contacter l'administrateur.");

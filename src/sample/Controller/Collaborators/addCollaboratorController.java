@@ -237,7 +237,7 @@ public class addCollaboratorController {
         // String case: 1 : toUpper,       2 : one letter Caps,       3 : nothingF
 
         Global.txtFormater(txtName, 30,0, 1);
-        Global.txtFormater(txtSurname, 30,0, 1);
+        Global.txtFormater(txtSurname, 30,0, 2);
         Global.txtFormater(txtEmail, 50,0, 2);
         Global.txtFormater(txtNumEmployee, 4,3, 3);
         Global.txtFormater(txtAddress, 60,0, 2);
@@ -689,6 +689,7 @@ public class addCollaboratorController {
     private void updateCollaboratorInDB() {
         dbHandler = new DBHandler();
         user = new User();
+        User previewUser = CollaboratorGlobal.getPreviewUser();
 
         //region get all data from fields
         // name
@@ -750,6 +751,9 @@ public class addCollaboratorController {
         // iban
         user.setIban(txtIBAN.getText());
         //endregion
+
+        // set default role
+        user.setRole(previewUser.getRole());
 
         DialogController wd = new DialogController(btnBack.getScene().getWindow(), "Mise à jour...");
 

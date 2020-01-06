@@ -25,10 +25,7 @@ import tray.animations.AnimationType;
 import tray.notification.TrayNotification;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -500,6 +497,19 @@ public final class Global {
                 return 12;
 
                 default: return 0;
+        }
+    }
+
+    public static void openInExplorer(String myDocumentsPath) {
+        Desktop desktop = null;
+        File file = new File(myDocumentsPath);
+        if (Desktop.isDesktopSupported()){
+            desktop = Desktop.getDesktop();
+        }
+        try {
+            Objects.requireNonNull(desktop).open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
