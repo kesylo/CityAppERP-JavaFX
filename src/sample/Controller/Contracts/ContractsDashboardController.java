@@ -24,6 +24,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static java.util.Collections.sort;
+
 public class ContractsDashboardController {
 
     //region UI
@@ -395,6 +397,7 @@ public class ContractsDashboardController {
                 }
 
                 Platform.runLater(() -> {
+                    sort(userList);
                     comboUser.setItems(userList);
                     comboUser.getSelectionModel().selectFirst();
                 });

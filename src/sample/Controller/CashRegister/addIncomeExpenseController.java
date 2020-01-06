@@ -19,6 +19,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static java.util.Collections.sort;
+
 public class addIncomeExpenseController {
     //region UI
     @FXML
@@ -232,6 +234,7 @@ public class addIncomeExpenseController {
                 } catch (SQLException e){
                     e.printStackTrace();
                 }
+                sort(usersList);
 
                 Platform.runLater(() -> comboSalaryBeneficial.setItems(usersList));
 

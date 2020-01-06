@@ -24,6 +24,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static java.util.Collections.sort;
+
 public class usersDashboardController {
 
     //region UI
@@ -251,12 +253,10 @@ public class usersDashboardController {
     public void clickItem() {
         tableUsers.setOnMouseClicked(event1 -> {
             if (event1.getClickCount() == 2){
-                //System.out.println("Clicked on " + (tableUsers.getSelectionModel().getSelectedCells().get(0)).getRow());
-
                 // set preview user globally
                 CollaboratorGlobal.setPreviewUser(tableUsers.getSelectionModel().getSelectedItem());
                 // specify which button is pressed
-                CollaboratorGlobal.setActionName("details");
+                CollaboratorGlobal.setActionName("edit");
 
                 URL url = getClass().getResource("/sample/View/Collaborators/addCollaborator.fxml");
                 Global.navigateModal(url, "Details-Collaborateur");
@@ -272,6 +272,7 @@ public class usersDashboardController {
             wd.exec("123", inputParam -> {
                 final ObservableList<User> data = longTask("all");
                 // set users Globally
+                sort(data);
                 CollaboratorGlobal.setUsersList(data);
                 // turn users list in filtered list for search
                 filteredUser = new FilteredList<>(data, b -> true);
@@ -366,6 +367,7 @@ public class usersDashboardController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        sort(data);
         return data;
     }
 

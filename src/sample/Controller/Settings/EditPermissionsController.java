@@ -21,6 +21,8 @@ import sample.Model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static java.util.Collections.sort;
+
 public class EditPermissionsController {
 
     //region UI
@@ -88,7 +90,7 @@ public class EditPermissionsController {
         } catch (SQLException e){
             e.printStackTrace();
         }
-
+        sort(data);
         return data;
     }
 
@@ -126,6 +128,7 @@ public class EditPermissionsController {
                 SettingsGlobal.setUsersList(data);
 
                 Platform.runLater(() ->{
+                    sort(data);
                     comboUser.setItems(data);
                     comboUser.getSelectionModel().selectFirst();
                 });

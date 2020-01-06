@@ -1,6 +1,6 @@
 package sample.Model;
 
-public class User {
+public class User implements Comparable{
     private int id;
     private String address;
     private String city;
@@ -32,6 +32,11 @@ public class User {
 
     //region controller
     public User() {
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.getFirstName().compareTo(((User) o).getFirstName());
     }
 
     // new constructor

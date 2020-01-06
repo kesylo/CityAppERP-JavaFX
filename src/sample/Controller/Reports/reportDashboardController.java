@@ -24,9 +24,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.util.Collections.*;
 
 public class reportDashboardController {
     //region UI
@@ -218,6 +220,7 @@ public class reportDashboardController {
                 }
 
                 Platform.runLater(() -> {
+                    sort(userList);
                     comboUser.setItems(userList);
                     comboUser.getSelectionModel().selectFirst();
                 });
