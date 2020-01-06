@@ -372,6 +372,8 @@ public class addCollaboratorController {
         txtCity.setEditable(false);
         comboPhoneCountry.setEditable(false);
         txtPhoneNumber.setEditable(false);
+        //radioSexeFemale.setDisable(true);
+        //radioSexeMale.setDisable(true);
         txtSalaryMonth.setEditable(false);
         txtSalaryHour.setEditable(false);
         txtNumeroRue.setEditable(false);
