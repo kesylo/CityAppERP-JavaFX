@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="CityAppERP.jnlp">
+  <information>
+    <title>CityCenterApp</title>
+    <vendor>kesyloCorp</vendor>
+    <description>CityAppERP</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="AnimateFX-1.2.1.jar" size="94267" download="eager" />
+    <jar href="CityAppERP.jar" size="4073802" download="eager" />
+    <jar href="TrayNotification.jar" size="41019" download="eager" />
+    <jar href="controlsfx-8.40.15.jar" size="1402490" download="eager" />
+    <jar href="fontawesomefx-8.9.jar" size="571068" download="eager" />
+    <jar href="itextpdf-5.5.13.1.jar" size="2330916" download="eager" />
+    <jar href="jfoenix-8.0.8.jar" size="2708772" download="eager" />
+    <jar href="mysql-connector-java-8.0.17.jar" size="2321813" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="sample.Main"  name="CityAppERP" />
+  <update check="background"/>
+</jnlp>

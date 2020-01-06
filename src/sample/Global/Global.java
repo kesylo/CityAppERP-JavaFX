@@ -18,6 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.Main;
 import sample.Model.Country;
 import sample.Model.CountryComparator;
 import sample.Model.User;
@@ -30,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Year;
@@ -94,6 +96,31 @@ public final class Global {
         stage.getIcons().add(image);
 
         alertDialog.showAndWait();
+    }
+
+    public static ArrayList<String> readTxtFile (String path){
+        InputStream inputStream = Main.class.getResourceAsStream(path);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+        ArrayList<String> fileLines = new ArrayList<>();
+        try {
+
+            /*BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(file), StandardCharsets.UTF_8));*/
+
+            BufferedReader in = new BufferedReader(inputStreamReader);
+            String str;
+
+            while ((str = in.readLine()) != null) {
+                fileLines.add(str);
+            }
+
+            in.close();
+        }catch (Exception e){
+            e.fillInStackTrace();
+        }
+
+        return fileLines;
     }
 
     public static boolean isUnix() {
@@ -340,7 +367,7 @@ public final class Global {
         }
     }
 
-    public static void txtFormater(JFXTextField textField, int maxLength, int type, int stringCase){
+    public static void inputTextFormater(JFXTextField textField, int maxLength, int type, int stringCase){
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (type == 1){     // validate letters only

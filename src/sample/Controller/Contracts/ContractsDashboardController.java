@@ -161,8 +161,8 @@ public class ContractsDashboardController {
         loadUserList();
 
         // format fields
-        Global.txtFormater(txtJobDescription, 100,0, 1);
-        Global.txtFormater(txtHoursPerWeek, 10,2, 3);
+        Global.inputTextFormater(txtJobDescription, 100,0, 1);
+        Global.inputTextFormater(txtHoursPerWeek, 10,2, 3);
 
 
         // radio buttons
@@ -413,20 +413,9 @@ public class ContractsDashboardController {
         String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
 
         //region Read txt file
-        ArrayList<String> fileLines = new ArrayList<>();
-        File file = new File(myDocumentsPath + "/ERPDocs/CDD_EMPLOYES_VARIABLE.txt");
+        ArrayList<String> fileLines ;
 
-        try {
-            FileReader reader = new FileReader(file);
-            BufferedReader br = new BufferedReader(reader);
-            String line;
-            while ((line = br.readLine()) != null) {
-                //System.out.println(line);
-                fileLines.add(line);
-            }
-        }catch (Exception e){
-            e.fillInStackTrace();
-        }
+        fileLines = Global.readTxtFile("/documents/CDD_EMPLOYES_VARIABLE.txt");
 
         //endregion
 
@@ -722,21 +711,7 @@ public class ContractsDashboardController {
         String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
 
         //region Read txt file
-        ArrayList<String> fileLines = new ArrayList<>();
-        File file = new File(myDocumentsPath + "/ERPDocs/CDD_ETUDIANTS_EMPLOYES_VARIABLE.txt");
-
-        try {
-            FileReader reader = new FileReader(file);
-            BufferedReader br = new BufferedReader(reader);
-            String line;
-            while ((line = br.readLine()) != null) {
-                //System.out.println(line);
-                fileLines.add(line);
-            }
-        }catch (Exception e){
-            e.fillInStackTrace();
-        }
-
+        ArrayList<String> fileLines = Global.readTxtFile("/documents/CDD_ETUDIANTS_EMPLOYES_VARIABLE.txt");
         //endregion
 
         //region PDF Generation
@@ -1092,20 +1067,8 @@ public class ContractsDashboardController {
         String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
 
         //region Read txt file
-        ArrayList<String> fileLines = new ArrayList<>();
-        File file = new File(myDocumentsPath + "/ERPDocs/CDD_FLEXI_EMLPLOYE_VARIABLE.txt");
-
-        try {
-            FileReader reader = new FileReader(file);
-            BufferedReader br = new BufferedReader(reader);
-            String line;
-            while ((line = br.readLine()) != null) {
-                //System.out.println(line);
-                fileLines.add(line);
-            }
-        }catch (Exception e){
-            e.fillInStackTrace();
-        }
+        ArrayList<String> fileLines = Global.readTxtFile("/documents/CDD_FLEXI_EMLPLOYE_VARIABLE.txt");
+        //fileLines = Global.readTxtFile(file);
 
         //endregion
 
@@ -1393,20 +1356,8 @@ public class ContractsDashboardController {
         String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
 
         //region Read txt file
-        ArrayList<String> fileLines = new ArrayList<>();
-        File file = new File(myDocumentsPath + "/ERPDocs/CDD_FLEXI_OUVRIER_VARIABLE.txt");
-
-        try {
-            FileReader reader = new FileReader(file);
-            BufferedReader br = new BufferedReader(reader);
-            String line;
-            while ((line = br.readLine()) != null) {
-                //System.out.println(line);
-                fileLines.add(line);
-            }
-        }catch (Exception e){
-            e.fillInStackTrace();
-        }
+        ArrayList<String> fileLines = Global.readTxtFile("/documents/CDD_FLEXI_OUVRIER_VARIABLE.txt");
+        //fileLines = Global.readTxtFile(file);
 
         //endregion
 

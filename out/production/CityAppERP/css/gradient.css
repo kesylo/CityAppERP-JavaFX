@@ -1,0 +1,18 @@
+/*@font-face {
+    font-family: Poppins;
+    src: url('/sample/Ressources/font/Poppins-Regular.otf');
+}
+
+.root{
+    -fx-font-size: 14px;
+    -fx-font-family: "Poppins";
+}*/
+
+#anchor{
+    -fx-background-color: linear-gradient(#F5D961,#FE9C88);
+}
+
+#pane{
+    -fx-background-color: linear-gradient(#F5D961,#FE9C88);
+}
+

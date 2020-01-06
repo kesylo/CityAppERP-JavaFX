@@ -236,21 +236,21 @@ public class addCollaboratorController {
         // types: 1 : string,       2 : float 0.00       3 : int,      4 : float 0.0000     0 : all
         // String case: 1 : toUpper,       2 : one letter Caps,       3 : nothingF
 
-        Global.txtFormater(txtName, 30,0, 1);
-        Global.txtFormater(txtSurname, 30,0, 2);
-        Global.txtFormater(txtEmail, 50,0, 2);
-        Global.txtFormater(txtNumEmployee, 4,3, 3);
-        Global.txtFormater(txtAddress, 60,0, 2);
-        Global.txtFormater(txtNumeroRue, 6,3, 3);
-        Global.txtFormater(txtNumeroBoite, 3,0, 1);
-        Global.txtFormater(txtCity, 40,1, 2);
-        Global.txtFormater(txtPhoneNumber, 30,3, 3);
-        Global.txtFormater(txtSalaryMonth, 10,2, 3);
-        Global.txtFormater(txtSalaryHour, 10,  4, 3);
-        Global.txtFormater(txtZipCode, 5,2, 3);
-        Global.txtFormater(txtRegisterNumber, 15,0, 1);
-        Global.txtFormater(txtPseudo, 15,0, 3);
-        Global.txtFormater(txtPassword, 20,0, 3);
+        Global.inputTextFormater(txtName, 30,0, 1);
+        Global.inputTextFormater(txtSurname, 30,0, 2);
+        Global.inputTextFormater(txtEmail, 50,0, 2);
+        Global.inputTextFormater(txtNumEmployee, 4,3, 3);
+        Global.inputTextFormater(txtAddress, 60,0, 2);
+        Global.inputTextFormater(txtNumeroRue, 6,3, 3);
+        Global.inputTextFormater(txtNumeroBoite, 3,0, 1);
+        Global.inputTextFormater(txtCity, 40,1, 2);
+        Global.inputTextFormater(txtPhoneNumber, 30,3, 3);
+        Global.inputTextFormater(txtSalaryMonth, 10,2, 3);
+        Global.inputTextFormater(txtSalaryHour, 10,  4, 3);
+        Global.inputTextFormater(txtZipCode, 5,2, 3);
+        Global.inputTextFormater(txtRegisterNumber, 15,0, 1);
+        Global.inputTextFormater(txtPseudo, 15,0, 3);
+        Global.inputTextFormater(txtPassword, 20,0, 3);
         //endregion
 
         // set datepicker font

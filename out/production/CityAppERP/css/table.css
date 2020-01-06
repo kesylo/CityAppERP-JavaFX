@@ -1,0 +1,56 @@
+
+
+/*
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color:  #5dbcd2;
+    -fx-padding: 12px ;
+    -fx-font-size: 16px;
+    -fx-border-radius: 20;
+}
+*/
+
+
+/* The column header row is made up of a number of column-header, one for each
+   TableColumn, and a 'filler' area that extends from the right-most column
+   to the edge of the tableview, or up to the 'column control' button. */
+.table-view .filler, .tree-table-view .filler, .table-view .column-header,
+.tree-table-view .column-header {
+    -fx-size: 30;
+    -fx-background-color: #AEB6BF ;
+    -fx-font-size: 14px;
+
+    -fx-background-radius: 7 7 0 0;
+}
+
+.table-view .show-hide-columns-button, .tree-table-view .show-hide-columns-button
+{
+    -fx-background-color: transparent;
+}
+
+.table-cell {
+    -fx-border-color: transparent; /* Vertical Lines*/
+    -fx-border-width: 1;
+}
+
+
+.table-view .column-header .label{
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+
+}
+
+.table-view .cell{
+    -fx-cell-size: 30;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+
+    -fx-text-fill: black;
+
+}
+.table-row-cell:selected {
+    -fx-background-color: #D6EAF8 ;
+
+
+}

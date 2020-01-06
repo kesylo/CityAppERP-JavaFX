@@ -1,8 +1,12 @@
 package sample;
 
 
+import sample.Controller.Contracts.ContractsDashboardController;
 import sample.Global.Global;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -524,7 +528,7 @@ public class test {
 
 
 
-        LocalTime l1 = LocalTime.parse("02:53");
+        /*LocalTime l1 = LocalTime.parse("02:53");
         LocalTime l2 = LocalTime.parse("17:54");
         System.out.println();
 
@@ -543,7 +547,22 @@ public class test {
             h++;
         }
 
-        System.out.println(h + " " + min);
+        System.out.println(h + " " + min);*/
+
+
+
+        InputStream inputStream = Main.class.getResourceAsStream("/documents/CDD_EMPLOYES_VARIABLE.txt");
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader reader = new BufferedReader(inputStreamReader);
+        try {
+            String line;
+            while ((line = reader.readLine()) !=null){
+                System.out.println(line);
+            }
+            reader.close();
+        } catch (Exception e){
+            e.fillInStackTrace();
+        }
 
 
 
