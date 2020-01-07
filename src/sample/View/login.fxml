@@ -86,7 +86,7 @@
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblAppVersion" alignment="CENTER" contentDisplay="CENTER" text="1.1">
+                  <Label fx:id="lblAppVersion" alignment="CENTER" contentDisplay="CENTER" text="2.0">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>

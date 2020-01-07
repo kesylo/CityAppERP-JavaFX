@@ -51,7 +51,7 @@ public class DBHandler extends DBConfig {
         String status = "Accepté";
 
         // prepare the query
-        String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+        String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
                 "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                 "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
                 "and status =? ";
@@ -78,7 +78,7 @@ public class DBHandler extends DBConfig {
         String status = "Accepté";
 
         // prepare the query
-        String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+        String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
                 "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                 "and status =? ";
         // run it
@@ -102,7 +102,7 @@ public class DBHandler extends DBConfig {
         rs = null;
 
         // prepare the query
-        String query = "SELECT id FROM cityappdberp.employees where dept=? " +
+        String query = "SELECT id FROM employees where dept=? " +
                 "and outService is null or outService = '' ";
         // run it
         try {
@@ -127,7 +127,7 @@ public class DBHandler extends DBConfig {
 
         for (Integer id : usersInSameDept) {
 
-            String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+            String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
                     "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                     "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
                     "and status =? ";
@@ -168,7 +168,7 @@ public class DBHandler extends DBConfig {
 
         for (Integer id : usersInSameDept) {
 
-            String query = "SELECT startTime, endTime, date FROM cityappdberp.planning where id_user=? " +
+            String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
                     "and extract(year from str_to_date(date, '%d-%m-%Y')) =? "+
                     "and status =? ";
             // run it
