@@ -331,9 +331,9 @@ public class ContractsDashboardController {
     }
 
     private void createContractDir() {
+        String contractsFolder = "Contracts";
         try {
             if (Global.isWindows()){
-                String contractsFolder = "Contracts";
                 File path = new File(myDocumentsPath + "\\" + contractsFolder);
                 // set globally
                 ContractGlobal.setContractsPath(path.toString());

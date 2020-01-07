@@ -140,8 +140,8 @@ public class DialogController<P> {
             }
             catch (Exception e) {
                 //e.printStackTrace();
-                Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
-                        "Voici les détails sur l'erreur ", e);
+                Global.showErrorMessage("Impossible de contacter le serveur distant!",
+                        "Vérifiez que le serveur MYSQL est actif");
             }
         };
 

@@ -488,12 +488,18 @@ public final class Global {
 
     public static boolean openInBrowser(String address) {
         try {
-            URL url = new URL(address);
-            return openWebPage(url.toURI());
-        } catch (URISyntaxException | MalformedURLException e) {
+
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI(address));
+            }
+
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
+
+
     }
 
     public static int monthToInt(String monthValue) {
