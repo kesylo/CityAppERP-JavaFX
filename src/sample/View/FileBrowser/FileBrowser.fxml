@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="760.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.FileBrowser.FileBrowserController">
+   <children>
+      <Pane fx:id="pane" prefHeight="168.0" prefWidth="1160.0" stylesheets="@../../Ressources/css/gradient.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane layoutX="815.0" layoutY="18.0" prefHeight="62.0" prefWidth="315.0" style="-fx-background-color: #FFFF; -fx-background-radius: 50;">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <children>
+                  <Label layoutX="131.0" layoutY="6.0" prefHeight="20.0" prefWidth="153.0" text="Utilisateur connecté :">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblConnectedUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="59.0" layoutY="31.0" prefHeight="20.0" prefWidth="197.0" text="Keming Loic" textAlignment="RIGHT" textFill="#5dbcd2">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="btnLogOut" fitHeight="36.0" fitWidth="26.0" layoutX="263.0" layoutY="29.0" onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/shutdown.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <ImageView fx:id="photo" fitHeight="52.0" fitWidth="52.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/userMale.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Label fx:id="txtHeading" layoutX="79.0" layoutY="30.0" text="Explorateur de fichiers">
+               <font>
+                  <Font name="Century Gothic Bold Italic" size="30.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="68.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_document_96px.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="30.0" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1100.0" style="-fx-background-color: #FFFF; -fx-background-radius: 7;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <JFXButton fx:id="btnhide" layoutX="23.0" layoutY="594.0" visible="false" />
+            <ScrollPane fx:id="tilesScroll" layoutX="15.0" layoutY="62.0" prefHeight="564.0" prefWidth="1070.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="62.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="560.0" prefWidth="1066.0">
+                     <children>
+                        <TilePane fx:id="tilePane" layoutX="7.0" layoutY="-8.0" prefHeight="560.0" prefWidth="1066.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+            <TextField fx:id="filePath" editable="false" focusTraversable="false" layoutX="75.0" layoutY="14.0" prefHeight="34.0" prefWidth="1011.0" promptText="Repertoire" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="14.0">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+            </TextField>
+            <JFXButton fx:id="btnBack" alignment="CENTER" cancelButton="true" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="5.0" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="44.0" style="-fx-background-color: #E0E0E0;" AnchorPane.bottomAnchor="592.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="1042.0">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_back_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -42,15 +42,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public final class Global {
+public class Global {
 
 
     //region variables
-    public static String PlanningServerAddress;
+    private static String PlanningServerAddress;
     private static User connectedUser = new User();
     public static String appName = "City Apartments ERP";
     public static String navFrom = "";
-    public static Double appVersion = 1.2;
     private static Stage stage;
 
     //endregion
@@ -85,18 +84,6 @@ public final class Global {
     //endregion
 
     //region Methods
-
-    public static void showErrorMessage(String header, String content) {
-        Alert alertDialog = new Alert(Alert.AlertType.ERROR);
-        alertDialog.setTitle(appName);
-        alertDialog.setHeaderText(header);
-        alertDialog.setContentText(content);
-        //Set app logo
-        Image image = new Image("/sample/Ressources/images/icon.png");
-        stage.getIcons().add(image);
-
-        alertDialog.showAndWait();
-    }
 
     public static ArrayList<String> readTxtFile (String path){
         InputStream inputStream = Main.class.getResourceAsStream(path);
@@ -136,8 +123,29 @@ public final class Global {
     public static void showInfoMessage(String header, String content) {
         Alert alertDialog = new Alert(Alert.AlertType.INFORMATION);
         alertDialog.setTitle(appName);
+
+        // set dialog icon
+        Stage stage = (Stage) alertDialog.getDialogPane().getScene().getWindow();
+        Image image = new Image("/sample/Ressources/images/icon.png");
+        stage.getIcons().add(image);
+
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
+        alertDialog.showAndWait();
+    }
+
+    public static void showErrorMessage(String header, String content) {
+        Alert alertDialog = new Alert(Alert.AlertType.ERROR);
+        alertDialog.setTitle(appName);
+
+        // set dialog icon
+        Stage stage = (Stage) alertDialog.getDialogPane().getScene().getWindow();
+        Image image = new Image("/sample/Ressources/images/icon.png");
+        stage.getIcons().add(image);
+
+        alertDialog.setHeaderText(header);
+        alertDialog.setContentText(content);
+
         alertDialog.showAndWait();
     }
 
@@ -147,8 +155,10 @@ public final class Global {
         alertDialog.setHeaderText(header);
         alertDialog.setContentText(content);
 
-
-        //ex = new FileNotFoundException("Could not find file blabla.txt");
+        // set dialog icon
+        Stage stage = (Stage) alertDialog.getDialogPane().getScene().getWindow();
+        Image image = new Image("/sample/Ressources/images/icon.png");
+        stage.getIcons().add(image);
 
         // Create expandable Exception.
         StringWriter sw = new StringWriter();
@@ -186,11 +196,18 @@ public final class Global {
     }
 
     public static Boolean showInfoMessageWithBtn(String header, String content, String btnYes, String btnNo) {
+
         // change button type text
         ButtonType yes = new ButtonType(btnYes, ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType(btnNo, ButtonBar.ButtonData.CANCEL_CLOSE);
 
         Alert alertDialog = new Alert(Alert.AlertType.CONFIRMATION, content, yes,  no);
+
+        // set dialog icon
+        Stage stage = (Stage) alertDialog.getDialogPane().getScene().getWindow();
+        Image image = new Image("/sample/Ressources/images/icon.png");
+        stage.getIcons().add(image);
+
         alertDialog.setTitle(appName);
         alertDialog.setHeaderText(header);
 
@@ -240,6 +257,36 @@ public final class Global {
             stage.setResizable(false);
             stage.centerOnScreen();
             stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void navigateNewWindow(URL location, String windowName) {
+
+        /*if (closeWindow){
+            anyBtn.getScene().getWindow().hide();
+        }*/
+        /*List<Window> windows = Window.getWindows();
+        Stage mywindow = new Stage();
+        for (Window win : windows) {
+            if (win.getTitle().contains(windowName)) {
+                    mywindow= win
+            }
+        }*/
+
+
+        try {
+            Parent root = FXMLLoader.load(location);
+            Stage newStage = new Stage();
+            Image image = new Image("/sample/Ressources/images/icon.png");
+            newStage.getIcons().add(image);
+            newStage.setScene(new Scene(root, 1160, 760));
+            newStage.setTitle(appName + " " + windowName);
+            newStage.setResizable(false);
+            newStage.centerOnScreen();
+            newStage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -471,19 +518,6 @@ public final class Global {
         stringBuilder.append("-");
 
         return stringBuilder.toString();
-    }
-
-    private static boolean openWebPage(URI uri) {
-        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(uri);
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
     }
 
     public static boolean openInBrowser(String address) {

@@ -5,15 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import sample.Global.FileBrowserGlobal;
 import sample.Global.Global;
-import sun.security.krb5.internal.crypto.Des;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 
 public class ProcedureMainController {
     //region UI
@@ -59,8 +55,13 @@ public class ProcedureMainController {
         Global.setProfileIcon(photo);
 
         btnNavToCleaning.setOnAction(event -> {
+            // set cleaning folder globally
             String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
-            Global.openInExplorer(myDocumentsPath);
+            FileBrowserGlobal.setExplorerBasePath(myDocumentsPath);
+
+            FileBrowserGlobal.setCurrentProcedure("Procédures de nettoyage");
+            URL url = getClass().getResource("/sample/View/FileBrowser/FileBrowser.fxml");
+            Global.navigateNewWindow(url, "Néttoyage");
         });
 
         btnBack.setOnAction(event -> {

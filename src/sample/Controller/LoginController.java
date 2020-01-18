@@ -52,7 +52,7 @@ public class LoginController {
 
         dbHandler = new DBHandler();
 
-        lblAppVersion.setText(Global.appVersion.toString());
+        lblAppVersion.setText(DBHandler.getAppVersion().toString());
 
         btnConnection.setOnAction(event -> {
             login();
