@@ -331,11 +331,17 @@ public class reportDashboardController {
             r.setMinutes(Global.minutesToTime(Integer.valueOf(r.getMinutes())));
         }
 
+        // create sort by date
+        clmDate.setSortType(TableColumn.SortType.ASCENDING);
 
         clmDate.setCellValueFactory(new PropertyValueFactory<>("ServiceDate"));
         clmShift.setCellValueFactory(new PropertyValueFactory<>("Minutes"));
 
+        // set table data
         tableDateHours.setItems(reportList);
+
+        // apply sort by date
+        tableDateHours.getSortOrder().add(clmDate);
 
         // set text
         String totalTime = Global.minutesToTime(totalMin);
