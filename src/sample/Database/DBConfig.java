@@ -2,10 +2,10 @@ package sample.Database;
 
 class DBConfig {
     // app version
-    private static Double appVersion = 3.0;
+    private static String appVersion = "3.1.5";
 
     // my local Server
-    /*String dbHost = "localhost";
+   /* String dbHost = "localhost";
     String dbPort = "3306";
     String dbUser = "root";
     String dbPass = "azerty";
@@ -21,11 +21,11 @@ class DBConfig {
 
 
     //region Getters and setters
-    public static Double getAppVersion() {
+    public static String getAppVersion() {
         return appVersion;
     }
 
-    public static void setAppVersion(Double appVersion) {
+    public static void setAppVersion(String appVersion) {
         DBConfig.appVersion = appVersion;
     }
     //endregion
