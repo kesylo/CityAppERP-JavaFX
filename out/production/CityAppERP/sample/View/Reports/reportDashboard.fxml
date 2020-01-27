@@ -27,7 +27,7 @@
          <children>
             <JFXButton fx:id="btnhide" layoutX="23.0" layoutY="594.0" visible="false" />
             <HBox layoutX="405.0" layoutY="582.0" spacing="30.0" AnchorPane.bottomAnchor="20.0" />
-            <JFXButton fx:id="btnBack" alignment="CENTER" cancelButton="true" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="5.0" layoutX="20.0" layoutY="581.0" prefHeight="38.0" prefWidth="26.0" style="-fx-background-color: #E0E0E0;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+            <JFXButton fx:id="btnBack" alignment="CENTER" cancelButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="20.0" layoutY="581.0" prefHeight="38.0" prefWidth="140.0" style="-fx-background-color: #E0E0E0;" text="Retour" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
@@ -72,7 +72,7 @@
             <Separator layoutX="14.0" layoutY="33.0" prefHeight="11.0" prefWidth="386.0" />
             <Separator layoutX="15.0" layoutY="87.0" prefHeight="11.0" prefWidth="1071.0" />
             <HBox layoutX="269.0" layoutY="218.0" />
-            <JFXButton fx:id="btnCalculate" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="484.0" layoutY="583.0" prefHeight="38.0" prefWidth="144.0" style="-fx-background-color: #59BA5C;" text="Calculer">
+            <JFXButton fx:id="btnCalculate" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="430.0" layoutY="583.0" prefHeight="38.0" prefWidth="144.0" style="-fx-background-color: #59BA5C;" text="Calculer">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
@@ -96,12 +96,12 @@
             <Pane layoutX="460.0" layoutY="98.0" prefHeight="9.0" prefWidth="200.0" style="-fx-background-color: #AEB6BF;" />
             <Separator layoutX="700.0" layoutY="33.0" prefHeight="11.0" prefWidth="386.0" />
             <HBox layoutX="765.0" layoutY="594.0" spacing="10.0" />
-            <Label layoutX="661.0" layoutY="581.0" text="Total :">
+            <Label layoutX="607.0" layoutY="581.0" text="Total :">
                <font>
                   <Font name="Poppins Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="hoursPrested" layoutX="661.0" layoutY="603.0" prefHeight="20.0" prefWidth="114.0" text="00 : 00">
+            <Label fx:id="hoursPrested" layoutX="607.0" layoutY="603.0" prefHeight="20.0" prefWidth="114.0" text="00 : 00">
                <font>
                   <Font name="Poppins Bold" size="14.0" />
                </font>
@@ -111,6 +111,18 @@
                   <Font name="Poppins Bold" size="16.0" />
                </font>
             </Label>
+            <JFXButton fx:id="btnExport" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="946.0" layoutY="584.0" prefHeight="38.0" prefWidth="140.0" style="-fx-background-color: #E0E0E0;" text="Exporter" AnchorPane.leftAnchor="946.0" AnchorPane.rightAnchor="20.0">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_Export_CSV_64px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children>
       </AnchorPane>
       <Pane layoutX="815.0" layoutY="18.0" prefHeight="62.0" prefWidth="315.0" style="-fx-background-color: #FFFF; -fx-background-radius: 50;">

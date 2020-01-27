@@ -32,6 +32,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Year;
@@ -390,6 +392,15 @@ public class Global {
 
     public static String formatDouble (double value){
         return String.format("%.2f", value);
+    }
+
+    public static boolean isStringNumeric (String str) {
+
+        boolean numeric = true;
+
+        numeric = str.matches("-?\\d+(\\.\\d+)?");
+
+        return numeric;
     }
 
     public static String formatDouble3 (double value){

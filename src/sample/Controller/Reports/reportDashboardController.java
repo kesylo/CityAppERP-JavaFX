@@ -12,6 +12,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
 import sample.Global.Global;
@@ -19,12 +22,14 @@ import sample.Model.Planning;
 import sample.Model.Report;
 import sample.Model.User;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.List;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -37,6 +42,9 @@ public class reportDashboardController {
 
     @FXML
     private JFXButton btnBack;
+
+    @FXML
+    private JFXButton btnExport;
 
     @FXML
     private JFXComboBox<User> comboUser;
@@ -98,6 +106,8 @@ public class reportDashboardController {
     private ObservableList<String> dept = FXCollections.observableArrayList();
     private ObservableList<String> month = FXCollections.observableArrayList();
     private ObservableList<Integer> year = FXCollections.observableArrayList();
+    ObservableList<Report> userReportList = FXCollections.observableArrayList();
+    ObservableList<Planning> planningList = FXCollections.observableArrayList();
     private ResultSet rs = null;
 
     @FXML
@@ -155,7 +165,13 @@ public class reportDashboardController {
             URL url = getClass().getResource("/sample/View/dashboard.fxml");
             Global.navigateTo(url, "Dashboard");
         });
+
+        btnExport.setOnAction(event -> {
+            // check if calculate is pressed
+            exportToExcel();
+        });
     }
+
 
     /* ==============================================================================================================================*/
 
@@ -169,6 +185,52 @@ public class reportDashboardController {
         }else if (radioDept.isSelected() && radioYear.isSelected()){
             fillTable("deptYear");
         }
+    }
+
+    private void exportToExcel() {
+
+        try {
+        // create excel sheet
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("Timesheet de " +
+                comboUser.getValue().getFirstName() + " " + comboUser.getValue().getLastName());
+        XSSFRow header1 = sheet.createRow(0);
+        header1.createCell(0).setCellValue("Nom :");
+        header1.createCell(1).setCellValue("LOIC");
+        header1.createCell(2).setCellValue("12.5");
+
+        XSSFRow header2 = sheet.createRow(1);
+        header2.setHeightInPoints(30);
+        header2.createCell(0).setCellValue("Date");
+        header2.createCell(1).setCellValue("Heure de début");
+        header2.createCell(2).setCellValue("Heure de fin");
+        header2.createCell(3).setCellValue("Pause");
+        header2.createCell(4).setCellValue("Heures prestées");
+        header2.createCell(5).setCellValue("Payts");
+        header2.createCell(6).setCellValue("Heures normales");
+        header2.createCell(7).setCellValue("Heures supplémentaires");
+        header2.createCell(8).setCellValue("A Payer");
+        header2.createCell(9).setCellValue("Report");
+        header2.createCell(9).setCellValue("Solde");
+
+        XSSFRow header3 = sheet.createRow(2);
+        header3.createCell(1).setCellValue("Heures au format décimal");
+
+
+        // write to file
+
+            FileOutputStream fileOut = new FileOutputStream("test.xlsx");
+            wb.write(fileOut);
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        /*for (Report r : userReportList){
+
+        }*/
     }
 
     private void loadUserList(){
@@ -270,7 +332,7 @@ public class reportDashboardController {
     }
 
     private void fillTable(String choice){
-        ObservableList<Planning> planningList = FXCollections.observableArrayList();
+        //ObservableList<Planning> planningList = FXCollections.observableArrayList();
         ObservableList<Report> reportList = FXCollections.observableArrayList();
         ObservableList<Integer> usersInSameDept;
 
@@ -315,16 +377,25 @@ public class reportDashboardController {
 
         for (Planning p : planningList) {
 
-            LocalTime startTime = LocalTime.parse(p.getStartTime());
-            LocalTime endTime = LocalTime.parse(p.getEndTime());
+            if (!p.getStartTime().equals("") && !p.getEndTime().equals("")){
 
-            min = MINUTES.between(startTime, endTime);
+                //System.out.println(p.getStartTime() + " " + p.getEndTime());
 
-            totalMin += min;
+                LocalTime startTime = LocalTime.parse(p.getStartTime());
+                LocalTime endTime = LocalTime.parse(p.getEndTime());
 
-            Report report = new Report(min + "", p.getPrestationDate());
-            reportList.add(report);
+                min = MINUTES.between(startTime, endTime);
+
+                totalMin += min;
+
+                Report report = new Report(min + "", p.getPrestationDate());
+                reportList.add(report);
+
+            }
         }
+
+        // set locally for the excel method
+        //planningList = planningsList;
 
         // add list to table
         for (Report r :reportList) {

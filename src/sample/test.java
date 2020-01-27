@@ -1,24 +1,21 @@
 package sample;
 
 
-import sample.Controller.Contracts.ContractsDashboardController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.CellUtil;
+import org.apache.poi.ss.util.PropertyTemplate;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Global.Global;
+import sample.Model.Planning;
+import sample.Model.Report;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+import java.io.*;
 import java.util.*;
-import java.util.List;
-
-import static java.time.temporal.ChronoUnit.HOURS;
-import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class test {
     public static void main(String[] args) {
@@ -550,7 +547,7 @@ public class test {
         System.out.println(h + " " + min);*/
 
 
-
+/*
         InputStream inputStream = Main.class.getResourceAsStream("/documents/CDD_EMPLOYES_VARIABLE.txt");
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader reader = new BufferedReader(inputStreamReader);
@@ -562,10 +559,203 @@ public class test {
             reader.close();
         } catch (Exception e){
             e.fillInStackTrace();
+        }*/
+
+
+
+
+
+
+        ObservableList<Planning> planningList = FXCollections.observableArrayList();
+        Planning p = new Planning("12-01-2019","12:01", "14:12");
+        planningList.add(p);
+        p = new Planning("21-03-2019","02:01", "15:32");
+        planningList.add(p);
+
+        try {
+            // variables
+            Double totalPrestaion = 0.0;
+
+            // create excel sheet
+            XSSFWorkbook wb = new XSSFWorkbook();
+            XSSFSheet sheet = wb.createSheet("Timesheet de LOIC" );
+            sheet.setFitToPage(true);
+            sheet.setHorizontallyCenter(true);
+
+
+            // row yellow
+            XSSFRow row1 = sheet.createRow(0);
+            createCell(row1, wb, "Nom :", 0, 12,IndexedColors.YELLOW.getIndex());
+            drawBorders(0,0,0,0, BorderExtent.ALL, sheet);
+            createCell(row1, wb, "LOIC", 1, 12,IndexedColors.YELLOW.getIndex());
+            drawBorders(0,0,1,5, BorderExtent.OUTSIDE, sheet);
+            createCell(row1, wb, "12.0", 5, 12,IndexedColors.YELLOW.getIndex());
+            drawBorders(0,0,5,5, BorderExtent.ALL, sheet);
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 4));
+
+            // row green
+            XSSFRow row2 = sheet.createRow(1);
+            row2.setHeightInPoints(45);
+            List<String> values = new ArrayList<>();
+            values.add("Date");
+            values.add("Heure de début");
+            values.add("Heure de fin");
+            values.add("Pause");
+            values.add("Heures prestées");
+            values.add("Payts");
+            values.add("Heures normales");
+            values.add("Heures supplémentaires");
+            values.add("A Payer");
+            values.add("Report");
+            values.add("Solde");
+
+            for (int i = 0; i < values.size(); i ++){
+                createCell(row2, wb, values.get(i), i, 12,IndexedColors.GREEN.getIndex());
+            }
+            drawBorders(1,1,0,10, BorderExtent.ALL, sheet);
+
+
+
+        /*    // dates
+            List<String> dates = new ArrayList<>();
+            dates.add("01-12-19");
+            dates.add("07-12-19");
+            dates.add("13-12-19");
+            int indexStart = 3;
+            *//*for (String date : dates) {
+                XSSFRow rowDates = sheet.createRow(indexStart);
+                createCell(rowDates, wb, date, 0, 12, IndexedColors.GREY_25_PERCENT.getIndex());
+                indexStart += 1;
+            }*/
+
+            // data
+            int indexStart = 3;
+            for (int i = 0; i < planningList.size(); i++){
+                XSSFRow rowDates = sheet.createRow(indexStart);
+
+                // dates
+                createCell(rowDates, wb, planningList.get(i).getPrestationDate(), 0, 12, IndexedColors.GREY_25_PERCENT.getIndex());
+
+                // start Time
+                String oldString = planningList.get(i).getStartTime();
+                String newString = oldString.replace(":", ".");
+                Double value1 = Double.parseDouble(newString);
+                createCell(rowDates, wb, newString, 1, 12, IndexedColors.WHITE.getIndex());
+
+                // end Time
+                String oldString2 = planningList.get(i).getEndTime();
+                String newString2 = oldString2.replace(":", ".");
+                Double value2 = Double.parseDouble(newString2);
+                createCell(rowDates, wb, newString2, 2, 12, IndexedColors.WHITE.getIndex());
+
+                // work time
+                Double workTime = value2 - value1;
+                createCell(rowDates, wb, workTime.toString(), 4, 12, IndexedColors.WHITE.getIndex());
+
+                // compute total time
+                if (workTime > 0){
+                    totalPrestaion += workTime;
+                }
+
+
+
+
+
+                indexStart += 1;
+            }
+
+
+
+
+
+            // row purple and green
+            XSSFRow row3 = sheet.createRow(2);
+            createCell(row3, wb, "", 1, 12,IndexedColors.GREY_25_PERCENT.getIndex());
+            drawBorders(2,2,0,0, BorderExtent.ALL, sheet);
+
+            String value = "Heures au format décimal";
+            createCell(row3, wb, value, 1, 12,IndexedColors.ROSE.getIndex());
+            drawBorders(2,2,1,3, BorderExtent.OUTSIDE, sheet);
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 3));
+
+            createCell(row3, wb, totalPrestaion.toString(), 4, 12,IndexedColors.GREEN.getIndex());
+            createCell(row3, wb, "00.00", 5, 12,IndexedColors.GREEN.getIndex());
+            createCell(row3, wb, "86.00", 6, 12,IndexedColors.SKY_BLUE.getIndex());
+            createCell(row3, wb, "20.75", 7, 12,IndexedColors.GREEN.getIndex());
+            createCell(row3, wb, "246.00", 8, 12,IndexedColors.GREEN.getIndex());
+            createCell(row3, wb, "6.00", 9, 12,IndexedColors.SKY_BLUE.getIndex());
+            createCell(row3, wb, "252.00", 10, 12,IndexedColors.GREEN.getIndex());
+            drawBorders(2,2,3,10, BorderExtent.ALL, sheet);
+
+
+
+            // auto size columns
+            for (int i = 0; i < 10; i++){
+                sheet.autoSizeColumn(i);
+            }
+
+
+
+
+            // write to file
+            FileOutputStream fileOut = new FileOutputStream("test.xlsx");
+            wb.write(fileOut);
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
 
 
+
+    }
+
+    private static void createCell(XSSFRow row, XSSFWorkbook wb, String value, int columnIndex, int fontSize, short color){
+
+        Cell cell = row.createCell(columnIndex);
+
+        if (Global.isStringNumeric(value)){
+            double v = Double.parseDouble(value);
+            cell.setCellValue(v);
+        }else {
+            cell.setCellValue(value);
+        }
+
+
+        // create it's style
+        CellStyle style = wb.createCellStyle();
+
+        // create font
+        Font headerFont = wb.createFont();
+        headerFont.setFontHeightInPoints((short) fontSize);
+        style.setFont(headerFont);
+
+        // add color
+        style.setFillForegroundColor(color);
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        // align
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        style.setAlignment(HorizontalAlignment.CENTER);
+
+        if (Global.isStringNumeric(value)){
+            style.setDataFormat(wb.getCreationHelper().createDataFormat().getFormat("00.00"));
+        }
+
+        style.setWrapText(true);
+
+        // apply created style
+        cell.setCellStyle(style);
+    }
+
+
+
+    private static void drawBorders(int firstRow, int lastRow, int firstCol, int lastCol, BorderExtent type, XSSFSheet sheet){
+        PropertyTemplate pt = new PropertyTemplate();
+        pt.drawBorders(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol),
+                BorderStyle.THIN, type);
+        pt.applyBorders(sheet);
     }
 }
