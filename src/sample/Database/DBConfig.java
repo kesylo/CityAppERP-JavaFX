@@ -8,8 +8,8 @@ class DBConfig {
     String dbHost = "localhost";
     String dbPort = "3306";
     String dbUser = "root";
-    String dbPass = "azerty";
-    String dbName = "cityappdberp";
+    String dbPass = "";
+    String dbName = "db2gy8y9y58had";
 
 
     // deployment server SITEGROUND
@@ -23,10 +23,6 @@ class DBConfig {
     //region Getters and setters
     public static String getAppVersion() {
         return appVersion;
-    }
-
-    public static void setAppVersion(String appVersion) {
-        DBConfig.appVersion = appVersion;
     }
     //endregion
 }

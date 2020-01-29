@@ -12,6 +12,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.PropertyTemplate;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,7 +25,6 @@ import sample.Model.Planning;
 import sample.Model.Report;
 import sample.Model.User;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +32,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -45,6 +48,9 @@ public class reportDashboardController {
 
     @FXML
     private JFXButton btnExport;
+
+    @FXML
+    private JFXButton btnAddPayment;
 
     @FXML
     private JFXComboBox<User> comboUser;
@@ -170,6 +176,11 @@ public class reportDashboardController {
             // check if calculate is pressed
             exportToExcel();
         });
+
+        btnAddPayment.setOnAction(event -> {
+            URL url = getClass().getResource("/sample/View/Reports/payment.fxml");
+            Global.navigateModal(url, "Paiements");
+        });
     }
 
 
@@ -190,35 +201,117 @@ public class reportDashboardController {
     private void exportToExcel() {
 
         try {
-        // create excel sheet
-        XSSFWorkbook wb = new XSSFWorkbook();
-        XSSFSheet sheet = wb.createSheet("Timesheet de " +
-                comboUser.getValue().getFirstName() + " " + comboUser.getValue().getLastName());
-        XSSFRow header1 = sheet.createRow(0);
-        header1.createCell(0).setCellValue("Nom :");
-        header1.createCell(1).setCellValue("LOIC");
-        header1.createCell(2).setCellValue("12.5");
+            // variables
+            Double totalWorked = 0.0;
 
-        XSSFRow header2 = sheet.createRow(1);
-        header2.setHeightInPoints(30);
-        header2.createCell(0).setCellValue("Date");
-        header2.createCell(1).setCellValue("Heure de début");
-        header2.createCell(2).setCellValue("Heure de fin");
-        header2.createCell(3).setCellValue("Pause");
-        header2.createCell(4).setCellValue("Heures prestées");
-        header2.createCell(5).setCellValue("Payts");
-        header2.createCell(6).setCellValue("Heures normales");
-        header2.createCell(7).setCellValue("Heures supplémentaires");
-        header2.createCell(8).setCellValue("A Payer");
-        header2.createCell(9).setCellValue("Report");
-        header2.createCell(9).setCellValue("Solde");
-
-        XSSFRow header3 = sheet.createRow(2);
-        header3.createCell(1).setCellValue("Heures au format décimal");
+            //region heading
+            // create excel sheet
+            XSSFWorkbook wb = new XSSFWorkbook();
+            XSSFSheet sheet = wb.createSheet("Timesheet de LOIC" );
+            sheet.setFitToPage(true);
+            sheet.setHorizontallyCenter(true);
 
 
-        // write to file
+            // row yellow
+            XSSFRow row1 = sheet.createRow(0);
+            createCell(row1, wb, "Nom :", 0, IndexedColors.YELLOW.getIndex());
+            drawBorders(0,0,0,0, BorderExtent.ALL, sheet);
+            createCell(row1, wb, "LOIC", 1, IndexedColors.YELLOW.getIndex());
+            drawBorders(0,0,1,5, BorderExtent.OUTSIDE, sheet);
+            createCell(row1, wb, "12.0", 5, IndexedColors.YELLOW.getIndex());
+            drawBorders(0,0,5,5, BorderExtent.ALL, sheet);
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 4));
 
+            // row green
+            XSSFRow row2 = sheet.createRow(1);
+            row2.setHeightInPoints(45);
+            List<String> values = new ArrayList<>();
+            values.add("Date");
+            values.add("Heure de début");
+            values.add("Heure de fin");
+            values.add("Pause");
+            values.add("Heures prestées");
+            values.add("Payts");
+            values.add("Heures normales");
+            values.add("Heures supplémentaires");
+            values.add("A Payer");
+            values.add("Report");
+            values.add("Solde");
+
+            for (int i = 0; i < values.size(); i ++){
+                createCell(row2, wb, values.get(i), i, IndexedColors.SEA_GREEN.getIndex());
+            }
+            drawBorders(1,1,0,10, BorderExtent.ALL, sheet);
+            //endregion
+
+            // data
+            int indexStart = 3;
+            int startDataRow = 3;
+            for (Planning aPlanningList : planningList) {
+                XSSFRow rowDates = sheet.createRow(indexStart);
+
+                // dates
+                createCell(rowDates, wb, aPlanningList.getPrestationDate(), 0, IndexedColors.GREY_25_PERCENT.getIndex());
+
+                // start Time
+                String oldString = aPlanningList.getStartTime();
+                String newString = oldString.replace(":", ".");
+                Double value1 = Double.parseDouble(newString);
+                createCell(rowDates, wb, newString, 1, IndexedColors.WHITE.getIndex());
+
+                // end Time
+                String oldString2 = aPlanningList.getEndTime();
+                String newString2 = oldString2.replace(":", ".");
+                Double value2 = Double.parseDouble(newString2);
+                createCell(rowDates, wb, newString2, 2, IndexedColors.WHITE.getIndex());
+
+                // work time
+                Double workTime = value2 - value1;
+                createCell(rowDates, wb, workTime.toString(), 4, IndexedColors.WHITE.getIndex());
+
+                // compute total time
+                if (workTime > 0) {
+                    totalWorked += workTime;
+                }
+                indexStart += 1;
+            }
+            drawBorders(startDataRow,indexStart - 1,0,4, BorderExtent.ALL, sheet);
+
+
+
+
+            // row purple and green
+            XSSFRow row3 = sheet.createRow(2);
+            createCell(row3, wb, "", 1, IndexedColors.GREY_25_PERCENT.getIndex());
+            drawBorders(2,2,0,0, BorderExtent.ALL, sheet);
+
+            String value = "Heures au format décimal";
+            createCell(row3, wb, value, 1, IndexedColors.ROSE.getIndex());
+            drawBorders(2,2,1,3, BorderExtent.OUTSIDE, sheet);
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 3));
+
+            createCell(row3, wb, totalWorked.toString(), 4, IndexedColors.SEA_GREEN.getIndex());
+            // payments from DB
+            createCell(row3, wb, "00.00", 5, IndexedColors.SEA_GREEN.getIndex());
+            // declared Hours from input
+            createCell(row3, wb, "86.00", 6, IndexedColors.SKY_BLUE.getIndex());
+            // extra hour (computed: worked Hours - declared hours)
+            createCell(row3, wb, "20.75", 7, IndexedColors.SEA_GREEN.getIndex());
+            // to pay (computed: salary * extra hour)
+            createCell(row3, wb, "246.00", 8, IndexedColors.SEA_GREEN.getIndex());
+            // report from DB
+            createCell(row3, wb, "6.00", 9, IndexedColors.SKY_BLUE.getIndex());
+            // balance computed
+            createCell(row3, wb, "252.00", 10, IndexedColors.SEA_GREEN.getIndex());
+
+            drawBorders(2,2,3,10, BorderExtent.ALL, sheet);
+
+            // auto size columns
+            for (int i = 0; i < 10; i++){
+                sheet.autoSizeColumn(i);
+            }
+
+            // write to file
             FileOutputStream fileOut = new FileOutputStream("test.xlsx");
             wb.write(fileOut);
             fileOut.close();
@@ -226,11 +319,51 @@ public class reportDashboardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createCell(XSSFRow row, XSSFWorkbook wb, String value, int columnIndex, short color){
+
+        Cell cell = row.createCell(columnIndex);
+
+        if (Global.isStringNumeric(value)){
+            double v = Double.parseDouble(value);
+            cell.setCellValue(v);
+        }else {
+            cell.setCellValue(value);
+        }
 
 
-        /*for (Report r : userReportList){
+        // create it's style
+        CellStyle style = wb.createCellStyle();
 
-        }*/
+        // create font
+        Font headerFont = wb.createFont();
+        headerFont.setFontHeightInPoints((short) 12);
+        style.setFont(headerFont);
+
+        // add color
+        style.setFillForegroundColor(color);
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        // align
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        style.setAlignment(HorizontalAlignment.CENTER);
+
+        if (Global.isStringNumeric(value)){
+            style.setDataFormat(wb.getCreationHelper().createDataFormat().getFormat("00.00"));
+        }
+
+        style.setWrapText(true);
+
+        // apply created style
+        cell.setCellStyle(style);
+    }
+
+    private void drawBorders(int firstRow, int lastRow, int firstCol, int lastCol, BorderExtent type, XSSFSheet sheet){
+        PropertyTemplate pt = new PropertyTemplate();
+        pt.drawBorders(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol),
+                BorderStyle.THIN, type);
+        pt.applyBorders(sheet);
     }
 
     private void loadUserList(){

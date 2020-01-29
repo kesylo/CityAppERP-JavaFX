@@ -610,7 +610,7 @@ public class test {
             values.add("Solde");
 
             for (int i = 0; i < values.size(); i ++){
-                createCell(row2, wb, values.get(i), i, 12,IndexedColors.GREEN.getIndex());
+                createCell(row2, wb, values.get(i), i, 12,IndexedColors.SEA_GREEN.getIndex());
             }
             drawBorders(1,1,0,10, BorderExtent.ALL, sheet);
 
@@ -630,20 +630,21 @@ public class test {
 
             // data
             int indexStart = 3;
-            for (int i = 0; i < planningList.size(); i++){
+            int startDataRow = 3;
+            for (Planning aPlanningList : planningList) {
                 XSSFRow rowDates = sheet.createRow(indexStart);
 
                 // dates
-                createCell(rowDates, wb, planningList.get(i).getPrestationDate(), 0, 12, IndexedColors.GREY_25_PERCENT.getIndex());
+                createCell(rowDates, wb, aPlanningList.getPrestationDate(), 0, 12, IndexedColors.GREY_25_PERCENT.getIndex());
 
                 // start Time
-                String oldString = planningList.get(i).getStartTime();
+                String oldString = aPlanningList.getStartTime();
                 String newString = oldString.replace(":", ".");
                 Double value1 = Double.parseDouble(newString);
                 createCell(rowDates, wb, newString, 1, 12, IndexedColors.WHITE.getIndex());
 
                 // end Time
-                String oldString2 = planningList.get(i).getEndTime();
+                String oldString2 = aPlanningList.getEndTime();
                 String newString2 = oldString2.replace(":", ".");
                 Double value2 = Double.parseDouble(newString2);
                 createCell(rowDates, wb, newString2, 2, 12, IndexedColors.WHITE.getIndex());
@@ -653,17 +654,12 @@ public class test {
                 createCell(rowDates, wb, workTime.toString(), 4, 12, IndexedColors.WHITE.getIndex());
 
                 // compute total time
-                if (workTime > 0){
+                if (workTime > 0) {
                     totalPrestaion += workTime;
                 }
-
-
-
-
-
                 indexStart += 1;
             }
-
+            drawBorders(startDataRow,indexStart,0,4, BorderExtent.ALL, sheet);
 
 
 
@@ -678,24 +674,26 @@ public class test {
             drawBorders(2,2,1,3, BorderExtent.OUTSIDE, sheet);
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 3));
 
-            createCell(row3, wb, totalPrestaion.toString(), 4, 12,IndexedColors.GREEN.getIndex());
-            createCell(row3, wb, "00.00", 5, 12,IndexedColors.GREEN.getIndex());
+            createCell(row3, wb, totalPrestaion.toString(), 4, 12,IndexedColors.SEA_GREEN.getIndex());
+            // payments from DB
+            createCell(row3, wb, "00.00", 5, 12,IndexedColors.SEA_GREEN.getIndex());
+            // declared Hours from input
             createCell(row3, wb, "86.00", 6, 12,IndexedColors.SKY_BLUE.getIndex());
-            createCell(row3, wb, "20.75", 7, 12,IndexedColors.GREEN.getIndex());
-            createCell(row3, wb, "246.00", 8, 12,IndexedColors.GREEN.getIndex());
+            // extra hour (computed: worked Hours - declared hours)
+            createCell(row3, wb, "20.75", 7, 12,IndexedColors.SEA_GREEN.getIndex());
+            // to pay (computed: salary * extra hour)
+            createCell(row3, wb, "246.00", 8, 12,IndexedColors.SEA_GREEN.getIndex());
+            // report from DB
             createCell(row3, wb, "6.00", 9, 12,IndexedColors.SKY_BLUE.getIndex());
-            createCell(row3, wb, "252.00", 10, 12,IndexedColors.GREEN.getIndex());
+            // balance computed
+            createCell(row3, wb, "252.00", 10, 12,IndexedColors.SEA_GREEN.getIndex());
+
             drawBorders(2,2,3,10, BorderExtent.ALL, sheet);
-
-
 
             // auto size columns
             for (int i = 0; i < 10; i++){
                 sheet.autoSizeColumn(i);
             }
-
-
-
 
             // write to file
             FileOutputStream fileOut = new FileOutputStream("test.xlsx");
