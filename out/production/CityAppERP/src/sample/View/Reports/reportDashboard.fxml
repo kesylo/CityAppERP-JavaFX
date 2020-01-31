@@ -123,6 +123,18 @@
                   </ImageView>
                </graphic>
             </JFXButton>
+            <JFXButton fx:id="btnAddPayment" alignment="CENTER" defaultButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="850.0" layoutY="132.0" prefHeight="38.0" prefWidth="236.0" style="-fx-background-color: #f7a631;" text="Ajouter un paiement">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Ressources/images/icons8_banknotes_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children>
       </AnchorPane>
       <Pane layoutX="815.0" layoutY="18.0" prefHeight="62.0" prefWidth="315.0" style="-fx-background-color: #FFFF; -fx-background-radius: 50;">

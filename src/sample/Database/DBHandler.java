@@ -245,6 +245,39 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    public Caisse getLastCaisse() {
+        rs = null;
+        Caisse caisse = new Caisse();
+
+        // prepare the query
+        String query = "SELECT * FROM " + Static.CAISSE_TABLE + " ORDER BY idCaisse DESC LIMIT 1";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+              caisse.setId(rs.getInt("idCaisse"));
+              caisse.setDate(rs.getString("date"));
+              caisse.setMontant(rs.getDouble("montant"));
+              caisse.setRemarque(rs.getString("remarque"));
+              caisse.setNumeroShift(rs.getInt("numeroShift"));
+              caisse.setClosed(rs.getInt("closed"));
+              caisse.setIdEmployes(rs.getInt("employees_id"));
+              caisse.setNumeroCaisse(rs.getString("numeroCaisse"));
+              caisse.setHasError(rs.getInt("has_error"));
+              caisse.setError_amount(rs.getDouble("error_amount"));
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+        return caisse;
+    }
+
     public ResultSet getAllEmployees(){
         rs = null;
 
@@ -473,6 +506,25 @@ public class DBHandler extends DBConfig {
         }
     }
 
+    public void addPayment(Payment payment) {
+        String query = "INSERT INTO payments (amount, date, userId, description) VALUES (?,?,?,?)";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDouble(1, payment.getAmount());
+            ps.setString(2, payment.getDate());
+            ps.setInt(3, payment.getUserId());
+            ps.setString(4, payment.getDescription());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+    }
+
     public void addCaisseCash(Cash caisseCash) {
         String query = "INSERT INTO " + Static.CAISSE_MONNAIE_TABLE + " ( caisse_idCaisse, numeroShift, lessThanOneEuro, fiftyCents, oneEuro," +
                 "twoEuros, fiveEuros, tenEuros, twentyEuros, fiftyEuros, oneHundredEuros, twoHundredEuros) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -671,6 +723,8 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
     }
+
+
 
     /*------------------------------ DELETE -------------------------------------*/
 }

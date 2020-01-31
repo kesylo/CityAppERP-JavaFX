@@ -1,14 +1,12 @@
 package sample.Model;
 
-import java.sql.Date;
-
 public class Payment {
     private Double amount;
-    private Date date;
+    private String date;
     private int userId;
     private String description;
 
-    public Payment(Double amount, Date date, int userId, String description) {
+    public Payment(Double amount, String date, int userId, String description) {
         this.amount = amount;
         this.date = date;
         this.userId = userId;
@@ -33,11 +31,11 @@ public class Payment {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
