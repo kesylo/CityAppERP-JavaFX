@@ -139,7 +139,7 @@ public class DialogController<P> {
                 resultNotificationList.add(resultValue);
             }
             catch (Exception e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 Global.showErrorMessage("Impossible de contacter le serveur distant!",
                         "Vérifiez que le serveur MYSQL est actif");
             }

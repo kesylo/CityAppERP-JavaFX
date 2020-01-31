@@ -4,8 +4,11 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -173,9 +176,8 @@ public class reportDashboardController {
         });
 
         btnCalculate.setOnAction(event -> {
-            // do this here to get data early
+            // find
             getUserPayments();
-            // clear table before put data
             tableDateHours.getItems().clear();
             showServices();
         });
@@ -186,7 +188,7 @@ public class reportDashboardController {
         });
 
         btnExport.setOnAction(event -> {
-            // check if calculate is pressed
+            /*// check if calculate is pressed
             if (tableDateHours.getItems().size() > 0){
                 Boolean response =  Global.showInfoMessageWithBtn("Exporter la timesheet",
                         "Voulez vous expoter ces données dans une timesheet ?",
@@ -201,7 +203,7 @@ public class reportDashboardController {
             } else {
                 Global.showInfoMessage("Attention",
                         "Effectuez un calcul avant de générer l'excel");
-            }
+            }*/
 
         });
 
@@ -364,16 +366,21 @@ public class reportDashboardController {
     }
 
     private void getUserPayments() {
+
         Platform.runLater(() ->{
             wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement des paiements...");
 
             wd.exec("123", inputParam -> {
 
-                User user = comboUser.getValue();
-                int month = comboMonth.getSelectionModel().getSelectedIndex();
-                month += 1;
-                int year = comboYear.getValue();
-                userPaymentList =  dbHandler.getUserPayments(user, month, year);
+                try {
+                    User user = comboUser.getValue();
+                    int month = comboMonth.getSelectionModel().getSelectedIndex();
+                    month += 1;
+                    int year = comboYear.getValue();
+                    userPaymentList =  dbHandler.getUserPayments(user, month, year);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
 
                 return 1;
             });
@@ -628,6 +635,7 @@ public class reportDashboardController {
 
         // select first
         tableDateHours.getSelectionModel().selectFirst();
+
     }
 
     private ObservableList<Integer> getUsersIDInSameDept(String selectedService) {
