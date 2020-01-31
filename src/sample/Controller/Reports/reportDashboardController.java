@@ -385,9 +385,6 @@ public class reportDashboardController {
                 return 1;
             });
         });
-
-
-
     }
 
     private void createCell(XSSFRow row, XSSFWorkbook wb, String value, int columnIndex, short color){
@@ -589,8 +586,16 @@ public class reportDashboardController {
 
                 double timeStart = Double.parseDouble(arr1[0] + "." + arr1[1]);
                 double timeEnd = Double.parseDouble(arr2[0] + "." + arr2[1]);
+                double totalTime = 0;
 
-                double totalTime = timeEnd - timeStart;
+                if (timeEnd < timeStart){
+                    // we have crossed a day
+                    double wholeDay = 24;
+                    timeEnd += wholeDay;
+                    totalTime = Math.abs(timeEnd - timeStart);
+                }else {
+                    totalTime = Math.abs(timeEnd - timeStart);
+                }
 
                 //System.out.println(totalTime);
 
@@ -601,19 +606,9 @@ public class reportDashboardController {
                         p.getStartTime(),
                         p.getEndTime(),
                         totalTime);
-               // Report report = new Report(min + "", p.getPrestationDate());
                 reportList.add(report);
-
             }
         }
-
-        // set locally for the excel method
-        //planningList = planningsList;
-
-        // add list to table
-        /*for (Report r :reportList) {
-            r.setMinutes(Global.minutesToTime(Integer.valueOf(r.getMinutes())));
-        }*/
 
         // create sort by date
         clmDate.setSortType(TableColumn.SortType.ASCENDING);
