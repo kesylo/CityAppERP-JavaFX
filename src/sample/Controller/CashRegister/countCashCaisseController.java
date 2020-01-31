@@ -289,7 +289,7 @@ public class countCashCaisseController {
 
         return new CaisseIncExp(
                solde,
-                Global.getSystemDate(),
+                Global.getSystemDateYMD(),
                 Global.getSystemTime(),
                 Global.getConnectedUser().getId(),
                "Erreur dans la caisse. Il y a " + solde + " euros de trop.",
@@ -306,7 +306,7 @@ public class countCashCaisseController {
 
         return new CaisseIncExp(
                 solde,
-                Global.getSystemDate(),
+                Global.getSystemDateYMD(),
                 Global.getSystemTime(),
                 Global.getConnectedUser().getId(),
                 "Erreur dans la caisse. On a " + solde + " euros.",
@@ -391,7 +391,7 @@ public class countCashCaisseController {
             // cash missing
             CaisseIncExp errorExpense = new CaisseIncExp(
                     soldeCaisse,
-                    CashRegisterGlobal.getSystemDate(),
+                    CashRegisterGlobal.getSystemDateYMD(),
                     CashRegisterGlobal.getSystemTime(),
                     CashRegisterGlobal.getConnectedUser().getId(),
                     "Erreur dans la caisse. Il manque " + CashRegisterGlobal.roundDouble(soldeCaisse) + " euros.",
@@ -409,7 +409,7 @@ public class countCashCaisseController {
             // more cash
             CaisseIncExp errorIncome = new CaisseIncExp(
                     soldeCaisse * -1,
-                    CashRegisterGlobal.getSystemDate(),
+                    CashRegisterGlobal.getSystemDateYMD(),
                     CashRegisterGlobal.getSystemTime(),
                     CashRegisterGlobal.getConnectedUser().getId(),
                     "Erreur dans la caisse. Il y a " + CashRegisterGlobal.roundDouble(soldeCaisse * -1) + " euros de plus que prévu.",

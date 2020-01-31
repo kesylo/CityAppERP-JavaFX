@@ -1,21 +1,16 @@
 package sample.Model;
 
 public class Report {
-    private String minutes;
     private String serviceDate;
+    private String startTime;
+    private String endTime;
+    private double totalTime;
 
-
-    public Report(String minutes, String serviceDate) {
-        this.minutes = minutes;
+    public Report(String serviceDate, String startTime, String endTime, double totalTime) {
         this.serviceDate = serviceDate;
-    }
-
-    public String getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(String minutes) {
-        this.minutes = minutes;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.totalTime = totalTime;
     }
 
     public String getServiceDate() {
@@ -24,5 +19,29 @@ public class Report {
 
     public void setServiceDate(String serviceDate) {
         this.serviceDate = serviceDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public double getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(double totalTime) {
+        this.totalTime = totalTime;
     }
 }

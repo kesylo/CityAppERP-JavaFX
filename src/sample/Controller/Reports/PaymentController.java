@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
-import sample.Global.CashRegisterGlobal;
 import sample.Global.Global;
 import sample.Model.Caisse;
 import sample.Model.CaisseIncExp;
@@ -16,7 +15,6 @@ import sample.Model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Collections.sort;
 
@@ -155,7 +153,7 @@ public class PaymentController {
     }
 
     private Payment createOutput() {
-        String date = Global.getSystemDate();
+        String date = Global.getSystemDateDMY();
         double amount = 0;
 
 

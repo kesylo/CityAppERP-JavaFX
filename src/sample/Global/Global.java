@@ -375,20 +375,26 @@ public class Global {
         tray.showAndDismiss(Duration.seconds(0.5));
     }
 
-    public static String getSystemDate()  {
+    public static String getSystemDateYMD()  {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(date);
     }
 
-    public static String minutesToTime(long minutes){
+    public static String getSystemDateDMY()  {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(date);
+    }
+
+    /*public static String minutesToTime(long minutes){
         int h = 0;
         while (minutes >=60){
             minutes -=60;
             h++;
         }
         return String.format("%02d", h) + " : " + String.format("%02d", minutes);
-    }
+    }*/
 
     public static String formatDouble (double value){
         return String.format("%.2f", value);

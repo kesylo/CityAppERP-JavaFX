@@ -96,7 +96,7 @@ public class caisseDashboardController{
 
         btnFillCaisse.setOnAction(event -> {
 
-            caisseWithSameDate = dbHandler.getNbrCaisseWithSameDate(Global.getSystemDate());
+            caisseWithSameDate = dbHandler.getNbrCaisseWithSameDate(Global.getSystemDateYMD());
             // set it globally
             CashRegisterGlobal.setNberOfCaissesWithSameDate(caisseWithSameDate);
 

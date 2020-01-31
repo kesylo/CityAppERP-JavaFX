@@ -1,6 +1,9 @@
 package sample.Model;
 
-public class Planning {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Planning implements Comparable{
     private String prestationDate;
     private String startTime;
     private String endTime;
@@ -72,5 +75,10 @@ public class Planning {
 
     public void setCallRedirect(String callRedirect) {
         this.callRedirect = callRedirect;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.getPrestationDate().compareTo(((Planning) o).getPrestationDate());
     }
 }

@@ -20,7 +20,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
+import sample.Global.ContractGlobal;
 import sample.Global.Global;
+import sample.Model.Payment;
 import sample.Model.Planning;
 import sample.Model.Report;
 import sample.Model.User;
@@ -86,7 +88,13 @@ public class reportDashboardController {
     private TableColumn<Report, String> clmDate;
 
     @FXML
-    private TableColumn<Report, String> clmShift;
+    private TableColumn<Report, String> clmStartTime;
+
+    @FXML
+    private TableColumn<Report, String> clmEndTime;
+
+    @FXML
+    private TableColumn<Report, String> clmTotalTime;
 
     @FXML
     private Label hoursPrested;
@@ -112,8 +120,9 @@ public class reportDashboardController {
     private ObservableList<String> dept = FXCollections.observableArrayList();
     private ObservableList<String> month = FXCollections.observableArrayList();
     private ObservableList<Integer> year = FXCollections.observableArrayList();
-    ObservableList<Report> userReportList = FXCollections.observableArrayList();
-    ObservableList<Planning> planningList = FXCollections.observableArrayList();
+    private ObservableList<Report> userReportList = FXCollections.observableArrayList();
+    private ObservableList<Planning> planningList = FXCollections.observableArrayList();
+    private ObservableList<Payment> userPaymentList = FXCollections.observableArrayList();
     private ResultSet rs = null;
 
     @FXML
@@ -164,6 +173,10 @@ public class reportDashboardController {
         });
 
         btnCalculate.setOnAction(event -> {
+            // do this here to get data early
+            getUserPayments();
+            // clear table before put data
+            tableDateHours.getItems().clear();
             showServices();
         });
 
@@ -174,7 +187,22 @@ public class reportDashboardController {
 
         btnExport.setOnAction(event -> {
             // check if calculate is pressed
-            exportToExcel();
+            if (tableDateHours.getItems().size() > 0){
+                Boolean response =  Global.showInfoMessageWithBtn("Exporter la timesheet",
+                        "Voulez vous expoter ces données dans une timesheet ?",
+                        "Oui",
+                        "Non");
+
+                if (response){
+                    exportToExcel();
+                    Global.showInfoMessage("Opération éffectuée!",
+                            "Votre fichié a été généré dans le repertoire ");
+                }
+            } else {
+                Global.showInfoMessage("Attention",
+                        "Effectuez un calcul avant de générer l'excel");
+            }
+
         });
 
         btnAddPayment.setOnAction(event -> {
@@ -199,10 +227,11 @@ public class reportDashboardController {
     }
 
     private void exportToExcel() {
+        // variables
+        Double totalWorked = 0.0;
+        String userName = comboUser.getValue().getFirstName() + " " + comboUser.getValue().getLastName();
 
         try {
-            // variables
-            Double totalWorked = 0.0;
 
             //region heading
             // create excel sheet
@@ -210,19 +239,20 @@ public class reportDashboardController {
             XSSFSheet sheet = wb.createSheet("Timesheet de LOIC" );
             sheet.setFitToPage(true);
             sheet.setHorizontallyCenter(true);
+            //endregion
 
-
-            // row yellow
+            //region row yellow
             XSSFRow row1 = sheet.createRow(0);
             createCell(row1, wb, "Nom :", 0, IndexedColors.YELLOW.getIndex());
             drawBorders(0,0,0,0, BorderExtent.ALL, sheet);
-            createCell(row1, wb, "LOIC", 1, IndexedColors.YELLOW.getIndex());
+            createCell(row1, wb, userName.toUpperCase(), 1, IndexedColors.YELLOW.getIndex());
             drawBorders(0,0,1,5, BorderExtent.OUTSIDE, sheet);
-            createCell(row1, wb, "12.0", 5, IndexedColors.YELLOW.getIndex());
+            createCell(row1, wb, comboUser.getValue().getSalary1() + "", 5, IndexedColors.YELLOW.getIndex());
             drawBorders(0,0,5,5, BorderExtent.ALL, sheet);
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 4));
+            //endregion
 
-            // row green
+            //region row green
             XSSFRow row2 = sheet.createRow(1);
             row2.setHeightInPoints(45);
             List<String> values = new ArrayList<>();
@@ -237,7 +267,9 @@ public class reportDashboardController {
             values.add("A Payer");
             values.add("Report");
             values.add("Solde");
+            //endregion
 
+            //region draw borders
             for (int i = 0; i < values.size(); i ++){
                 createCell(row2, wb, values.get(i), i, IndexedColors.SEA_GREEN.getIndex());
             }
@@ -247,20 +279,22 @@ public class reportDashboardController {
             // data
             int indexStart = 3;
             int startDataRow = 3;
-            for (Planning aPlanningList : planningList) {
+            // sort planning list by date
+            sort(planningList);
+            for (Planning planning : planningList) {
                 XSSFRow rowDates = sheet.createRow(indexStart);
 
                 // dates
-                createCell(rowDates, wb, aPlanningList.getPrestationDate(), 0, IndexedColors.GREY_25_PERCENT.getIndex());
+                createCell(rowDates, wb, planning.getPrestationDate(), 0, IndexedColors.GREY_25_PERCENT.getIndex());
 
                 // start Time
-                String oldString = aPlanningList.getStartTime();
+                String oldString = planning.getStartTime();
                 String newString = oldString.replace(":", ".");
                 Double value1 = Double.parseDouble(newString);
                 createCell(rowDates, wb, newString, 1, IndexedColors.WHITE.getIndex());
 
                 // end Time
-                String oldString2 = aPlanningList.getEndTime();
+                String oldString2 = planning.getEndTime();
                 String newString2 = oldString2.replace(":", ".");
                 Double value2 = Double.parseDouble(newString2);
                 createCell(rowDates, wb, newString2, 2, IndexedColors.WHITE.getIndex());
@@ -269,13 +303,21 @@ public class reportDashboardController {
                 Double workTime = value2 - value1;
                 createCell(rowDates, wb, workTime.toString(), 4, IndexedColors.WHITE.getIndex());
 
+                // payment
+                // get user's payments
+                for (Payment p : userPaymentList){
+                    if (planning.getPrestationDate().equals(p.getDate())){
+                        createCell(rowDates, wb, p.getAmount()+"", 5, IndexedColors.WHITE.getIndex());
+                    }
+                }
+
                 // compute total time
                 if (workTime > 0) {
                     totalWorked += workTime;
                 }
                 indexStart += 1;
             }
-            drawBorders(startDataRow,indexStart - 1,0,4, BorderExtent.ALL, sheet);
+            drawBorders(startDataRow,indexStart - 1,0,5, BorderExtent.ALL, sheet);
 
 
 
@@ -319,6 +361,26 @@ public class reportDashboardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getUserPayments() {
+        Platform.runLater(() ->{
+            wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement des paiements...");
+
+            wd.exec("123", inputParam -> {
+
+                User user = comboUser.getValue();
+                int month = comboMonth.getSelectionModel().getSelectedIndex();
+                month += 1;
+                int year = comboYear.getValue();
+                userPaymentList =  dbHandler.getUserPayments(user, month, year);
+
+                return 1;
+            });
+        });
+
+
+
     }
 
     private void createCell(XSSFRow row, XSSFWorkbook wb, String value, int columnIndex, short color){
@@ -465,11 +527,11 @@ public class reportDashboardController {
     }
 
     private void fillTable(String choice){
-        //ObservableList<Planning> planningList = FXCollections.observableArrayList();
         ObservableList<Report> reportList = FXCollections.observableArrayList();
         ObservableList<Integer> usersInSameDept;
+        planningList = FXCollections.observableArrayList();
 
-        long min, totalMin = 0;
+        double totalMin = 0;
 
         int selectedYear = comboYear.getValue();
         int selectedMonth = Global.monthToInt(comboMonth.getValue());
@@ -514,14 +576,25 @@ public class reportDashboardController {
 
                 //System.out.println(p.getStartTime() + " " + p.getEndTime());
 
-                LocalTime startTime = LocalTime.parse(p.getStartTime());
-                LocalTime endTime = LocalTime.parse(p.getEndTime());
+                // remove the :
+                String[] arr1 = p.getStartTime().split(":");
+                String[] arr2 = p.getEndTime().split(":");
 
-                min = MINUTES.between(startTime, endTime);
+                double timeStart = Double.parseDouble(arr1[0] + "." + arr1[1]);
+                double timeEnd = Double.parseDouble(arr2[0] + "." + arr2[1]);
 
-                totalMin += min;
+                double totalTime = timeEnd - timeStart;
 
-                Report report = new Report(min + "", p.getPrestationDate());
+                //System.out.println(totalTime);
+
+                totalMin += totalTime;
+
+                Report report = new Report(
+                        p.getPrestationDate(),
+                        p.getStartTime(),
+                        p.getEndTime(),
+                        totalTime);
+               // Report report = new Report(min + "", p.getPrestationDate());
                 reportList.add(report);
 
             }
@@ -531,15 +604,17 @@ public class reportDashboardController {
         //planningList = planningsList;
 
         // add list to table
-        for (Report r :reportList) {
+        /*for (Report r :reportList) {
             r.setMinutes(Global.minutesToTime(Integer.valueOf(r.getMinutes())));
-        }
+        }*/
 
         // create sort by date
         clmDate.setSortType(TableColumn.SortType.ASCENDING);
 
         clmDate.setCellValueFactory(new PropertyValueFactory<>("ServiceDate"));
-        clmShift.setCellValueFactory(new PropertyValueFactory<>("Minutes"));
+        clmStartTime.setCellValueFactory(new PropertyValueFactory<>("StartTime"));
+        clmEndTime.setCellValueFactory(new PropertyValueFactory<>("EndTime"));
+        clmTotalTime.setCellValueFactory(new PropertyValueFactory<>("TotalTime"));
 
         // set table data
         tableDateHours.setItems(reportList);
@@ -548,7 +623,7 @@ public class reportDashboardController {
         tableDateHours.getSortOrder().add(clmDate);
 
         // set text
-        String totalTime = Global.minutesToTime(totalMin);
+        String totalTime = totalMin + " Heures";
         hoursPrested.setText(totalTime);
 
         // select first

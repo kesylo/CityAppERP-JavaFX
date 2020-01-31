@@ -116,7 +116,7 @@ public class createCaisseController{
 
     private void configureCaisse (Caisse caisse){
 
-        caisse.setDate(Global.getSystemDate());
+        caisse.setDate(Global.getSystemDateYMD());
         caisse.setMontant(amountNewCaisse);
         caisse.setRemarque("");
         caisse.setClosed(1);
@@ -131,7 +131,7 @@ public class createCaisseController{
         Global.setProfileIcon(photo);
         // set user profile
         Global.setUserProfile(lblConnectedUser, btnLogOut);
-        lblDate.setText(Global.getSystemDate());
+        lblDate.setText(Global.getSystemDateYMD());
         lblNumCaisse.setText(CashRegisterGlobal.getAvailableCaisseNumber());
         lblMontant.setText(Global.formatDouble(amountNewCaisse) + " €");
         lblUser.setText(Global.getConnectedUser().getFirstName() + " " + Global.getConnectedUser().getLastName());

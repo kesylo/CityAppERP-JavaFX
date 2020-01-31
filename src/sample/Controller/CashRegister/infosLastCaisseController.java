@@ -213,7 +213,7 @@ public class infosLastCaisseController  {
         if (CashRegisterGlobal.getNberOfCaisses() >= 1){
             // set date
             //datePicker.setValue(CashRegisterGlobal.getCurrentCaisse().getDate());
-            lblDate.setText(Global.getSystemDate());
+            lblDate.setText(Global.getSystemDateYMD());
         }
 
         // fill incomes

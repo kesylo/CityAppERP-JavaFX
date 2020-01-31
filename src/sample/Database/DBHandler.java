@@ -7,6 +7,10 @@ import sample.Global.Global;
 import sample.Model.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DBHandler extends DBConfig {
 
@@ -352,6 +356,89 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
         return rs;
+    }
+
+    public ObservableList<Payment> getUserPayments(User user, int month, int year) {
+        rs = null;
+        ObservableList<Payment> userPaymentList = FXCollections.observableArrayList();
+        String username = user.getFirstName() + " " + user.getLastName();
+        String upName = username.toUpperCase();
+
+        // prepare the query
+        String query = "SELECT * FROM payments WHERE userId=? " +
+                "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
+                "and extract(month from str_to_date(date, '%d-%m-%Y')) =? ";
+
+
+        String query2 = "SELECT * FROM caisse_recettes WHERE " +
+                "extract(year from str_to_date(date, '%Y-%m-%d')) =? " +
+                "and extract(month from str_to_date(date, '%Y-%m-%d')) =? " +
+                "and type = ? " +
+                "and reason = ? " +
+                "and salaryBeneficial = ?";
+
+        //region First query Payments
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, user.getId());
+            ps.setInt(2, year);
+            ps.setInt(3, month);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                Payment payment = new Payment(
+                        rs.getDouble("amount"),
+                        rs.getString("date"),
+                        rs.getInt("userId"),
+                        rs.getString("description")
+                );
+
+                userPaymentList.add(payment);
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+        //endregion
+
+        //region Second query Payments
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query2);
+            ps.setInt(1, year);
+            ps.setInt(2, month);
+            ps.setInt(3, 1);
+            ps.setString(4, "Salaire");
+            ps.setString(5, upName);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+
+                String strDateIn = rs.getString("date");
+                LocalDate realDate = LocalDate.parse(strDateIn);
+                String strDateOut = realDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+                Payment payment = new Payment(
+                        rs.getDouble("montant"),
+                        strDateOut,
+                        user.getId(),
+                        rs.getString("remarque")
+                );
+
+                userPaymentList.add(payment);
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+        //endregion
+
+        return userPaymentList;
     }
 
     public User getEmployeObjByID(int idEmployes) {
@@ -723,6 +810,7 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
     }
+
 
 
 

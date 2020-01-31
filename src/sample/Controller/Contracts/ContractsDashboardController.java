@@ -653,7 +653,7 @@ public class ContractsDashboardController {
             pdf.add( Chunk.NEWLINE );
             p = new Paragraph();
             p.add(new Phrase(fileLines.get(73), textNormal));
-            p.add(new Phrase(Global.getSystemDate() + ".", textBold));
+            p.add(new Phrase(Global.getSystemDateYMD() + ".", textBold));
             pdf.add(p);
 
             p = new Paragraph(new Phrase(fileLines.get(74), textNormal));
@@ -1010,7 +1010,7 @@ public class ContractsDashboardController {
             // add user data in this section
             p = new Paragraph();
             p.add(new Phrase(fileLines.get(244), textNormal));
-            p.add(new Phrase(Global.getSystemDate() + ".", textBold));
+            p.add(new Phrase(Global.getSystemDateYMD() + ".", textBold));
             pdf.add(p);
 
             p = new Paragraph(new Phrase(fileLines.get(245), textNormal));
@@ -1299,7 +1299,7 @@ public class ContractsDashboardController {
             // add user data in this section
             p = new Paragraph();
             p.add(new Phrase(fileLines.get(244), textNormal));
-            p.add(new Phrase(Global.getSystemDate() + ".", textBold));
+            p.add(new Phrase(Global.getSystemDateYMD() + ".", textBold));
             pdf.add(p);
 
             p = new Paragraph(new Phrase(fileLines.get(245), textNormal));
@@ -1588,7 +1588,7 @@ public class ContractsDashboardController {
             // add user data in this section
             p = new Paragraph();
             p.add(new Phrase(fileLines.get(244), textNormal));
-            p.add(new Phrase(Global.getSystemDate() + ".", textBold));
+            p.add(new Phrase(Global.getSystemDateYMD() + ".", textBold));
             pdf.add(p);
 
             p = new Paragraph(new Phrase(fileLines.get(245), textNormal));

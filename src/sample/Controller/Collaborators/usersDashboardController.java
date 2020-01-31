@@ -373,7 +373,7 @@ public class usersDashboardController {
 
     private void archiveCollaborator() {
         dbHandler = new DBHandler();
-        CollaboratorGlobal.getPreviewUser().setDateOutService(Global.getSystemDate());
+        CollaboratorGlobal.getPreviewUser().setDateOutService(Global.getSystemDateYMD());
 
         wd = new DialogController<>(btnEdit.getScene().getWindow(), "Archivage...");
 

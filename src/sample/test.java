@@ -37,7 +37,7 @@ public class test {
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
         //double n = 0.05264;
-        //System.out.println(CashRegisterGlobal.getSystemDate());
+        //System.out.println(CashRegisterGlobal.getSystemDateYMD());
 
        /* final String stringDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         LocalDate m = LocalDate.parse(stringDate);*/
@@ -463,7 +463,7 @@ public class test {
             // add user data in this section
             p = new Paragraph();
             p.add(new Phrase(fileLines.get(244), textNormal));
-            p.add(new Phrase(Global.getSystemDate() + ".", textBold));
+            p.add(new Phrase(Global.getSystemDateYMD() + ".", textBold));
             pdf.add(p);
 
             p = new Paragraph(new Phrase(fileLines.get(245), textNormal));
