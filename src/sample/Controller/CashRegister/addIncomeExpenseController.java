@@ -222,6 +222,7 @@ public class addIncomeExpenseController {
                 String firstName;
                 String lastName;
                 String fullName;
+                String upfullName;
                 ResultSet userRow = dbHandler.getActiveEmployees();
 
                 try {
@@ -229,7 +230,8 @@ public class addIncomeExpenseController {
                         firstName = userRow.getString("firstName");
                         lastName = userRow.getString("lastName");
                         fullName = firstName + " " + lastName;
-                        usersList.add(fullName);
+                        upfullName = fullName.toUpperCase();
+                        usersList.add(upfullName);
                     }
                 } catch (SQLException e){
                     e.printStackTrace();
