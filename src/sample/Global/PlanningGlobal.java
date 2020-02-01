@@ -3,20 +3,19 @@ package sample.Global;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Model.Planning;
-import sample.Model.Report;
-import sample.Model.User;
+import sample.Model.PlanningReport;
 
 public class PlanningGlobal {
 
     private static ObservableList<Planning> planningsList = FXCollections.observableArrayList();
-    private static ObservableList<Report> reportList = FXCollections.observableArrayList();
+    private static ObservableList<PlanningReport> planningReportList = FXCollections.observableArrayList();
 
-    public static ObservableList<Report> getReportList() {
-        return reportList;
+    public static ObservableList<PlanningReport> getPlanningReportList() {
+        return planningReportList;
     }
 
-    public static void setReportList(ObservableList<Report> reportList) {
-        PlanningGlobal.reportList = reportList;
+    public static void setPlanningReportList(ObservableList<PlanningReport> planningReportList) {
+        PlanningGlobal.planningReportList = planningReportList;
     }
 
     public static ObservableList<Planning> getPlanningsList() {

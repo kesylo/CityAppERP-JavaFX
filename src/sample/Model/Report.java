@@ -1,47 +1,59 @@
 package sample.Model;
 
 public class Report {
-    private String serviceDate;
-    private String startTime;
-    private String endTime;
-    private double totalTime;
 
-    public Report(String serviceDate, String startTime, String endTime, double totalTime) {
-        this.serviceDate = serviceDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.totalTime = totalTime;
+    private int idReport;
+    private Double reportAmount;
+    private String date;
+    private int userID;
+    private int status;
+
+
+    public Report(int idReport, Double reportAmount, String date, int userID, int status) {
+        this.idReport = idReport;
+        this.reportAmount = reportAmount;
+        this.date = date;
+        this.userID = userID;
+        this.status = status;
     }
 
-    public String getServiceDate() {
-        return serviceDate;
+    public int getIdReport() {
+        return idReport;
     }
 
-    public void setServiceDate(String serviceDate) {
-        this.serviceDate = serviceDate;
+    public void setIdReport(int idReport) {
+        this.idReport = idReport;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public int getStatus() {
+        return status;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public Double getReportAmount() {
+        return reportAmount;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setReportAmount(Double reportAmount) {
+        this.reportAmount = reportAmount;
     }
 
-    public double getTotalTime() {
-        return totalTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setTotalTime(double totalTime) {
-        this.totalTime = totalTime;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }

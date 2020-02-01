@@ -341,6 +341,39 @@ public class DBHandler extends DBConfig {
         return rs;
     }
 
+    public ObservableList<Report> getAllReports() {
+        rs = null;
+        ObservableList<Report> reportList = FXCollections.observableArrayList();
+
+        // prepare the query
+        String query = "SELECT * FROM report";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                Report report = new Report(
+                        rs.getInt("idReport"),
+                        rs.getDouble("reportAmount"),
+                        rs.getString("date"),
+                        rs.getInt("idUser"),
+                        rs.getInt("status")
+                );
+
+                reportList.add(report);
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+
+        return reportList;
+    }
+
     public ResultSet getPlanningServerAdress() {
         String query = "SELECT * FROM erp_tools WHERE id_erp_tools=1";
 
@@ -557,6 +590,25 @@ public class DBHandler extends DBConfig {
             ps.setString(7, caisse.getRemarque());
             ps.setInt(8, caisse.getHasError());
             ps.setDouble(9, caisse.getError_amount());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+    }
+
+    public void addReport(Report report) {
+        String query = "INSERT INTO report (reportAmount, date, idUser, status) VALUES (?,?,?,?)";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setDouble(1, report.getReportAmount());
+            ps.setString(2, report.getDate());
+            ps.setInt(3, report.getUserID());
+            ps.setInt(4, report.getStatus());
 
             ps.executeUpdate();
         } catch (Exception e) {
@@ -810,6 +862,25 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
     }
+
+    public void updateReport(int idCustomReport) {
+        String query = "UPDATE report SET status = 1 WHERE idReport = ?";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setInt(1, idCustomReport);
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+    }
+
+
 
 
 

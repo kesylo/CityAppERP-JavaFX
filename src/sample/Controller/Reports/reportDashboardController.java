@@ -3,9 +3,8 @@ package sample.Controller.Reports;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.PropertyTemplate;
@@ -23,12 +23,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
-import sample.Global.ContractGlobal;
 import sample.Global.Global;
-import sample.Model.Payment;
-import sample.Model.Planning;
-import sample.Model.Report;
-import sample.Model.User;
+import sample.Model.*;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,17 +32,27 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Collections.*;
 
 public class reportDashboardController {
     //region UI
     @FXML
     private JFXButton btnhide;
+
+    @FXML
+    private JFXTextField txtNormalHour;
+
+    @FXML
+    private JFXButton btnAddReport;
+
+    @FXML
+    private JFXTextField txtReport;
+
+    @FXML
+    private Label txtUserName;
 
     @FXML
     private JFXButton btnBack;
@@ -85,19 +91,19 @@ public class reportDashboardController {
     private JFXButton btnCalculate;
 
     @FXML
-    private TableView<Report> tableDateHours;
+    private TableView<PlanningReport> tableDateHours;
 
     @FXML
-    private TableColumn<Report, String> clmDate;
+    private TableColumn<PlanningReport, String> clmDate;
 
     @FXML
-    private TableColumn<Report, String> clmStartTime;
+    private TableColumn<PlanningReport, String> clmStartTime;
 
     @FXML
-    private TableColumn<Report, String> clmEndTime;
+    private TableColumn<PlanningReport, String> clmEndTime;
 
     @FXML
-    private TableColumn<Report, String> clmTotalTime;
+    private TableColumn<PlanningReport, String> clmTotalTime;
 
     @FXML
     private Label hoursPrested;
@@ -118,15 +124,29 @@ public class reportDashboardController {
         Global.logOut(location, btnBack);
     }
 
+    //region variable
     private DBHandler dbHandler = new DBHandler();
     private DialogController<String> wd = null;
     private ObservableList<String> dept = FXCollections.observableArrayList();
     private ObservableList<String> month = FXCollections.observableArrayList();
     private ObservableList<Integer> year = FXCollections.observableArrayList();
-    private ObservableList<Report> userReportList = FXCollections.observableArrayList();
     private ObservableList<Planning> planningList = FXCollections.observableArrayList();
     private ObservableList<Payment> userPaymentList = FXCollections.observableArrayList();
     private ResultSet rs = null;
+    //endregion
+
+    @FXML
+    void userCmbChange(ActionEvent event) {
+
+        User currentUser = comboUser.getValue();
+        String fullName = currentUser.getFirstName() + " " + currentUser.getLastName();
+        txtUserName.setText(fullName);
+    }
+
+    @FXML
+    void selectAllHours(MouseEvent event) {
+        txtNormalHour.selectAll();
+    }
 
     @FXML
     void initialize() {
@@ -188,7 +208,7 @@ public class reportDashboardController {
         });
 
         btnExport.setOnAction(event -> {
-            /*// check if calculate is pressed
+            // check if calculate is pressed
             if (tableDateHours.getItems().size() > 0){
                 Boolean response =  Global.showInfoMessageWithBtn("Exporter la timesheet",
                         "Voulez vous expoter ces données dans une timesheet ?",
@@ -203,14 +223,19 @@ public class reportDashboardController {
             } else {
                 Global.showInfoMessage("Attention",
                         "Effectuez un calcul avant de générer l'excel");
-            }*/
-
+            }
         });
 
         btnAddPayment.setOnAction(event -> {
             URL url = getClass().getResource("/sample/View/Reports/payment.fxml");
             Global.navigateModal(url, "Paiements");
         });
+
+        btnAddReport.setOnAction(event -> {
+            URL url = getClass().getResource("/sample/View/Reports/cashPostpone.fxml");
+            Global.navigateModal(url, "Report de salaire");
+        });
+
     }
 
 
@@ -267,7 +292,7 @@ public class reportDashboardController {
             values.add("Heures normales");
             values.add("Heures supplémentaires");
             values.add("A Payer");
-            values.add("Report");
+            values.add("PlanningReport");
             values.add("Solde");
             //endregion
 
@@ -531,7 +556,7 @@ public class reportDashboardController {
     }
 
     private void fillTable(String choice){
-        ObservableList<Report> reportList = FXCollections.observableArrayList();
+        ObservableList<PlanningReport> planningReportList = FXCollections.observableArrayList();
         ObservableList<Integer> usersInSameDept;
         planningList = FXCollections.observableArrayList();
 
@@ -601,12 +626,12 @@ public class reportDashboardController {
 
                 totalMin += totalTime;
 
-                Report report = new Report(
+                PlanningReport planningReport = new PlanningReport(
                         p.getPrestationDate(),
                         p.getStartTime(),
                         p.getEndTime(),
                         totalTime);
-                reportList.add(report);
+                planningReportList.add(planningReport);
             }
         }
 
@@ -619,7 +644,7 @@ public class reportDashboardController {
         clmTotalTime.setCellValueFactory(new PropertyValueFactory<>("TotalTime"));
 
         // set table data
-        tableDateHours.setItems(reportList);
+        tableDateHours.setItems(planningReportList);
 
         // apply sort by date
         tableDateHours.getSortOrder().add(clmDate);

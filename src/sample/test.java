@@ -5,14 +5,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.ss.util.PropertyTemplate;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Global.Global;
 import sample.Model.Planning;
-import sample.Model.Report;
 
 import java.io.*;
 import java.util.*;
@@ -606,7 +604,7 @@ public class test {
             values.add("Heures normales");
             values.add("Heures supplémentaires");
             values.add("A Payer");
-            values.add("Report");
+            values.add("PlanningReport");
             values.add("Solde");
 
             for (int i = 0; i < values.size(); i ++){

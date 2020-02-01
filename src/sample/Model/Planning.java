@@ -1,8 +1,5 @@
 package sample.Model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Planning implements Comparable{
     private String prestationDate;
     private String startTime;
