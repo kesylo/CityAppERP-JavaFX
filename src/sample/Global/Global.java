@@ -387,6 +387,22 @@ public class Global {
         return formatter.format(date);
     }
 
+    public static String getLastMonthDateDMY()  {
+        Date dt = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.MONTH, -1);
+
+        int day = c.get(Calendar.DATE);
+        int month = c.get(Calendar.MONTH) + 1;
+        int year  = c.get(Calendar.YEAR);
+
+        String m = String.format("%02d", month);
+        String d = String.format("%02d", day);
+
+        return d + "-" + m + "-" + year;
+    }
+
     /*public static String minutesToTime(long minutes){
         int h = 0;
         while (minutes >=60){

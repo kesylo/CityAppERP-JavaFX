@@ -13,6 +13,7 @@ import sample.Global.Global;
 import sample.Model.Planning;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class test {
@@ -33,7 +34,7 @@ public class test {
         System.out.println(r);*/
 
 
-        int year = Calendar.getInstance().get(Calendar.YEAR);
+        //int year = Calendar.getInstance().get(Calendar.YEAR);
         //double n = 0.05264;
         //System.out.println(CashRegisterGlobal.getSystemDateYMD());
 
@@ -564,6 +565,7 @@ public class test {
 
 
 
+/*
         ObservableList<Planning> planningList = FXCollections.observableArrayList();
         Planning p = new Planning("12-01-2019","12:01", "14:12");
         planningList.add(p);
@@ -614,17 +616,21 @@ public class test {
 
 
 
-        /*    // dates
+        */
+/*    // dates
             List<String> dates = new ArrayList<>();
             dates.add("01-12-19");
             dates.add("07-12-19");
             dates.add("13-12-19");
             int indexStart = 3;
-            *//*for (String date : dates) {
+            *//*
+*/
+/*for (String date : dates) {
                 XSSFRow rowDates = sheet.createRow(indexStart);
                 createCell(rowDates, wb, date, 0, 12, IndexedColors.GREY_25_PERCENT.getIndex());
                 indexStart += 1;
-            }*/
+            }*//*
+
 
             // data
             int indexStart = 3;
@@ -754,4 +760,20 @@ public class test {
                 BorderStyle.THIN, type);
         pt.applyBorders(sheet);
     }
-}
+*/
+        Date dt = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.MONTH, -1);
+
+        int day = c.get(Calendar.DATE);
+        int month = c.get(Calendar.MONTH) + 1;
+        int year  = c.get(Calendar.YEAR);
+
+        String m = String.format("%02d", month);
+        String d = String.format("%02d", day);
+
+        String lastMonthDate = d + "-" + m + "-" + year;
+
+        System.out.println(lastMonthDate);
+}}

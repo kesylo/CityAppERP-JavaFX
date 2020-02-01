@@ -10,6 +10,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DBHandler extends DBConfig {
@@ -389,6 +390,47 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
         return rs;
+    }
+
+    public double getUserReport(int userId) {
+        rs = null;
+        double userReportAmount = 0;
+
+        //region getLast Month date
+        Date dt = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.MONTH, -1);
+
+        int month = c.get(Calendar.MONTH) + 1;
+        int year  = c.get(Calendar.YEAR);
+        //endregion
+
+        // prepare the query
+        String query = "SELECT reportAmount FROM report WHERE idUser=? AND status=? " +
+                "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
+                "and extract(month from str_to_date(date, '%d-%m-%Y')) =? ";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setInt(2, 0);
+            ps.setInt(3, year);
+            ps.setInt(4, month);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                userReportAmount += rs.getDouble("reportAmount");
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+
+        return userReportAmount;
     }
 
     public ObservableList<Payment> getUserPayments(User user, int month, int year) {
@@ -879,10 +921,6 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
     }
-
-
-
-
 
 
     /*------------------------------ DELETE -------------------------------------*/

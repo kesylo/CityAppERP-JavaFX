@@ -23,9 +23,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
+import sample.Global.ContractGlobal;
 import sample.Global.Global;
 import sample.Model.*;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -133,6 +136,9 @@ public class reportDashboardController {
     private ObservableList<Planning> planningList = FXCollections.observableArrayList();
     private ObservableList<Payment> userPaymentList = FXCollections.observableArrayList();
     private ResultSet rs = null;
+    private double totalMin = 0;
+    private String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
+    private Double userReportAmount = 0.0;
     //endregion
 
     @FXML
@@ -216,9 +222,28 @@ public class reportDashboardController {
                         "Non");
 
                 if (response){
-                    exportToExcel();
-                    Global.showInfoMessage("Opération éffectuée!",
-                            "Votre fichié a été généré dans le repertoire ");
+                    // if normal hours are 0
+                    if (Double.parseDouble(txtNormalHour.getText()) == 0){
+                        Boolean response2 =  Global.showInfoMessageWithBtn("Heures Normales",
+                                "Voulez vous générer l'excel sans spécifier les heures normales ?",
+                                "Oui",
+                                "Non");
+                        if (response2){
+                            exportToExcel();
+                            Global.showInfoMessage("Opération éffectuée!",
+                                    "Votre fichié a été généré dans le repertoire ");
+                        }
+                    }
+                    else if (Double.parseDouble(txtNormalHour.getText()) > totalMin){
+                        Global.showInfoMessage("Heures normales incorrectes",
+                                "La valeur entrée est supérieure aux heures totales de travail.");
+
+                    }
+                    else if(Double.parseDouble(txtNormalHour.getText()) <= totalMin){
+                        exportToExcel();
+                        Global.showInfoMessage("Opération éffectuée!",
+                                "Votre fichié a été généré dans le repertoire ");
+                    }
                 }
             } else {
                 Global.showInfoMessage("Attention",
@@ -256,14 +281,18 @@ public class reportDashboardController {
     private void exportToExcel() {
         // variables
         Double totalWorked = 0.0;
+        Double totalPayment = 0.0;
         String userName = comboUser.getValue().getFirstName() + " " + comboUser.getValue().getLastName();
+
+        // get user report early
+        getUserReport();
 
         try {
 
             //region heading
             // create excel sheet
             XSSFWorkbook wb = new XSSFWorkbook();
-            XSSFSheet sheet = wb.createSheet("Timesheet de LOIC" );
+            XSSFSheet sheet = wb.createSheet("Timesheet de " + comboUser.getValue().getFirstName());
             sheet.setFitToPage(true);
             sheet.setHorizontallyCenter(true);
             //endregion
@@ -274,7 +303,7 @@ public class reportDashboardController {
             drawBorders(0,0,0,0, BorderExtent.ALL, sheet);
             createCell(row1, wb, userName.toUpperCase(), 1, IndexedColors.YELLOW.getIndex());
             drawBorders(0,0,1,5, BorderExtent.OUTSIDE, sheet);
-            createCell(row1, wb, comboUser.getValue().getSalary1() + "", 5, IndexedColors.YELLOW.getIndex());
+            createCell(row1, wb, comboUser.getValue().getSalary2() + "", 5, IndexedColors.YELLOW.getIndex());
             drawBorders(0,0,5,5, BorderExtent.ALL, sheet);
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 4));
             //endregion
@@ -292,7 +321,7 @@ public class reportDashboardController {
             values.add("Heures normales");
             values.add("Heures supplémentaires");
             values.add("A Payer");
-            values.add("PlanningReport");
+            values.add("Report");
             values.add("Solde");
             //endregion
 
@@ -335,6 +364,7 @@ public class reportDashboardController {
                 for (Payment p : userPaymentList){
                     if (planning.getPrestationDate().equals(p.getDate())){
                         createCell(rowDates, wb, p.getAmount()+"", 5, IndexedColors.WHITE.getIndex());
+                        totalPayment += p.getAmount();
                     }
                 }
 
@@ -360,18 +390,31 @@ public class reportDashboardController {
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 3));
 
             createCell(row3, wb, totalWorked.toString(), 4, IndexedColors.SEA_GREEN.getIndex());
+
             // payments from DB
-            createCell(row3, wb, "00.00", 5, IndexedColors.SEA_GREEN.getIndex());
+            createCell(row3, wb, totalPayment.toString(), 5, IndexedColors.SEA_GREEN.getIndex());
+
             // declared Hours from input
-            createCell(row3, wb, "86.00", 6, IndexedColors.SKY_BLUE.getIndex());
+            createCell(row3, wb, txtNormalHour.getText(), 6, IndexedColors.SKY_BLUE.getIndex());
+
             // extra hour (computed: worked Hours - declared hours)
-            createCell(row3, wb, "20.75", 7, IndexedColors.SEA_GREEN.getIndex());
+            Double normalHours = Double.parseDouble(txtNormalHour.getText());
+            double extraHours = 0.0;
+            if (totalWorked > normalHours){
+                extraHours = totalWorked - normalHours;
+            }
+            createCell(row3, wb, Double.toString(extraHours), 7, IndexedColors.SEA_GREEN.getIndex());
+
             // to pay (computed: salary * extra hour)
-            createCell(row3, wb, "246.00", 8, IndexedColors.SEA_GREEN.getIndex());
+            double toPay = comboUser.getValue().getSalary2() * extraHours;
+            createCell(row3, wb, Double.toString(toPay), 8, IndexedColors.SEA_GREEN.getIndex());
+
             // report from DB
-            createCell(row3, wb, "6.00", 9, IndexedColors.SKY_BLUE.getIndex());
+            createCell(row3, wb, String.valueOf(userReportAmount), 9, IndexedColors.SKY_BLUE.getIndex());
+
             // balance computed
-            createCell(row3, wb, "252.00", 10, IndexedColors.SEA_GREEN.getIndex());
+            double balance = toPay + userReportAmount;
+            createCell(row3, wb, Double.toString(balance), 10, IndexedColors.SEA_GREEN.getIndex());
 
             drawBorders(2,2,3,10, BorderExtent.ALL, sheet);
 
@@ -381,13 +424,54 @@ public class reportDashboardController {
             }
 
             // write to file
-            FileOutputStream fileOut = new FileOutputStream("test.xlsx");
+            createTimeSheetDir();
+            String contractsFolder = "Timesheets";
+            User selectedUser = comboUser.getSelectionModel().getSelectedItem();
+            String collaboratorName = selectedUser.getFirstName() + " " + selectedUser.getLastName() ;
+            String contractFileName = "Timesheet-" + Global.getSystemDateDMY() + "_";
+            FileOutputStream fileOut = new FileOutputStream(
+                    myDocumentsPath
+                    +"\\"
+                    + contractsFolder
+                    +"\\"
+                    + contractFileName
+                    + collaboratorName
+                    + ".xlsx");
             wb.write(fileOut);
             fileOut.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createTimeSheetDir() {
+        String timeSheetFolder = "Timesheets";
+        try {
+            if (Global.isWindows()){
+                File path = new File(myDocumentsPath + "\\" + timeSheetFolder);
+                // set globally
+                //ContractGlobal.setContractsPath(path.toString());
+                path.mkdirs();
+
+            }else if (Global.isUnix()){
+                System.out.println("linux");
+            }
+        } catch (Exception e) {
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+    }
+
+    private void getUserReport() {
+        wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement...");
+
+        wd.exec("123", inputParam -> {
+
+            userReportAmount =  dbHandler.getUserReport(comboUser.getValue().getId());
+
+            return 1;
+        });
     }
 
     private void getUserPayments() {
@@ -560,7 +644,6 @@ public class reportDashboardController {
         ObservableList<Integer> usersInSameDept;
         planningList = FXCollections.observableArrayList();
 
-        double totalMin = 0;
 
         int selectedYear = comboYear.getValue();
         int selectedMonth = Global.monthToInt(comboMonth.getValue());
