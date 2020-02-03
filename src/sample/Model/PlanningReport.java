@@ -1,12 +1,14 @@
 package sample.Model;
 
+import sample.Global.Global;
+
 public class PlanningReport {
     private String serviceDate;
     private String startTime;
     private String endTime;
-    private double totalTime;
+    private long totalTime;
 
-    public PlanningReport(String serviceDate, String startTime, String endTime, double totalTime) {
+    public PlanningReport(String serviceDate, String startTime, String endTime, long totalTime) {
         this.serviceDate = serviceDate;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -37,11 +39,11 @@ public class PlanningReport {
         this.endTime = endTime;
     }
 
-    public double getTotalTime() {
-        return totalTime;
+    public String getTotalTime() {
+        return Global.millisToTime(totalTime);
     }
 
-    public void setTotalTime(double totalTime) {
+    public void setTotalTime(long totalTime) {
         this.totalTime = totalTime;
     }
 }

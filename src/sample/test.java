@@ -13,7 +13,11 @@ import sample.Global.Global;
 import sample.Model.Planning;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class test {
@@ -761,7 +765,7 @@ public class test {
         pt.applyBorders(sheet);
     }
 */
-        Date dt = new Date();
+        /*Date dt = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(dt);
         c.add(Calendar.MONTH, -1);
@@ -775,5 +779,36 @@ public class test {
 
         String lastMonthDate = d + "-" + m + "-" + year;
 
-        System.out.println(lastMonthDate);
+        System.out.println(lastMonthDate);*/
+
+
+        String time1 = "20:00";
+        String time2 = "21:59";
+        Date d1;
+        Date d2;
+        long timeDiff = 0L;
+        SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
+        try {
+            d1 = formatter.parse(time1);
+            d2 = formatter.parse(time2);
+
+            timeDiff = d1.getTime() + d2.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        String h = ((timeDiff / 3600000) < 10 ? "0" : "") + (timeDiff / 3600000);
+        String m =     (((timeDiff % 3600000) / 60000) < 10 ? "0" : "") + (timeDiff % 3600000) / 60000;
+        System.out.println( h + " h " + m + " minutes");
+
+
+
+
+
+
+
+
+
+
 }}

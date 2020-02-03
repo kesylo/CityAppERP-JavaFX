@@ -136,7 +136,7 @@ public class reportDashboardController {
     private ObservableList<Planning> planningList = FXCollections.observableArrayList();
     private ObservableList<Payment> userPaymentList = FXCollections.observableArrayList();
     private ResultSet rs = null;
-    private double totalMin = 0;
+    private long totalMin = 0L;
     private String myDocumentsPath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
     private Double userReportAmount = 0.0;
     //endregion
@@ -643,7 +643,7 @@ public class reportDashboardController {
         ObservableList<PlanningReport> planningReportList = FXCollections.observableArrayList();
         ObservableList<Integer> usersInSameDept;
         planningList = FXCollections.observableArrayList();
-
+        totalMin = 0L;
 
         int selectedYear = comboYear.getValue();
         int selectedMonth = Global.monthToInt(comboMonth.getValue());
@@ -689,24 +689,25 @@ public class reportDashboardController {
                 //System.out.println(p.getStartTime() + " " + p.getEndTime());
 
                 // remove the :
-                String[] arr1 = p.getStartTime().split(":");
+                /*String[] arr1 = p.getStartTime().split(":");
                 String[] arr2 = p.getEndTime().split(":");
 
                 double timeStart = Double.parseDouble(arr1[0] + "." + arr1[1]);
                 double timeEnd = Double.parseDouble(arr2[0] + "." + arr2[1]);
-                double totalTime = 0;
+                double totalTime, totalTimeFinal;
 
                 if (timeEnd < timeStart){
                     // we have crossed a day
-                    double wholeDay = 24;
+                    int wholeDay = 24;
                     timeEnd += wholeDay;
                     totalTime = Math.abs(timeEnd - timeStart);
                 }else {
                     totalTime = Math.abs(timeEnd - timeStart);
-                }
+                }*/
 
-                //System.out.println(totalTime);
+                long totalTime = Global.computeTimeBetween(p.getStartTime(), p.getEndTime());
 
+                // for precision issues
                 totalMin += totalTime;
 
                 PlanningReport planningReport = new PlanningReport(
@@ -733,8 +734,7 @@ public class reportDashboardController {
         tableDateHours.getSortOrder().add(clmDate);
 
         // set text
-        String totalTime = totalMin + " Heures";
-        hoursPrested.setText(totalTime);
+        hoursPrested.setText(Global.millisToTime(totalMin));
 
         // select first
         tableDateHours.getSelectionModel().selectFirst();

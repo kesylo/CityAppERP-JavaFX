@@ -34,6 +34,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Year;
@@ -403,15 +404,6 @@ public class Global {
         return d + "-" + m + "-" + year;
     }
 
-    /*public static String minutesToTime(long minutes){
-        int h = 0;
-        while (minutes >=60){
-            minutes -=60;
-            h++;
-        }
-        return String.format("%02d", h) + " : " + String.format("%02d", minutes);
-    }*/
-
     public static String formatDouble (double value){
         return String.format("%.2f", value);
     }
@@ -425,12 +417,42 @@ public class Global {
         return numeric;
     }
 
+    public static long computeTimeBetween(String time1, String time2){
+        Date d1;
+        Date d2;
+        long tempDate;
+        long timeDiff = 0L;
+        SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
+        try {
+            d1 = formatter.parse(time1);
+            d2 = formatter.parse(time2);
+
+            if (d2.before(d1)){
+                tempDate =  d2.getTime() + (3600*1000*24);
+                timeDiff = tempDate - d1.getTime();
+            }else {
+                timeDiff = d2.getTime() - d1.getTime();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //return (timeDiff / 3600000) + ":" + (timeDiff % 3600000) / 60000;
+        return timeDiff;
+}
+
     public static String formatDouble3 (double value){
         return String.format("%.3f", value);
     }
 
     public static double roundDouble(double value){
         return Math.round(value * 100D) / 100D;
+    }
+
+    public static String millisToTime(Long timeInMillis){
+        String h = ((timeInMillis / 3600000) < 10 ? "0" : "") + (timeInMillis / 3600000);
+        String m =     (((timeInMillis % 3600000) / 60000) < 10 ? "0" : "") + (timeInMillis % 3600000) / 60000;
+        return ( h + ":" + m);
     }
 
     public static void setProfileIcon(ImageView photo) {
