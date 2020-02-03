@@ -74,7 +74,7 @@
                         <Image url="@../Ressources/images/logo.jpg" />
                     </image>
                 </ImageView>
-              <Label layoutX="133.0" layoutY="660.0" text="City Center Apartments ERP 2019 ©">
+              <Label layoutX="133.0" layoutY="660.0" text="City Center Apartments ERP 2020 ©">
                   <font>
                       <Font name="Poppins Regular" size="14.0" />
                   </font>
