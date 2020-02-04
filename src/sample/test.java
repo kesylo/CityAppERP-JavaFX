@@ -782,15 +782,17 @@ public class test {
         System.out.println(lastMonthDate);*/
 
 
-        String time1 = "20:00";
-        String time2 = "21:59";
+        String time1 = "12:30";
+        String time2 = "16:00";
         Date d1;
         Date d2;
         long timeDiff = 0L;
-        SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.FRANCE);
         try {
             d1 = formatter.parse(time1);
+            System.out.println(d1);
             d2 = formatter.parse(time2);
+            System.out.println(d2);
 
             timeDiff = d1.getTime() + d2.getTime();
         } catch (ParseException e) {

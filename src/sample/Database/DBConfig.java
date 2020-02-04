@@ -2,7 +2,7 @@ package sample.Database;
 
 class DBConfig {
     // app version
-    private static String appVersion = "3.2.3";
+    private static String appVersion = "3.2.4";
 
     // my local Server
     /*String dbHost = "localhost";

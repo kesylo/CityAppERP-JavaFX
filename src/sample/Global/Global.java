@@ -422,7 +422,7 @@ public class Global {
         Date d2;
         long tempDate;
         long timeDiff = 0L;
-        SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.FRANCE);
         try {
             d1 = formatter.parse(time1);
             d2 = formatter.parse(time2);
