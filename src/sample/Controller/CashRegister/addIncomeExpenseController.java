@@ -252,13 +252,13 @@ public class addIncomeExpenseController {
        if (comboSource.getSelectionModel().getSelectedIndex() == 0){ // client selected
            txtClientIndex.setDisable(false);
            comboIncomeBank.setDisable(true);
-           txtAreaCommentCaisse.setDisable(true);
+           txtAreaCommentCaisse.setDisable(false);
        }
        if (comboSource.getSelectionModel().getSelectedIndex() == 1){ // bank selected
            txtClientIndex.setDisable(true);
            comboIncomeBank.setDisable(false);
            comboIncomeBank.getSelectionModel().selectFirst();
-           txtAreaCommentCaisse.setDisable(true);
+           txtAreaCommentCaisse.setDisable(false);
        }
        if (comboSource.getSelectionModel().getSelectedIndex() == 2){ // other selected
            // reset index field
@@ -276,13 +276,13 @@ public class addIncomeExpenseController {
             comboSalaryBeneficial.getSelectionModel().selectFirst();
             comboSalaryBeneficial.setDisable(false);
             comboExpenseBank.setDisable(true);
-            txtAreaComment.setDisable(true);
+            txtAreaComment.setDisable(false);
         }
         if (comboRaison.getSelectionModel().getSelectedIndex() == 1){ // bank selected
             comboExpenseBank.getSelectionModel().selectFirst();
             comboSalaryBeneficial.setDisable(true);
             comboExpenseBank.setDisable(false);
-            txtAreaComment.setDisable(true);
+            txtAreaComment.setDisable(false);
         }
         if (comboRaison.getSelectionModel().getSelectedIndex() == 2){ // other selected
             comboSalaryBeneficial.setDisable(true);
@@ -314,12 +314,30 @@ public class addIncomeExpenseController {
             // salary selected
             if (comboRaison.getSelectionModel().getSelectedIndex() == 0){
                 // check if checkbox is checked
-                commitToDB();
+                if (!txtAreaComment.getText().isEmpty()){
+                    // check if checkbox is checked
+                    commitToDB();
+                }
+                else {
+                    // Comment is empty
+                    Global.showErrorMessage(
+                            "Erreur sur le commentaire",
+                            "Le champ details ne peut pas être vide.");
+                }
             }
             // bank selected
             else if (comboRaison.getSelectionModel().getSelectedIndex() == 1){
                 // check if checkbox is checked
-                commitToDB();
+                if (!txtAreaComment.getText().isEmpty()){
+                    // check if checkbox is checked
+                    commitToDB();
+                }
+                else {
+                    // Comment is empty
+                    Global.showErrorMessage(
+                            "Erreur sur le commentaire",
+                            "Le champ details ne peut pas être vide.");
+                }
             }
             // other selected
             else if (comboRaison.getSelectionModel().getSelectedIndex() == 2){
@@ -349,7 +367,16 @@ public class addIncomeExpenseController {
                     // check if client index is ok
                     if (txtClientIndex.getText().matches("\\d{3}+[-+]\\d{4}+[-+]\\d{5}")){
                         // check if checkbox is checked
-                        commitToDB();
+                        if (!txtAreaCommentCaisse.getText().isEmpty()){
+                            // check if checkbox is checked
+                            commitToDB();
+                        }
+                        else {
+                            // Comment is empty
+                            Global.showErrorMessage(
+                                    "Erreur sur le commentaire",
+                                    "Le champ details ne peut pas être vide.");
+                        }
                     }
                     else {
                         // regex pattern not ok
@@ -368,7 +395,16 @@ public class addIncomeExpenseController {
             // bank selected
             else if (comboSource.getSelectionModel().getSelectedIndex() == 1){
                 // check if checkbox is checked
-                commitToDB();
+                if (!txtAreaCommentCaisse.getText().isEmpty()){
+                    // check if checkbox is checked
+                    commitToDB();
+                }
+                else {
+                    // Comment is empty
+                    Global.showErrorMessage(
+                            "Erreur sur le commentaire",
+                            "Le champ details ne peut pas être vide.");
+                }
             }
             // other selected
             else if (comboSource.getSelectionModel().getSelectedIndex() == 2){
@@ -419,7 +455,7 @@ public class addIncomeExpenseController {
                             Global.getSystemDateYMD(),
                             Global.getSystemTime(),
                             Global.getConnectedUser().getId(),
-                            "",
+                            txtAreaCommentCaisse.getText(),
                             CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
                             CashRegisterGlobal.getCurrentCaisse().getId(),
                             "",
@@ -436,7 +472,7 @@ public class addIncomeExpenseController {
                         Global.getSystemDateYMD(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
-                        "",
+                        txtAreaCommentCaisse.getText(),
                         CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
                         CashRegisterGlobal.getCurrentCaisse().getId(),
                         comboIncomeBank.getValue(),
@@ -474,7 +510,7 @@ public class addIncomeExpenseController {
                         Global.getSystemDateYMD(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
-                        "",
+                        txtAreaComment.getText(),
                         CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
                         CashRegisterGlobal.getCurrentCaisse().getId(),
                         comboRaison.getValue(),
@@ -491,7 +527,7 @@ public class addIncomeExpenseController {
                         Global.getSystemDateYMD(),
                         Global.getSystemTime(),
                         Global.getConnectedUser().getId(),
-                        "",
+                        txtAreaComment.getText(),
                         CashRegisterGlobal.getCurrentCaisse().getNumeroShift(),
                         CashRegisterGlobal.getCurrentCaisse().getId(),
                         comboExpenseBank.getValue(),

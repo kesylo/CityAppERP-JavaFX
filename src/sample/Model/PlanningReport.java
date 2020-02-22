@@ -4,15 +4,17 @@ import sample.Global.Global;
 
 public class PlanningReport {
     private String serviceDate;
+    private String userName;
     private String startTime;
     private String endTime;
     private long totalTime;
 
-    public PlanningReport(String serviceDate, String startTime, String endTime, long totalTime) {
+    public PlanningReport(String serviceDate, String startTime, String endTime, long totalTime, String userName) {
         this.serviceDate = serviceDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.totalTime = totalTime;
+        this.userName = userName;
     }
 
     public String getServiceDate() {
@@ -45,5 +47,13 @@ public class PlanningReport {
 
     public void setTotalTime(long totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

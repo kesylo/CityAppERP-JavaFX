@@ -15,9 +15,11 @@ import sample.Model.Planning;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.WeekFields;
 import java.util.*;
 
 public class test {
@@ -782,32 +784,18 @@ public class test {
         System.out.println(lastMonthDate);*/
 
 
-        String time1 = "12:30";
-        String time2 = "16:00";
-        Date d1;
-        Date d2;
-        long timeDiff = 0L;
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.FRANCE);
-        try {
-            d1 = formatter.parse(time1);
-            System.out.println(d1);
-            d2 = formatter.parse(time2);
-            System.out.println(d2);
 
-            timeDiff = d1.getTime() + d2.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        //Global.stringToLocalDate("2020-02-22");
+
+        LocalDate monday = Global.stringToLocalDate("2019-11-18");
+        while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
+            monday = monday.minusDays(1);
         }
 
-
-        String h = ((timeDiff / 3600000) < 10 ? "0" : "") + (timeDiff / 3600000);
-        String m =     (((timeDiff % 3600000) / 60000) < 10 ? "0" : "") + (timeDiff % 3600000) / 60000;
-        System.out.println( h + " h " + m + " minutes");
-
-
-
-
-
+        System.out.println("Monday of the Week: " + monday.toString());
+        System.out.println(monday.getMonth().getValue());
+        System.out.println(monday.getDayOfMonth());
+        System.out.println(monday.getYear());
 
 
 

@@ -56,7 +56,7 @@ public class DBHandler extends DBConfig {
         String status = "Accepté";
 
         // prepare the query
-        String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
+        String query = "SELECT id_user, startTime, endTime, date FROM planning where id_user=? " +
                 "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                 "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
                 "and status =? ";
@@ -83,7 +83,7 @@ public class DBHandler extends DBConfig {
         String status = "Accepté";
 
         // prepare the query
-        String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
+        String query = "SELECT id_user, startTime, endTime, date FROM planning where id_user=? " +
                 "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                 "and status =? ";
         // run it
@@ -132,7 +132,7 @@ public class DBHandler extends DBConfig {
 
         for (Integer id : usersInSameDept) {
 
-            String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
+            String query = "SELECT id_user startTime, endTime, date FROM planning where id_user=? " +
                     "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                     "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
                     "and status =? ";
@@ -152,6 +152,7 @@ public class DBHandler extends DBConfig {
                             rs.getString("startTime"),
                             rs.getString("endTime")
                     );
+                    planning.setIdUser(rs.getInt("id_user"));
                     planningList.add(planning);
                 }
 
@@ -173,7 +174,7 @@ public class DBHandler extends DBConfig {
 
         for (Integer id : usersInSameDept) {
 
-            String query = "SELECT startTime, endTime, date FROM planning where id_user=? " +
+            String query = "SELECT id_user, startTime, endTime, date FROM planning where id_user=? " +
                     "and extract(year from str_to_date(date, '%d-%m-%Y')) =? "+
                     "and status =? ";
             // run it
@@ -191,6 +192,7 @@ public class DBHandler extends DBConfig {
                             rs.getString("startTime"),
                             rs.getString("endTime")
                     );
+                    planning.setIdUser(rs.getInt("id_user"));
                     planningList.add(planning);
                 }
 
@@ -203,6 +205,95 @@ public class DBHandler extends DBConfig {
 
         return planningList;
     }
+
+    public ObservableList<Planning> getDeptServiceInDay(ObservableList<Integer> usersInSameDept, String datePickerSelectedDage) {
+
+        ObservableList<Planning> planningList = FXCollections.observableArrayList();
+        String status = "Accepté";
+        rs = null;
+        String[] splitDate = datePickerSelectedDage.split("-",3);
+
+        for (Integer id : usersInSameDept) {
+
+            String query = "SELECT id_user, startTime, endTime, date FROM planning where id_user=? " +
+                    "and extract(year from str_to_date(date, '%d-%m-%Y')) =? "+
+                    "and extract(month from str_to_date(date, '%d-%m-%Y')) =? "+
+                    "and extract(day from str_to_date(date, '%d-%m-%Y')) =? "+
+                    "and status =? ";
+            // run it
+            try {
+                PreparedStatement ps = getDbConnection().prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setString(2, splitDate[0]);
+                ps.setString(3, splitDate[1]);
+                ps.setString(4, splitDate[2]);
+                ps.setString(5, status);
+
+                rs = ps.executeQuery();
+
+                while (rs.next()){
+                    Planning planning = new Planning(
+                            rs.getString("date"),
+                            rs.getString("startTime"),
+                            rs.getString("endTime")
+                    );
+                    planning.setIdUser(rs.getInt("id_user"));
+                    planningList.add(planning);
+                }
+
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                        "Voici les détails sur l'erreur ", e);
+            }
+        }
+
+        return planningList;
+    }
+
+    public ObservableList<Planning> getDeptServiceInWeek(ObservableList<Integer> usersInSameDept, LocalDate weekDate) {
+        ObservableList<Planning> planningList = FXCollections.observableArrayList();
+        String status = "Accepté";
+        rs = null;
+
+        for (Integer id : usersInSameDept) {
+
+            String query = "SELECT id_user, startTime, endTime, date FROM planning where id_user=? " +
+                    "and extract(year from str_to_date(week, '%d-%m-%Y')) =? "+
+                    "and extract(month from str_to_date(week, '%d-%m-%Y')) =? "+
+                    "and extract(day from str_to_date(week, '%d-%m-%Y')) =? "+
+                    "and status =? ";
+            // run it
+            try {
+                PreparedStatement ps = getDbConnection().prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setInt(2, weekDate.getYear());
+                ps.setInt(3, weekDate.getMonth().getValue());
+                ps.setInt(4, weekDate.getDayOfMonth());
+                ps.setString(5, status);
+
+                rs = ps.executeQuery();
+
+                while (rs.next()){
+                    Planning planning = new Planning(
+                            rs.getString("date"),
+                            rs.getString("startTime"),
+                            rs.getString("endTime")
+                    );
+                    planning.setIdUser(rs.getInt("id_user"));
+                    planningList.add(planning);
+                }
+
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                        "Voici les détails sur l'erreur ", e);
+            }
+        }
+
+        return planningList;
+    }
+
 
     public ResultSet getUser(User user)  {
 
@@ -921,6 +1012,9 @@ public class DBHandler extends DBConfig {
                     "Voici les détails sur l'erreur ", e);
         }
     }
+
+
+
 
 
     /*------------------------------ DELETE -------------------------------------*/

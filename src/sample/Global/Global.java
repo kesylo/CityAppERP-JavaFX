@@ -36,6 +36,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -633,6 +634,14 @@ public class Global {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static LocalDate getWeekDateFromDate(String datePickerSelectedDate) {
+        LocalDate monday = Global.stringToLocalDate(datePickerSelectedDate);
+        while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
+            monday = monday.minusDays(1);
+        }
+        return monday;
     }
 
     //endregion

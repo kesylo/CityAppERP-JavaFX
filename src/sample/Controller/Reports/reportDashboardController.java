@@ -1,9 +1,6 @@
 package sample.Controller.Reports;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,6 +76,15 @@ public class reportDashboardController {
     private JFXRadioButton radioDept;
 
     @FXML
+    private JFXRadioButton radioDay;
+
+    @FXML
+    private JFXRadioButton radioWeek;
+
+    @FXML
+    private JFXDatePicker datePickerWeekDate;
+
+    @FXML
     private JFXComboBox<String> comboMonth;
 
     @FXML
@@ -101,6 +107,9 @@ public class reportDashboardController {
 
     @FXML
     private TableColumn<PlanningReport, String> clmStartTime;
+
+    @FXML
+    private TableColumn<PlanningReport, String> clmUser;
 
     @FXML
     private TableColumn<PlanningReport, String> clmEndTime;
@@ -130,6 +139,7 @@ public class reportDashboardController {
     //region variable
     private DBHandler dbHandler = new DBHandler();
     private DialogController<String> wd = null;
+    ObservableList<User> userList = FXCollections.observableArrayList();
     private ObservableList<String> dept = FXCollections.observableArrayList();
     private ObservableList<String> month = FXCollections.observableArrayList();
     private ObservableList<Integer> year = FXCollections.observableArrayList();
@@ -156,6 +166,8 @@ public class reportDashboardController {
 
     @FXML
     void initialize() {
+        datePickerWeekDate.setStyle("-fx-font: 14px Poppins;");
+        datePickerWeekDate.setValue(LocalDate.now());
 
         Global.setUserProfile(lblConnectedUser, btnLogOut);
 
@@ -172,6 +184,7 @@ public class reportDashboardController {
                 comboDept.setDisable(true);
                 // what i need to be active
                 comboUser.setDisable(false);
+                txtUserName.setVisible(true);
             }
         });
 
@@ -179,6 +192,7 @@ public class reportDashboardController {
             if (isNowSelected) {
                 // what i don't need to be active
                 comboUser.setDisable(true);
+                txtUserName.setVisible(false);
                 // what i need to be active
                 comboDept.setDisable(false);
             }
@@ -189,6 +203,7 @@ public class reportDashboardController {
                 // what i don't need to be active
                 // what i need to be active
                 comboMonth.setDisable(false);
+                datePickerWeekDate.setDisable(true);
             }
         });
 
@@ -196,8 +211,27 @@ public class reportDashboardController {
             if (isNowSelected) {
                 // what i don't need to be active
                 comboMonth.setDisable(true);
+                datePickerWeekDate.setDisable(true);
                 // what i need to be active
                 comboYear.setDisable(false);
+            }
+        });
+
+        radioDay.selectedProperty().addListener((obs, wasPreviouslySelected, isNowSelected) -> {
+            if (isNowSelected) {
+                // what i don't need to be active
+                comboMonth.setDisable(true);
+                datePickerWeekDate.setDisable(false);
+                comboYear.setDisable(true);
+            }
+        });
+
+        radioWeek.selectedProperty().addListener((obs, wasPreviouslySelected, isNowSelected) -> {
+            if (isNowSelected) {
+                // what i don't need to be active
+                comboMonth.setDisable(true);
+                datePickerWeekDate.setDisable(false);
+                comboYear.setDisable(true);
             }
         });
 
@@ -271,6 +305,10 @@ public class reportDashboardController {
             fillTable("userMonth");
         }else if (radioCollaborator.isSelected() && radioYear.isSelected()){
             fillTable("userYear");
+        }else if (radioDept.isSelected() && radioDay.isSelected()){
+            fillTable("deptDay");
+        }else if (radioDept.isSelected() && radioWeek.isSelected()){
+            fillTable("deptWeek");
         }else if (radioDept.isSelected() && radioMonth.isSelected()){
             fillTable("deptMonth");
         }else if (radioDept.isSelected() && radioYear.isSelected()){
@@ -548,7 +586,6 @@ public class reportDashboardController {
 
             wd.exec("123", inputParam -> {
 
-                ObservableList<User> userList = FXCollections.observableArrayList();
                 ResultSet userRow = dbHandler.getActiveEmployees();
 
                 try {
@@ -645,10 +682,14 @@ public class reportDashboardController {
         planningList = FXCollections.observableArrayList();
         totalMin = 0L;
 
+
         int selectedYear = comboYear.getValue();
+        String datePickerSelectedDate = Global.localDateToString(datePickerWeekDate.getValue());
         int selectedMonth = Global.monthToInt(comboMonth.getValue());
         String selectedService =comboDept.getValue();
         int selectedUser = comboUser.getSelectionModel().getSelectedItem().getId();
+
+
 
         switch (choice) {
             case "userMonth":
@@ -665,6 +706,19 @@ public class reportDashboardController {
                 usersInSameDept = getUsersIDInSameDept(selectedService);
                 planningList = dbHandler.getDeptServiceInYear(usersInSameDept, selectedYear);
                 break;
+            case "deptDay":
+               if (datePickerSelectedDate != null){
+                   usersInSameDept = getUsersIDInSameDept(selectedService);
+                   planningList = dbHandler.getDeptServiceInDay(usersInSameDept, datePickerSelectedDate);
+               }
+                break;
+            case "deptWeek":
+                if (datePickerSelectedDate != null){
+                    LocalDate weekDate = Global.getWeekDateFromDate(datePickerSelectedDate);
+                    usersInSameDept = getUsersIDInSameDept(selectedService);
+                    planningList = dbHandler.getDeptServiceInWeek(usersInSameDept, weekDate);
+                }
+                break;
         }
 
         if (choice.equals("userMonth") || choice.equals("userYear")){
@@ -675,6 +729,7 @@ public class reportDashboardController {
                             rs.getString("startTime"),
                             rs.getString("endTime")
                     );
+                    planning.setIdUser(rs.getInt("id_user"));
                     planningList.add(planning);
                 }
             } catch (SQLException e) {
@@ -686,26 +741,10 @@ public class reportDashboardController {
 
             if (!p.getStartTime().equals("") && !p.getEndTime().equals("")){
 
-                //System.out.println(p.getStartTime() + " " + p.getEndTime());
-
-                // remove the :
-                /*String[] arr1 = p.getStartTime().split(":");
-                String[] arr2 = p.getEndTime().split(":");
-
-                double timeStart = Double.parseDouble(arr1[0] + "." + arr1[1]);
-                double timeEnd = Double.parseDouble(arr2[0] + "." + arr2[1]);
-                double totalTime, totalTimeFinal;
-
-                if (timeEnd < timeStart){
-                    // we have crossed a day
-                    int wholeDay = 24;
-                    timeEnd += wholeDay;
-                    totalTime = Math.abs(timeEnd - timeStart);
-                }else {
-                    totalTime = Math.abs(timeEnd - timeStart);
-                }*/
-
                 long totalTime = Global.computeTimeBetween(p.getStartTime(), p.getEndTime());
+
+                // get username
+                //String userName = getUserByIdInList()
 
                 // for precision issues
                 totalMin += totalTime;
@@ -714,7 +753,8 @@ public class reportDashboardController {
                         p.getPrestationDate(),
                         p.getStartTime(),
                         p.getEndTime(),
-                        totalTime);
+                        totalTime,
+                        getUserByIdInList(p.getIdUser()));
                 planningReportList.add(planningReport);
             }
         }
@@ -726,6 +766,7 @@ public class reportDashboardController {
         clmStartTime.setCellValueFactory(new PropertyValueFactory<>("StartTime"));
         clmEndTime.setCellValueFactory(new PropertyValueFactory<>("EndTime"));
         clmTotalTime.setCellValueFactory(new PropertyValueFactory<>("TotalTime"));
+        clmUser.setCellValueFactory(new PropertyValueFactory<>("UserName"));
 
         // set table data
         tableDateHours.setItems(planningReportList);
@@ -739,6 +780,15 @@ public class reportDashboardController {
         // select first
         tableDateHours.getSelectionModel().selectFirst();
 
+    }
+
+    private String getUserByIdInList(int idUser) {
+        for (User user : userList){
+            if (user.getId() == idUser){
+                return user.getFirstName() + " " + user.getLastName();
+            }
+        }
+        return null;
     }
 
     private ObservableList<Integer> getUsersIDInSameDept(String selectedService) {
