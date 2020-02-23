@@ -32,7 +32,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.*;
 
@@ -236,7 +238,6 @@ public class reportDashboardController {
 
         btnCalculate.setOnAction(event -> {
             // find
-            getUserPayments();
             tableDateHours.getItems().clear();
             showServices();
         });
@@ -317,9 +318,11 @@ public class reportDashboardController {
 
     private void exportToExcel() {
         // variables
-        Double totalWorked = 0.0;
         Double totalPayment = 0.0;
         String userName = comboUser.getValue().getFirstName() + " " + comboUser.getValue().getLastName();
+        totalMin = 0L;
+
+        getUserPayments();
 
         // get user report early
         getUserReport();
@@ -370,6 +373,9 @@ public class reportDashboardController {
             //endregion
 
             // data
+            Map<XSSFRow, Double> positions = new HashMap<>();
+            int index = 0;
+            int count = 0;
             int indexStart = 3;
             int startDataRow = 3;
             // sort planning list by date
@@ -393,24 +399,41 @@ public class reportDashboardController {
                 createCell(rowDates, wb, newString2, 2, IndexedColors.WHITE.getIndex());
 
                 // work time
-                Double workTime = value2 - value1;
-                createCell(rowDates, wb, workTime.toString(), 4, IndexedColors.WHITE.getIndex());
+                long totalTime = Global.computeTimeBetween(planning.getStartTime(), planning.getEndTime());
+                totalMin += totalTime;
+                double workTime = value2 - value1;
+                createCell(rowDates, wb, Double.toString(workTime), 4, IndexedColors.WHITE.getIndex());
 
-                // payment
-                // get user's payments
-                for (Payment p : userPaymentList){
-                    if (planning.getPrestationDate().equals(p.getDate())){
-                        createCell(rowDates, wb, p.getAmount()+"", 5, IndexedColors.WHITE.getIndex());
+
+                /*System.out.println(userPaymentList.get(count).getDate());
+                System.out.println(planning.getPrestationDate());
+                System.out.println(" ");*/
+                // print payment where date matches planning
+                if (userPaymentList.get(count).getDate().equals(planning.getPrestationDate())){
+                    positions.put(rowDates, userPaymentList.get(count).getAmount());
+                    totalPayment += userPaymentList.get(count).getAmount();
+                    count ++;
+                }
+
+                // user payments of the month
+                /*if (index < userPaymentList.size()){
+                    Payment p = userPaymentList.get(index);
+                    String[] splitDate = p.getDate().split("-",3);
+                    if (comboMonth.getSelectionModel().getSelectedIndex()+1 == Integer.parseInt(splitDate[1])){
+                        //createCell(rowDates, wb, p.getAmount()+"", 5, IndexedColors.WHITE.getIndex());
                         totalPayment += p.getAmount();
                     }
-                }
+                }*/
 
-                // compute total time
-                if (workTime > 0) {
-                    totalWorked += workTime;
-                }
                 indexStart += 1;
+                index += 1;
             }
+
+            positions.forEach((row, amount) -> {
+                createCell(row, wb, amount+"", 5, IndexedColors.WHITE.getIndex());
+            });
+
+
             drawBorders(startDataRow,indexStart - 1,0,5, BorderExtent.ALL, sheet);
 
 
@@ -426,7 +449,10 @@ public class reportDashboardController {
             drawBorders(2,2,1,3, BorderExtent.OUTSIDE, sheet);
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 3));
 
-            createCell(row3, wb, totalWorked.toString(), 4, IndexedColors.SEA_GREEN.getIndex());
+            // just to convert 00:00 to 0.0
+            String time = Global.millisToTime(totalMin);
+            String strDoubleTime = time.replace(":", ".");
+            createCell(row3, wb, strDoubleTime, 4, IndexedColors.SEA_GREEN.getIndex());
 
             // payments from DB
             createCell(row3, wb, totalPayment.toString(), 5, IndexedColors.SEA_GREEN.getIndex());
@@ -436,9 +462,10 @@ public class reportDashboardController {
 
             // extra hour (computed: worked Hours - declared hours)
             Double normalHours = Double.parseDouble(txtNormalHour.getText());
+            Double timeWork = Double.parseDouble(strDoubleTime);
             double extraHours = 0.0;
-            if (totalWorked > normalHours){
-                extraHours = totalWorked - normalHours;
+            if (timeWork > normalHours){
+                extraHours = timeWork - normalHours;
             }
             createCell(row3, wb, Double.toString(extraHours), 7, IndexedColors.SEA_GREEN.getIndex());
 
@@ -450,7 +477,7 @@ public class reportDashboardController {
             createCell(row3, wb, String.valueOf(userReportAmount), 9, IndexedColors.SKY_BLUE.getIndex());
 
             // balance computed
-            double balance = toPay + userReportAmount;
+            double balance = (toPay + userReportAmount) - totalPayment;
             createCell(row3, wb, Double.toString(balance), 10, IndexedColors.SEA_GREEN.getIndex());
 
             drawBorders(2,2,3,10, BorderExtent.ALL, sheet);
@@ -464,8 +491,8 @@ public class reportDashboardController {
             createTimeSheetDir();
             String contractsFolder = "Timesheets";
             User selectedUser = comboUser.getSelectionModel().getSelectedItem();
-            String collaboratorName = selectedUser.getFirstName() + " " + selectedUser.getLastName() ;
-            String contractFileName = "Timesheet-" + Global.getSystemDateDMY() + "_";
+            String collaboratorName = selectedUser.getFirstName() + "-" + selectedUser.getLastName() ;
+            String contractFileName = "Timesheet-" + comboMonth.getValue() + "-" + comboYear.getValue() + "_";
             FileOutputStream fileOut = new FileOutputStream(
                     myDocumentsPath
                     +"\\"
@@ -513,23 +540,23 @@ public class reportDashboardController {
 
     private void getUserPayments() {
 
-        Platform.runLater(() ->{
-            wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement des paiements...");
+        wd = new DialogController<>(btnBack.getScene().getWindow(), "Chargement des paiements...");
 
-            wd.exec("123", inputParam -> {
+        wd.exec("123", inputParam -> {
 
-                try {
-                    User user = comboUser.getValue();
-                    int month = comboMonth.getSelectionModel().getSelectedIndex();
-                    month += 1;
-                    int year = comboYear.getValue();
-                    userPaymentList =  dbHandler.getUserPayments(user, month, year);
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+            try {
+                userPaymentList = null;
+                User user = comboUser.getValue();
+                int month = comboMonth.getSelectionModel().getSelectedIndex();
+                month += 1;
+                int year = comboYear.getValue();
+                userPaymentList =  dbHandler.getUserPayments(user, month, year);
 
-                return 1;
-            });
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return 1;
         });
     }
 

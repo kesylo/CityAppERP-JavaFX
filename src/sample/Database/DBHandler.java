@@ -132,7 +132,7 @@ public class DBHandler extends DBConfig {
 
         for (Integer id : usersInSameDept) {
 
-            String query = "SELECT id_user startTime, endTime, date FROM planning where id_user=? " +
+            String query = "SELECT id_user, startTime, endTime, date FROM planning where id_user=? " +
                     "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                     "and extract(month from str_to_date(date, '%d-%m-%Y')) =? " +
                     "and status =? ";

@@ -89,6 +89,7 @@ public class PaymentController {
 
     @FXML
     void initialize() {
+        firstRun = true;
 
         fillComboBox();
 
