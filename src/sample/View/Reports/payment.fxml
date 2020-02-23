@@ -6,36 +6,33 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="477.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Reports.PaymentController">
+<AnchorPane prefHeight="657.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Reports.PaymentController">
    <children>
-      <JFXComboBox fx:id="comboUser" focusColor="#5dbcd2" focusTraversable="false" layoutX="14.0" layoutY="45.0" prefHeight="30.0" prefWidth="330.0" promptText="Utililisateur" />
+      <JFXComboBox fx:id="comboUser" focusColor="#5dbcd2" focusTraversable="false" layoutX="14.0" layoutY="45.0" onAction="#userCmbChange" prefHeight="30.0" prefWidth="330.0" promptText="Utililisateur" />
       <Label layoutX="14.0" layoutY="14.0" text="Utilisateur">
          <font>
             <Font name="Poppins Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="96.0" text="Montant">
+      <Label layoutX="14.0" layoutY="90.0" text="Montant">
          <font>
             <Font name="Poppins Bold" size="16.0" />
          </font>
       </Label>
-      <JFXTextArea fx:id="txtDescription" layoutX="16.0" layoutY="300.0" prefHeight="88.0" prefWidth="330.0">
+      <JFXTextArea fx:id="txtDescription" labelFloat="true" layoutX="363.0" layoutY="63.0" prefHeight="88.0" prefWidth="343.0" promptText="Description">
          <font>
             <Font size="14.0" />
          </font>
       </JFXTextArea>
-      <Label layoutX="16.0" layoutY="264.0" text="Description">
-         <font>
-            <Font name="Poppins Bold" size="16.0" />
-         </font>
-      </Label>
-      <JFXButton fx:id="btnCalculate" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="200.0" layoutY="424.0" prefHeight="38.0" prefWidth="144.0" style="-fx-background-color: #59BA5C;" text="Ajouter">
+      <JFXButton fx:id="btnCalculate" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="281.0" layoutY="172.0" prefHeight="38.0" prefWidth="144.0" style="-fx-background-color: #59BA5C;" text="Ajouter">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
@@ -47,12 +44,12 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXTextField fx:id="txtAmount" layoutX="14.0" layoutY="127.0" prefHeight="25.0" prefWidth="330.0" promptText="0">
+      <JFXTextField fx:id="txtAmount" layoutX="14.0" layoutY="121.0" prefHeight="25.0" prefWidth="330.0" promptText="0">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
       </JFXTextField>
-      <JFXRadioButton fx:id="radioFromCaisse" focusTraversable="false" layoutX="14.0" layoutY="181.0" prefHeight="30.0" selected="true" style="-jfx-selected-color: #f7a631;" text="Deduire de la caisse">
+      <JFXRadioButton fx:id="radioFromCaisse" focusTraversable="false" layoutX="372.0" layoutY="11.0" prefHeight="30.0" selected="true" style="-jfx-selected-color: #f7a631;" text="Deduire de la caisse">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
@@ -60,10 +57,47 @@
             <ToggleGroup fx:id="choix" />
          </toggleGroup>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="radioBank" focusTraversable="false" layoutX="16.0" layoutY="220.0" prefHeight="30.0" style="-jfx-selected-color: #f7a631;" text="Banque" toggleGroup="$choix">
+      <JFXRadioButton fx:id="radioBank" focusTraversable="false" layoutX="586.0" layoutY="11.0" prefHeight="30.0" style="-jfx-selected-color: #f7a631;" text="Banque" toggleGroup="$choix">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
       </JFXRadioButton>
+      <TableView fx:id="tablePayment" focusTraversable="false" layoutY="227.0" pickOnBounds="false" prefHeight="356.0" prefWidth="706.0" style="-fx-border-radius: 7; -fx-background-radius: 7;" stylesheets="@../../Ressources/css/table.css" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn fx:id="clmUser" prefWidth="151.0" text="Utilisateur" />
+            <TableColumn fx:id="clmAmount" prefWidth="151.0" text="Montant" />
+            <TableColumn fx:id="clmDate" prefWidth="151.0" text="Date" />
+            <TableColumn fx:id="clmDescription" prefWidth="151.0" text="Description" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="btnDelete" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="13.0" layoutY="597.0" prefHeight="38.0" prefWidth="144.0" style="-fx-background-color: #F08080;" text="Supprimer" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="549.0">
+         <font>
+            <Font name="Poppins Regular" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_delete_52px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnShow" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="548.0" layoutY="597.0" prefHeight="38.0" prefWidth="144.0" style="-fx-background-color: #5dbcd2;" text="Afficher" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="549.0" AnchorPane.rightAnchor="13.0">
+         <font>
+            <Font name="Poppins Regular" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/images/icons8_visible_52px_1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXComboBox fx:id="comboMonth" focusColor="#5dbcd2" focusTraversable="false" layoutX="188.0" layoutY="601.0" prefHeight="30.0" prefWidth="178.0" promptText="Mois" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="188.0" AnchorPane.rightAnchor="340.0" />
+      <JFXComboBox fx:id="comboYear" focusColor="#5dbcd2" focusTraversable="false" layoutX="385.0" layoutY="601.0" prefHeight="30.0" prefWidth="133.0" promptText="Année" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="188.0" />
    </children>
 </AnchorPane>

@@ -294,7 +294,6 @@ public class DBHandler extends DBConfig {
         return planningList;
     }
 
-
     public ResultSet getUser(User user)  {
 
         rs = null;
@@ -530,20 +529,13 @@ public class DBHandler extends DBConfig {
         String username = user.getFirstName() + " " + user.getLastName();
         String upName = username.toUpperCase();
 
+
+        //region First query Payments
         // prepare the query
         String query = "SELECT * FROM payments WHERE userId=? " +
                 "and extract(year from str_to_date(date, '%d-%m-%Y')) =? " +
                 "and extract(month from str_to_date(date, '%d-%m-%Y')) =? ";
 
-
-        String query2 = "SELECT * FROM caisse_recettes WHERE " +
-                "extract(year from str_to_date(date, '%Y-%m-%d')) =? " +
-                "and extract(month from str_to_date(date, '%Y-%m-%d')) =? " +
-                "and type = ? " +
-                "and reason = ? " +
-                "and salaryBeneficial = ?";
-
-        //region First query Payments
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query);
             ps.setInt(1, user.getId());
@@ -557,7 +549,9 @@ public class DBHandler extends DBConfig {
                         rs.getDouble("amount"),
                         rs.getString("date"),
                         rs.getInt("userId"),
-                        rs.getString("description")
+                        rs.getInt("idPayments"),
+                        rs.getString("description"),
+                        1 // 1 to say this data is from Payment Table
                 );
 
                 userPaymentList.add(payment);
@@ -571,6 +565,13 @@ public class DBHandler extends DBConfig {
         //endregion
 
         //region Second query Payments
+        String query2 = "SELECT * FROM caisse_recettes WHERE " +
+                "extract(year from str_to_date(date, '%Y-%m-%d')) =? " +
+                "and extract(month from str_to_date(date, '%Y-%m-%d')) =? " +
+                "and type = ? " +
+                "and reason = ? " +
+                "and salaryBeneficial = ?";
+
         try {
             PreparedStatement ps = getDbConnection().prepareStatement(query2);
             ps.setInt(1, year);
@@ -591,7 +592,9 @@ public class DBHandler extends DBConfig {
                         rs.getDouble("montant"),
                         strDateOut,
                         user.getId(),
-                        rs.getString("remarque")
+                        rs.getInt("id_caisse_recettes"),
+                        rs.getString("remarque"),
+                        0 // 0 to say this data is from Recettes Table
                 );
 
                 userPaymentList.add(payment);
@@ -1013,9 +1016,25 @@ public class DBHandler extends DBConfig {
         }
     }
 
-
-
-
-
     /*------------------------------ DELETE -------------------------------------*/
+
+    public void deleteInDB(int id, String tableName, String idTableName) {
+
+        String query = "DELETE FROM " + tableName + " WHERE " + idTableName + "=? ";
+
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+
+
+    }
 }

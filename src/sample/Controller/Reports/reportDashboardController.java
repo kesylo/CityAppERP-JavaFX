@@ -20,7 +20,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Controller.DialogController;
 import sample.Database.DBHandler;
-import sample.Global.ContractGlobal;
 import sample.Global.Global;
 import sample.Model.*;
 
@@ -660,19 +659,36 @@ public class reportDashboardController {
         month.add("Novembre");
         month.add("Decembre");
         comboMonth.setItems(month);
-        comboMonth.getSelectionModel().selectFirst();
+        int currentMonth = LocalDate.now().getMonth().getValue();
+        int index = 0;
+
+        for (int i = 0; i< month.size(); i++){
+            if (i == currentMonth -1){
+                index = i;
+            }
+        }
+        comboMonth.getSelectionModel().select(index);
 
         // year
         LocalDate startDate = LocalDate.of(2015,1,1);
         LocalDate endDate = LocalDate.of(2030,1,1);
         List<LocalDate> dates = Global.getYearsBetween(startDate, endDate);
+        int currentYear = LocalDate.now().getYear();
+        index = 0;
+        int i = 0;
 
         for (LocalDate date : dates) {
-            int intDate = date.getYear();
-            year.add(intDate);
+            int intYear = date.getYear();
+            year.add(intYear);
+            if (intYear == currentYear){
+                index = i;
+            }
+            i ++;
         }
         comboYear.setItems(year);
-        comboYear.getSelectionModel().selectFirst();
+        // get current year
+
+        comboYear.getSelectionModel().select(index);
 
     }
 
@@ -744,7 +760,7 @@ public class reportDashboardController {
                 long totalTime = Global.computeTimeBetween(p.getStartTime(), p.getEndTime());
 
                 // get username
-                //String userName = getUserByIdInList()
+                //String userName = getUserNameByIdInList()
 
                 // for precision issues
                 totalMin += totalTime;
@@ -754,7 +770,7 @@ public class reportDashboardController {
                         p.getStartTime(),
                         p.getEndTime(),
                         totalTime,
-                        getUserByIdInList(p.getIdUser()));
+                        getUserNameByIdInList(p.getIdUser()));
                 planningReportList.add(planningReport);
             }
         }
@@ -782,7 +798,7 @@ public class reportDashboardController {
 
     }
 
-    private String getUserByIdInList(int idUser) {
+    private String getUserNameByIdInList(int idUser) {
         for (User user : userList){
             if (user.getId() == idUser){
                 return user.getFirstName() + " " + user.getLastName();

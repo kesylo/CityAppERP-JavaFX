@@ -141,7 +141,7 @@
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextArea fx:id="txtAreaCommentCaisse" disable="true" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
+                  <JFXTextArea fx:id="txtAreaCommentCaisse" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
@@ -153,7 +153,7 @@
                   <ComboBox fx:id="comboRaison" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#comboBoxReason" prefHeight="25.0" prefWidth="270.0" promptText="Raison" visibleRowCount="5" />
                   <ComboBox fx:id="comboExpenseBank" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Banque" visibleRowCount="5" />
                   <ComboBox fx:id="comboSalaryBeneficial" disable="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="270.0" promptText="Choisir l'employé" visibleRowCount="5" />
-                  <JFXTextArea fx:id="txtAreaComment" disable="true" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
+                  <JFXTextArea fx:id="txtAreaComment" focusColor="#f7a631" labelFloat="true" prefHeight="83.0" prefWidth="270.0" promptText="Détails" wrapText="true">
                      <font>
                         <Font name="Poppins Regular" size="14.0" />
                      </font>
