@@ -36,7 +36,7 @@
             <JFXDatePicker fx:id="datePickerTo" layoutX="366.0" layoutY="11.0" onAction="#dateToChange" prefHeight="30.0" prefWidth="136.0" />
             <JFXButton fx:id="btnhide" layoutX="23.0" layoutY="594.0" visible="false" />
             <HBox layoutX="405.0" layoutY="582.0" spacing="30.0" AnchorPane.bottomAnchor="20.0" />
-            <JFXButton fx:id="btnBack" alignment="CENTER" cancelButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="20.0" layoutY="581.0" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #E0E0E0;" text="Retour" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="20.0">
+            <JFXButton fx:id="btnBack" alignment="CENTER" cancelButton="true" focusTraversable="false" graphicTextGap="5.0" layoutX="20.0" layoutY="581.0" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #E0E0E0;" text="Retour" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="20.0">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
@@ -50,7 +50,7 @@
             </JFXButton>
             <Separator layoutX="14.0" layoutY="38.0" prefHeight="11.0" prefWidth="482.0" />
             <HBox layoutX="269.0" layoutY="218.0" />
-            <JFXButton fx:id="btnCompute" alignment="BASELINE_LEFT" focusTraversable="false" graphicTextGap="5.0" layoutX="1026.0" layoutY="588.0" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #59BA5C;" text="Calculer" AnchorPane.bottomAnchor="14.0">
+            <JFXButton fx:id="btnCompute" alignment="BASELINE_LEFT" focusTraversable="false" graphicTextGap="5.0" layoutX="1026.0" layoutY="590.0" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #59BA5C;" text="Calculer" AnchorPane.bottomAnchor="12.0">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
@@ -79,7 +79,7 @@
             </TableView>
             <Pane layoutX="127.0" layoutY="58.0" prefHeight="6.0" prefWidth="1000.0" style="-fx-background-color: #AEB6BF;" />
             <HBox layoutX="765.0" layoutY="594.0" spacing="10.0" />
-            <JFXButton fx:id="btnExport" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="1162.0" layoutY="588.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #60BBDE;" text="Exporter " AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="20.0">
+            <JFXButton fx:id="btnExport" alignment="CENTER" focusTraversable="false" graphicTextGap="5.0" layoutX="1157.0" layoutY="590.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #60BBDE;" text="Exporter " AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="20.0">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
@@ -101,6 +101,94 @@
                   <Font name="Poppins Bold" size="14.0" />
                </font>
             </Label>
+            <HBox layoutX="170.0" layoutY="588.0" prefHeight="20.0" prefWidth="254.0" spacing="8.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="867.0">
+               <children>
+                  <Label fx:id="txtUserName122" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Du" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtDateFrom" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="20-12-2020" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName12211" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="38.0" layoutY="10.0" text="Au" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtDateTo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="125.0" layoutY="10.0" text="12-12-2013" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="170.0" layoutY="611.0" spacing="7.0">
+               <children>
+                  <Label fx:id="txtUserName122111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Recettes :" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtIncome" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="210.20" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName1221111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="," textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName122111111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Dépenses :" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtExpense" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="253.00" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName1221111111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="," textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName122111111111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Erreurs :" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtError" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="-254" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName1221111111111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="-&gt;" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName122111111111111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Solde" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUserName1221111111111111111" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text=":" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtBalance" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="201450" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Poppins Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
       <Pane layoutX="1005.0" layoutY="18.0" prefHeight="62.0" prefWidth="315.0" style="-fx-background-color: #FFFF; -fx-background-radius: 50;">

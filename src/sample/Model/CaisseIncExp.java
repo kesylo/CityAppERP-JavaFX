@@ -51,6 +51,34 @@ public class CaisseIncExp {
         this.salaryBeneficial = salaryBeneficial;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setShiftNumber(int shiftNumber) {
+        this.shiftNumber = shiftNumber;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void setClientIndex(String clientIndex) {
+        this.clientIndex = clientIndex;
+    }
+
+    public void setSalaryBeneficial(String salaryBeneficial) {
+        this.salaryBeneficial = salaryBeneficial;
+    }
+
     public double getAmount() {
         return amount;
     }

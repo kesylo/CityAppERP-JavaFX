@@ -1,6 +1,7 @@
 package sample.Model;
 
 
+import sample.Global.Global;
 
 public class Caisse {
 
@@ -110,7 +111,7 @@ public class Caisse {
     }
 
     public double getIncomes() {
-        return incomes;
+        return Double.parseDouble(Global.formatDouble(incomes));
     }
 
     public void setIncomes(double incomes) {
@@ -118,7 +119,7 @@ public class Caisse {
     }
 
     public double getExpenses() {
-        return expenses;
+        return Double.parseDouble(Global.formatDouble(expenses));
     }
 
     public void setExpenses(double expenses) {

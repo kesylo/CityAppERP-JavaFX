@@ -75,12 +75,6 @@ public class CaisseFilterController {
     private JFXButton btnExport;
 
     @FXML
-    private Label txtUserName12;
-
-    @FXML
-    private Label txtUserName121;
-
-    @FXML
     private Label lblConnectedUser;
 
     @FXML
@@ -88,6 +82,26 @@ public class CaisseFilterController {
 
     @FXML
     private ImageView photo;
+
+    //-----------------------------
+    @FXML
+    private Label txtDateFrom;
+
+    @FXML
+    private Label txtDateTo;
+
+    @FXML
+    private Label txtIncome;
+
+    @FXML
+    private Label txtExpense;
+
+    @FXML
+    private Label txtError;
+
+    @FXML
+    private Label txtBalance;
+
     //endregion
 
     @FXML
@@ -122,6 +136,10 @@ public class CaisseFilterController {
     private DialogController<String> wd = null;
     private ObservableList<User> userList = FXCollections.observableArrayList();
     private ObservableList<Caisse> filteredCaisses = FXCollections.observableArrayList();
+    private Double income = 0.0;
+    private Double expense = 0.0;
+    private Double balance = 0.0;
+    private Double error = 0.0;
 
     @FXML
     void initialize() {
@@ -175,12 +193,29 @@ public class CaisseFilterController {
     }
 
     private void fillTable() {
+        // reset
+        income = 0.0;
+        expense = 0.0;
+        error = 0.0;
+        balance = 0.0;
         // set user names in caisse object
         for (Caisse c : filteredCaisses){
             c.setEmployeeName(getUserNameByIdInList(c.getIdEmployes()));
             // set day number
             LocalDate d = Global.stringToLocalDate(c.getDate());
             c.setDayNbr(Global.getDateNberInYear(d));
+
+            // compute income
+            income += c.getIncomes();
+
+            // compute expense
+            expense += c.getExpenses();
+
+            // balance
+            balance += c.getMontant();
+
+            // error
+            error += c.getError_amount();
         }
 
         clmDayNbr.setCellValueFactory(new PropertyValueFactory<>("DayNbr"));
@@ -197,6 +232,17 @@ public class CaisseFilterController {
 
         // select first
         tableCaisses.getSelectionModel().selectFirst();
+
+        setBottomText();
+    }
+
+    private void setBottomText() {
+        txtDateFrom.setText(datePickerFrom.getValue().toString());
+        txtDateTo.setText(datePickerTo.getValue().toString());
+        txtIncome.setText(Global.formatDouble(income));
+        txtExpense.setText(Global.formatDouble(expense));
+        txtBalance.setText(Global.formatDouble(balance));
+        txtError.setText(Global.formatDouble(error));
     }
 
     private void getCaisseBetween(LocalDate dateFrom, LocalDate dateTo) {

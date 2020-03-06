@@ -526,8 +526,11 @@ public class DBHandler extends DBConfig {
     public ObservableList<Caisse> getCaisseBetween(LocalDate dateFrom, LocalDate dateTo) {
 
         ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
+        ObservableList<CaisseIncExp> caisseInc = FXCollections.observableArrayList();
+        ObservableList<CaisseIncExp> caisseExp = FXCollections.observableArrayList();
         rs = null;
 
+        //region caisse between
         String query = "SELECT * FROM caisse where date between ? AND ? ";
         // run it
         try {
@@ -556,6 +559,86 @@ public class DBHandler extends DBConfig {
             Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
                     "Voici les détails sur l'erreur ", e);
         }
+        //endregion
+
+        // -----------------------------------------------------------------------------------
+
+        //region Income
+        String queryIncome = "SELECT * FROM caisse_recettes where date between ? AND ? and type = ?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(queryIncome);
+            ps.setString(1, dateFrom.toString());
+            ps.setString(2, dateTo.toString());
+            ps.setInt(3, 0);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                CaisseIncExp income = new CaisseIncExp();
+
+                income.setCreationDate(rs.getString("date"));
+                income.setAmount(rs.getDouble("montant"));
+                income.setClientIndex(rs.getString("indexClient"));
+                income.setIdCaisse(rs.getInt("fk_IdCaisse"));
+                income.setShiftNumber(rs.getInt("numeroShift"));
+
+                caisseInc.add(income);
+            }
+        } catch (Exception e) {
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+
+        for (Caisse c : caisseList){
+            double incomeTotal = 0.0;
+            for (CaisseIncExp i : caisseInc){
+                if (c.getDate().equals(i.getCreationDate()) && c.getNumeroShift() == i.getShiftNumber()){
+                    incomeTotal += i.getAmount();
+                }
+            }
+            c.setIncomes(incomeTotal);
+        }
+        //endregion
+
+        //region Income
+        String queryExpense = "SELECT * FROM caisse_recettes where date between ? AND ? and type = ?";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(queryExpense);
+            ps.setString(1, dateFrom.toString());
+            ps.setString(2, dateTo.toString());
+            ps.setInt(3, 1);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                CaisseIncExp expense = new CaisseIncExp();
+
+                expense.setCreationDate(rs.getString("date"));
+                expense.setAmount(rs.getDouble("montant"));
+                expense.setClientIndex(rs.getString("indexClient"));
+                expense.setIdCaisse(rs.getInt("fk_idCaisse"));
+                expense.setShiftNumber(rs.getInt("numeroShift"));
+
+
+                caisseExp.add(expense);
+            }
+        } catch (Exception e) {
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+
+        for (Caisse c : caisseList){
+            double expenseTotal = 0.0;
+            for (CaisseIncExp i : caisseExp){
+                if (c.getDate().equals(i.getCreationDate()) && c.getNumeroShift() == i.getShiftNumber()){
+                    expenseTotal += i.getAmount();
+                }
+            }
+            c.setExpenses(expenseTotal);
+        }
+        //endregion
 
         return caisseList;
     }
