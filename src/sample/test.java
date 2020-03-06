@@ -787,15 +787,14 @@ public class test {
 
         //Global.stringToLocalDate("2020-02-22");
 
-        LocalDate monday = Global.stringToLocalDate("2019-11-18");
-        while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
-            monday = monday.minusDays(1);
-        }
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
 
-        System.out.println("Monday of the Week: " + monday.toString());
-        System.out.println(monday.getMonth().getValue());
-        System.out.println(monday.getDayOfMonth());
-        System.out.println(monday.getYear());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(Global.convertLocalDateToDate(today));
+        int dayOfYear = cal.get(Calendar.DAY_OF_YEAR);
+
+        System.out.println("Monday of the Week: " + dayOfYear);
 
 
 

@@ -50,6 +50,9 @@ public class caisseDashboardController{
     private JFXButton btnCloseCaisse;
 
     @FXML
+    private JFXButton btnCaisseReport;
+
+    @FXML
     private JFXButton btnFillCaisse;
 
     @FXML
@@ -127,6 +130,11 @@ public class caisseDashboardController{
            if (CashRegisterGlobal.getNberOfCaisses() >= 1){
                closeCaisse();
            }
+       });
+
+        btnCaisseReport.setOnAction(event -> {
+            URL navPath = getClass().getResource("/sample/View/CashRegister/caisseFilter.fxml");
+            Global.navigateTo(navPath,"Rapports de caisse");
        });
 
         btnRefresh.setOnAction(event -> {

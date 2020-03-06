@@ -26,7 +26,31 @@ public class Caisse {
 
     private double error_amount;
 
+    // extra
+    private int dayNbr;
+    private String employeeName;
+    private double incomes;
+    private double expenses;
+
     public Caisse() {
+    }
+
+    public Caisse(int id, String date, double montant, String remarque, int numeroShift, int closed, int idEmployes, String closedDate, String numeroCaisse, int hasError, double error_amount, int dayNbr, String employeeName, double incomes, double expenses) {
+        this.id = id;
+        this.date = date;
+        this.montant = montant;
+        this.remarque = remarque;
+        this.numeroShift = numeroShift;
+        this.closed = closed;
+        this.idEmployes = idEmployes;
+        this.closedDate = closedDate;
+        this.numeroCaisse = numeroCaisse;
+        this.hasError = hasError;
+        this.error_amount = error_amount;
+        this.dayNbr = dayNbr;
+        this.employeeName = employeeName;
+        this.incomes = incomes;
+        this.expenses = expenses;
     }
 
     @Override
@@ -60,6 +84,46 @@ public class Caisse {
 
     //region Getters
 
+
+    public String getClosedDate() {
+        return closedDate;
+    }
+
+    public void setClosedDate(String closedDate) {
+        this.closedDate = closedDate;
+    }
+
+    public int getDayNbr() {
+        return dayNbr;
+    }
+
+    public void setDayNbr(int dayNbr) {
+        this.dayNbr = dayNbr;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public double getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(double incomes) {
+        this.incomes = incomes;
+    }
+
+    public double getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(double expenses) {
+        this.expenses = expenses;
+    }
 
     public double getError_amount() {
         return error_amount;

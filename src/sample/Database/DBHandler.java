@@ -523,6 +523,43 @@ public class DBHandler extends DBConfig {
         return userReportAmount;
     }
 
+    public ObservableList<Caisse> getCaisseBetween(LocalDate dateFrom, LocalDate dateTo) {
+
+        ObservableList<Caisse> caisseList = FXCollections.observableArrayList();
+        rs = null;
+
+        String query = "SELECT * FROM caisse where date between ? AND ? ";
+        // run it
+        try {
+            PreparedStatement ps = getDbConnection().prepareStatement(query);
+            ps.setString(1, dateFrom.toString());
+            ps.setString(2, dateTo.toString());
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                Caisse caisse = new Caisse();
+                caisse.setId(rs.getInt("idCaisse"));
+                caisse.setDate(rs.getString("date"));
+                caisse.setMontant(rs.getDouble("montant"));
+                caisse.setRemarque(rs.getString("remarque"));
+                caisse.setNumeroShift(rs.getInt("numeroShift"));
+                caisse.setClosed(rs.getInt("closed"));
+                caisse.setIdEmployes(rs.getInt("employees_id"));
+                caisse.setNumeroCaisse(rs.getString("numeroCaisse"));
+                caisse.setHasError(rs.getInt("has_error"));
+                caisse.setError_amount(rs.getDouble("error_amount"));
+                caisseList.add(caisse);
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Global.showExceptionMessage("Une erreur est survenue lors de l'exécution de la tâche précedente",
+                    "Voici les détails sur l'erreur ", e);
+        }
+
+        return caisseList;
+    }
+
     public ObservableList<Payment> getUserPayments(User user, int month, int year) {
         rs = null;
         ObservableList<Payment> userPaymentList = FXCollections.observableArrayList();

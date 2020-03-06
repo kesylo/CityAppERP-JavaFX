@@ -4,7 +4,7 @@ class DBConfig {
 
     public static String getAppVersion() {
         // app version
-        return "3.2.6";
+        return "3.2.7";
     }
 
     // my local Server

@@ -140,7 +140,7 @@ public class reportDashboardController {
     //region variable
     private DBHandler dbHandler = new DBHandler();
     private DialogController<String> wd = null;
-    ObservableList<User> userList = FXCollections.observableArrayList();
+    private ObservableList<User> userList = FXCollections.observableArrayList();
     private ObservableList<String> dept = FXCollections.observableArrayList();
     private ObservableList<String> month = FXCollections.observableArrayList();
     private ObservableList<Integer> year = FXCollections.observableArrayList();

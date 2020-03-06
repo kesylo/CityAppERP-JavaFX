@@ -1,6 +1,7 @@
 package sample.Global;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.glass.ui.Window;
 import com.sun.xml.internal.ws.util.StringUtils;
@@ -18,6 +19,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import sample.Main;
 import sample.Model.Country;
 import sample.Model.CountryComparator;
@@ -122,6 +124,46 @@ public class Global {
     public static boolean isWindows() {
         String OS = System.getProperty("os.name");
         return OS.contains("Win");
+    }
+
+    public static Date convertLocalDateToDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
+    }
+
+    public static int getDateNberInYear(LocalDate day){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(convertLocalDateToDate(day));
+        return cal.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public static void formatDatePicker(JFXDatePicker datePicker) {
+        String pattern = "dd-MM-yyyy";
+
+        datePicker.setStyle("-fx-font: 14px Poppins;");
+
+        datePicker.setPromptText(pattern.toLowerCase());
+
+        datePicker.setConverter(new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
     }
 
     public static void showInfoMessage(String header, String content) {
